@@ -6,12 +6,16 @@ So you can create a cool application, without all the boilerplate code
  * main.py     is a sample application
  * widgets.py  contains classes to make it easy to create your UI
 
-### Requirements (Fedora 34)
+### Requirements (Fedora 35)
 * gtk4
 * python3-gobject
 * Python 3.9 (or later)
 
-Will properly work fine in other distros, but I have only tested in Fedora 34
+```bash
+sudo dnf install gtk4-devel polkit-devel 
+```
+
+Will properly work fine in other distros, but I have only tested in Fedora 35
 
 ### Screenshoots
 ![gtk4python_page1](https://user-images.githubusercontent.com/283985/138865212-6d67f2e0-c844-4ef6-bfbe-6cb064dfb2ab.png)

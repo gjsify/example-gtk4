@@ -1,0 +1,27 @@
+{
+  "name": "example-gtk4",
+  "version": "1.0.0",
+  "description": "It takes the hassle away from building Gtk4 application in Python So you can create a cool application, without all the boilerplate code",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:types": "ts-for-gir generate gtk4 Gtk-4.0 Polkit-1.0 -e gjs --useNamespace -t esm",
+    "build:app": "node esbuild.js",
+    "build": "npm run build:app && npm run build:app",
+    "start": "gjs -m dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gjsify/example-gtk4.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gjsify/example-gtk4/issues"
+  },
+  "homepage": "https://github.com/gjsify/example-gtk4#readme",
+  "devDependencies": {
+    "esbuild": "^0.14.29"
+  }
+}
