@@ -1,4 +1,5 @@
 import Gio from './@types/Gjs/Gio-2.0.js'
+import GLib from './@types/Gjs/GLib-2.0.js'
 import Gtk from './@types/Gjs/Gtk-4.0.js'
 import GObject from './@types/Gjs/GObject-2.0.js'
 
@@ -112,7 +113,7 @@ class _Window extends Gtk.ApplicationWindow {
     }
 
     /** Add an Action and connect to a callback */
-    public createAction(name: string, callback: any) {
+    public createAction(name: string, callback: ($obj: Gio.SimpleAction, parameter?: GLib.Variant | null | undefined) => void) {
         const action = Gio.SimpleAction.new(name, null);
         action.connect("activate", callback);
         this.add_action(action);

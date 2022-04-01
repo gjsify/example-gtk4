@@ -936,6 +936,10 @@ export interface MetaInfo<Props, Interfaces, Sigs> {
     InternalChildren?: string[]
 }
 
+// The following are part of gi.ts
+// See https://gitlab.gnome.org/ewlsh/gi.ts/-/blob/master/packages/lib/src/generators/dts/gobject.ts
+// Copyright Evan Welsh
+
 export const GTypeName: unique symbol;
 export const requires: unique symbol;
 export const interfaces: unique symbol;
@@ -967,10 +971,10 @@ export type Property<K extends ParamSpec> = K extends ParamSpecBoolean
 export type Properties<Prototype extends {}, Properties extends { [key: string]: ParamSpec }> = Omit<
     {
         [key in keyof Properties | keyof Prototype]: key extends keyof Prototype
-            ? never
-            : key extends keyof Properties
-            ? Property<Properties[key]>
-            : never;
+        ? never
+        : key extends keyof Properties
+        ? Property<Properties[key]>
+        : never;
     },
     keyof Prototype
 >;
@@ -985,7 +989,7 @@ export type RegisteredPrototype<
     P extends {},
     Props extends { [key: string]: ParamSpec },
     Interfaces extends any[]
-> = Properties<P, SnakeToCamel<Props> & SnakeToUnderscore<Props>> & UnionToIntersection<Interfaces[number]> & P;
+    > = Properties<P, SnakeToCamel<Props> & SnakeToUnderscore<Props>> & UnionToIntersection<Interfaces[number]> & P;
 
 type SnakeToUnderscoreCase<S extends string> = S extends `${infer T}-${infer U}`
     ? `${T}_${SnakeToUnderscoreCase<U>}`
@@ -1021,16 +1025,16 @@ export type RegisteredClass<
     T extends Ctor,
     Props extends { [key: string]: ParamSpec },
     Interfaces extends { $gtype: GType<any> }[]
-> = T extends { prototype: infer P }
+    > = T extends { prototype: infer P }
     ? {
-          $gtype: GType<RegisteredClass<T, Props, IFaces<Interfaces>>>;
-          new (...args: P extends Init ? Parameters<P["_init"]> : [void]): RegisteredPrototype<
-              P,
-              Props,
-              IFaces<Interfaces>
-          >;
-          prototype: RegisteredPrototype<P, Props, IFaces<Interfaces>>;
-      }
+        $gtype: GType<RegisteredClass<T, Props, IFaces<Interfaces>>>;
+        new(...args: P extends Init ? Parameters<P["_init"]> : [void]): RegisteredPrototype<
+            P,
+            Props,
+            IFaces<Interfaces>
+        >;
+        prototype: RegisteredPrototype<P, Props, IFaces<Interfaces>>;
+    }
     : never;
 
 export function registerClass<
@@ -1560,8 +1564,8 @@ class Binding {
     connect_after(sigName: "notify::target", callback: (($obj: Binding, pspec: ParamSpec) => void)): number
     connect(sigName: "notify::target-property", callback: (($obj: Binding, pspec: ParamSpec) => void)): number
     connect_after(sigName: "notify::target-property", callback: (($obj: Binding, pspec: ParamSpec) => void)): number
-    connect(sigName: string, callback: any): number
-    connect_after(sigName: string, callback: any): number
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
     emit(sigName: string, ...args: any[]): void
     disconnect(id: number): void
     static name: string
@@ -1943,8 +1947,8 @@ class InitiallyUnowned {
     connect(sigName: "notify", callback: (($obj: InitiallyUnowned, pspec: ParamSpec) => void)): number
     connect_after(sigName: "notify", callback: (($obj: InitiallyUnowned, pspec: ParamSpec) => void)): number
     emit(sigName: "notify", pspec: ParamSpec): void
-    connect(sigName: string, callback: any): number
-    connect_after(sigName: string, callback: any): number
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
     emit(sigName: string, ...args: any[]): void
     disconnect(id: number): void
     static name: string
@@ -2324,8 +2328,8 @@ class Object {
     connect(sigName: "notify", callback: (($obj: Object, pspec: ParamSpec) => void)): number
     connect_after(sigName: "notify", callback: (($obj: Object, pspec: ParamSpec) => void)): number
     emit(sigName: "notify", pspec: ParamSpec): void
-    connect(sigName: string, callback: any): number
-    connect_after(sigName: string, callback: any): number
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
     emit(sigName: string, ...args: any[]): void
     disconnect(id: number): void
     static name: string
@@ -5230,8 +5234,8 @@ class TypeModule {
     connect(sigName: "notify", callback: (($obj: TypeModule, pspec: ParamSpec) => void)): number
     connect_after(sigName: "notify", callback: (($obj: TypeModule, pspec: ParamSpec) => void)): number
     emit(sigName: "notify", pspec: ParamSpec): void
-    connect(sigName: string, callback: any): number
-    connect_after(sigName: string, callback: any): number
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
     emit(sigName: string, ...args: any[]): void
     disconnect(id: number): void
     static name: string
