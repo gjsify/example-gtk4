@@ -56,6 +56,32 @@ declare global {
     function logError(exception: any, message?: string): void
     const ARGV: string[]
 
+    /**
+     * @this {typeof globalThis}
+     * @param callback a callback function
+     * @param delay the duration in milliseconds to wait before running callback
+     * @param args arguments to pass to callback
+     */
+    function setTimeout(callback: (...args: any[]) => any, delay: number, ...args: any[])
+
+     /**
+      * @this {typeof globalThis}
+      * @param callback a callback function
+      * @param delay the duration in milliseconds to wait between calling callback
+      * @param args arguments to pass to callback
+      */
+    function setInterval(callback, delay: number, ...args: any[])
+ 
+     /**
+      * @param timeout the timeout to clear
+      */
+    function clearTimeout(timeout: GLib20.Source)
+ 
+     /**
+      * @param timeout the timeout to clear
+      */
+    function clearInterval(timeout: GLib20.Source)
+
     const imports: typeof Gjs & {
         gi: {
             Gtk:              typeof Gtk40

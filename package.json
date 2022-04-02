@@ -9,7 +9,8 @@
     "build:types": "ts-for-gir generate gtk4 Gtk-4.0 Polkit-1.0 -e gjs --useNamespace -t esm",
     "build:app": "node esbuild.js",
     "build": "npm run build:app && npm run build:app",
-    "start": "npm run build:app && gjs -m dist/main.js"
+    "start:gjs": "gjs -m dist/main.js",
+    "start": "npm run build:app && npm run start:gjs"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/gjsify/example-gtk4#readme",
   "devDependencies": {
+    "babel-plugin-gjs": "^0.0.11",
     "esbuild": "^0.14.29"
   }
 }

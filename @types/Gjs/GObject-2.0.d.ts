@@ -1014,7 +1014,7 @@ type SnakeToPascalCase<S extends string> = string extends S
 type SnakeToCamel<T> = { [P in keyof T as P extends string ? SnakeToCamelCase<P> : P]: T[P] };
 type SnakeToUnderscore<T> = { [P in keyof T as P extends string ? SnakeToUnderscoreCase<P> : P]: T[P] };
 
-type Ctor = new (...a: any[]) => object;
+type Ctor<T extends object = any> = new (...a: any[]) => T;
 
 type Init = { _init(...args: any[]): void };
 
@@ -1023,8 +1023,8 @@ export type TClosure<R = any, P = any> = (...args: P[]) => R;
 
 export type RegisteredClass<
     T extends Ctor,
-    Props extends { [key: string]: ParamSpec },
-    Interfaces extends { $gtype: GType<any> }[]
+    Props extends { [key: string]: ParamSpec } = {},
+    Interfaces extends { $gtype: GType<any> }[] = []
     > = T extends { prototype: infer P }
     ? {
         $gtype: GType<RegisteredClass<T, Props, IFaces<Interfaces>>>;
@@ -1052,7 +1052,7 @@ export function registerClass<
     klass: T
 ): RegisteredClass<T, Props, Interfaces>;
 
-export function registerClass<P extends {}, T extends new (...args: any[]) => P>(cls: T): RegisteredClass<T, {}, []>;
+export function registerClass<P extends {}, T extends Ctor<P>>(cls: T): RegisteredClass<T>;
 interface Binding_ConstructProps extends Object_ConstructProps {
     /* Constructor properties of GObject-2.0.GObject.Binding */
     /**
@@ -2467,7 +2467,46 @@ class ParamSpec {
      * @param name the canonical name of the property
      */
     static is_valid_name(name: string): boolean
+
+    // TODO add to ts-for-gir
+
+    static char(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    
+    static uchar(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    
+    static int(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    
+    static uint(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    
+    static long(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number) 
+    
+    static ulong(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number) 
+
+    static int64(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+
+    static uint64(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number) 
+
+    static float(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    
+    static boolean(name: string, nick: string, blurb: string, flags: ParamFlags, defaultValue: boolean)
+    
+    static flags(name: string, nick: string, blurb: string, flags: ParamFlags, flagsType: GType<unknown>, defaultValue: number) 
+    
+    static enum(name: string, nick: string, blurb: string, flags: ParamFlags, enumType: GType<unknown>, defaultValue: number) 
+    
+    static double(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    
+    static string(name: string, nick: string, blurb: string, flags: ParamFlags, defaultValue: string | null)
+    
+    static boxed(name: string, nick: string, blurb: string, flags: ParamFlags, boxedType: GType<unknown>)
+
+    static object(name: string, nick: string, blurb: string, flags: ParamFlags, objectType: GType<unknown>)
+    
+    static jsobject(name: string, nick: string, blurb: string, flags: ParamFlags)
+    
+    static param(name: string, nick: string, blurb: string, flags: ParamFlags, paramType: GType<unknown>)
 }
+
 class ParamSpecBoolean {
     /* Fields of GObject-2.0.GObject.ParamSpec */
     /**
