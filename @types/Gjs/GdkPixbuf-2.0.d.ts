@@ -674,7 +674,7 @@ class Pixbuf {
      * @param option_keys name of options to set
      * @param option_values values for named options
      */
-    save_to_bufferv(type: string, option_keys?: string[] | null, option_values?: string[] | null): [ /* returnType */ boolean, /* buffer */ Uint8Array ]
+    save_to_bufferv(type: string, option_keys: string[] | null, option_values: string[] | null): [ /* returnType */ boolean, /* buffer */ Uint8Array ]
     /**
      * Vector version of `gdk_pixbuf_save_to_callback()`.
      * 
@@ -689,7 +689,7 @@ class Pixbuf {
      * @param option_keys name of options to set
      * @param option_values values for named options
      */
-    save_to_callbackv(save_func: PixbufSaveFunc, type: string, option_keys?: string[] | null, option_values?: string[] | null): boolean
+    save_to_callbackv(save_func: PixbufSaveFunc, type: string, option_keys: string[] | null, option_values: string[] | null): boolean
     /**
      * Saves `pixbuf` to an output stream.
      * 
@@ -703,7 +703,7 @@ class Pixbuf {
      * @param option_values values for named options
      * @param cancellable optional `GCancellable` object, `NULL` to ignore
      */
-    save_to_streamv(stream: Gio.OutputStream, type: string, option_keys?: string[] | null, option_values?: string[] | null, cancellable?: Gio.Cancellable | null): boolean
+    save_to_streamv(stream: Gio.OutputStream, type: string, option_keys: string[] | null, option_values: string[] | null, cancellable: Gio.Cancellable | null): boolean
     /**
      * Saves `pixbuf` to an output stream asynchronously.
      * 
@@ -721,7 +721,7 @@ class Pixbuf {
      * @param cancellable optional `GCancellable` object, `NULL` to ignore
      * @param callback a `GAsyncReadyCallback` to call when the pixbuf is saved
      */
-    save_to_streamv_async(stream: Gio.OutputStream, type: string, option_keys?: string[] | null, option_values?: string[] | null, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    save_to_streamv_async(stream: Gio.OutputStream, type: string, option_keys: string[] | null, option_values: string[] | null, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Vector version of `gdk_pixbuf_save()`.
      * 
@@ -735,7 +735,7 @@ class Pixbuf {
      * @param option_keys name of options to set
      * @param option_values values for named options
      */
-    savev(filename: string, type: string, option_keys?: string[] | null, option_values?: string[] | null): boolean
+    savev(filename: string, type: string, option_keys: string[] | null, option_values: string[] | null): boolean
     /**
      * Creates a transformation of the source image `src` by scaling by
      * `scale_x` and `scale_y` then translating by `offset_x` and `offset_y,`
@@ -1020,7 +1020,7 @@ class Pixbuf {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -1114,7 +1114,7 @@ class Pixbuf {
      * Checks if two icons are equal.
      * @param icon2 pointer to the second #GIcon.
      */
-    equal(icon2?: Gio.Icon | null): boolean
+    equal(icon2: Gio.Icon | null): boolean
     /**
      * Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
      * back by calling g_icon_deserialize() on the returned value.
@@ -1149,7 +1149,7 @@ class Pixbuf {
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    load(size: number, cancellable?: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string | null ]
+    load(size: number, cancellable: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /**
      * Loads an icon asynchronously. To finish this function, see
      * g_loadable_icon_load_finish(). For the synchronous, blocking
@@ -1158,18 +1158,18 @@ class Pixbuf {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
      */
-    load_async(size: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
      * @param res a #GAsyncResult.
      */
-    load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string | null ]
+    load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /* Virtual methods of GdkPixbuf-2.0.GdkPixbuf.Pixbuf */
     /**
      * Checks if two icons are equal.
      * @param icon2 pointer to the second #GIcon.
      */
-    vfunc_equal(icon2?: Gio.Icon | null): boolean
+    vfunc_equal(icon2: Gio.Icon | null): boolean
     /**
      * Gets a hash for an icon.
      */
@@ -1188,7 +1188,7 @@ class Pixbuf {
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    vfunc_load(size: number, cancellable?: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string | null ]
+    vfunc_load(size: number, cancellable: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /**
      * Loads an icon asynchronously. To finish this function, see
      * g_loadable_icon_load_finish(). For the synchronous, blocking
@@ -1197,12 +1197,12 @@ class Pixbuf {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
      */
-    vfunc_load_async(size: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
      * @param res a #GAsyncResult.
      */
-    vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string | null ]
+    vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -1286,15 +1286,15 @@ class Pixbuf {
     /* Static methods and pseudo-constructors */
     static new(colorspace: Colorspace, has_alpha: boolean, bits_per_sample: number, width: number, height: number): Pixbuf
     static new_from_bytes(data: GLib.Bytes, colorspace: Colorspace, has_alpha: boolean, bits_per_sample: number, width: number, height: number, rowstride: number): Pixbuf
-    static new_from_data(data: Uint8Array, colorspace: Colorspace, has_alpha: boolean, bits_per_sample: number, width: number, height: number, rowstride: number, destroy_fn?: PixbufDestroyNotify | null): Pixbuf
+    static new_from_data(data: Uint8Array, colorspace: Colorspace, has_alpha: boolean, bits_per_sample: number, width: number, height: number, rowstride: number, destroy_fn: PixbufDestroyNotify | null): Pixbuf
     static new_from_file(filename: string): Pixbuf
     static new_from_file_at_scale(filename: string, width: number, height: number, preserve_aspect_ratio: boolean): Pixbuf
     static new_from_file_at_size(filename: string, width: number, height: number): Pixbuf
     static new_from_inline(data: Uint8Array, copy_pixels: boolean): Pixbuf
     static new_from_resource(resource_path: string): Pixbuf
     static new_from_resource_at_scale(resource_path: string, width: number, height: number, preserve_aspect_ratio: boolean): Pixbuf
-    static new_from_stream(stream: Gio.InputStream, cancellable?: Gio.Cancellable | null): Pixbuf
-    static new_from_stream_at_scale(stream: Gio.InputStream, width: number, height: number, preserve_aspect_ratio: boolean, cancellable?: Gio.Cancellable | null): Pixbuf
+    static new_from_stream(stream: Gio.InputStream, cancellable: Gio.Cancellable | null): Pixbuf
+    static new_from_stream_at_scale(stream: Gio.InputStream, width: number, height: number, preserve_aspect_ratio: boolean, cancellable: Gio.Cancellable | null): Pixbuf
     static new_from_stream_finish(async_result: Gio.AsyncResult): Pixbuf
     static new_from_xpm_data(data: string[]): Pixbuf
     /**
@@ -1314,7 +1314,7 @@ class Pixbuf {
      * Parses an image file far enough to determine its format and size.
      * @param filename The name of the file to identify.
      */
-    static get_file_info(filename: string): [ /* returnType */ PixbufFormat | null, /* width */ number | null, /* height */ number | null ]
+    static get_file_info(filename: string): [ /* returnType */ PixbufFormat | null, /* width */ number, /* height */ number ]
     /**
      * Asynchronously parses an image file far enough to determine its
      * format and size.
@@ -1329,7 +1329,7 @@ class Pixbuf {
      * @param cancellable optional `GCancellable` object, `NULL` to ignore
      * @param callback a `GAsyncReadyCallback` to call when the file info is available
      */
-    static get_file_info_async(filename: string, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    static get_file_info_async(filename: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous pixbuf parsing operation started with
      * gdk_pixbuf_get_file_info_async().
@@ -1371,7 +1371,7 @@ class Pixbuf {
      * @param cancellable optional `GCancellable` object, `NULL` to ignore
      * @param callback a `GAsyncReadyCallback` to call when the pixbuf is loaded
      */
-    static new_from_stream_async(stream: Gio.InputStream, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    static new_from_stream_async(stream: Gio.InputStream, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Creates a new pixbuf by asynchronously loading an image from an input stream.
      * 
@@ -1387,7 +1387,7 @@ class Pixbuf {
      * @param cancellable optional `GCancellable` object, `NULL` to ignore
      * @param callback a `GAsyncReadyCallback` to call when the pixbuf is loaded
      */
-    static new_from_stream_at_scale_async(stream: Gio.InputStream, width: number, height: number, preserve_aspect_ratio: boolean, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    static new_from_stream_at_scale_async(stream: Gio.InputStream, width: number, height: number, preserve_aspect_ratio: boolean, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous pixbuf save operation started with
      * gdk_pixbuf_save_to_stream_async().
@@ -1463,7 +1463,7 @@ class PixbufAnimation {
      * A delay time of -1 is possible, indicating "infinite".
      * @param start_time time when the animation starts playing
      */
-    get_iter(start_time?: GLib.TimeVal | null): PixbufAnimationIter
+    get_iter(start_time: GLib.TimeVal | null): PixbufAnimationIter
     /**
      * Retrieves a static image for the animation.
      * 
@@ -1716,7 +1716,7 @@ class PixbufAnimation {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -1843,7 +1843,7 @@ class PixbufAnimation {
      * A delay time of -1 is possible, indicating "infinite".
      * @param start_time time when the animation starts playing
      */
-    vfunc_get_iter(start_time?: GLib.TimeVal | null): PixbufAnimationIter
+    vfunc_get_iter(start_time: GLib.TimeVal | null): PixbufAnimationIter
     vfunc_get_size(width: number, height: number): void
     /**
      * Retrieves a static image for the animation.
@@ -1933,7 +1933,7 @@ class PixbufAnimation {
     /* Static methods and pseudo-constructors */
     static new_from_file(filename: string): PixbufAnimation
     static new_from_resource(resource_path: string): PixbufAnimation
-    static new_from_stream(stream: Gio.InputStream, cancellable?: Gio.Cancellable | null): PixbufAnimation
+    static new_from_stream(stream: Gio.InputStream, cancellable: Gio.Cancellable | null): PixbufAnimation
     static new_from_stream_finish(async_result: Gio.AsyncResult): PixbufAnimation
     /**
      * Creates a new animation by asynchronously loading an image from an input stream.
@@ -1948,7 +1948,7 @@ class PixbufAnimation {
      * @param cancellable optional #GCancellable object
      * @param callback a `GAsyncReadyCallback` to call when the pixbuf is loaded
      */
-    static new_from_stream_async(stream: Gio.InputStream, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    static new_from_stream_async(stream: Gio.InputStream, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     static $gtype: GObject.GType
 }
 interface PixbufAnimationIter_ConstructProps extends GObject.Object_ConstructProps {
@@ -1981,7 +1981,7 @@ class PixbufAnimationIter {
      * and update the display with the new pixbuf.
      * @param current_time current time
      */
-    advance(current_time?: GLib.TimeVal | null): boolean
+    advance(current_time: GLib.TimeVal | null): boolean
     /**
      * Gets the number of milliseconds the current pixbuf should be displayed,
      * or -1 if the current pixbuf should be displayed forever.
@@ -2246,7 +2246,7 @@ class PixbufAnimationIter {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -2360,7 +2360,7 @@ class PixbufAnimationIter {
      * and update the display with the new pixbuf.
      * @param current_time current time
      */
-    vfunc_advance(current_time?: GLib.TimeVal | null): boolean
+    vfunc_advance(current_time: GLib.TimeVal | null): boolean
     /**
      * Gets the number of milliseconds the current pixbuf should be displayed,
      * or -1 if the current pixbuf should be displayed forever.
@@ -2770,7 +2770,7 @@ class PixbufLoader {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -3034,7 +3034,7 @@ class PixbufNonAnim {
      * A delay time of -1 is possible, indicating "infinite".
      * @param start_time time when the animation starts playing
      */
-    get_iter(start_time?: GLib.TimeVal | null): PixbufAnimationIter
+    get_iter(start_time: GLib.TimeVal | null): PixbufAnimationIter
     /**
      * Retrieves a static image for the animation.
      * 
@@ -3287,7 +3287,7 @@ class PixbufNonAnim {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -3414,7 +3414,7 @@ class PixbufNonAnim {
      * A delay time of -1 is possible, indicating "infinite".
      * @param start_time time when the animation starts playing
      */
-    vfunc_get_iter(start_time?: GLib.TimeVal | null): PixbufAnimationIter
+    vfunc_get_iter(start_time: GLib.TimeVal | null): PixbufAnimationIter
     vfunc_get_size(width: number, height: number): void
     /**
      * Retrieves a static image for the animation.
@@ -3581,7 +3581,7 @@ class PixbufSimpleAnim {
      * A delay time of -1 is possible, indicating "infinite".
      * @param start_time time when the animation starts playing
      */
-    get_iter(start_time?: GLib.TimeVal | null): PixbufAnimationIter
+    get_iter(start_time: GLib.TimeVal | null): PixbufAnimationIter
     /**
      * Retrieves a static image for the animation.
      * 
@@ -3834,7 +3834,7 @@ class PixbufSimpleAnim {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -3961,7 +3961,7 @@ class PixbufSimpleAnim {
      * A delay time of -1 is possible, indicating "infinite".
      * @param start_time time when the animation starts playing
      */
-    vfunc_get_iter(start_time?: GLib.TimeVal | null): PixbufAnimationIter
+    vfunc_get_iter(start_time: GLib.TimeVal | null): PixbufAnimationIter
     vfunc_get_size(width: number, height: number): void
     /**
      * Retrieves a static image for the animation.
@@ -4086,7 +4086,7 @@ class PixbufSimpleAnimIter {
      * and update the display with the new pixbuf.
      * @param current_time current time
      */
-    advance(current_time?: GLib.TimeVal | null): boolean
+    advance(current_time: GLib.TimeVal | null): boolean
     /**
      * Gets the number of milliseconds the current pixbuf should be displayed,
      * or -1 if the current pixbuf should be displayed forever.
@@ -4351,7 +4351,7 @@ class PixbufSimpleAnimIter {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -4465,7 +4465,7 @@ class PixbufSimpleAnimIter {
      * and update the display with the new pixbuf.
      * @param current_time current time
      */
-    vfunc_advance(current_time?: GLib.TimeVal | null): boolean
+    vfunc_advance(current_time: GLib.TimeVal | null): boolean
     /**
      * Gets the number of milliseconds the current pixbuf should be displayed,
      * or -1 if the current pixbuf should be displayed forever.
@@ -4578,7 +4578,7 @@ abstract class PixbufAnimationClass {
     is_static_image: (animation: PixbufAnimation) => boolean
     get_static_image: (animation: PixbufAnimation) => Pixbuf
     get_size: (animation: PixbufAnimation, width: number, height: number) => void
-    get_iter: (animation: PixbufAnimation, start_time?: GLib.TimeVal | null) => PixbufAnimationIter
+    get_iter: (animation: PixbufAnimation, start_time: GLib.TimeVal | null) => PixbufAnimationIter
     static name: string
 }
 abstract class PixbufAnimationIterClass {
@@ -4590,7 +4590,7 @@ abstract class PixbufAnimationIterClass {
     get_delay_time: (iter: PixbufAnimationIter) => number
     get_pixbuf: (iter: PixbufAnimationIter) => Pixbuf
     on_currently_loading_frame: (iter: PixbufAnimationIter) => boolean
-    advance: (iter: PixbufAnimationIter, current_time?: GLib.TimeVal | null) => boolean
+    advance: (iter: PixbufAnimationIter, current_time: GLib.TimeVal | null) => boolean
     static name: string
 }
 class PixbufFormat {

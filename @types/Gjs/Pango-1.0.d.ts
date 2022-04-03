@@ -1560,7 +1560,7 @@ function attr_rise_new(rise: number): Attribute
 function attr_scale_new(scale_factor: number): Attribute
 function attr_sentence_new(): Attribute
 function attr_shape_new(ink_rect: Rectangle, logical_rect: Rectangle): Attribute
-function attr_shape_new_with_data(ink_rect: Rectangle, logical_rect: Rectangle, data?: object | null, copy_func?: AttrDataCopyFunc | null): Attribute
+function attr_shape_new_with_data(ink_rect: Rectangle, logical_rect: Rectangle, data: object | null, copy_func: AttrDataCopyFunc | null): Attribute
 function attr_show_new(flags: ShowFlags): Attribute
 function attr_size_new(size: number): Attribute
 function attr_size_new_absolute(size: number): Attribute
@@ -1579,28 +1579,28 @@ function attr_word_new(): Attribute
 function bidi_type_for_unichar(ch: number): BidiType
 function break_TODO(text: string, length: number, analysis: Analysis, attrs: LogAttr[]): void
 function default_break(text: string, length: number, analysis: Analysis | null, attrs: LogAttr, attrs_len: number): void
-function extents_to_pixels(inclusive?: Rectangle | null, nearest?: Rectangle | null): void
+function extents_to_pixels(inclusive: Rectangle | null, nearest: Rectangle | null): void
 function find_base_dir(text: string, length: number): Direction
 function find_paragraph_boundary(text: string, length: number): [ /* paragraph_delimiter_index */ number, /* next_paragraph_start */ number ]
 function font_description_from_string(str: string): FontDescription
 function get_log_attrs(text: string, length: number, level: number, language: Language, attrs: LogAttr[]): void
 function get_mirror_char(ch: number, mirrored_ch: number): boolean
-function gravity_get_for_matrix(matrix?: Matrix | null): Gravity
+function gravity_get_for_matrix(matrix: Matrix | null): Gravity
 function gravity_get_for_script(script: Script, base_gravity: Gravity, hint: GravityHint): Gravity
 function gravity_get_for_script_and_width(script: Script, wide: boolean, base_gravity: Gravity, hint: GravityHint): Gravity
 function gravity_to_rotation(gravity: Gravity): number
 function is_zero_width(ch: number): boolean
-function itemize(context: Context, text: string, start_index: number, length: number, attrs: AttrList, cached_iter?: AttrIterator | null): Item[]
-function itemize_with_base_dir(context: Context, base_dir: Direction, text: string, start_index: number, length: number, attrs: AttrList, cached_iter?: AttrIterator | null): Item[]
-function language_from_string(language?: string | null): Language | null
+function itemize(context: Context, text: string, start_index: number, length: number, attrs: AttrList, cached_iter: AttrIterator | null): Item[]
+function itemize_with_base_dir(context: Context, base_dir: Direction, text: string, start_index: number, length: number, attrs: AttrList, cached_iter: AttrIterator | null): Item[]
+function language_from_string(language: string | null): Language | null
 function language_get_default(): Language
 function language_get_preferred(): Language | null
 function layout_deserialize_error_quark(): GLib.Quark
 function log2vis_get_embedding_levels(text: string, length: number, pbase_dir: Direction): number
-function markup_parser_finish(context: GLib.MarkupParseContext): [ /* returnType */ boolean, /* attr_list */ AttrList | null, /* text */ string | null, /* accel_char */ number | null ]
+function markup_parser_finish(context: GLib.MarkupParseContext): [ /* returnType */ boolean, /* attr_list */ AttrList, /* text */ string, /* accel_char */ number ]
 function markup_parser_new(accel_marker: number): GLib.MarkupParseContext
-function parse_enum(type: GObject.GType, str: string | null, warn: boolean): [ /* returnType */ boolean, /* value */ number | null, /* possible_values */ string | null ]
-function parse_markup(markup_text: string, length: number, accel_marker: number): [ /* returnType */ boolean, /* attr_list */ AttrList | null, /* text */ string | null, /* accel_char */ number | null ]
+function parse_enum(type: GObject.GType, str: string | null, warn: boolean): [ /* returnType */ boolean, /* value */ number, /* possible_values */ string ]
+function parse_markup(markup_text: string, length: number, accel_marker: number): [ /* returnType */ boolean, /* attr_list */ AttrList, /* text */ string, /* accel_char */ number ]
 function parse_stretch(str: string, warn: boolean): [ /* returnType */ boolean, /* stretch */ Stretch ]
 function parse_style(str: string, warn: boolean): [ /* returnType */ boolean, /* style */ Style ]
 function parse_variant(str: string, warn: boolean): [ /* returnType */ boolean, /* variant */ Variant ]
@@ -1725,7 +1725,7 @@ class Context {
      * @param desc a `PangoFontDescription` structure. %NULL means that the   font description from the context will be used.
      * @param language language tag used to determine which script to get   the metrics for. %NULL means that the language tag from the context   will be used. If no language tag is set on the context, metrics   for the default language (as determined by [func`Pango`.Language.get_default]   will be returned.
      */
-    get_metrics(desc?: FontDescription | null, language?: Language | null): FontMetrics
+    get_metrics(desc: FontDescription | null, language: Language | null): FontMetrics
     /**
      * Returns whether font rendering with this context should
      * round glyph positions and widths.
@@ -1826,7 +1826,7 @@ class Context {
      * text is fit to the pixel grid.
      * @param matrix a `PangoMatrix`, or %NULL to unset any existing matrix. (No matrix set is the same as setting the identity matrix.)
      */
-    set_matrix(matrix?: Matrix | null): void
+    set_matrix(matrix: Matrix | null): void
     /**
      * Sets whether font rendering with this context should
      * round glyph positions and widths to integral positions,
@@ -2065,7 +2065,7 @@ class Context {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -2487,7 +2487,7 @@ class Coverage {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -2706,7 +2706,7 @@ class Font {
      * output variables and returns.
      * @param glyph the glyph index
      */
-    get_glyph_extents(glyph: Glyph): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    get_glyph_extents(glyph: Glyph): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Returns the languages that are supported by `font`.
      * 
@@ -2729,7 +2729,7 @@ class Font {
      * output variables and returns.
      * @param language language tag used to determine which script   to get the metrics for, or %NULL to indicate to get the metrics for   the entire font.
      */
-    get_metrics(language?: Language | null): FontMetrics
+    get_metrics(language: Language | null): FontMetrics
     /**
      * Returns whether the font provides a glyph for this character.
      * @param wc a Unicode character
@@ -2972,7 +2972,7 @@ class Font {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -3115,7 +3115,7 @@ class Font {
      * output variables and returns.
      * @param glyph the glyph index
      */
-    vfunc_get_glyph_extents(glyph: Glyph): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    vfunc_get_glyph_extents(glyph: Glyph): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Gets overall metric information for a font.
      * 
@@ -3127,7 +3127,7 @@ class Font {
      * output variables and returns.
      * @param language language tag used to determine which script   to get the metrics for, or %NULL to indicate to get the metrics for   the entire font.
      */
-    vfunc_get_metrics(language?: Language | null): FontMetrics
+    vfunc_get_metrics(language: Language | null): FontMetrics
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -3478,7 +3478,7 @@ class FontFace {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -3679,7 +3679,7 @@ class FontFamily {
      * Gets the `PangoFontFace` of `family` with the given name.
      * @param name the name of a face. If the name is %NULL,   the family's default face (fontconfig calls it "Regular")   will be returned.
      */
-    get_face(name?: string | null): FontFace | null
+    get_face(name: string | null): FontFace | null
     /**
      * Gets the name of the family.
      * 
@@ -3725,7 +3725,7 @@ class FontFamily {
      * `PangoFontFamily` also implemented the [iface`Gio`.ListModel] interface
      * for enumerating faces.
      */
-    list_faces(): /* faces */ FontFace[] | null
+    list_faces(): /* faces */ FontFace[]
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -3951,7 +3951,7 @@ class FontFamily {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -4045,7 +4045,7 @@ class FontFamily {
      * Gets the `PangoFontFace` of `family` with the given name.
      * @param name the name of a face. If the name is %NULL,   the family's default face (fontconfig calls it "Regular")   will be returned.
      */
-    vfunc_get_face(name?: string | null): FontFace | null
+    vfunc_get_face(name: string | null): FontFace | null
     /**
      * Gets the name of the family.
      * 
@@ -4091,7 +4091,7 @@ class FontFamily {
      * `PangoFontFamily` also implemented the [iface`Gio`.ListModel] interface
      * for enumerating faces.
      */
-    vfunc_list_faces(): /* faces */ FontFace[] | null
+    vfunc_list_faces(): /* faces */ FontFace[]
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -4452,7 +4452,7 @@ class FontMap {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -4908,7 +4908,7 @@ class Fontset {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -5344,7 +5344,7 @@ class FontsetSimple {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -5574,7 +5574,7 @@ class Layout {
      * </picture>
      * @param index_ the byte index of the cursor
      */
-    get_caret_pos(index_: number): [ /* strong_pos */ Rectangle | null, /* weak_pos */ Rectangle | null ]
+    get_caret_pos(index_: number): [ /* strong_pos */ Rectangle, /* weak_pos */ Rectangle ]
     /**
      * Returns the number of Unicode characters in the
      * the text of `layout`.
@@ -5614,7 +5614,7 @@ class Layout {
      * will insert it at the end.
      * @param index_ the byte index of the cursor
      */
-    get_cursor_pos(index_: number): [ /* strong_pos */ Rectangle | null, /* weak_pos */ Rectangle | null ]
+    get_cursor_pos(index_: number): [ /* strong_pos */ Rectangle, /* weak_pos */ Rectangle ]
     /**
      * Gets the text direction at the given character position in `layout`.
      * @param index the byte index of the char
@@ -5641,7 +5641,7 @@ class Layout {
      * The extents are given in layout coordinates and in Pango units; layout
      * coordinates begin at the top left corner of the layout.
      */
-    get_extents(): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    get_extents(): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Gets the font description for the layout, if any.
      */
@@ -5741,7 +5741,7 @@ class Layout {
      * such that the rounded rectangles fully contain the unrounded one (that is,
      * passes them as first argument to [func`Pango`.extents_to_pixels]).
      */
-    get_pixel_extents(): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    get_pixel_extents(): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Determines the logical width and height of a `PangoLayout` in device
      * units.
@@ -5750,7 +5750,7 @@ class Layout {
      * scaled by %PANGO_SCALE. This is simply a convenience function
      * around [method`Pango`.Layout.get_pixel_extents].
      */
-    get_pixel_size(): [ /* width */ number | null, /* height */ number | null ]
+    get_pixel_size(): [ /* width */ number, /* height */ number ]
     /**
      * Returns the current serial number of `layout`.
      * 
@@ -5778,7 +5778,7 @@ class Layout {
      * 
      * This is simply a convenience function around [method`Pango`.Layout.get_extents].
      */
-    get_size(): [ /* width */ number | null, /* height */ number | null ]
+    get_size(): [ /* width */ number, /* height */ number ]
     /**
      * Gets the amount of spacing between the lines of the layout.
      */
@@ -5825,7 +5825,7 @@ class Layout {
      * @param index_ the byte index of a grapheme within the layout
      * @param trailing an integer indicating the edge of the grapheme to retrieve the   position of. If > 0, the trailing edge of the grapheme, if 0,   the leading of the grapheme
      */
-    index_to_line_x(index_: number, trailing: boolean): [ /* line */ number | null, /* x_pos */ number | null ]
+    index_to_line_x(index_: number, trailing: boolean): [ /* line */ number, /* x_pos */ number ]
     /**
      * Converts from an index within a `PangoLayout` to the onscreen position
      * corresponding to the grapheme at that index.
@@ -5903,7 +5903,7 @@ class Layout {
      * References `attrs,` so the caller can unref its reference.
      * @param attrs a `PangoAttrList`
      */
-    set_attributes(attrs?: AttrList | null): void
+    set_attributes(attrs: AttrList | null): void
     /**
      * Sets whether to calculate the base direction
      * for the layout according to its contents.
@@ -5950,7 +5950,7 @@ class Layout {
      * font description from the layout's context is used.
      * @param desc the new `PangoFontDescription`   to unset the current font description
      */
-    set_font_description(desc?: FontDescription | null): void
+    set_font_description(desc: FontDescription | null): void
     /**
      * Sets the height to which the `PangoLayout` should be ellipsized at.
      * 
@@ -6077,7 +6077,7 @@ class Layout {
      * @param length length of marked-up text in bytes, or -1 if `markup` is   `NUL`-terminated
      * @param accel_marker marker for accelerators in the text
      */
-    set_markup_with_accel(markup: string, length: number, accel_marker: number): /* accel_char */ number | null
+    set_markup_with_accel(markup: string, length: number, accel_marker: number): /* accel_char */ number
     /**
      * Sets the single paragraph mode of `layout`.
      * 
@@ -6126,7 +6126,7 @@ class Layout {
      * %PANGO_ALIGN_LEFT.
      * @param tabs a `PangoTabArray`
      */
-    set_tabs(tabs?: TabArray | null): void
+    set_tabs(tabs: TabArray | null): void
     /**
      * Sets the text of the layout.
      * 
@@ -6414,7 +6414,7 @@ class Layout {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -6781,12 +6781,12 @@ class Renderer {
      * @param part the part to change the color of
      * @param color the new color or %NULL to unset the current color
      */
-    set_color(part: RenderPart, color?: Color | null): void
+    set_color(part: RenderPart, color: Color | null): void
     /**
      * Sets the transformation matrix that will be applied when rendering.
      * @param matrix a `PangoMatrix`, or %NULL to unset any existing matrix  (No matrix set is the same as setting the identity matrix.)
      */
-    set_matrix(matrix?: Matrix | null): void
+    set_matrix(matrix: Matrix | null): void
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -7012,7 +7012,7 @@ class Renderer {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -7412,7 +7412,7 @@ class AttrIterator {
      * iterator position.
      * @param desc a `PangoFontDescription` to fill in with the current   values. The family name in this structure will be set using   [method`Pango`.FontDescription.set_family_static] using   values from an attribute in the `PangoAttrList` associated   with the iterator, so if you plan to keep it around, you   must call:   `pango_font_description_set_family (desc, pango_font_description_get_family (desc))`.
      */
-    get_font(desc: FontDescription): [ /* language */ Language | null, /* extra_attrs */ Attribute[] | null ]
+    get_font(desc: FontDescription): [ /* language */ Language, /* extra_attrs */ Attribute[] ]
     /**
      * Advance the iterator until the next change of style.
      */
@@ -7626,7 +7626,7 @@ class AttrShape {
      * @param data user data pointer
      * @param copy_func function to copy `data` when the   attribute is copied. If %NULL, `data` is simply copied   as a pointer
      */
-    static new_with_data(ink_rect: Rectangle, logical_rect: Rectangle, data?: object | null, copy_func?: AttrDataCopyFunc | null): Attribute
+    static new_with_data(ink_rect: Rectangle, logical_rect: Rectangle, data: object | null, copy_func: AttrDataCopyFunc | null): Attribute
 }
 class AttrSize {
     /* Fields of Pango-1.0.Pango.AttrSize */
@@ -7822,7 +7822,7 @@ class Color {
      * solid color).
      * @param spec a string specifying the new color
      */
-    parse_with_alpha(spec: string): [ /* returnType */ boolean, /* alpha */ number | null ]
+    parse_with_alpha(spec: string): [ /* returnType */ boolean, /* alpha */ number ]
     /**
      * Returns a textual specification of `color`.
      * 
@@ -7841,9 +7841,9 @@ abstract class FontClass {
     parent_class: GObject.ObjectClass
     describe: (font: Font) => FontDescription
     get_coverage: (font: Font, language: Language) => Coverage
-    get_glyph_extents: (font: Font | null, glyph: Glyph) => [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
-    get_metrics: (font?: Font | null, language?: Language | null) => FontMetrics
-    get_font_map: (font?: Font | null) => FontMap | null
+    get_glyph_extents: (font: Font | null, glyph: Glyph) => [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
+    get_metrics: (font: Font | null, language: Language | null) => FontMetrics
+    get_font_map: (font: Font | null) => FontMap | null
     describe_absolute: (font: Font) => FontDescription
     get_features: (font: Font, num_features: number) => [ /* features */ HarfBuzz.feature_t[], /* num_features */ number ]
     create_hb_font: (font: Font) => HarfBuzz.font_t
@@ -8087,7 +8087,7 @@ class FontDescription {
      * for example [hb_ot_var_get_axis_infos](https://harfbuzz.github.io/harfbuzz-hb-ot-var.html#hb-ot-var-get-axis-infos).
      * @param variations a string representing the variations
      */
-    set_variations(variations?: string | null): void
+    set_variations(variations: string | null): void
     /**
      * Sets the variations field of a font description.
      * 
@@ -8202,11 +8202,11 @@ abstract class FontFaceClass {
 abstract class FontFamilyClass {
     /* Fields of Pango-1.0.Pango.FontFamilyClass */
     parent_class: GObject.ObjectClass
-    list_faces: (family: FontFamily) => /* faces */ FontFace[] | null
+    list_faces: (family: FontFamily) => /* faces */ FontFace[]
     get_name: (family: FontFamily) => string
     is_monospace: (family: FontFamily) => boolean
     is_variable: (family: FontFamily) => boolean
-    get_face: (family: FontFamily, name?: string | null) => FontFace | null
+    get_face: (family: FontFamily, name: string | null) => FontFace | null
     static name: string
 }
 abstract class FontMapClass {
@@ -8532,7 +8532,7 @@ class GlyphString {
      * ![](rects1.png) ![](rects2.png)
      * @param font a `PangoFont`
      */
-    extents(font: Font): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    extents(font: Font): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Computes the extents of a sub-portion of a glyph string.
      * 
@@ -8543,7 +8543,7 @@ class GlyphString {
      * @param end end index (the range is the set of bytes with   indices such that start <= index < end)
      * @param font a `PangoFont`
      */
-    extents_range(start: number, end: number, font: Font): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    extents_range(start: number, end: number, font: Font): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Free a glyph string and associated storage.
      */
@@ -8807,7 +8807,7 @@ class Language {
      * `PangoLanguage` for the current locale of the process.
      * @param language a string representing a language tag
      */
-    static from_string(language?: string | null): Language | null
+    static from_string(language: string | null): Language | null
     /**
      * Returns the `PangoLanguage` for the current locale of the process.
      * 
@@ -8895,7 +8895,7 @@ class LayoutIter {
      * 
      * Layout coordinates have the origin at the top left of the entire layout.
      */
-    get_cluster_extents(): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    get_cluster_extents(): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Gets the current byte index.
      * 
@@ -8912,7 +8912,7 @@ class LayoutIter {
     /**
      * Obtains the extents of the `PangoLayout` being iterated over.
      */
-    get_layout_extents(): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    get_layout_extents(): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Gets the current line.
      * 
@@ -8929,7 +8929,7 @@ class LayoutIter {
      * function will be the same width/height but not at the same x/y
      * as the extents returned from [method`Pango`.LayoutLine.get_extents].
      */
-    get_line_extents(): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    get_line_extents(): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Gets the current line for read-only access.
      * 
@@ -8951,7 +8951,7 @@ class LayoutIter {
      * Note: Since 1.44, Pango uses line heights for placing lines, and there
      * may be gaps between the ranges returned by this function.
      */
-    get_line_yrange(): [ /* y0_ */ number | null, /* y1_ */ number | null ]
+    get_line_yrange(): [ /* y0_ */ number, /* y1_ */ number ]
     /**
      * Gets the current run.
      * 
@@ -8979,7 +8979,7 @@ class LayoutIter {
      * 
      * Layout coordinates have the origin at the top left of the entire layout.
      */
-    get_run_extents(): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    get_run_extents(): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Gets the current run for read-only access.
      * 
@@ -9053,7 +9053,7 @@ class LayoutLine {
      * See [method`Pango`.Font.get_glyph_extents] for details
      * about the interpretation of the rectangles.
      */
-    get_extents(): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    get_extents(): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Computes the height of the line, as the maximum of the heights
      * of fonts used in this line.
@@ -9063,7 +9063,7 @@ class LayoutLine {
      * [method`Pango`.Layout.set_spacing] and
      * [method`Pango`.Layout.set_line_spacing].
      */
-    get_height(): /* height */ number | null
+    get_height(): /* height */ number
     /**
      * Returns the length of the line, in bytes.
      */
@@ -9076,7 +9076,7 @@ class LayoutLine {
      * such that the rounded rectangles fully contain the unrounded one (that is,
      * passes them as first argument to [func`extents_to_pixels]`).
      */
-    get_pixel_extents(): [ /* ink_rect */ Rectangle | null, /* logical_rect */ Rectangle | null ]
+    get_pixel_extents(): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     /**
      * Returns the resolved direction of the line.
      */
@@ -9284,7 +9284,7 @@ class Matrix {
      * 
      * Note that output numbers will always be non-negative.
      */
-    get_font_scale_factors(): [ /* xscale */ number | null, /* yscale */ number | null ]
+    get_font_scale_factors(): [ /* xscale */ number, /* yscale */ number ]
     /**
      * Gets the slant ratio of a matrix.
      * 
@@ -9439,7 +9439,7 @@ class ScriptIter {
      * `GUnicodeScript` values. Callers must be prepared to handle unknown
      * values.
      */
-    get_range(): [ /* start */ string | null, /* end */ string | null, /* script */ Script | null ]
+    get_range(): [ /* start */ string, /* end */ string, /* script */ Script ]
     /**
      * Advances a `PangoScriptIter` to the next range.
      * 
@@ -9488,7 +9488,7 @@ class TabArray {
      * Gets the alignment and position of a tab stop.
      * @param tab_index tab stop index
      */
-    get_tab(tab_index: number): [ /* alignment */ TabAlign | null, /* location */ number | null ]
+    get_tab(tab_index: number): [ /* alignment */ TabAlign, /* location */ number ]
     /**
      * If non-%NULL, `alignments` and `locations` are filled with allocated
      * arrays.
@@ -9496,7 +9496,7 @@ class TabArray {
      * The arrays are of length [method`Pango`.TabArray.get_size].
      * You must free the returned array.
      */
-    get_tabs(): [ /* alignments */ TabAlign | null, /* locations */ number[] | null ]
+    get_tabs(): [ /* alignments */ TabAlign, /* locations */ number[] ]
     /**
      * Resizes a tab array.
      * 

@@ -643,7 +643,7 @@ class BroadwayRenderer {
      * @param root a `GskRenderNode`
      * @param region the `cairo_region_t` that must be redrawn or %NULL   for the whole window
      */
-    render(root: RenderNode, region?: cairo.Region | null): void
+    render(root: RenderNode, region: cairo.Region | null): void
     /**
      * Renders the scene graph, described by a tree of `GskRenderNode` instances,
      * to a `GdkTexture`.
@@ -656,7 +656,7 @@ class BroadwayRenderer {
      * @param root a `GskRenderNode`
      * @param viewport the section to draw or %NULL to use `root'`s bounds
      */
-    render_texture(root: RenderNode, viewport?: Graphene.Rect | null): Gdk.Texture
+    render_texture(root: RenderNode, viewport: Graphene.Rect | null): Gdk.Texture
     /**
      * Releases all the resources created by gsk_renderer_realize().
      */
@@ -886,7 +886,7 @@ class BroadwayRenderer {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -1167,7 +1167,7 @@ class CairoRenderer {
      * @param root a `GskRenderNode`
      * @param region the `cairo_region_t` that must be redrawn or %NULL   for the whole window
      */
-    render(root: RenderNode, region?: cairo.Region | null): void
+    render(root: RenderNode, region: cairo.Region | null): void
     /**
      * Renders the scene graph, described by a tree of `GskRenderNode` instances,
      * to a `GdkTexture`.
@@ -1180,7 +1180,7 @@ class CairoRenderer {
      * @param root a `GskRenderNode`
      * @param viewport the section to draw or %NULL to use `root'`s bounds
      */
-    render_texture(root: RenderNode, viewport?: Graphene.Rect | null): Gdk.Texture
+    render_texture(root: RenderNode, viewport: Graphene.Rect | null): Gdk.Texture
     /**
      * Releases all the resources created by gsk_renderer_realize().
      */
@@ -1410,7 +1410,7 @@ class CairoRenderer {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -2147,7 +2147,7 @@ class GLRenderer {
      * @param root a `GskRenderNode`
      * @param region the `cairo_region_t` that must be redrawn or %NULL   for the whole window
      */
-    render(root: RenderNode, region?: cairo.Region | null): void
+    render(root: RenderNode, region: cairo.Region | null): void
     /**
      * Renders the scene graph, described by a tree of `GskRenderNode` instances,
      * to a `GdkTexture`.
@@ -2160,7 +2160,7 @@ class GLRenderer {
      * @param root a `GskRenderNode`
      * @param viewport the section to draw or %NULL to use `root'`s bounds
      */
-    render_texture(root: RenderNode, viewport?: Graphene.Rect | null): Gdk.Texture
+    render_texture(root: RenderNode, viewport: Graphene.Rect | null): Gdk.Texture
     /**
      * Releases all the resources created by gsk_renderer_realize().
      */
@@ -2390,7 +2390,7 @@ class GLRenderer {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -2919,7 +2919,7 @@ class GLShader {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -3376,7 +3376,7 @@ class NglRenderer {
      * @param root a `GskRenderNode`
      * @param region the `cairo_region_t` that must be redrawn or %NULL   for the whole window
      */
-    render(root: RenderNode, region?: cairo.Region | null): void
+    render(root: RenderNode, region: cairo.Region | null): void
     /**
      * Renders the scene graph, described by a tree of `GskRenderNode` instances,
      * to a `GdkTexture`.
@@ -3389,7 +3389,7 @@ class NglRenderer {
      * @param root a `GskRenderNode`
      * @param viewport the section to draw or %NULL to use `root'`s bounds
      */
-    render_texture(root: RenderNode, viewport?: Graphene.Rect | null): Gdk.Texture
+    render_texture(root: RenderNode, viewport: Graphene.Rect | null): Gdk.Texture
     /**
      * Releases all the resources created by gsk_renderer_realize().
      */
@@ -3619,7 +3619,7 @@ class NglRenderer {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -4146,7 +4146,7 @@ class Renderer {
      * @param root a `GskRenderNode`
      * @param region the `cairo_region_t` that must be redrawn or %NULL   for the whole window
      */
-    render(root: RenderNode, region?: cairo.Region | null): void
+    render(root: RenderNode, region: cairo.Region | null): void
     /**
      * Renders the scene graph, described by a tree of `GskRenderNode` instances,
      * to a `GdkTexture`.
@@ -4159,7 +4159,7 @@ class Renderer {
      * @param root a `GskRenderNode`
      * @param viewport the section to draw or %NULL to use `root'`s bounds
      */
-    render_texture(root: RenderNode, viewport?: Graphene.Rect | null): Gdk.Texture
+    render_texture(root: RenderNode, viewport: Graphene.Rect | null): Gdk.Texture
     /**
      * Releases all the resources created by gsk_renderer_realize().
      */
@@ -4389,7 +4389,7 @@ class Renderer {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -4616,10 +4616,10 @@ class RepeatNode {
      */
     write_to_file(filename: string): boolean
     static name: string
-    static new(bounds: Graphene.Rect, child: RenderNode, child_bounds?: Graphene.Rect | null): RepeatNode
-    constructor(bounds: Graphene.Rect, child: RenderNode, child_bounds?: Graphene.Rect | null)
+    static new(bounds: Graphene.Rect, child: RenderNode, child_bounds: Graphene.Rect | null): RepeatNode
+    constructor(bounds: Graphene.Rect, child: RenderNode, child_bounds: Graphene.Rect | null)
     /* Static methods and pseudo-constructors */
-    static new(bounds: Graphene.Rect, child: RenderNode, child_bounds?: Graphene.Rect | null): RepeatNode
+    static new(bounds: Graphene.Rect, child: RenderNode, child_bounds: Graphene.Rect | null): RepeatNode
 }
 class RepeatingLinearGradientNode {
     /* Methods of Gsk-4.0.Gsk.RenderNode */
@@ -5364,10 +5364,10 @@ class ShaderArgsBuilder {
      */
     unref(): void
     static name: string
-    static new(shader: GLShader, initial_values?: GLib.Bytes | null): ShaderArgsBuilder
-    constructor(shader: GLShader, initial_values?: GLib.Bytes | null)
+    static new(shader: GLShader, initial_values: GLib.Bytes | null): ShaderArgsBuilder
+    constructor(shader: GLShader, initial_values: GLib.Bytes | null)
     /* Static methods and pseudo-constructors */
-    static new(shader: GLShader, initial_values?: GLib.Bytes | null): ShaderArgsBuilder
+    static new(shader: GLShader, initial_values: GLib.Bytes | null): ShaderArgsBuilder
 }
 class Shadow {
     /* Fields of Gsk-4.0.Gsk.Shadow */
@@ -5395,7 +5395,7 @@ class Transform {
      * Checks two transforms for equality.
      * @param second the second transform
      */
-    equal(second?: Transform | null): boolean
+    equal(second: Transform | null): boolean
     /**
      * Returns the category this transform belongs to.
      */
@@ -5526,7 +5526,7 @@ class Transform {
      * Applies all the operations from `other` to `next`.
      * @param other Transform to apply
      */
-    transform(other?: Transform | null): Transform
+    transform(other: Transform | null): Transform
     /**
      * Transforms a `graphene_rect_t` using the given transform `self`.
      * 

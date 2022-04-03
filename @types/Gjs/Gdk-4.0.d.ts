@@ -3410,12 +3410,12 @@ function cairo_region(cr: cairo.Context, region: cairo.Region): void
 function cairo_region_create_from_surface(surface: cairo.Surface): cairo.Region
 function cairo_set_source_pixbuf(cr: cairo.Context, pixbuf: GdkPixbuf.Pixbuf, pixbuf_x: number, pixbuf_y: number): void
 function cairo_set_source_rgba(cr: cairo.Context, rgba: RGBA): void
-function content_deserialize_async(stream: Gio.InputStream, mime_type: string, type: GObject.GType, io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+function content_deserialize_async(stream: Gio.InputStream, mime_type: string, type: GObject.GType, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
 function content_deserialize_finish(result: Gio.AsyncResult, value: any): boolean
 function content_formats_parse(string: string): ContentFormats | null
 function content_register_deserializer(mime_type: string, type: GObject.GType, deserialize: ContentDeserializeFunc): void
 function content_register_serializer(type: GObject.GType, mime_type: string, serialize: ContentSerializeFunc): void
-function content_serialize_async(stream: Gio.OutputStream, mime_type: string, value: any, io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+function content_serialize_async(stream: Gio.OutputStream, mime_type: string, value: any, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
 function content_serialize_finish(result: Gio.AsyncResult): boolean
 function drag_action_is_unique(action: DragAction): boolean
 function events_get_angle(event1: Event, event2: Event): [ /* returnType */ boolean, /* angle */ number ]
@@ -3653,7 +3653,7 @@ class DevicePad {
      * Returns %NULL if the surface tree under `device` is not known to GDK
      * (for example, belongs to another application).
      */
-    get_surface_at_position(): [ /* returnType */ Surface | null, /* win_x */ number | null, /* win_y */ number | null ]
+    get_surface_at_position(): [ /* returnType */ Surface | null, /* win_x */ number, /* win_y */ number ]
     /**
      * Returns the timestamp of the last activity for this device.
      * 
@@ -3918,7 +3918,7 @@ class DevicePad {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -4252,7 +4252,7 @@ class DragSurface {
      * left corner of `surface`.
      * @param device pointer `GdkDevice` to query to
      */
-    get_device_position(device: Device): [ /* returnType */ boolean, /* x */ number | null, /* y */ number | null, /* mask */ ModifierType | null ]
+    get_device_position(device: Device): [ /* returnType */ boolean, /* x */ number, /* y */ number, /* mask */ ModifierType ]
     /**
      * Gets the `GdkDisplay` associated with a `GdkSurface`.
      */
@@ -4337,7 +4337,7 @@ class DragSurface {
      * to create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
      * @param cursor a `GdkCursor`
      */
-    set_cursor(cursor?: Cursor | null): void
+    set_cursor(cursor: Cursor | null): void
     /**
      * Sets a specific `GdkCursor` for a given device when it gets inside `surface`.
      * 
@@ -4386,7 +4386,7 @@ class DragSurface {
      * [vfunc`Gtk`.Widget.css_changed] handler.
      * @param region a region, or %NULL to make the entire   surface opaque
      */
-    set_opaque_region(region?: cairo.Region | null): void
+    set_opaque_region(region: cairo.Region | null): void
     /**
      * Translates coordinates between two surfaces.
      * 
@@ -4622,7 +4622,7 @@ class DragSurface {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -5255,7 +5255,7 @@ class Popup {
      * left corner of `surface`.
      * @param device pointer `GdkDevice` to query to
      */
-    get_device_position(device: Device): [ /* returnType */ boolean, /* x */ number | null, /* y */ number | null, /* mask */ ModifierType | null ]
+    get_device_position(device: Device): [ /* returnType */ boolean, /* x */ number, /* y */ number, /* mask */ ModifierType ]
     /**
      * Gets the `GdkDisplay` associated with a `GdkSurface`.
      */
@@ -5340,7 +5340,7 @@ class Popup {
      * to create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
      * @param cursor a `GdkCursor`
      */
-    set_cursor(cursor?: Cursor | null): void
+    set_cursor(cursor: Cursor | null): void
     /**
      * Sets a specific `GdkCursor` for a given device when it gets inside `surface`.
      * 
@@ -5389,7 +5389,7 @@ class Popup {
      * [vfunc`Gtk`.Widget.css_changed] handler.
      * @param region a region, or %NULL to make the entire   surface opaque
      */
-    set_opaque_region(region?: cairo.Region | null): void
+    set_opaque_region(region: cairo.Region | null): void
     /**
      * Translates coordinates between two surfaces.
      * 
@@ -5625,7 +5625,7 @@ class Popup {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -6012,7 +6012,7 @@ class Toplevel {
      * by listening to the [property`Gdk`.Toplevel:shortcuts-inhibited] property.
      * @param event the `GdkEvent` that is triggering the inhibit   request, or %NULL if none is available
      */
-    inhibit_system_shortcuts(event?: Event | null): void
+    inhibit_system_shortcuts(event: Event | null): void
     /**
      * Asks to lower the `toplevel` below other windows.
      * 
@@ -6224,7 +6224,7 @@ class Toplevel {
      * left corner of `surface`.
      * @param device pointer `GdkDevice` to query to
      */
-    get_device_position(device: Device): [ /* returnType */ boolean, /* x */ number | null, /* y */ number | null, /* mask */ ModifierType | null ]
+    get_device_position(device: Device): [ /* returnType */ boolean, /* x */ number, /* y */ number, /* mask */ ModifierType ]
     /**
      * Gets the `GdkDisplay` associated with a `GdkSurface`.
      */
@@ -6309,7 +6309,7 @@ class Toplevel {
      * to create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
      * @param cursor a `GdkCursor`
      */
-    set_cursor(cursor?: Cursor | null): void
+    set_cursor(cursor: Cursor | null): void
     /**
      * Sets a specific `GdkCursor` for a given device when it gets inside `surface`.
      * 
@@ -6358,7 +6358,7 @@ class Toplevel {
      * [vfunc`Gtk`.Widget.css_changed] handler.
      * @param region a region, or %NULL to make the entire   surface opaque
      */
-    set_opaque_region(region?: cairo.Region | null): void
+    set_opaque_region(region: cairo.Region | null): void
     /**
      * Translates coordinates between two surfaces.
      * 
@@ -6594,7 +6594,7 @@ class Toplevel {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -6885,7 +6885,7 @@ class AppLaunchContext {
      * See also [method`Gdk`.AppLaunchContext.set_icon_name].
      * @param icon a `GIcon`
      */
-    set_icon(icon?: Gio.Icon | null): void
+    set_icon(icon: Gio.Icon | null): void
     /**
      * Sets the icon for applications that are launched with this context.
      * 
@@ -6898,7 +6898,7 @@ class AppLaunchContext {
      * for the launched application itself.
      * @param icon_name an icon name
      */
-    set_icon_name(icon_name?: string | null): void
+    set_icon_name(icon_name: string | null): void
     /**
      * Sets the timestamp of `context`.
      * 
@@ -7182,7 +7182,7 @@ class AppLaunchContext {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -7842,7 +7842,7 @@ class CairoContext {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -8067,14 +8067,14 @@ class Clipboard {
      * @param cancellable optional `GCancellable` object
      * @param callback callback to call when the request is satisfied
      */
-    read_async(mime_types: string[], io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    read_async(mime_types: string[], io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous clipboard read.
      * 
      * See [method`Gdk`.Clipboard.read_async].
      * @param result a `GAsyncResult`
      */
-    read_finish(result: Gio.AsyncResult): [ /* returnType */ Gio.InputStream | null, /* out_mime_type */ string | null ]
+    read_finish(result: Gio.AsyncResult): [ /* returnType */ Gio.InputStream | null, /* out_mime_type */ string ]
     /**
      * Asynchronously request the `clipboard` contents converted to a string.
      * 
@@ -8087,7 +8087,7 @@ class Clipboard {
      * @param cancellable optional `GCancellable` object
      * @param callback callback to call when the request is satisfied
      */
-    read_text_async(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    read_text_async(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous clipboard read.
      * 
@@ -8107,7 +8107,7 @@ class Clipboard {
      * @param cancellable optional `GCancellable` object, %NULL to ignore.
      * @param callback callback to call when the request is satisfied
      */
-    read_texture_async(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    read_texture_async(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous clipboard read.
      * 
@@ -8130,7 +8130,7 @@ class Clipboard {
      * @param cancellable optional `GCancellable` object
      * @param callback callback to call when the request is satisfied
      */
-    read_value_async(type: GObject.GType, io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    read_value_async(type: GObject.GType, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous clipboard read.
      * 
@@ -8153,7 +8153,7 @@ class Clipboard {
      * transfer the contents and then request that format from `provider`.
      * @param provider the new contents of `clipboard`   or %NULL to clear the clipboard
      */
-    set_content(provider?: ContentProvider | null): boolean
+    set_content(provider: ContentProvider | null): boolean
     /**
      * Sets the `clipboard` to contain the given `value`.
      * @param value a `GValue` to set
@@ -8177,7 +8177,7 @@ class Clipboard {
      * @param cancellable optional `GCancellable` object
      * @param callback callback to call when the request is satisfied
      */
-    store_async(io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    store_async(io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous clipboard store.
      * 
@@ -8410,7 +8410,7 @@ class Clipboard {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -8866,7 +8866,7 @@ class ContentDeserializer {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -8965,7 +8965,7 @@ class ContentDeserializer {
      * pointer indicating the function `res` was created by).
      * @param source_tag an application-defined tag
      */
-    is_tagged(source_tag?: object | null): boolean
+    is_tagged(source_tag: object | null): boolean
     /**
      * If `res` is a #GSimpleAsyncResult, this is equivalent to
      * g_simple_async_result_propagate_error(). Otherwise it returns
@@ -8993,7 +8993,7 @@ class ContentDeserializer {
      * pointer indicating the function `res` was created by).
      * @param source_tag an application-defined tag
      */
-    vfunc_is_tagged(source_tag?: object | null): boolean
+    vfunc_is_tagged(source_tag: object | null): boolean
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -9120,7 +9120,7 @@ class ContentProvider {
      * @param cancellable optional `GCancellable` object, %NULL to ignore.
      * @param callback callback to call when the request is satisfied
      */
-    write_mime_type_async(mime_type: string, stream: Gio.OutputStream, io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    write_mime_type_async(mime_type: string, stream: Gio.OutputStream, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous write operation.
      * 
@@ -9353,7 +9353,7 @@ class ContentProvider {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -9492,7 +9492,7 @@ class ContentProvider {
      * @param cancellable optional `GCancellable` object, %NULL to ignore.
      * @param callback callback to call when the request is satisfied
      */
-    vfunc_write_mime_type_async(mime_type: string, stream: Gio.OutputStream, io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_write_mime_type_async(mime_type: string, stream: Gio.OutputStream, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous write operation.
      * 
@@ -9867,7 +9867,7 @@ class ContentSerializer {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -9966,7 +9966,7 @@ class ContentSerializer {
      * pointer indicating the function `res` was created by).
      * @param source_tag an application-defined tag
      */
-    is_tagged(source_tag?: object | null): boolean
+    is_tagged(source_tag: object | null): boolean
     /**
      * If `res` is a #GSimpleAsyncResult, this is equivalent to
      * g_simple_async_result_propagate_error(). Otherwise it returns
@@ -9994,7 +9994,7 @@ class ContentSerializer {
      * pointer indicating the function `res` was created by).
      * @param source_tag an application-defined tag
      */
-    vfunc_is_tagged(source_tag?: object | null): boolean
+    vfunc_is_tagged(source_tag: object | null): boolean
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -10529,7 +10529,7 @@ class Cursor {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -10691,8 +10691,8 @@ class Cursor {
     constructor (config?: Cursor_ConstructProps)
     _init (config?: Cursor_ConstructProps): void
     /* Static methods and pseudo-constructors */
-    static new_from_name(name: string, fallback?: Cursor | null): Cursor
-    static new_from_texture(texture: Texture, hotspot_x: number, hotspot_y: number, fallback?: Cursor | null): Cursor
+    static new_from_name(name: string, fallback: Cursor | null): Cursor
+    static new_from_texture(texture: Texture, hotspot_x: number, hotspot_y: number, fallback: Cursor | null): Cursor
     static $gtype: GObject.GType
 }
 class DNDEvent {
@@ -11176,7 +11176,7 @@ class Device {
      * Returns %NULL if the surface tree under `device` is not known to GDK
      * (for example, belongs to another application).
      */
-    get_surface_at_position(): [ /* returnType */ Surface | null, /* win_x */ number | null, /* win_y */ number | null ]
+    get_surface_at_position(): [ /* returnType */ Surface | null, /* win_x */ number, /* win_y */ number ]
     /**
      * Returns the timestamp of the last activity for this device.
      * 
@@ -11441,7 +11441,7 @@ class Device {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -11940,7 +11940,7 @@ class DeviceTool {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -12253,7 +12253,7 @@ class Display {
      * Free the returned arrays with g_free().
      * @param keycode a keycode
      */
-    map_keycode(keycode: number): [ /* returnType */ boolean, /* keys */ KeymapKey[] | null, /* keyvals */ number[] | null ]
+    map_keycode(keycode: number): [ /* returnType */ boolean, /* keys */ KeymapKey[], /* keyvals */ number[] ]
     /**
      * Obtains a list of keycode/group/level combinations that will
      * generate `keyval`.
@@ -12356,7 +12356,7 @@ class Display {
      * @param state a modifier state
      * @param group active keyboard group
      */
-    translate_key(keycode: number, state: ModifierType, group: number): [ /* returnType */ boolean, /* keyval */ number | null, /* effective_group */ number | null, /* level */ number | null, /* consumed */ ModifierType | null ]
+    translate_key(keycode: number, state: ModifierType, group: number): [ /* returnType */ boolean, /* keyval */ number, /* effective_group */ number, /* level */ number, /* consumed */ ModifierType ]
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -12582,7 +12582,7 @@ class Display {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -13051,7 +13051,7 @@ class DisplayManager {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -13574,7 +13574,7 @@ class Drag {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -14102,7 +14102,7 @@ class DrawContext {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -14368,7 +14368,7 @@ class Drop {
      * @param cancellable optional `GCancellable` object
      * @param callback a `GAsyncReadyCallback` to call when   the request is satisfied
      */
-    read_async(mime_types: string[], io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    read_async(mime_types: string[], io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an async drop read operation.
      * 
@@ -14397,7 +14397,7 @@ class Drop {
      * @param cancellable optional `GCancellable` object, %NULL to ignore.
      * @param callback callback to call when the request is satisfied
      */
-    read_value_async(type: GObject.GType, io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    read_value_async(type: GObject.GType, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an async drop read.
      * 
@@ -14648,7 +14648,7 @@ class Drop {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -15154,7 +15154,7 @@ class FrameClock {
      * interval after the last presentation time, and later than `base_time`.
      * @param base_time base time for determining a presentaton time
      */
-    get_refresh_info(base_time: number): [ /* refresh_interval_return */ number | null, /* presentation_time_return */ number ]
+    get_refresh_info(base_time: number): [ /* refresh_interval_return */ number, /* presentation_time_return */ number ]
     /**
      * Retrieves a `GdkFrameTimings` object holding timing information
      * for the current frame or a recent frame.
@@ -15405,7 +15405,7 @@ class FrameClock {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -16080,7 +16080,7 @@ class GLContext {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -16542,7 +16542,7 @@ class GLTexture {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -16991,7 +16991,7 @@ class GLTexture {
     constructor (config?: GLTexture_ConstructProps)
     _init (config?: GLTexture_ConstructProps): void
     /* Static methods and pseudo-constructors */
-    static new(context: GLContext, id: number, width: number, height: number, destroy: GLib.DestroyNotify, data?: object | null): GLTexture
+    static new(context: GLContext, id: number, width: number, height: number, destroy: GLib.DestroyNotify, data: object | null): GLTexture
     /**
      * Returns a paintable that has the given intrinsic size and draws nothing.
      * 
@@ -17609,7 +17609,7 @@ class MemoryTexture {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -18423,7 +18423,7 @@ class Monitor {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -19445,7 +19445,7 @@ class Seat {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -19865,7 +19865,7 @@ class Snapshot {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -20153,7 +20153,7 @@ class Surface {
      * left corner of `surface`.
      * @param device pointer `GdkDevice` to query to
      */
-    get_device_position(device: Device): [ /* returnType */ boolean, /* x */ number | null, /* y */ number | null, /* mask */ ModifierType | null ]
+    get_device_position(device: Device): [ /* returnType */ boolean, /* x */ number, /* y */ number, /* mask */ ModifierType ]
     /**
      * Gets the `GdkDisplay` associated with a `GdkSurface`.
      */
@@ -20238,7 +20238,7 @@ class Surface {
      * to create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
      * @param cursor a `GdkCursor`
      */
-    set_cursor(cursor?: Cursor | null): void
+    set_cursor(cursor: Cursor | null): void
     /**
      * Sets a specific `GdkCursor` for a given device when it gets inside `surface`.
      * 
@@ -20287,7 +20287,7 @@ class Surface {
      * [vfunc`Gtk`.Widget.css_changed] handler.
      * @param region a region, or %NULL to make the entire   surface opaque
      */
-    set_opaque_region(region?: cairo.Region | null): void
+    set_opaque_region(region: cairo.Region | null): void
     /**
      * Translates coordinates between two surfaces.
      * 
@@ -20523,7 +20523,7 @@ class Surface {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -21025,7 +21025,7 @@ class Texture {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -22015,7 +22015,7 @@ class VulkanContext {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -22146,7 +22146,7 @@ class VulkanContext {
      * instance.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    init(cancellable?: Gio.Cancellable | null): boolean
+    init(cancellable: Gio.Cancellable | null): boolean
     /* Virtual methods of Gdk-4.0.Gdk.VulkanContext */
     /**
      * Initializes the object implementing the interface.
@@ -22189,7 +22189,7 @@ class VulkanContext {
      * instance.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    vfunc_init(cancellable?: Gio.Cancellable | null): boolean
+    vfunc_init(cancellable: Gio.Cancellable | null): boolean
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -22275,7 +22275,7 @@ class VulkanContext {
      * @param parameters the parameters to use to construct the object
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable?: Gio.Cancellable | null): GObject.Object
+    static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable: Gio.Cancellable | null): GObject.Object
     static $gtype: GObject.GType
 }
 class ContentFormats {
@@ -22450,7 +22450,7 @@ abstract class ContentProviderClass {
     detach_clipboard: (provider: ContentProvider, clipboard: Clipboard) => void
     ref_formats: (provider: ContentProvider) => ContentFormats
     ref_storable_formats: (provider: ContentProvider) => ContentFormats
-    write_mime_type_async: (provider: ContentProvider, mime_type: string, stream: Gio.OutputStream, io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null) => void
+    write_mime_type_async: (provider: ContentProvider, mime_type: string, stream: Gio.OutputStream, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null) => void
     write_mime_type_finish: (provider: ContentProvider, result: Gio.AsyncResult) => boolean
     get_value: (provider: ContentProvider, value: any) => boolean
     static name: string
@@ -22814,7 +22814,7 @@ class Rectangle {
      * itself, pass %NULL for `dest`.
      * @param src2 a `GdkRectangle`
      */
-    intersect(src2: Rectangle): [ /* returnType */ boolean, /* dest */ Rectangle | null ]
+    intersect(src2: Rectangle): [ /* returnType */ boolean, /* dest */ Rectangle ]
     /**
      * Calculates the union of two rectangles.
      * 
@@ -22900,7 +22900,7 @@ class ToplevelLayout {
      * @param fullscreen %TRUE to fullscreen the surface
      * @param monitor the monitor to fullscreen on
      */
-    set_fullscreen(fullscreen: boolean, monitor?: Monitor | null): void
+    set_fullscreen(fullscreen: boolean, monitor: Monitor | null): void
     /**
      * Sets whether the layout should cause the surface
      * to be maximized when presented.

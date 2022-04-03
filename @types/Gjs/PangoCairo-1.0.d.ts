@@ -19,9 +19,9 @@ export namespace PangoCairo {
 
 function context_get_font_options(context: Pango.Context): cairo.FontOptions | null
 function context_get_resolution(context: Pango.Context): number
-function context_set_font_options(context: Pango.Context, options?: cairo.FontOptions | null): void
+function context_set_font_options(context: Pango.Context, options: cairo.FontOptions | null): void
 function context_set_resolution(context: Pango.Context, dpi: number): void
-function context_set_shape_renderer(context: Pango.Context, func?: ShapeRendererFunc | null): void
+function context_set_shape_renderer(context: Pango.Context, func: ShapeRendererFunc | null): void
 function create_context(cr: cairo.Context): Pango.Context
 function create_layout(cr: cairo.Context): Pango.Layout
 function error_underline_path(cr: cairo.Context, x: number, y: number, width: number, height: number): void
@@ -122,7 +122,7 @@ class Font {
      * output variables and returns.
      * @param glyph the glyph index
      */
-    get_glyph_extents(glyph: Pango.Glyph): [ /* ink_rect */ Pango.Rectangle | null, /* logical_rect */ Pango.Rectangle | null ]
+    get_glyph_extents(glyph: Pango.Glyph): [ /* ink_rect */ Pango.Rectangle, /* logical_rect */ Pango.Rectangle ]
     /**
      * Returns the languages that are supported by `font`.
      * 
@@ -145,7 +145,7 @@ class Font {
      * output variables and returns.
      * @param language language tag used to determine which script   to get the metrics for, or %NULL to indicate to get the metrics for   the entire font.
      */
-    get_metrics(language?: Pango.Language | null): Pango.FontMetrics
+    get_metrics(language: Pango.Language | null): Pango.FontMetrics
     /**
      * Returns whether the font provides a glyph for this character.
      * @param wc a Unicode character
@@ -388,7 +388,7 @@ class Font {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -531,7 +531,7 @@ class Font {
      * output variables and returns.
      * @param glyph the glyph index
      */
-    vfunc_get_glyph_extents(glyph: Pango.Glyph): [ /* ink_rect */ Pango.Rectangle | null, /* logical_rect */ Pango.Rectangle | null ]
+    vfunc_get_glyph_extents(glyph: Pango.Glyph): [ /* ink_rect */ Pango.Rectangle, /* logical_rect */ Pango.Rectangle ]
     /**
      * Gets overall metric information for a font.
      * 
@@ -543,7 +543,7 @@ class Font {
      * output variables and returns.
      * @param language language tag used to determine which script   to get the metrics for, or %NULL to indicate to get the metrics for   the entire font.
      */
-    vfunc_get_metrics(language?: Pango.Language | null): Pango.FontMetrics
+    vfunc_get_metrics(language: Pango.Language | null): Pango.FontMetrics
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -945,7 +945,7 @@ class FontMap {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set

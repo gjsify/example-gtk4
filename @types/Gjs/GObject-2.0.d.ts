@@ -368,29 +368,29 @@ const VALUE_INTERNED_STRING: number
 const VALUE_NOCOPY_CONTENTS: number
 function boxed_copy(boxed_type: GType, src_boxed: object): object
 function boxed_free(boxed_type: GType, boxed: object): void
-function cclosure_marshal_BOOLEAN__BOXED_BOXED(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_BOOLEAN__FLAGS(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_STRING__OBJECT_POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__BOOLEAN(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__BOXED(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__CHAR(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__DOUBLE(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__ENUM(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__FLAGS(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__FLOAT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__INT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__LONG(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__OBJECT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__PARAM(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__STRING(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__UCHAR(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__UINT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__UINT_POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__ULONG(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__VARIANT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_VOID__VOID(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
-function cclosure_marshal_generic(closure: TClosure, return_gvalue: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+function cclosure_marshal_BOOLEAN__BOXED_BOXED(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_BOOLEAN__FLAGS(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_STRING__OBJECT_POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__BOOLEAN(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__BOXED(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__CHAR(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__DOUBLE(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__ENUM(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__FLAGS(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__FLOAT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__INT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__LONG(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__OBJECT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__PARAM(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__STRING(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__UCHAR(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__UINT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__UINT_POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__ULONG(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__VARIANT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_VOID__VOID(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
+function cclosure_marshal_generic(closure: TClosure, return_gvalue: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
 function clear_signal_handler(handler_id_ptr: number, instance: Object): void
 function enum_complete_type_info(g_enum_type: GType, const_values: EnumValue): /* info */ TypeInfo
 function enum_get_value(enum_class: EnumClass, value: number): EnumValue | null
@@ -433,8 +433,8 @@ function param_value_set_default(pspec: ParamSpec, value: any): void
 function param_value_validate(pspec: ParamSpec, value: any): boolean
 function param_values_cmp(pspec: ParamSpec, value1: any, value2: any): number
 function pointer_type_register_static(name: string): GType
-function signal_accumulator_first_wins(ihint: SignalInvocationHint, return_accu: any, handler_return: any, dummy?: object | null): boolean
-function signal_accumulator_true_handled(ihint: SignalInvocationHint, return_accu: any, handler_return: any, dummy?: object | null): boolean
+function signal_accumulator_first_wins(ihint: SignalInvocationHint, return_accu: any, handler_return: any, dummy: object | null): boolean
+function signal_accumulator_true_handled(ihint: SignalInvocationHint, return_accu: any, handler_return: any, dummy: object | null): boolean
 function signal_add_emission_hook(signal_id: number, detail: GLib.Quark): number
 function signal_chain_from_overridden(instance_and_params: any[], return_value: any): void
 function signal_connect_closure(instance: Object, detailed_signal: string, closure: TClosure, after: boolean): number
@@ -443,13 +443,13 @@ function signal_emitv(instance_and_params: any[], signal_id: number, detail: GLi
 function signal_get_invocation_hint(instance: Object): SignalInvocationHint | null
 function signal_handler_block(instance: Object, handler_id: number): void
 function signal_handler_disconnect(instance: Object, handler_id: number): void
-function signal_handler_find(instance: Object, mask: SignalMatchType, signal_id: number, detail: GLib.Quark, func?: object | null, data?: object | null): number
+function signal_handler_find(instance: Object, mask: SignalMatchType, signal_id: number, detail: GLib.Quark, func: object | null, data: object | null): number
 function signal_handler_is_connected(instance: Object, handler_id: number): boolean
 function signal_handler_unblock(instance: Object, handler_id: number): void
-function signal_handlers_block_matched(instance: Object, mask: SignalMatchType, signal_id: number, detail: GLib.Quark, func?: object | null, data?: object | null): number
+function signal_handlers_block_matched(instance: Object, mask: SignalMatchType, signal_id: number, detail: GLib.Quark, func: object | null, data: object | null): number
 function signal_handlers_destroy(instance: Object): void
-function signal_handlers_disconnect_matched(instance: Object, mask: SignalMatchType, signal_id: number, detail: GLib.Quark, func?: object | null, data?: object | null): number
-function signal_handlers_unblock_matched(instance: Object, mask: SignalMatchType, signal_id: number, detail: GLib.Quark, func?: object | null, data?: object | null): number
+function signal_handlers_disconnect_matched(instance: Object, mask: SignalMatchType, signal_id: number, detail: GLib.Quark, func: object | null, data: object | null): number
+function signal_handlers_unblock_matched(instance: Object, mask: SignalMatchType, signal_id: number, detail: GLib.Quark, func: object | null, data: object | null): number
 function signal_has_handler_pending(instance: Object, signal_id: number, detail: GLib.Quark, may_be_blocked: boolean): boolean
 function signal_is_valid_name(name: string): boolean
 function signal_list_ids(itype: GType): number[]
@@ -514,7 +514,7 @@ function type_query(type: GType): /* query */ TypeQuery
 function type_register_dynamic(parent_type: GType, type_name: string, plugin: TypePlugin, flags: TypeFlags): GType
 function type_register_fundamental(type_id: GType, type_name: string, info: TypeInfo, finfo: TypeFundamentalInfo, flags: TypeFlags): GType
 function type_register_static(parent_type: GType, type_name: string, info: TypeInfo, flags: TypeFlags): GType
-function type_set_qdata(type: GType, quark: GLib.Quark, data?: object | null): void
+function type_set_qdata(type: GType, quark: GLib.Quark, data: object | null): void
 function type_test_flags(type: GType, flags: number): boolean
 function value_type_compatible(src_type: GType, dest_type: GType): boolean
 function value_type_transformable(src_type: GType, dest_type: GType): boolean
@@ -598,7 +598,7 @@ interface Callback {
  * reference count drops to zero).
  */
 interface ClassFinalizeFunc {
-    (g_class: TypeClass, class_data?: object | null): void
+    (g_class: TypeClass, class_data: object | null): void
 }
 /**
  * A callback function used by the type system to initialize the class
@@ -702,13 +702,13 @@ interface ClassFinalizeFunc {
  * time.
  */
 interface ClassInitFunc {
-    (g_class: TypeClass, class_data?: object | null): void
+    (g_class: TypeClass, class_data: object | null): void
 }
 /**
  * The type used for marshaller functions.
  */
 interface ClosureMarshal {
-    (closure: TClosure, return_value: any | null, param_values: any[], invocation_hint?: object | null, marshal_data?: object | null): void
+    (closure: TClosure, return_value: any | null, param_values: any[], invocation_hint: object | null, marshal_data: object | null): void
 }
 /**
  * The type used for the various notification callbacks which can be registered
@@ -742,7 +742,7 @@ interface InstanceInitFunc {
  * allocated by the corresponding GInterfaceInitFunc() function.
  */
 interface InterfaceFinalizeFunc {
-    (g_iface: TypeInterface, iface_data?: object | null): void
+    (g_iface: TypeInterface, iface_data: object | null): void
 }
 /**
  * A callback function used by the type system to initialize a new
@@ -755,7 +755,7 @@ interface InterfaceFinalizeFunc {
  * zeros before this function is called.
  */
 interface InterfaceInitFunc {
-    (g_iface: TypeInterface, iface_data?: object | null): void
+    (g_iface: TypeInterface, iface_data: object | null): void
 }
 /**
  * The type of the `finalize` function of #GObjectClass.
@@ -786,7 +786,7 @@ interface ObjectSetPropertyFunc {
  * last callback.
  */
 interface SignalAccumulator {
-    (ihint: SignalInvocationHint, return_accu: any, handler_return: any, data?: object | null): boolean
+    (ihint: SignalInvocationHint, return_accu: any, handler_return: any, data: object | null): boolean
 }
 /**
  * A simple function pointer to get invoked when the signal is emitted.
@@ -797,7 +797,7 @@ interface SignalAccumulator {
  * You may not attach these to signals created with the #G_SIGNAL_NO_HOOKS flag.
  */
 interface SignalEmissionHook {
-    (ihint: SignalInvocationHint, param_values: any[], data?: object | null): boolean
+    (ihint: SignalInvocationHint, param_values: any[], data: object | null): boolean
 }
 /**
  * A callback function used for notification when the state
@@ -1410,7 +1410,7 @@ class Binding {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -1803,7 +1803,7 @@ class InitiallyUnowned {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -2184,7 +2184,7 @@ class Object {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -2337,7 +2337,7 @@ class Object {
     _init (config?: Object_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static newv(object_type: GType, parameters: Parameter[]): Object
-    static compat_control(what: number, data?: object | null): number
+    static compat_control(what: number, data: object | null): number
     /**
      * Find the #GParamSpec with the given name for an
      * interface. Generally, the interface vtable passed in as `g_iface`
@@ -2431,7 +2431,7 @@ class ParamSpec {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -2583,7 +2583,7 @@ class ParamSpecBoolean {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -2682,7 +2682,7 @@ class ParamSpecBoxed {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -2781,7 +2781,7 @@ class ParamSpecChar {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -2880,7 +2880,7 @@ class ParamSpecDouble {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -2979,7 +2979,7 @@ class ParamSpecEnum {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -3078,7 +3078,7 @@ class ParamSpecFlags {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -3177,7 +3177,7 @@ class ParamSpecFloat {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -3276,7 +3276,7 @@ class ParamSpecGType {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -3375,7 +3375,7 @@ class ParamSpecInt {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -3474,7 +3474,7 @@ class ParamSpecInt64 {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -3573,7 +3573,7 @@ class ParamSpecLong {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -3672,7 +3672,7 @@ class ParamSpecObject {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -3771,7 +3771,7 @@ class ParamSpecOverride {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -3870,7 +3870,7 @@ class ParamSpecParam {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -3969,7 +3969,7 @@ class ParamSpecPointer {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -4068,7 +4068,7 @@ class ParamSpecString {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -4167,7 +4167,7 @@ class ParamSpecUChar {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -4266,7 +4266,7 @@ class ParamSpecUInt {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -4365,7 +4365,7 @@ class ParamSpecUInt64 {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -4464,7 +4464,7 @@ class ParamSpecULong {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -4563,7 +4563,7 @@ class ParamSpecUnichar {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -4662,7 +4662,7 @@ class ParamSpecValueArray {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -4761,7 +4761,7 @@ class ParamSpecVariant {
      * @param quark a #GQuark, naming the user data pointer
      * @param data an opaque user data pointer
      */
-    set_qdata(quark: GLib.Quark, data?: object | null): void
+    set_qdata(quark: GLib.Quark, data: object | null): void
     /**
      * The initial reference count of a newly created #GParamSpec is 1,
      * even though no one has explicitly called g_param_spec_ref() on it
@@ -5104,7 +5104,7 @@ class TypeModule {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -5309,7 +5309,7 @@ class CClosure {
      * @param invocation_hint The invocation hint given as the last argument to   g_closure_invoke().
      * @param marshal_data Additional data specified when registering the   marshaller, see g_closure_set_marshal() and   g_closure_set_meta_marshal()
      */
-    static marshal_BOOLEAN__BOXED_BOXED(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_BOOLEAN__BOXED_BOXED(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `gboolean (*callback) (gpointer instance, gint arg1, gpointer user_data)` where the #gint parameter
@@ -5321,7 +5321,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_BOOLEAN__FLAGS(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_BOOLEAN__FLAGS(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `gchar* (*callback) (gpointer instance, GObject *arg1, gpointer arg2, gpointer user_data)`.
@@ -5332,7 +5332,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_STRING__OBJECT_POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_STRING__OBJECT_POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, gboolean arg1, gpointer user_data)`.
@@ -5343,7 +5343,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__BOOLEAN(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__BOOLEAN(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, GBoxed *arg1, gpointer user_data)`.
@@ -5354,7 +5354,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__BOXED(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__BOXED(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, gchar arg1, gpointer user_data)`.
@@ -5365,7 +5365,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__CHAR(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__CHAR(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, gdouble arg1, gpointer user_data)`.
@@ -5376,7 +5376,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__DOUBLE(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__DOUBLE(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, gint arg1, gpointer user_data)` where the #gint parameter denotes an enumeration type..
@@ -5387,7 +5387,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__ENUM(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__ENUM(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, gint arg1, gpointer user_data)` where the #gint parameter denotes a flags type.
@@ -5398,7 +5398,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__FLAGS(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__FLAGS(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, gfloat arg1, gpointer user_data)`.
@@ -5409,7 +5409,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__FLOAT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__FLOAT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, gint arg1, gpointer user_data)`.
@@ -5420,7 +5420,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__INT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__INT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, glong arg1, gpointer user_data)`.
@@ -5431,7 +5431,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__LONG(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__LONG(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, GObject *arg1, gpointer user_data)`.
@@ -5442,7 +5442,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__OBJECT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__OBJECT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, GParamSpec *arg1, gpointer user_data)`.
@@ -5453,7 +5453,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__PARAM(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__PARAM(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, gpointer arg1, gpointer user_data)`.
@@ -5464,7 +5464,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, const gchar *arg1, gpointer user_data)`.
@@ -5475,7 +5475,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__STRING(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__STRING(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, guchar arg1, gpointer user_data)`.
@@ -5486,7 +5486,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__UCHAR(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__UCHAR(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, guint arg1, gpointer user_data)`.
@@ -5497,7 +5497,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__UINT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__UINT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, guint arg1, gpointer arg2, gpointer user_data)`.
@@ -5508,7 +5508,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__UINT_POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__UINT_POINTER(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, gulong arg1, gpointer user_data)`.
@@ -5519,7 +5519,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__ULONG(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__ULONG(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, GVariant *arg1, gpointer user_data)`.
@@ -5530,7 +5530,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__VARIANT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__VARIANT(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A marshaller for a #GCClosure with a callback of type
      * `void (*callback) (gpointer instance, gpointer user_data)`.
@@ -5541,7 +5541,7 @@ class CClosure {
      * @param invocation_hint the invocation hint given as the last argument  to g_closure_invoke()
      * @param marshal_data additional data specified when registering the marshaller
      */
-    static marshal_VOID__VOID(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_VOID__VOID(closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
     /**
      * A generic marshaller function implemented via
      * [libffi](http://sourceware.org/libffi/).
@@ -5555,7 +5555,7 @@ class CClosure {
      * @param invocation_hint The invocation hint given as the last argument to   g_closure_invoke().
      * @param marshal_data Additional data specified when registering the   marshaller, see g_closure_set_marshal() and   g_closure_set_meta_marshal()
      */
-    static marshal_generic(closure: TClosure, return_gvalue: any, n_param_values: number, param_values: any, invocation_hint?: object | null, marshal_data?: object | null): void
+    static marshal_generic(closure: TClosure, return_gvalue: any, n_param_values: number, param_values: any, invocation_hint: object | null, marshal_data: object | null): void
 }
 class Closure {
     /* Fields of GObject-2.0.GObject.Closure */
@@ -5594,7 +5594,7 @@ class Closure {
      * @param param_values an array of                #GValues holding the arguments on which to                invoke the callback of `closure`
      * @param invocation_hint a context-dependent invocation hint
      */
-    invoke(param_values: any[], invocation_hint?: object | null): /* return_value */ any | null
+    invoke(param_values: any[], invocation_hint: object | null): /* return_value */ any
     /**
      * Increments the reference count on a closure to force it staying
      * alive while the caller holds a pointer to it.
@@ -5667,7 +5667,7 @@ class Closure {
     static name: string
     /* Static methods and pseudo-constructors */
     static new_object(sizeof_closure: number, object: Object): Closure
-    static new_simple(sizeof_closure: number, data?: object | null): Closure
+    static new_simple(sizeof_closure: number, data: object | null): Closure
 }
 class ClosureNotifyData {
     /* Fields of GObject-2.0.GObject.ClosureNotifyData */
@@ -6544,12 +6544,12 @@ class Value {
      * Set the contents of a %G_TYPE_BOXED derived #GValue to `v_boxed`.
      * @param v_boxed boxed value to be set
      */
-    set_boxed(v_boxed?: object | null): void
+    set_boxed(v_boxed: object | null): void
     /**
      * This is an internal function introduced mainly for C marshallers.
      * @param v_boxed duplicated unowned boxed value to be set
      */
-    set_boxed_take_ownership(v_boxed?: object | null): void
+    set_boxed_take_ownership(v_boxed: object | null): void
     /**
      * Set the contents of a %G_TYPE_CHAR #GValue to `v_char`.
      * @param v_char character value to be set
@@ -6585,7 +6585,7 @@ class Value {
      * value_table's collect_value() function.
      * @param instance the instance
      */
-    set_instance(instance?: object | null): void
+    set_instance(instance: object | null): void
     /**
      * Set the contents of a %G_TYPE_INT #GValue to `v_int`.
      * @param v_int integer value to be set
@@ -6602,7 +6602,7 @@ class Value {
      * g_intern_string()), and is thus not duplicated when setting the #GValue.
      * @param v_string static string to be set
      */
-    set_interned_string(v_string?: string | null): void
+    set_interned_string(v_string: string | null): void
     /**
      * Set the contents of a %G_TYPE_LONG #GValue to `v_long`.
      * @param v_long long integer value to be set
@@ -6622,17 +6622,17 @@ class Value {
      * the #GValue still exists).
      * @param v_object object value to be set
      */
-    set_object(v_object?: Object | null): void
+    set_object(v_object: Object | null): void
     /**
      * Set the contents of a %G_TYPE_PARAM #GValue to `param`.
      * @param param the #GParamSpec to be set
      */
-    set_param(param?: ParamSpec | null): void
+    set_param(param: ParamSpec | null): void
     /**
      * Set the contents of a pointer #GValue to `v_pointer`.
      * @param v_pointer pointer value to be set
      */
-    set_pointer(v_pointer?: object | null): void
+    set_pointer(v_pointer: object | null): void
     /**
      * Set the contents of a %G_TYPE_CHAR #GValue to `v_char`.
      * @param v_char signed 8 bit integer to be set
@@ -6645,7 +6645,7 @@ class Value {
      * when setting the #GValue.
      * @param v_boxed static boxed value to be set
      */
-    set_static_boxed(v_boxed?: object | null): void
+    set_static_boxed(v_boxed: object | null): void
     /**
      * Set the contents of a %G_TYPE_STRING #GValue to `v_string`.
      * The string is assumed to be static, and is thus not duplicated
@@ -6655,17 +6655,17 @@ class Value {
      * is more appropriate.
      * @param v_string static string to be set
      */
-    set_static_string(v_string?: string | null): void
+    set_static_string(v_string: string | null): void
     /**
      * Set the contents of a %G_TYPE_STRING #GValue to a copy of `v_string`.
      * @param v_string caller-owned string to be duplicated for the #GValue
      */
-    set_string(v_string?: string | null): void
+    set_string(v_string: string | null): void
     /**
      * This is an internal function introduced mainly for C marshallers.
      * @param v_string duplicated unowned string to be set
      */
-    set_string_take_ownership(v_string?: string | null): void
+    set_string_take_ownership(v_string: string | null): void
     /**
      * Set the contents of a %G_TYPE_UCHAR #GValue to `v_uchar`.
      * @param v_uchar unsigned character value to be set
@@ -6691,19 +6691,19 @@ class Value {
      * If the variant is floating, it is consumed.
      * @param variant a #GVariant, or %NULL
      */
-    set_variant(variant?: GLib.Variant | null): void
+    set_variant(variant: GLib.Variant | null): void
     /**
      * Sets the contents of a %G_TYPE_BOXED derived #GValue to `v_boxed`
      * and takes over the ownership of the caller’s reference to `v_boxed;`
      * the caller doesn’t have to unref it any more.
      * @param v_boxed duplicated unowned boxed value to be set
      */
-    take_boxed(v_boxed?: object | null): void
+    take_boxed(v_boxed: object | null): void
     /**
      * Sets the contents of a %G_TYPE_STRING #GValue to `v_string`.
      * @param v_string string to take ownership of
      */
-    take_string(v_string?: string | null): void
+    take_string(v_string: string | null): void
     /**
      * Set the contents of a variant #GValue to `variant,` and takes over
      * the ownership of the caller's reference to `variant;`
@@ -6719,7 +6719,7 @@ class Value {
      * This is an internal function introduced mainly for C marshallers.
      * @param variant a #GVariant, or %NULL
      */
-    take_variant(variant?: GLib.Variant | null): void
+    take_variant(variant: GLib.Variant | null): void
     /**
      * Tries to cast the contents of `src_value` into a type appropriate
      * to store in `dest_value,` e.g. to transform a %G_TYPE_INT value
@@ -6773,7 +6773,7 @@ class ValueArray {
      * %NULL, an uninitialized value is appended.
      * @param value #GValue to copy into #GValueArray, or %NULL
      */
-    append(value?: any | null): ValueArray
+    append(value: any | null): ValueArray
     /**
      * Construct an exact copy of a #GValueArray by duplicating all its
      * contents.
@@ -6790,13 +6790,13 @@ class ValueArray {
      * @param index_ insertion position, must be <= value_array->;n_values
      * @param value #GValue to copy into #GValueArray, or %NULL
      */
-    insert(index_: number, value?: any | null): ValueArray
+    insert(index_: number, value: any | null): ValueArray
     /**
      * Insert a copy of `value` as first element of `value_array`. If `value` is
      * %NULL, an uninitialized value is prepended.
      * @param value #GValue to copy into #GValueArray, or %NULL
      */
-    prepend(value?: any | null): ValueArray
+    prepend(value: any | null): ValueArray
     /**
      * Remove the value at position `index_` from `value_array`.
      * @param index_ position of value to remove, which must be less than     `value_array->`n_values

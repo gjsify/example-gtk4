@@ -169,7 +169,7 @@ class Subject {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    exists(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
@@ -183,7 +183,7 @@ class Subject {
      * asynchronous version.
      * @param cancellable A #GCancellable or %NULL.
      */
-    exists_sync(cancellable?: Gio.Cancellable | null): boolean
+    exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
      */
@@ -214,7 +214,7 @@ class Subject {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    vfunc_exists(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
@@ -228,7 +228,7 @@ class Subject {
      * asynchronous version.
      * @param cancellable A #GCancellable or %NULL.
      */
-    vfunc_exists_sync(cancellable?: Gio.Cancellable | null): boolean
+    vfunc_exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
      */
@@ -526,7 +526,7 @@ class ActionDescription {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -719,7 +719,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    authentication_agent_response(cookie: string, identity: Identity, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    authentication_agent_response(cookie: string, identity: Identity, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes providing response from an authentication agent.
      * @param res A #GAsyncResult obtained from the callback.
@@ -737,7 +737,7 @@ class Authority {
      * @param identity The identity that was authenticated.
      * @param cancellable A #GCancellable or %NULL.
      */
-    authentication_agent_response_sync(cookie: string, identity: Identity, cancellable?: Gio.Cancellable | null): boolean
+    authentication_agent_response_sync(cookie: string, identity: Identity, cancellable: Gio.Cancellable | null): boolean
     /**
      * Asynchronously checks if `subject` is authorized to perform the action represented
      * by `action_id`.
@@ -770,7 +770,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    check_authorization(subject: Subject, action_id: string, details: Details | null, flags: CheckAuthorizationFlags, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    check_authorization(subject: Subject, action_id: string, details: Details | null, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking if a subject is authorized for an action.
      * @param res A #GAsyncResult obtained from the callback.
@@ -804,7 +804,7 @@ class Authority {
      * @param flags A set of #PolkitCheckAuthorizationFlags.
      * @param cancellable A #GCancellable or %NULL.
      */
-    check_authorization_sync(subject: Subject, action_id: string, details: Details | null, flags: CheckAuthorizationFlags, cancellable?: Gio.Cancellable | null): AuthorizationResult
+    check_authorization_sync(subject: Subject, action_id: string, details: Details | null, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null): AuthorizationResult
     /**
      * Asynchronously retrieves all registered actions.
      * 
@@ -816,7 +816,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    enumerate_actions(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    enumerate_actions(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes retrieving all registered actions.
      * @param res A #GAsyncResult obtained from the callback.
@@ -828,7 +828,7 @@ class Authority {
      * polkit_authority_enumerate_actions() for the asynchronous version.
      * @param cancellable A #GCancellable or %NULL.
      */
-    enumerate_actions_sync(cancellable?: Gio.Cancellable | null): ActionDescription[]
+    enumerate_actions_sync(cancellable: Gio.Cancellable | null): ActionDescription[]
     /**
      * Asynchronously gets all temporary authorizations for `subject`.
      * 
@@ -842,7 +842,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    enumerate_temporary_authorizations(subject: Subject, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    enumerate_temporary_authorizations(subject: Subject, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes retrieving all registered actions.
      * @param res A #GAsyncResult obtained from the callback.
@@ -857,7 +857,7 @@ class Authority {
      * @param subject A #PolkitSubject, typically a #PolkitUnixSession.
      * @param cancellable A #GCancellable or %NULL.
      */
-    enumerate_temporary_authorizations_sync(subject: Subject, cancellable?: Gio.Cancellable | null): TemporaryAuthorization[]
+    enumerate_temporary_authorizations_sync(subject: Subject, cancellable: Gio.Cancellable | null): TemporaryAuthorization[]
     /**
      * Gets the features supported by the authority backend.
      */
@@ -896,7 +896,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    register_authentication_agent(subject: Subject, locale: string, object_path: string, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    register_authentication_agent(subject: Subject, locale: string, object_path: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes registering an authentication agent.
      * @param res A #GAsyncResult obtained from the callback.
@@ -918,7 +918,7 @@ class Authority {
      * @param object_path The object path for the authentication agent.
      * @param cancellable A #GCancellable or %NULL.
      */
-    register_authentication_agent_sync(subject: Subject, locale: string, object_path: string, cancellable?: Gio.Cancellable | null): boolean
+    register_authentication_agent_sync(subject: Subject, locale: string, object_path: string, cancellable: Gio.Cancellable | null): boolean
     /**
      * Asynchronously registers an authentication agent.
      * 
@@ -939,7 +939,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    register_authentication_agent_with_options(subject: Subject, locale: string, object_path: string, options?: GLib.Variant | null, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    register_authentication_agent_with_options(subject: Subject, locale: string, object_path: string, options: GLib.Variant | null, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes registering an authentication agent.
      * @param res A #GAsyncResult obtained from the callback.
@@ -962,7 +962,7 @@ class Authority {
      * @param options A #GVariant with options or %NULL.
      * @param cancellable A #GCancellable or %NULL.
      */
-    register_authentication_agent_with_options_sync(subject: Subject, locale: string, object_path: string, options?: GLib.Variant | null, cancellable?: Gio.Cancellable | null): boolean
+    register_authentication_agent_with_options_sync(subject: Subject, locale: string, object_path: string, options: GLib.Variant | null, cancellable: Gio.Cancellable | null): boolean
     /**
      * Asynchronously revoke a temporary authorization.
      * 
@@ -976,7 +976,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    revoke_temporary_authorization_by_id(id: string, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    revoke_temporary_authorization_by_id(id: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes revoking a temporary authorization by id.
      * @param res A #GAsyncResult obtained from the callback.
@@ -991,7 +991,7 @@ class Authority {
      * @param id The opaque identifier for the temporary authorization.
      * @param cancellable A #GCancellable or %NULL.
      */
-    revoke_temporary_authorization_by_id_sync(id: string, cancellable?: Gio.Cancellable | null): boolean
+    revoke_temporary_authorization_by_id_sync(id: string, cancellable: Gio.Cancellable | null): boolean
     /**
      * Asynchronously revokes all temporary authorizations for `subject`.
      * 
@@ -1005,7 +1005,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    revoke_temporary_authorizations(subject: Subject, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    revoke_temporary_authorizations(subject: Subject, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes revoking temporary authorizations.
      * @param res A #GAsyncResult obtained from the callback.
@@ -1020,7 +1020,7 @@ class Authority {
      * @param subject The subject to revoke authorizations from, typically a #PolkitUnixSession.
      * @param cancellable A #GCancellable or %NULL.
      */
-    revoke_temporary_authorizations_sync(subject: Subject, cancellable?: Gio.Cancellable | null): boolean
+    revoke_temporary_authorizations_sync(subject: Subject, cancellable: Gio.Cancellable | null): boolean
     /**
      * Asynchronously unregisters an authentication agent.
      * 
@@ -1035,7 +1035,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    unregister_authentication_agent(subject: Subject, object_path: string, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    unregister_authentication_agent(subject: Subject, object_path: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes unregistering an authentication agent.
      * @param res A #GAsyncResult obtained from the callback.
@@ -1050,7 +1050,7 @@ class Authority {
      * @param object_path The object path for the authentication agent.
      * @param cancellable A #GCancellable or %NULL.
      */
-    unregister_authentication_agent_sync(subject: Subject, object_path: string, cancellable?: Gio.Cancellable | null): boolean
+    unregister_authentication_agent_sync(subject: Subject, object_path: string, cancellable: Gio.Cancellable | null): boolean
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -1276,7 +1276,7 @@ class Authority {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -1407,7 +1407,7 @@ class Authority {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the request is satisfied
      */
-    init_async(io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    init_async(io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes asynchronous initialization and returns the result.
      * See g_async_initable_init_async().
@@ -1462,7 +1462,7 @@ class Authority {
      * instance.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    init(cancellable?: Gio.Cancellable | null): boolean
+    init(cancellable: Gio.Cancellable | null): boolean
     /* Virtual methods of Polkit-1.0.Polkit.Authority */
     /**
      * Starts asynchronous initialization of the object implementing the
@@ -1505,7 +1505,7 @@ class Authority {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the request is satisfied
      */
-    vfunc_init_async(io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_init_async(io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes asynchronous initialization and returns the result.
      * See g_async_initable_init_async().
@@ -1553,7 +1553,7 @@ class Authority {
      * instance.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    vfunc_init(cancellable?: Gio.Cancellable | null): boolean
+    vfunc_init(cancellable: Gio.Cancellable | null): boolean
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -1648,7 +1648,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    static get_async(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    static get_async(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an operation started with polkit_authority_get_async().
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_authority_get_async().
@@ -1662,7 +1662,7 @@ class Authority {
      * for the asynchronous version.
      * @param cancellable A #GCancellable or %NULL.
      */
-    static get_sync(cancellable?: Gio.Cancellable | null): Authority
+    static get_sync(cancellable: Gio.Cancellable | null): Authority
     /**
      * Helper function for constructing #GAsyncInitable object. This is
      * similar to g_object_newv() but also initializes the object asynchronously.
@@ -1677,7 +1677,7 @@ class Authority {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the initialization is     finished
      */
-    static newv_async(object_type: GObject.GType, n_parameters: number, parameters: GObject.Parameter, io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    static newv_async(object_type: GObject.GType, n_parameters: number, parameters: GObject.Parameter, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Helper function for constructing #GInitable object. This is
      * similar to g_object_newv() but also initializes the object
@@ -1686,7 +1686,7 @@ class Authority {
      * @param parameters the parameters to use to construct the object
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable?: Gio.Cancellable | null): GObject.Object
+    static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable: Gio.Cancellable | null): GObject.Object
     static $gtype: GObject.GType
 }
 interface AuthorizationResult_ConstructProps extends GObject.Object_ConstructProps {
@@ -1972,7 +1972,7 @@ class AuthorizationResult {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -2124,7 +2124,7 @@ class AuthorizationResult {
     constructor (config?: AuthorizationResult_ConstructProps)
     _init (config?: AuthorizationResult_ConstructProps): void
     /* Static methods and pseudo-constructors */
-    static new(is_authorized: boolean, is_challenge: boolean, details?: Details | null): AuthorizationResult
+    static new(is_authorized: boolean, is_challenge: boolean, details: Details | null): AuthorizationResult
     static $gtype: GObject.GType
 }
 interface Details_ConstructProps extends GObject.Object_ConstructProps {
@@ -2144,7 +2144,7 @@ class Details {
      * @param key A key.
      * @param value A value.
      */
-    insert(key: string, value?: string | null): void
+    insert(key: string, value: string | null): void
     /**
      * Gets the value for `key` on `details`.
      * @param key A key.
@@ -2375,7 +2375,7 @@ class Details {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -2601,7 +2601,7 @@ class Permission {
      * the non-blocking version.
      * @param cancellable a #GCancellable, or %NULL
      */
-    acquire(cancellable?: Gio.Cancellable | null): boolean
+    acquire(cancellable: Gio.Cancellable | null): boolean
     /**
      * Attempts to acquire the permission represented by `permission`.
      * 
@@ -2610,7 +2610,7 @@ class Permission {
      * @param cancellable a #GCancellable, or %NULL
      * @param callback the #GAsyncReadyCallback to call when done
      */
-    acquire_async(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    acquire_async(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Collects the result of attempting to acquire the permission
      * represented by `permission`.
@@ -2667,7 +2667,7 @@ class Permission {
      * the non-blocking version.
      * @param cancellable a #GCancellable, or %NULL
      */
-    release(cancellable?: Gio.Cancellable | null): boolean
+    release(cancellable: Gio.Cancellable | null): boolean
     /**
      * Attempts to release the permission represented by `permission`.
      * 
@@ -2676,7 +2676,7 @@ class Permission {
      * @param cancellable a #GCancellable, or %NULL
      * @param callback the #GAsyncReadyCallback to call when done
      */
-    release_async(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    release_async(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Collects the result of attempting to release the permission
      * represented by `permission`.
@@ -2911,7 +2911,7 @@ class Permission {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -3042,7 +3042,7 @@ class Permission {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the request is satisfied
      */
-    init_async(io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    init_async(io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes asynchronous initialization and returns the result.
      * See g_async_initable_init_async().
@@ -3097,7 +3097,7 @@ class Permission {
      * instance.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    init(cancellable?: Gio.Cancellable | null): boolean
+    init(cancellable: Gio.Cancellable | null): boolean
     /* Virtual methods of Polkit-1.0.Polkit.Permission */
     /**
      * Starts asynchronous initialization of the object implementing the
@@ -3140,7 +3140,7 @@ class Permission {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the request is satisfied
      */
-    vfunc_init_async(io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_init_async(io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes asynchronous initialization and returns the result.
      * See g_async_initable_init_async().
@@ -3188,7 +3188,7 @@ class Permission {
      * instance.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    vfunc_init(cancellable?: Gio.Cancellable | null): boolean
+    vfunc_init(cancellable: Gio.Cancellable | null): boolean
     /* Virtual methods of Gio-2.0.Gio.Permission */
     /**
      * Attempts to acquire the permission represented by `permission`.
@@ -3208,7 +3208,7 @@ class Permission {
      * the non-blocking version.
      * @param cancellable a #GCancellable, or %NULL
      */
-    vfunc_acquire(cancellable?: Gio.Cancellable | null): boolean
+    vfunc_acquire(cancellable: Gio.Cancellable | null): boolean
     /**
      * Attempts to acquire the permission represented by `permission`.
      * 
@@ -3217,7 +3217,7 @@ class Permission {
      * @param cancellable a #GCancellable, or %NULL
      * @param callback the #GAsyncReadyCallback to call when done
      */
-    vfunc_acquire_async(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_acquire_async(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Collects the result of attempting to acquire the permission
      * represented by `permission`.
@@ -3245,7 +3245,7 @@ class Permission {
      * the non-blocking version.
      * @param cancellable a #GCancellable, or %NULL
      */
-    vfunc_release(cancellable?: Gio.Cancellable | null): boolean
+    vfunc_release(cancellable: Gio.Cancellable | null): boolean
     /**
      * Attempts to release the permission represented by `permission`.
      * 
@@ -3254,7 +3254,7 @@ class Permission {
      * @param cancellable a #GCancellable, or %NULL
      * @param callback the #GAsyncReadyCallback to call when done
      */
-    vfunc_release_async(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_release_async(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Collects the result of attempting to release the permission
      * represented by `permission`.
@@ -3338,7 +3338,7 @@ class Permission {
     _init (config?: Permission_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new_finish(res: Gio.AsyncResult): Permission
-    static new_sync(action_id: string, subject?: Subject | null, cancellable?: Gio.Cancellable | null): Permission
+    static new_sync(action_id: string, subject: Subject | null, cancellable: Gio.Cancellable | null): Permission
     /**
      * Helper function for constructing #GAsyncInitable object. This is
      * similar to g_object_newv() but also initializes the object asynchronously.
@@ -3353,7 +3353,7 @@ class Permission {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the initialization is     finished
      */
-    static newv_async(object_type: GObject.GType, n_parameters: number, parameters: GObject.Parameter, io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    static newv_async(object_type: GObject.GType, n_parameters: number, parameters: GObject.Parameter, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Helper function for constructing #GInitable object. This is
      * similar to g_object_newv() but also initializes the object
@@ -3362,7 +3362,7 @@ class Permission {
      * @param parameters the parameters to use to construct the object
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable?: Gio.Cancellable | null): GObject.Object
+    static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable: Gio.Cancellable | null): GObject.Object
     static $gtype: GObject.GType
 }
 interface SystemBusName_ConstructProps extends GObject.Object_ConstructProps {
@@ -3390,13 +3390,13 @@ class SystemBusName {
      * - the calling thread is blocked until a reply is received.
      * @param cancellable A #GCancellable or %NULL.
      */
-    get_process_sync(cancellable?: Gio.Cancellable | null): Subject | null
+    get_process_sync(cancellable: Gio.Cancellable | null): Subject | null
     /**
      * Synchronously gets a #PolkitUnixUser object for `system_bus_name;`
      * the calling thread is blocked until a reply is received.
      * @param cancellable A #GCancellable or %NULL.
      */
-    get_user_sync(cancellable?: Gio.Cancellable | null): UnixUser | null
+    get_user_sync(cancellable: Gio.Cancellable | null): UnixUser | null
     /**
      * Sets the unique system bus name for `system_bus_name`.
      * @param name A unique system bus name.
@@ -3627,7 +3627,7 @@ class SystemBusName {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -3737,7 +3737,7 @@ class SystemBusName {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    exists(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
@@ -3751,7 +3751,7 @@ class SystemBusName {
      * asynchronous version.
      * @param cancellable A #GCancellable or %NULL.
      */
-    exists_sync(cancellable?: Gio.Cancellable | null): boolean
+    exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
      */
@@ -3782,7 +3782,7 @@ class SystemBusName {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    vfunc_exists(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
@@ -3796,7 +3796,7 @@ class SystemBusName {
      * asynchronous version.
      * @param cancellable A #GCancellable or %NULL.
      */
-    vfunc_exists_sync(cancellable?: Gio.Cancellable | null): boolean
+    vfunc_exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
      */
@@ -4136,7 +4136,7 @@ class TemporaryAuthorization {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -4539,7 +4539,7 @@ class UnixGroup {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -4991,7 +4991,7 @@ class UnixNetgroup {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -5486,7 +5486,7 @@ class UnixProcess {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -5596,7 +5596,7 @@ class UnixProcess {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    exists(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
@@ -5610,7 +5610,7 @@ class UnixProcess {
      * asynchronous version.
      * @param cancellable A #GCancellable or %NULL.
      */
-    exists_sync(cancellable?: Gio.Cancellable | null): boolean
+    exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
      */
@@ -5641,7 +5641,7 @@ class UnixProcess {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    vfunc_exists(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
@@ -5655,7 +5655,7 @@ class UnixProcess {
      * asynchronous version.
      * @param cancellable A #GCancellable or %NULL.
      */
-    vfunc_exists_sync(cancellable?: Gio.Cancellable | null): boolean
+    vfunc_exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
      */
@@ -6017,7 +6017,7 @@ class UnixSession {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -6148,7 +6148,7 @@ class UnixSession {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the request is satisfied
      */
-    init_async(io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    init_async(io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes asynchronous initialization and returns the result.
      * See g_async_initable_init_async().
@@ -6203,7 +6203,7 @@ class UnixSession {
      * instance.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    init(cancellable?: Gio.Cancellable | null): boolean
+    init(cancellable: Gio.Cancellable | null): boolean
     /* Methods of Polkit-1.0.Polkit.Subject */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same subject.
@@ -6225,7 +6225,7 @@ class UnixSession {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    exists(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
@@ -6239,7 +6239,7 @@ class UnixSession {
      * asynchronous version.
      * @param cancellable A #GCancellable or %NULL.
      */
-    exists_sync(cancellable?: Gio.Cancellable | null): boolean
+    exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
      */
@@ -6291,7 +6291,7 @@ class UnixSession {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the request is satisfied
      */
-    vfunc_init_async(io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_init_async(io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes asynchronous initialization and returns the result.
      * See g_async_initable_init_async().
@@ -6339,7 +6339,7 @@ class UnixSession {
      * instance.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    vfunc_init(cancellable?: Gio.Cancellable | null): boolean
+    vfunc_init(cancellable: Gio.Cancellable | null): boolean
     /**
      * Checks if `a` and `b` are equal, ie. represent the same subject.
      * However, avoid calling polkit_subject_equal() to compare two processes;
@@ -6360,7 +6360,7 @@ class UnixSession {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    vfunc_exists(cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
@@ -6374,7 +6374,7 @@ class UnixSession {
      * asynchronous version.
      * @param cancellable A #GCancellable or %NULL.
      */
-    vfunc_exists_sync(cancellable?: Gio.Cancellable | null): boolean
+    vfunc_exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
      */
@@ -6468,7 +6468,7 @@ class UnixSession {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    static new_for_process(pid: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    static new_for_process(pid: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes constructing a #PolkitSubject for a process id.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_unix_session_new_for_process().
@@ -6483,7 +6483,7 @@ class UnixSession {
      * @param pid The process id of the process to get the session for.
      * @param cancellable A #GCancellable or %NULL.
      */
-    static new_for_process_sync(pid: number, cancellable?: Gio.Cancellable | null): Subject | null
+    static new_for_process_sync(pid: number, cancellable: Gio.Cancellable | null): Subject | null
     /**
      * Helper function for constructing #GAsyncInitable object. This is
      * similar to g_object_newv() but also initializes the object asynchronously.
@@ -6498,7 +6498,7 @@ class UnixSession {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the initialization is     finished
      */
-    static newv_async(object_type: GObject.GType, n_parameters: number, parameters: GObject.Parameter, io_priority: number, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null): void
+    static newv_async(object_type: GObject.GType, n_parameters: number, parameters: GObject.Parameter, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Helper function for constructing #GInitable object. This is
      * similar to g_object_newv() but also initializes the object
@@ -6507,7 +6507,7 @@ class UnixSession {
      * @param parameters the parameters to use to construct the object
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
-    static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable?: Gio.Cancellable | null): GObject.Object
+    static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable: Gio.Cancellable | null): GObject.Object
     /**
      * Creates an object from `str` that implements the #PolkitSubject
      * interface.
@@ -6770,7 +6770,7 @@ class UnixUser {
      * @param key name of the key
      * @param data data to associate with that key
      */
-    set_data(key: string, data?: object | null): void
+    set_data(key: string, data: object | null): void
     /**
      * Sets a property on an object.
      * @param property_name the name of the property to set
@@ -7004,9 +7004,9 @@ abstract class SubjectIface {
     hash: (subject: Subject) => number
     equal: (a: Subject, b: Subject) => boolean
     to_string: (subject: Subject) => string
-    exists: (subject: Subject, cancellable?: Gio.Cancellable | null, callback?: Gio.AsyncReadyCallback | null) => void
+    exists: (subject: Subject, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null) => void
     exists_finish: (subject: Subject, res: Gio.AsyncResult) => boolean
-    exists_sync: (subject: Subject, cancellable?: Gio.Cancellable | null) => boolean
+    exists_sync: (subject: Subject, cancellable: Gio.Cancellable | null) => boolean
     static name: string
 }
 abstract class SystemBusNameClass {

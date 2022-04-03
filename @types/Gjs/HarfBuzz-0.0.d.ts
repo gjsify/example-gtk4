@@ -3072,7 +3072,7 @@ const VERSION_MINOR: number
  */
 const VERSION_STRING: string
 function aat_layout_feature_type_get_name_id(face: face_t, feature_type: aat_layout_feature_type_t): ot_name_id_t
-function aat_layout_feature_type_get_selector_infos(face: face_t, feature_type: aat_layout_feature_type_t, start_offset: number): [ /* returnType */ number, /* selectors */ aat_layout_feature_selector_info_t[] | null, /* default_index */ number | null ]
+function aat_layout_feature_type_get_selector_infos(face: face_t, feature_type: aat_layout_feature_type_t, start_offset: number): [ /* returnType */ number, /* selectors */ aat_layout_feature_selector_info_t[], /* default_index */ number ]
 function aat_layout_get_feature_types(face: face_t, start_offset: number): [ /* returnType */ number, /* features */ aat_layout_feature_type_t[] ]
 function aat_layout_has_positioning(face: face_t): bool_t
 function aat_layout_has_substitution(face: face_t): bool_t
@@ -3097,8 +3097,8 @@ function buffer_allocation_successful(buffer: buffer_t): bool_t
 function buffer_append(buffer: buffer_t, source: buffer_t, start: number, end: number): void
 function buffer_clear_contents(buffer: buffer_t): void
 function buffer_create(): buffer_t
-function buffer_deserialize_glyphs(buffer: buffer_t, buf: string[], font: font_t | null, format: buffer_serialize_format_t): [ /* returnType */ bool_t, /* end_ptr */ string | null ]
-function buffer_deserialize_unicode(buffer: buffer_t, buf: string[], format: buffer_serialize_format_t): [ /* returnType */ bool_t, /* end_ptr */ string | null ]
+function buffer_deserialize_glyphs(buffer: buffer_t, buf: string[], font: font_t | null, format: buffer_serialize_format_t): [ /* returnType */ bool_t, /* end_ptr */ string ]
+function buffer_deserialize_unicode(buffer: buffer_t, buf: string[], format: buffer_serialize_format_t): [ /* returnType */ bool_t, /* end_ptr */ string ]
 function buffer_diff(buffer: buffer_t, reference: buffer_t, dottedcircle_glyph: codepoint_t, position_fuzz: number): buffer_diff_flags_t
 function buffer_get_cluster_level(buffer: buffer_t): buffer_cluster_level_t
 function buffer_get_content_type(buffer: buffer_t): buffer_content_type_t
@@ -3122,12 +3122,12 @@ function buffer_reset(buffer: buffer_t): void
 function buffer_reverse(buffer: buffer_t): void
 function buffer_reverse_clusters(buffer: buffer_t): void
 function buffer_reverse_range(buffer: buffer_t, start: number, end: number): void
-function buffer_serialize(buffer: buffer_t, start: number, end: number, font: font_t | null, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number | null ]
+function buffer_serialize(buffer: buffer_t, start: number, end: number, font: font_t | null, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number ]
 function buffer_serialize_format_from_string(str: Uint8Array): buffer_serialize_format_t
 function buffer_serialize_format_to_string(format: buffer_serialize_format_t): string
-function buffer_serialize_glyphs(buffer: buffer_t, start: number, end: number, font: font_t | null, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number | null ]
+function buffer_serialize_glyphs(buffer: buffer_t, start: number, end: number, font: font_t | null, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number ]
 function buffer_serialize_list_formats(): string[]
-function buffer_serialize_unicode(buffer: buffer_t, start: number, end: number, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number | null ]
+function buffer_serialize_unicode(buffer: buffer_t, start: number, end: number, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number ]
 function buffer_set_cluster_level(buffer: buffer_t, cluster_level: buffer_cluster_level_t): void
 function buffer_set_content_type(buffer: buffer_t, content_type: buffer_content_type_t): void
 function buffer_set_direction(buffer: buffer_t, direction: direction_t): void
@@ -3231,7 +3231,7 @@ function font_is_immutable(font: font_t): bool_t
 function font_make_immutable(font: font_t): void
 function font_set_face(font: font_t, face: face_t): void
 function font_set_funcs(font: font_t, klass: font_funcs_t): void
-function font_set_funcs_data(font: font_t, font_data?: object | null): void
+function font_set_funcs_data(font: font_t, font_data: object | null): void
 function font_set_parent(font: font_t, parent: font_t): void
 function font_set_ppem(font: font_t, x_ppem: number, y_ppem: number): void
 function font_set_ptem(font: font_t, ptem: number): void
@@ -3281,7 +3281,7 @@ function ot_layout_collect_features(face: face_t, table_tag: tag_t, scripts: tag
 function ot_layout_collect_lookups(face: face_t, table_tag: tag_t, scripts: tag_t, languages: tag_t, features: tag_t): /* lookup_indexes */ set_t
 function ot_layout_feature_get_characters(face: face_t, table_tag: tag_t, feature_index: number, start_offset: number): [ /* returnType */ number, /* characters */ codepoint_t[] ]
 function ot_layout_feature_get_lookups(face: face_t, table_tag: tag_t, feature_index: number, start_offset: number): [ /* returnType */ number, /* lookup_indexes */ number[] ]
-function ot_layout_feature_get_name_ids(face: face_t, table_tag: tag_t, feature_index: number): [ /* returnType */ bool_t, /* label_id */ ot_name_id_t | null, /* tooltip_id */ ot_name_id_t | null, /* sample_id */ ot_name_id_t | null, /* num_named_parameters */ number | null, /* first_param_id */ ot_name_id_t | null ]
+function ot_layout_feature_get_name_ids(face: face_t, table_tag: tag_t, feature_index: number): [ /* returnType */ bool_t, /* label_id */ ot_name_id_t, /* tooltip_id */ ot_name_id_t, /* sample_id */ ot_name_id_t, /* num_named_parameters */ number, /* first_param_id */ ot_name_id_t ]
 function ot_layout_feature_with_variations_get_lookups(face: face_t, table_tag: tag_t, feature_index: number, variations_index: number, start_offset: number): [ /* returnType */ number, /* lookup_indexes */ number[] ]
 function ot_layout_get_attach_points(face: face_t, glyph: codepoint_t, start_offset: number): [ /* returnType */ number, /* point_array */ number[] ]
 function ot_layout_get_baseline(font: font_t, baseline_tag: ot_layout_baseline_tag_t, direction: direction_t, script_tag: tag_t, language_tag: tag_t): [ /* returnType */ bool_t, /* coord */ position_t ]
@@ -3311,7 +3311,7 @@ function ot_layout_table_find_script(face: face_t, table_tag: tag_t, script_tag:
 function ot_layout_table_get_feature_tags(face: face_t, table_tag: tag_t, start_offset: number): [ /* returnType */ number, /* feature_tags */ tag_t[] ]
 function ot_layout_table_get_lookup_count(face: face_t, table_tag: tag_t): number
 function ot_layout_table_get_script_tags(face: face_t, table_tag: tag_t, start_offset: number): [ /* returnType */ number, /* script_tags */ tag_t[] ]
-function ot_layout_table_select_script(face: face_t, table_tag: tag_t, script_count: number, script_tags: tag_t): [ /* returnType */ bool_t, /* script_index */ number | null, /* chosen_script */ tag_t | null ]
+function ot_layout_table_select_script(face: face_t, table_tag: tag_t, script_count: number, script_tags: tag_t): [ /* returnType */ bool_t, /* script_index */ number, /* chosen_script */ tag_t ]
 function ot_math_get_constant(font: font_t, constant: ot_math_constant_t): position_t
 function ot_math_get_glyph_assembly(font: font_t, glyph: codepoint_t, direction: direction_t, start_offset: number): [ /* returnType */ number, /* parts */ ot_math_glyph_part_t[], /* italics_correction */ position_t ]
 function ot_math_get_glyph_italics_correction(font: font_t, glyph: codepoint_t): position_t
@@ -3323,7 +3323,7 @@ function ot_math_has_data(face: face_t): bool_t
 function ot_math_is_glyph_extended_shape(face: face_t, glyph: codepoint_t): bool_t
 function ot_meta_get_entry_tags(face: face_t, start_offset: number): [ /* returnType */ number, /* entries */ ot_meta_tag_t[] ]
 function ot_meta_reference_entry(face: face_t, meta_tag: ot_meta_tag_t): blob_t
-function ot_metrics_get_position(font: font_t, metrics_tag: ot_metrics_tag_t): [ /* returnType */ bool_t, /* position */ position_t | null ]
+function ot_metrics_get_position(font: font_t, metrics_tag: ot_metrics_tag_t): [ /* returnType */ bool_t, /* position */ position_t ]
 function ot_metrics_get_variation(font: font_t, metrics_tag: ot_metrics_tag_t): number
 function ot_metrics_get_x_variation(font: font_t, metrics_tag: ot_metrics_tag_t): position_t
 function ot_metrics_get_y_variation(font: font_t, metrics_tag: ot_metrics_tag_t): position_t
@@ -3337,8 +3337,8 @@ function ot_tag_from_language(language: language_t): tag_t
 function ot_tag_to_language(tag: tag_t): language_t | null
 function ot_tag_to_script(tag: tag_t): script_t
 function ot_tags_from_script(script: script_t, script_tag_1: tag_t, script_tag_2: tag_t): void
-function ot_tags_from_script_and_language(script: script_t, language: language_t, script_count?: number, language_count?: number): [ /* script_count */ number, /* script_tags */ tag_t | null, /* language_count */ number, /* language_tags */ tag_t | null ]
-function ot_tags_to_script_and_language(script_tag: tag_t, language_tag: tag_t): [ /* script */ script_t | null, /* language */ language_t | null ]
+function ot_tags_from_script_and_language(script: script_t, language: language_t, script_count?: number, language_count?: number): [ /* script_count */ number, /* script_tags */ tag_t, /* language_count */ number, /* language_tags */ tag_t ]
+function ot_tags_to_script_and_language(script_tag: tag_t, language_tag: tag_t): [ /* script */ script_t, /* language */ language_t ]
 function ot_var_find_axis(face: face_t, axis_tag: tag_t, axis_index: number): [ /* returnType */ bool_t, /* axis_info */ ot_var_axis_t ]
 function ot_var_find_axis_info(face: face_t, axis_tag: tag_t): [ /* returnType */ bool_t, /* axis_info */ ot_var_axis_info_t ]
 function ot_var_get_axes(face: face_t, start_offset: number): [ /* returnType */ number, /* axes_array */ ot_var_axis_t[] ]
@@ -3384,7 +3384,7 @@ function set_subtract(set: set_t, other: set_t): void
 function set_symmetric_difference(set: set_t, other: set_t): void
 function set_union(set: set_t, other: set_t): void
 function shape(font: font_t, buffer: buffer_t, features: feature_t[] | null): void
-function shape_full(font: font_t, buffer: buffer_t, features: feature_t[] | null, shaper_list?: string[] | null): bool_t
+function shape_full(font: font_t, buffer: buffer_t, features: feature_t[] | null, shaper_list: string[] | null): bool_t
 function shape_list_shapers(): string[]
 function shape_plan_create(face: face_t, props: segment_properties_t, user_features: feature_t[], shaper_list: string[]): shape_plan_t
 function shape_plan_create2(face: face_t, props: segment_properties_t, user_features: feature_t[], coords: number[], shaper_list: string[]): shape_plan_t
@@ -3400,7 +3400,7 @@ function unicode_compose(ufuncs: unicode_funcs_t, a: codepoint_t, b: codepoint_t
 function unicode_decompose(ufuncs: unicode_funcs_t, ab: codepoint_t): [ /* returnType */ bool_t, /* a */ codepoint_t, /* b */ codepoint_t ]
 function unicode_decompose_compatibility(ufuncs: unicode_funcs_t, u: codepoint_t): [ /* returnType */ number, /* decomposed */ codepoint_t ]
 function unicode_eastasian_width(ufuncs: unicode_funcs_t, unicode: codepoint_t): number
-function unicode_funcs_create(parent?: unicode_funcs_t | null): unicode_funcs_t
+function unicode_funcs_create(parent: unicode_funcs_t | null): unicode_funcs_t
 function unicode_funcs_get_default(): unicode_funcs_t
 function unicode_funcs_get_empty(): unicode_funcs_t
 function unicode_funcs_get_parent(ufuncs: unicode_funcs_t): unicode_funcs_t
@@ -3442,7 +3442,7 @@ interface destroy_func_t {
  * This method should retrieve the extents for a font.
  */
 interface font_get_font_extents_func_t {
-    (font: font_t, font_data?: object | null): bool_t
+    (font: font_t, font_data: object | null): bool_t
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.

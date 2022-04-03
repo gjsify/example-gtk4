@@ -343,7 +343,7 @@ class Box {
      * @param min the coordinates of the minimum vertex
      * @param max the coordinates of the maximum vertex
      */
-    init(min?: Point3D | null, max?: Point3D | null): Box
+    init(min: Point3D | null, max: Point3D | null): Box
     /**
      * Initializes the given #graphene_box_t with the vertices of
      * another #graphene_box_t.
@@ -365,7 +365,7 @@ class Box {
      * @param min the coordinates of the minimum vertex
      * @param max the coordinates of the maximum vertex
      */
-    init_from_vec3(min?: Vec3 | null, max?: Vec3 | null): Box
+    init_from_vec3(min: Vec3 | null, max: Vec3 | null): Box
     /**
      * Initializes the given #graphene_box_t with the given array
      * of vertices.
@@ -382,7 +382,7 @@ class Box {
      * initialized with graphene_box_empty().
      * @param b a #graphene_box_t
      */
-    intersection(b: Box): [ /* returnType */ boolean, /* res */ Box | null ]
+    intersection(b: Box): [ /* returnType */ boolean, /* res */ Box ]
     /**
      * Unions the two given #graphene_box_t.
      * @param b the box to union to `a`
@@ -502,7 +502,7 @@ class Euler {
      * to calling graphene_euler_init() with all angles set to 0.
      * @param src a #graphene_euler_t
      */
-    init_from_euler(src?: Euler | null): Euler
+    init_from_euler(src: Euler | null): Euler
     /**
      * Initializes a #graphene_euler_t using the given rotation matrix.
      * 
@@ -1246,7 +1246,7 @@ class Plane {
      * @param matrix a #graphene_matrix_t
      * @param normal_matrix a #graphene_matrix_t
      */
-    transform(matrix: Matrix, normal_matrix?: Matrix | null): /* res */ Plane
+    transform(matrix: Matrix, normal_matrix: Matrix | null): /* res */ Plane
     static name: string
     /* Static methods and pseudo-constructors */
     static alloc(): Plane
@@ -1266,7 +1266,7 @@ class Point {
      * Computes the distance between `a` and `b`.
      * @param b a #graphene_point_t
      */
-    distance(b: Point): [ /* returnType */ number, /* d_x */ number | null, /* d_y */ number | null ]
+    distance(b: Point): [ /* returnType */ number, /* d_x */ number, /* d_y */ number ]
     /**
      * Checks if the two points `a` and `b` point to the same
      * coordinates.
@@ -1350,7 +1350,7 @@ class Point3D {
      * Computes the distance between the two given #graphene_point3d_t.
      * @param b a #graphene_point3d_t
      */
-    distance(b: Point3D): [ /* returnType */ number, /* delta */ Vec3 | null ]
+    distance(b: Point3D): [ /* returnType */ number, /* delta */ Vec3 ]
     /**
      * Computes the dot product of the two given #graphene_point3d_t.
      * @param b a #graphene_point3d_t
@@ -1602,7 +1602,7 @@ class Quaternion {
      * on the [Euler angles](http://en.wikipedia.org/wiki/Euler_angles)
      * on each axis.
      */
-    to_angles(): [ /* deg_x */ number | null, /* deg_y */ number | null, /* deg_z */ number | null ]
+    to_angles(): [ /* deg_x */ number, /* deg_y */ number, /* deg_z */ number ]
     /**
      * Converts a quaternion into a transformation matrix expressing
      * the rotation defined by the #graphene_quaternion_t.
@@ -1613,7 +1613,7 @@ class Quaternion {
      * on the [Euler angles](http://en.wikipedia.org/wiki/Euler_angles)
      * on each axis.
      */
-    to_radians(): [ /* rad_x */ number | null, /* rad_y */ number | null, /* rad_z */ number | null ]
+    to_radians(): [ /* rad_x */ number, /* rad_y */ number, /* rad_z */ number ]
     /**
      * Copies the components of a #graphene_quaternion_t into a
      * #graphene_vec4_t.
@@ -1678,7 +1678,7 @@ class Ray {
      * @param origin the origin of the ray
      * @param direction the direction vector
      */
-    init(origin?: Point3D | null, direction?: Vec3 | null): Ray
+    init(origin: Point3D | null, direction: Vec3 | null): Ray
     /**
      * Initializes the given #graphene_ray_t using the origin and direction
      * values of another #graphene_ray_t.
@@ -1690,7 +1690,7 @@ class Ray {
      * @param origin a #graphene_vec3_t
      * @param direction a #graphene_vec3_t
      */
-    init_from_vec3(origin?: Vec3 | null, direction?: Vec3 | null): Ray
+    init_from_vec3(origin: Vec3 | null, direction: Vec3 | null): Ray
     /**
      * Intersects the given #graphene_ray_t `r` with the given
      * #graphene_box_t `b`.
@@ -1894,7 +1894,7 @@ class Rect {
      * a degenerate rectangle with origin in (0, 0) and a size of 0.
      * @param b a #graphene_rect_t
      */
-    intersection(b: Rect): [ /* returnType */ boolean, /* res */ Rect | null ]
+    intersection(b: Rect): [ /* returnType */ boolean, /* res */ Rect ]
     /**
      * Normalizes the passed rectangle.
      * 
@@ -2109,7 +2109,7 @@ class Sphere {
      * @param points an array of #graphene_point3d_t
      * @param center the center of the sphere
      */
-    init_from_points(points: Point3D[], center?: Point3D | null): Sphere
+    init_from_points(points: Point3D[], center: Point3D | null): Sphere
     /**
      * Initializes the given #graphene_sphere_t using the given array
      * of 3D coordinates so that the sphere includes them.
@@ -2119,7 +2119,7 @@ class Sphere {
      * @param vectors an array of #graphene_vec3_t
      * @param center the center of the sphere
      */
-    init_from_vectors(vectors: Vec3[], center?: Point3D | null): Sphere
+    init_from_vectors(vectors: Vec3[], center: Point3D | null): Sphere
     /**
      * Checks whether the sphere has a zero radius.
      */
@@ -2173,7 +2173,7 @@ class Triangle {
      *  - `res.y = v`
      * @param p a #graphene_point3d_t
      */
-    get_barycoords(p?: Point3D | null): [ /* returnType */ boolean, /* res */ Vec2 ]
+    get_barycoords(p: Point3D | null): [ /* returnType */ boolean, /* res */ Vec2 ]
     /**
      * Computes the bounding box of the given #graphene_triangle_t.
      */
@@ -2197,7 +2197,7 @@ class Triangle {
      * Retrieves the three vertices of the given #graphene_triangle_t and returns
      * their coordinates as #graphene_point3d_t.
      */
-    get_points(): [ /* a */ Point3D | null, /* b */ Point3D | null, /* c */ Point3D | null ]
+    get_points(): [ /* a */ Point3D, /* b */ Point3D, /* c */ Point3D ]
     /**
      * Computes the UV coordinates of the given point `p`.
      * 
@@ -2220,7 +2220,7 @@ class Triangle {
     /**
      * Retrieves the three vertices of the given #graphene_triangle_t.
      */
-    get_vertices(): [ /* a */ Vec3 | null, /* b */ Vec3 | null, /* c */ Vec3 | null ]
+    get_vertices(): [ /* a */ Vec3, /* b */ Vec3, /* c */ Vec3 ]
     /**
      * Initializes a #graphene_triangle_t using the three given arrays
      * of floating point values, each representing the coordinates of
@@ -2236,14 +2236,14 @@ class Triangle {
      * @param b a #graphene_point3d_t
      * @param c a #graphene_point3d_t
      */
-    init_from_point3d(a?: Point3D | null, b?: Point3D | null, c?: Point3D | null): Triangle
+    init_from_point3d(a: Point3D | null, b: Point3D | null, c: Point3D | null): Triangle
     /**
      * Initializes a #graphene_triangle_t using the three given vectors.
      * @param a a #graphene_vec3_t
      * @param b a #graphene_vec3_t
      * @param c a #graphene_vec3_t
      */
-    init_from_vec3(a?: Vec3 | null, b?: Vec3 | null, c?: Vec3 | null): Triangle
+    init_from_vec3(a: Vec3 | null, b: Vec3 | null, c: Vec3 | null): Triangle
     static name: string
     /* Static methods and pseudo-constructors */
     static alloc(): Triangle
