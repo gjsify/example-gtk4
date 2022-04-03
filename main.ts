@@ -24,8 +24,9 @@ import GObject from './@types/Gjs/GObject-2.0.js'
 import Gio from './@types/Gjs/Gio-2.0.js'
 import GLib from './@types/Gjs/GLib-2.0.js'
 
-import { Window, MenuButton, SearchBar, _SearchBar, Stack, _Stack, IconSelector } from "./widgets/index.js";
+import { Window, MenuButton, SearchBar, _SearchBar, Stack, _Stack, IconSelector, TextSelector, SwitchRow } from "./widgets/index.js";
 import { get_font_markup, getPermission, range } from "./utils.js";
+import { LOREM_IPSUM } from "./constants.js";
 
 class _MyWindow extends Window {
 
@@ -38,8 +39,10 @@ class _MyWindow extends Window {
     stack?: _Stack;
 
     override _init(config?: Gtk.ApplicationWindow_ConstructProps) {
+
         const title = config?.title || "";
         super._init(config)
+
         // load the custom css, so we can use it later
         this.loadCSS('main.css');
 
@@ -57,17 +60,21 @@ class _MyWindow extends Window {
         // So we can place the stack switcher in the middle
         const label = new Gtk.Label()
         label.set_text(title);
+
         // add 2 chars indent on the label for better looks
         label.set_halign(Gtk.Align.END)
         label.set_width_chars(title.length + 2)
         this.headerbar?.pack_start(label)
+
         // Main content box
         const content = new Gtk.Box( { orientation: Gtk.Orientation.VERTICAL } )
+
         // Search Bar
         this.search = new SearchBar(this)
         content.append(this.search)
+
         // search bar is active by default
-        this.search.setCallback(this.onSearch)
+        this.search.setCallback(this.onSearch.bind(this))
 
         // Stack
         this.stack = new Stack()
@@ -82,25 +89,32 @@ class _MyWindow extends Window {
         this.page4 = this.setupPageFour('page4', 'Page 4')
         // Stack Page 5
         this.page5 = this.setupPageFive('page5', 'Page 5')
+
         // add stack switcher to center of titlebar
         this.headerbar?.set_title_widget(this.stack.switcher)
+
         // Add stack to window
         content.append(this.stack)
+
         // Add main content box to window
         this.set_child(content)
     }
 
     /** setup the common widgets for each page */
     setupPageHeader(name: string, title: string) {
+
         // Content box for the page
         const frame = new Gtk.Frame()
+
         // Set Frame Margins
         frame.set_margin_top(15)
         frame.set_margin_start(15)
         frame.set_margin_end(15)
         frame.set_margin_bottom(15)
+
         // Content box for the page
         const content = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
+
         // Add a label with custom font in the center
         const fontLabel = new Gtk.Label()
         fontLabel.set_margin_top(20)
@@ -108,6 +122,7 @@ class _MyWindow extends Window {
         fontLabel.set_markup(markup)
         fontLabel.set_valign(Gtk.Align.CENTER)
         content.append(fontLabel)
+
         // Output label to write user action on the page
         const label = new Gtk.Label()
         label.set_margin_top(20)
@@ -122,24 +137,28 @@ class _MyWindow extends Window {
 
     /** Add a page with a icon selector to the stack */
     setupPageOne(name: string, title: string) {
+
         // Main Content box for the page
         const main = new Gtk.Box({orientation:Gtk.Orientation.HORIZONTAL})
+
         // Add info selector
         const selector = new IconSelector()
-        selector.add_row("row1", "dialog-information-symbolic")
-        selector.add_row("row2", "software-update-available-symbolic")
-        selector.add_row("row3", "drive-multidisk-symbolic")
-        selector.add_row("row4", "insert-object-symbolic")
+        selector.addRow("row1", "dialog-information-symbolic")
+        selector.addRow("row2", "software-update-available-symbolic")
+        selector.addRow("row3", "drive-multidisk-symbolic")
+        selector.addRow("row4", "insert-object-symbolic")
         selector.setCallback(this.onSelectIconSelector.bind(this))
         main.append(selector)
         const { frame: page_frame, content: content_right, label: lbl } = this.setupPageHeader(name, title)
         this.page1_label = lbl
+
         // Lock button
         const lock_btn = Gtk.LockButton.new(getPermission())
         lock_btn.set_margin_top(20)
         lock_btn.set_halign(Gtk.Align.CENTER)
         lock_btn.set_hexpand(false)
         content_right.append(lock_btn)
+
         // buttons
         const box = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL})
         box.set_halign(Gtk.Align.CENTER)
@@ -152,6 +171,7 @@ class _MyWindow extends Window {
             box.append(btn)
         }
         content_right.append(box)
+
         // Entry
         const entry = new Gtk.Entry()
         entry.set_halign(Gtk.Align.FILL)
@@ -162,14 +182,17 @@ class _MyWindow extends Window {
         entry.set_placeholder_text("Type something here ....")
         entry.connect('activate', this.onEntryActivate.bind(this))
         content_right.append(entry)
+
         // Calendar
         const calendar = new Gtk.Calendar()
         calendar.set_margin_top(20)
         calendar.set_halign(Gtk.Align.CENTER)
         calendar.connect('day-selected', this.onCalendarChanged.bind(this))
         content_right.append(calendar)
+
         // DropDown
         const model = new Gtk.StringList()
+        // Note: The original python example seems to use here in index instead of the string
         for (const txt in ['One', 'Two', 'Three', 'Four']) {
             model.append(txt)
         }
@@ -179,6 +202,7 @@ class _MyWindow extends Window {
         dropdown.set_size_request(200, -1)
         dropdown.set_halign(Gtk.Align.START)
         content_right.append(dropdown)
+
         // DropDown
         const dropdownColor = Gtk.DropDown.new_from_strings(
             ['Red', 'Green', 'Blue', 'Black', 'White'])
@@ -188,73 +212,82 @@ class _MyWindow extends Window {
         dropdownColor.set_halign(Gtk.Align.START)
         content_right.append(dropdownColor)
         main.append(page_frame)
+
         // Add the content box as a new page in the stack
         return this.stack?.addPage(name, title, main)
     }
 
     /** Add a page with a text selector to the stack */
     setupPageTwo(name: string, title: string) {
-        // // Content box for the page
-        // const main = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL})
-        // // Add info selector
-        // const selector = new TextSelector()
-        // selector.add_row("Orange", "Orange")
-        // selector.add_row("Apple", "Apple")
-        // selector.add_row("Water Melon", "Water Melon")
-        // selector.add_row("Lollypop", "Lollypop")
-        // selector.setCallback(this.on_select_text_selector)
-        // main.append(selector)
-        // // Add a label with custom font in the center
-        // const {frame, content: content_right, label } = this.setupPageHeader(name, title)
-        // this.page2_label = label
-        // // Overlay
-        // const overlay_info = new Gtk.InfoBar()
-        // overlay_info.set_halign(Gtk.Align.FILL)
-        // overlay_info.set_valign(Gtk.Align.START)
-        // overlay_info.set_margin_top(10)
-        // overlay_info.set_margin_start(10)
-        // overlay_info.set_margin_end(10)
-        // const lbl = new Gtk.Label()
-        // lbl.set_halign(Gtk.Align.FILL)
-        // lbl.set_valign(Gtk.Align.FILL)
-        // lbl.set_hexpand(true)
-        // lbl.set_vexpand(true)
-        // lbl.set_markup(
-        //     '<span foreground="#ff0000" size="xx-large">This is an Gtk.Infobar as an overlay</span>')
-        // overlay_info.add_child(lbl)
-        // this.overlay_info = overlay_info
-        // const frame_child = new Gtk.Frame()
-        // // TexkView
-        // const sw = new Gtk.ScrolledWindow()
-        // const text = Gtk.TextView.new()
-        // text.set_vexpand(true)
-        // // Set Wrap Mode to word
-        // text.set_wrap_mode(Gtk.WrapMode.WORD)
-        // // Add some text
-        // let lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae leo ac magna lobortis maximus. ' +
-        //       'Etiam eleifend, libero a pulvinar ornare, justo nunc porta velit, ut sodales mi est feugiat tellus. '
-        // for (const iterator of range(10)) {
-        //     lorem += lorem;
-        // }
-        // text.get_buffer().set_text(lorem, lorem.length)
-        // sw.set_child(text)
-        // frame_child.set_child(sw)
-        // const overlay = new Gtk.Overlay()
-        // overlay.set_margin_top(20)
-        // overlay.set_margin_start(20)
-        // overlay.set_margin_end(20)
-        // overlay.set_margin_bottom(20)
-        // overlay.set_child(frame_child)
-        // overlay.add_overlay(overlay_info)
-        // content_right.append(overlay)
-        // // Switch to control overlay visibility
-        // const switch_row = new SwitchRow("Show Overlay")
-        // switch_row.set_state(true)
-        // switch_row.connect('state-set', this.on_switch_overlay)
-        // content_right.append(switch_row)
-        // main.append(frame)
-        // // Add the content box as a new page in the stack
-        // return this.stack.addPage(name, title, main)
+
+        // Content box for the page
+        const main = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL})
+
+        // Add info selector
+        const selector = new TextSelector()
+        selector.addRow("Orange", "Orange")
+        selector.addRow("Apple", "Apple")
+        selector.addRow("Water Melon", "Water Melon")
+        selector.addRow("Lollypop", "Lollypop")
+        selector.setCallback(this.onSelectTextSelector.bind(this))
+        main.append(selector)
+
+        // Add a label with custom font in the center
+        const {frame, content: content_right, label } = this.setupPageHeader(name, title)
+        this.page2_label = label
+
+        // Overlay
+        const overlay_info = new Gtk.InfoBar()
+        overlay_info.set_halign(Gtk.Align.FILL)
+        overlay_info.set_valign(Gtk.Align.START)
+        overlay_info.set_margin_top(10)
+        overlay_info.set_margin_start(10)
+        overlay_info.set_margin_end(10)
+        const lbl = new Gtk.Label()
+        lbl.set_halign(Gtk.Align.FILL)
+        lbl.set_valign(Gtk.Align.FILL)
+        lbl.set_hexpand(true)
+        lbl.set_vexpand(true)
+        lbl.set_markup(
+            '<span foreground="#ff0000" size="xx-large">This is an Gtk.Infobar as an overlay</span>')
+        overlay_info.add_child(lbl)
+        this.overlay_info = overlay_info
+        const frame_child = new Gtk.Frame()
+
+        // TexkView
+        const sw = new Gtk.ScrolledWindow()
+        const text = Gtk.TextView.new()
+        text.set_vexpand(true)
+
+        // Set Wrap Mode to word
+        text.set_wrap_mode(Gtk.WrapMode.WORD)
+
+        // Add some text
+        let lorem = '';
+        for (const _ of range(10)) {
+            lorem += LOREM_IPSUM;
+        }
+        text.get_buffer().set_text(lorem, lorem.length)
+        sw.set_child(text)
+        frame_child.set_child(sw)
+        const overlay = new Gtk.Overlay()
+        overlay.set_margin_top(20)
+        overlay.set_margin_start(20)
+        overlay.set_margin_end(20)
+        overlay.set_margin_bottom(20)
+        overlay.set_child(frame_child)
+        overlay.add_overlay(overlay_info)
+        content_right.append(overlay)
+
+        // Switch to control overlay visibility
+        const switchRow = new SwitchRow({}, "Show Overlay")
+        switchRow.set_state(true)
+        switchRow.connect('state-set', this.onSwitchOverlay.bind(this))
+        content_right.append(switchRow)
+        main.append(frame)
+
+        // Add the content box as a new page in the stack
+        return this.stack?.addPage(name, title, main)
     }
 
     /** Add a page with css styled content to the stack */
@@ -492,11 +525,11 @@ class _MyWindow extends Window {
         this.page5_label.set_markup(markup)
     }
 
-    /** callback for buttom clicked (Page1) */
+    /** callback for button clicked (Page5) */
     onButtonChooser(widget) {
         // TODO:
         // const dialog = new MaterialColorDialog("Select Color", this)
-        // dialog.connect('response', this.on_dialog_response)
+        // dialog.connect('response', this.onDialogResponse.bind(this))
         // dialog.show()
     }
 
@@ -532,7 +565,8 @@ class _MyWindow extends Window {
     }
 
     /** callback for overlay switch (Page2) */
-    onSwitchOverlay(widget, state) {
+    onSwitchOverlay(widget: Gtk.Switch, state: boolean) {
+        print("onSwitchOverlay state: ", state);
         if (this.overlay_info)
             this.overlay_info.set_revealed(state)
     }
@@ -580,7 +614,7 @@ const MyWindow = GObject.registerClass({
 
 class _Application extends Gtk.Application {
     _init(constructProperties = {
-        application_id: 'dk.rasmil.Example',
+        application_id: 'org.gjsify.example-gtk4',
         flags: Gio.ApplicationFlags.FLAGS_NONE
     }) {
         super._init(constructProperties);

@@ -5,8 +5,9 @@ import { SelectorBase } from "./selector-base.js";
 
 /** Vertical Selector Widget that contains a number of icons where one can be selected */
 export class _IconSelector extends SelectorBase {
+
     /** Add a named row to the selector with at given icon name */
-    override add_row(name: string, icon_name: string) {
+    override addRow(name: string, icon_name: string) {
         // get the image
         const pix = Gtk.Image.new_from_icon_name(icon_name)
         // set the widget size request to 32x32 px, so we get some margins

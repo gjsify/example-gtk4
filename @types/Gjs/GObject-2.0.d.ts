@@ -2469,6 +2469,7 @@ class ParamSpec {
     static is_valid_name(name: string): boolean
 
     // TODO add to ts-for-gir
+    // See https://gitlab.gnome.org/GNOME/gjs/-/blob/master/modules/core/overrides/GObject.js
 
     static char(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
     
@@ -2505,6 +2506,8 @@ class ParamSpec {
     static jsobject(name: string, nick: string, blurb: string, flags: ParamFlags)
     
     static param(name: string, nick: string, blurb: string, flags: ParamFlags, paramType: GType<unknown>)
+
+    static override: typeof ObjectClass['override_property'];
 }
 
 class ParamSpecBoolean {

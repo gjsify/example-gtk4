@@ -24,3 +24,6 @@ export const APP_MENU = `
 </menu>
 </interface>
 `
+
+export const LOREM_IPSUM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae leo ac magna lobortis maximus. ' +
+'Etiam eleifend, libero a pulvinar ornare, justo nunc porta velit, ut sodales mi est feugiat tellus. '

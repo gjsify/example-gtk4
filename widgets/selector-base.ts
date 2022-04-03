@@ -20,7 +20,7 @@ export class _SelectorBase extends Gtk.ListBox {
     }
 
     /** Overload this in a subclass */
-    add_row(name: string, markup: string) {
+    addRow(name: string, markup: string) {
         throw new Error("Not implemented!");
     }
 
@@ -41,13 +41,6 @@ export class _SelectorBase extends Gtk.ListBox {
 export const SelectorBase = GObject.registerClass({
     GTypeName: 'SelectorBase',
     Properties: {
-        // TODO:
-        // '_rows': GObject.ParamSpec.jsobject(
-        //     '_rows',
-        //     'Rows',
-        //     'Object of rows',
-        //     GObject.ParamFlags.READWRITE,
-        // ),
         'ndx': GObject.ParamSpec.double(
             'ndx',
             'Index',
