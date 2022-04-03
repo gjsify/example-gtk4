@@ -3337,7 +3337,7 @@ function ot_tag_from_language(language: language_t): tag_t
 function ot_tag_to_language(tag: tag_t): language_t | null
 function ot_tag_to_script(tag: tag_t): script_t
 function ot_tags_from_script(script: script_t, script_tag_1: tag_t, script_tag_2: tag_t): void
-function ot_tags_from_script_and_language(script: script_t, language: language_t, script_count?: number | null, language_count?: number | null): [ /* script_count */ number | null, /* script_tags */ tag_t | null, /* language_count */ number | null, /* language_tags */ tag_t | null ]
+function ot_tags_from_script_and_language(script: script_t, language: language_t, script_count?: number, language_count?: number): [ /* script_count */ number, /* script_tags */ tag_t | null, /* language_count */ number, /* language_tags */ tag_t | null ]
 function ot_tags_to_script_and_language(script_tag: tag_t, language_tag: tag_t): [ /* script */ script_t | null, /* language */ language_t | null ]
 function ot_var_find_axis(face: face_t, axis_tag: tag_t, axis_index: number): [ /* returnType */ bool_t, /* axis_info */ ot_var_axis_t ]
 function ot_var_find_axis_info(face: face_t, axis_tag: tag_t): [ /* returnType */ bool_t, /* axis_info */ ot_var_axis_info_t ]

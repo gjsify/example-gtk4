@@ -9379,7 +9379,7 @@ class OptionContext {
      * arguments.
      * @param argv a pointer to the array of command line arguments
      */
-    parse(argv?: string[] | null): [ /* returnType */ boolean, /* argv */ string[] | null ]
+    parse(argv?: string[]): [ /* returnType */ boolean, /* argv */ string[] ]
     /**
      * Parses the command line arguments.
      * 
@@ -9399,7 +9399,7 @@ class OptionContext {
      * #GApplication.
      * @param arguments_ a pointer    to the command line arguments (which must be in UTF-8 on Windows).    Starting with GLib 2.62, `arguments` can be %NULL, which matches    g_option_context_parse().
      */
-    parse_strv(arguments_?: string[] | null): [ /* returnType */ boolean, /* arguments_ */ string[] | null ]
+    parse_strv(arguments_?: string[]): [ /* returnType */ boolean, /* arguments_ */ string[] ]
     /**
      * Adds a string to be displayed in `--help` output after the list
      * of options. This text often includes a bug reporting address.

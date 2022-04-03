@@ -9345,7 +9345,7 @@ class Matrix {
      * using [func`extents_to_pixels]`'s first argument.
      * @param rect in/out bounding box in device units
      */
-    transform_pixel_rectangle(rect?: Rectangle | null): /* rect */ Rectangle | null
+    transform_pixel_rectangle(rect?: Rectangle): /* rect */ Rectangle
     /**
      * Transforms the point (`x,` `y)` by `matrix`.
      * @param x in/out X position
@@ -9373,7 +9373,7 @@ class Matrix {
      * example).
      * @param rect in/out bounding box in Pango units
      */
-    transform_rectangle(rect?: Rectangle | null): /* rect */ Rectangle | null
+    transform_rectangle(rect?: Rectangle): /* rect */ Rectangle
     /**
      * Changes the transformation represented by `matrix` to be the
      * transformation given by first translating by (`tx,` `ty)`

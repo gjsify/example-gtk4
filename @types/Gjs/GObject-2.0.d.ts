@@ -439,7 +439,7 @@ function signal_add_emission_hook(signal_id: number, detail: GLib.Quark): number
 function signal_chain_from_overridden(instance_and_params: any[], return_value: any): void
 function signal_connect_closure(instance: Object, detailed_signal: string, closure: TClosure, after: boolean): number
 function signal_connect_closure_by_id(instance: Object, signal_id: number, detail: GLib.Quark, closure: TClosure, after: boolean): number
-function signal_emitv(instance_and_params: any[], signal_id: number, detail: GLib.Quark, return_value?: any | null): /* return_value */ any | null
+function signal_emitv(instance_and_params: any[], signal_id: number, detail: GLib.Quark, return_value?: any): /* return_value */ any
 function signal_get_invocation_hint(instance: Object): SignalInvocationHint | null
 function signal_handler_block(instance: Object, handler_id: number): void
 function signal_handler_disconnect(instance: Object, handler_id: number): void
@@ -1023,8 +1023,8 @@ export type TClosure<R = any, P = any> = (...args: P[]) => R;
 
 export type RegisteredClass<
     T extends Ctor,
-    Props extends { [key: string]: ParamSpec } = {},
-    Interfaces extends { $gtype: GType<any> }[] = []
+    Props extends { [key: string]: ParamSpec },
+    Interfaces extends { $gtype: GType<any> }[]
     > = T extends { prototype: infer P }
     ? {
         $gtype: GType<RegisteredClass<T, Props, IFaces<Interfaces>>>;
@@ -1049,10 +1049,10 @@ export function registerClass<
     }
 >(
     options: MetaInfo<Props, Interfaces, Sigs>,
-    klass: T
+    cls: T
 ): RegisteredClass<T, Props, Interfaces>;
 
-export function registerClass<P extends {}, T extends Ctor<P>>(cls: T): RegisteredClass<T>;
+export function registerClass<P extends {}, T extends Ctor<P>>(cls: T): RegisteredClass<T, {}, []>;
 interface Binding_ConstructProps extends Object_ConstructProps {
     /* Constructor properties of GObject-2.0.GObject.Binding */
     /**

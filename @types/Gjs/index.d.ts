@@ -56,13 +56,16 @@ declare global {
     function logError(exception: any, message?: string): void
     const ARGV: string[]
 
+    // Timers
+    // See https://gitlab.gnome.org/GNOME/gjs/-/blob/master/modules/esm/_timers.js
+
     /**
      * @this {typeof globalThis}
      * @param callback a callback function
      * @param delay the duration in milliseconds to wait before running callback
      * @param args arguments to pass to callback
      */
-    function setTimeout(callback: (...args: any[]) => any, delay: number, ...args: any[])
+     function setTimeout(callback: (...args: any[]) => any, delay: number, ...args: any[])
 
      /**
       * @this {typeof globalThis}
