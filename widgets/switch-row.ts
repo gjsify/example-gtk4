@@ -9,6 +9,7 @@ export class _SwitchRow extends Gtk.Box {
     override _init(config: Gtk.Box_ConstructProps = {}, text: string = "") {
         config.orientation ||= Gtk.Orientation.HORIZONTAL; 
         super._init(config)
+
         // Switch to control overlay visibility
         this.label = Gtk.Label.new(text)
         this.label.set_halign(Gtk.Align.FILL)
@@ -29,7 +30,7 @@ export class _SwitchRow extends Gtk.Box {
         return this.switch?.connect(signal, callback) || -1
     }
 
-    set_state(state) {
+    setState(state: boolean) {
         return this.switch?.set_state(state)
     }
 }

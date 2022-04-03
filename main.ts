@@ -70,7 +70,7 @@ class _MyWindow extends Window {
         const content = new Gtk.Box( { orientation: Gtk.Orientation.VERTICAL } )
 
         // Search Bar
-        this.search = new SearchBar(this)
+        this.search = new SearchBar({}, this)
         content.append(this.search)
 
         // search bar is active by default
@@ -91,7 +91,7 @@ class _MyWindow extends Window {
         this.page5 = this.setupPageFive('page5', 'Page 5')
 
         // add stack switcher to center of titlebar
-        this.headerbar?.set_title_widget(this.stack.switcher)
+        this.headerbar?.set_title_widget(this.stack?.switcher || null)
 
         // Add stack to window
         content.append(this.stack)
@@ -153,11 +153,11 @@ class _MyWindow extends Window {
         this.page1_label = lbl
 
         // Lock button
-        const lock_btn = Gtk.LockButton.new(getPermission())
-        lock_btn.set_margin_top(20)
-        lock_btn.set_halign(Gtk.Align.CENTER)
-        lock_btn.set_hexpand(false)
-        content_right.append(lock_btn)
+        const lockBtn = Gtk.LockButton.new(getPermission())
+        lockBtn.set_margin_top(20)
+        lockBtn.set_halign(Gtk.Align.CENTER)
+        lockBtn.set_hexpand(false)
+        content_right.append(lockBtn)
 
         // buttons
         const box = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL})
@@ -281,7 +281,7 @@ class _MyWindow extends Window {
 
         // Switch to control overlay visibility
         const switchRow = new SwitchRow({}, "Show Overlay")
-        switchRow.set_state(true)
+        switchRow.setState(true)
         switchRow.connect('state-set', this.onSwitchOverlay.bind(this))
         content_right.append(switchRow)
         main.append(frame)
@@ -292,130 +292,150 @@ class _MyWindow extends Window {
 
     /** Add a page with css styled content to the stack */
     setupPageThree(name: string, title: string) {
-        // // Content box for the page
-        // const frame = new Gtk.Frame()
-        // // Set Frame Margins
-        // frame.set_margin_top(15)
-        // frame.set_margin_start(15)
-        // frame.set_margin_end(15)
-        // frame.set_margin_bottom(15)
+        // Content box for the page
+        const frame = new Gtk.Frame()
 
-        // // Left/Right Paned
-        // // Orientation is the ways the separator is moving, not the way it is facing
-        // // So HORIZONTAL split in Left/Right and VERTICAL split in Top/Down
-        // this.left_right_paned = new Gtk.Paned({
-        //     orientation: Gtk.Orientation.HORIZONTAL})
-        // // Left Side
-        // const left_box = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
-        // left_box.set_vexpand(true)
-        // left_box.set_spacing(5)
-        // const left_label = Gtk.Label.new("LEFT")
-        // left_label.set_valign(Gtk.Align.START)
-        // left_label.set_halign(Gtk.Align.START)
-        // left_box.append(left_label)
-        // // Add Progress Bar
-        // const progress = new Gtk.ProgressBar()
-        // progress.set_fraction(.75)
-        // left_box.append(progress)
-        // // Add Scale
-        // const scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0, 100, 5)
-        // scale.set_value(25)
-        // left_box.append(scale)
-        // // separator
-        // const separator = new Gtk.Separator({orientation:Gtk.Orientation.HORIZONTAL})
-        // left_box.append(separator)
-        // this.left_right_paned.set_start_child(left_box)
-        // this.left_right_paned.set_shrink_start_child(false)  // Can't shrink
-        // // Right Side
-        // const right_box = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
-        // const right_label = Gtk.Label.new("RIGHT")
-        // right_label.set_valign(Gtk.Align.START)
-        // right_label.set_halign(Gtk.Align.START)
-        // right_box.append(right_label)
-        // // TextView
-        // const text = Gtk.TextView.new()
-        // // Set the default width
-        // text.set_size_request(150, -1)
-        // // Set Wrap Mode to word
-        // text.set_wrap_mode(Gtk.WrapMode.WORD)
-        // // Add some text
-        // const txt = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae leo ac magna lobortis maximus. ' +
-        //       'Etiam eleifend, libero a pulvinar ornare, justo nunc porta velit, ut sodales mi est feugiat tellus. '
-        // text.get_buffer().set_text(txt, txt.length)
-        // right_box.append(text)
-        // // Add Switches
-        // for (const txt in ['Reveal', 'Yet Another Option']) {
-        //     const grid = new Gtk.Grid()
-        //     grid.set_column_spacing(30)
-        //     grid.insert_row(0)
-        //     grid.insert_column(0)
-        //     grid.insert_column(1)
-        //     grid.insert_column(2)
-        //     grid.set_row_homogeneous(true)
-        //     const label = Gtk.Label.new(txt)
-        //     label.set_hexpand(true)
-        //     label.set_xalign(0.0)
-        //     label.set_valign(Gtk.Align.CENTER)
-        //     const _switch = new Gtk.Switch()
-        //     if (txt === "Reveal") {
-        //         _switch.connect('state-set', this.on_switch_activate)
-        //         _switch.set_state(true)
-        //     }
-        //     grid.attach(label, 0, 1, 2, 1)
-        //     grid.attach(_switch, 2, 1, 1, 1)
-        //     right_box.append(grid)
-        // }
+        // Set Frame Margins
+        frame.set_margin_top(15)
+        frame.set_margin_start(15)
+        frame.set_margin_end(15)
+        frame.set_margin_bottom(15)
 
-        // // Some bottoms
-        // const lock_btn = Gtk.LockButton.new()
-        // right_box.append(lock_btn)
-        // // Add the box to paned
-        // this.left_right_paned.set_end_child(right_box)
-        // this.left_right_paned.set_shrink_end_child(false)  // Can't shrink
-        // // Top/Down Paned
-        // this.top_botton_paned = new Gtk.Paned({orientation: Gtk.Orientation.VERTICAL})
-        // // Top
-        // this.top_botton_paned.set_start_child(this.left_right_paned)
-        // this.top_botton_paned.set_shrink_start_child(false)
-        // // Bottom
-        // this.bottom_box = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
-        // this.bottom_box.set_vexpand(false)
-        // // Add a label with custom font in the center
-        // let label = new Gtk.Label()
-        // let markup = get_font_markup(
-        //     'Noto Sans Regular 24', `This page is styled using main.css`)
-        // label.set_markup(markup)
-        // // fill the whole page, will make the Label centered.
-        // label.set_halign(Gtk.Align.CENTER)
-        // label.set_vexpand(false)
-        // this.bottom_box.append(label)
-        // label = new Gtk.Label()
-        // markup = get_font_markup(
-        //     'Noto Sans Regular 18', `UGLY AS HELL, but shows how it is working`)
-        // label.set_markup(markup)
-        // // fill the whole page, will make the Label centered.
-        // label.set_halign(Gtk.Align.CENTER)
-        // label.set_vexpand(false)
-        // this.bottom_box.append(label)
-        // // Revealer
-        // this.revealer = new Gtk.Revealer()
-        // this.revealer.set_valign(Gtk.Align.END)
-        // const box = new Gtk.Box({orientation:Gtk.Orientation.VERTICAL})
-        // label = Gtk.Label.new("This is a revlealer")
-        // box.append(label)
-        // this.revealer.set_child(box)
-        // this.revealer.set_transition_type(Gtk.RevealerTransitionType.CROSSFADE)
-        // this.revealer.set_transition_duration(200)
-        // this.revealer.set_reveal_child(true)
-        // this.bottom_box.append(this.revealer)
-        // this.top_botton_paned.set_end_child(this.bottom_box)
-        // this.top_botton_paned.set_shrink_end_child(false)  // Can't shrink
-        // frame.set_child(this.top_botton_paned)
-        // this.page3_label = label
-        // // add custom styling to widgets
-        // this.add_custom_styling(frame)
-        // // Add the content box as a new page in the stack
-        // return this.stack.addPage(name, title, frame)
+        // Left/Right Paned
+        // Orientation is the ways the separator is moving, not the way it is facing
+        // So HORIZONTAL split in Left/Right and VERTICAL split in Top/Down
+        this.left_right_paned = new Gtk.Paned({
+            orientation: Gtk.Orientation.HORIZONTAL})
+    
+        // Left Side
+        const left_box = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
+        left_box.set_vexpand(true)
+        left_box.set_spacing(5)
+        const left_label = Gtk.Label.new("LEFT")
+        left_label.set_valign(Gtk.Align.START)
+        left_label.set_halign(Gtk.Align.START)
+        left_box.append(left_label)
+
+        // Add Progress Bar
+        const progress = new Gtk.ProgressBar()
+        progress.set_fraction(.75)
+        left_box.append(progress)
+
+        // Add Scale
+        const scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0, 100, 5)
+        scale.set_value(25)
+        left_box.append(scale)
+
+        // separator
+        const separator = new Gtk.Separator({orientation:Gtk.Orientation.HORIZONTAL})
+        left_box.append(separator)
+        this.left_right_paned.set_start_child(left_box)
+        this.left_right_paned.set_shrink_start_child(false)  // Can't shrink
+
+        // Right Side
+        const right_box = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
+        const right_label = Gtk.Label.new("RIGHT")
+        right_label.set_valign(Gtk.Align.START)
+        right_label.set_halign(Gtk.Align.START)
+        right_box.append(right_label)
+
+        // TextView
+        const text = Gtk.TextView.new()
+
+        // Set the default width
+        text.set_size_request(150, -1)
+
+        // Set Wrap Mode to word
+        text.set_wrap_mode(Gtk.WrapMode.WORD)
+
+        // Add some text
+        const txt = LOREM_IPSUM
+        text.get_buffer().set_text(txt, txt.length)
+        right_box.append(text)
+
+        // Add Switches
+        for (const txt of ['Reveal', 'Yet Another Option']) {
+            const grid = new Gtk.Grid()
+            grid.set_column_spacing(30)
+            grid.insert_row(0)
+            grid.insert_column(0)
+            grid.insert_column(1)
+            grid.insert_column(2)
+            grid.set_row_homogeneous(true)
+            const label = Gtk.Label.new(txt)
+            label.set_hexpand(true)
+            label.set_xalign(0.0)
+            label.set_valign(Gtk.Align.CENTER)
+            const _switch = new Gtk.Switch()
+            if (txt === "Reveal") {
+                _switch.connect('state-set', this.onSwitchActivate.bind(this))
+                _switch.set_state(true)
+            }
+            grid.attach(label, 0, 1, 2, 1)
+            grid.attach(_switch, 2, 1, 1, 1)
+            right_box.append(grid)
+        }
+
+        // Some buttons
+        const lockBtn = Gtk.LockButton.new(null)
+        right_box.append(lockBtn)
+
+        // Add the box to paned
+        this.left_right_paned.set_end_child(right_box)
+        this.left_right_paned.set_shrink_end_child(false)  // Can't shrink
+
+        // Top/Down Paned
+        this.top_botton_paned = new Gtk.Paned({orientation: Gtk.Orientation.VERTICAL})
+
+        // Top
+        this.top_botton_paned.set_start_child(this.left_right_paned)
+        this.top_botton_paned.set_shrink_start_child(false)
+
+        // Bottom
+        this.bottom_box = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
+        this.bottom_box.set_vexpand(false)
+
+        // Add a label with custom font in the center
+        let label = new Gtk.Label()
+        let markup = get_font_markup(
+            'Noto Sans Regular 24', `This page is styled using main.css`)
+        label.set_markup(markup)
+
+        // fill the whole page, will make the Label centered.
+        label.set_halign(Gtk.Align.CENTER)
+        label.set_vexpand(false)
+        this.bottom_box.append(label)
+        label = new Gtk.Label()
+        markup = get_font_markup(
+            'Noto Sans Regular 18', `UGLY AS HELL, but shows how it is working`)
+        label.set_markup(markup)
+
+        // fill the whole page, will make the Label centered.
+        label.set_halign(Gtk.Align.CENTER)
+        label.set_vexpand(false)
+        this.bottom_box.append(label)
+
+        // Revealer
+        this.revealer = new Gtk.Revealer()
+        this.revealer.set_valign(Gtk.Align.END)
+        const box = new Gtk.Box({orientation:Gtk.Orientation.VERTICAL})
+        label = Gtk.Label.new("This is a revlealer")
+        box.append(label)
+        this.revealer.set_child(box)
+        this.revealer.set_transition_type(Gtk.RevealerTransitionType.CROSSFADE)
+        this.revealer.set_transition_duration(200)
+        this.revealer.set_reveal_child(true)
+        this.bottom_box.append(this.revealer)
+        this.top_botton_paned.set_end_child(this.bottom_box)
+        this.top_botton_paned.set_shrink_end_child(false)  // Can't shrink
+        frame.set_child(this.top_botton_paned)
+        this.page3_label = label
+
+        // add custom styling to widgets
+        this.addCustomStyling(frame)
+
+        // Add the content box as a new page in the stack
+        return this.stack?.addPage(name, title, frame)
     }
 
     /** Add a page with a text selector to the stack */
@@ -551,15 +571,17 @@ class _MyWindow extends Window {
     }
 
     /** callback for reveal switch (Page3) */
-    onSwitchActivate(widget, state) {
+    onSwitchActivate(widget: Gtk.Switch, state: boolean) {
+        print("onSwitchActivate state: ", state)
         if(this.revealer) {
             this.revealer.set_reveal_child(state)
-            if (setTimeout) {
+            if (typeof setTimeout === 'function') {
                 setTimeout(() => {
                     this.top_botton_paned.set_position(1000)
                 }, 500);
             } else {
-                printerr("setTimeout not defined, your GJS version is too old")
+                this.top_botton_paned.set_position(1000)
+                printerr("setTimeout not defined, your GJS version is too old", setTimeout)
             }
         }
     }

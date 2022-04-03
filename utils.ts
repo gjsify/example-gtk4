@@ -1,4 +1,5 @@
 import Polkit from './@types/Gjs/Polkit-1.0.js'
+import Gio from './@types/Gjs/Gio-2.0'
 
 export const isInt = (n: Number) => {
     return !Number.isNaN(n) && Number.isInteger(n);
@@ -45,6 +46,5 @@ export const range = (end: number) => {
  */
 export const getPermission = (action_id='org.freedesktop.accounts.user-administration') => {
     const prem = Polkit.Permission.new_sync(action_id, null, null)
-    // print(prem.acquire())
     return prem
 }
