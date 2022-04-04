@@ -4,3 +4,4 @@
   export const Format = imports.format;
   export const Mainloop = imports.mainloop;
   export const gettext = imports.gettext;
+  export const System = imports.system;

@@ -2471,41 +2471,41 @@ class ParamSpec {
     // TODO add to ts-for-gir
     // See https://gitlab.gnome.org/GNOME/gjs/-/blob/master/modules/core/overrides/GObject.js
 
-    static char(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    static char(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number): ParamSpecChar
     
-    static uchar(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    static uchar(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number): ParamSpecUChar
     
-    static int(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    static int(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number): ParamSpecInt
     
-    static uint(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    static uint(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number): ParamSpecUInt
     
-    static long(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number) 
+    static long(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number): ParamSpecLong
     
-    static ulong(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number) 
+    static ulong(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number): ParamSpecULong
 
-    static int64(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    static int64(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number): ParamSpecInt64
 
-    static uint64(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number) 
+    static uint64(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number): ParamSpecUInt64
 
-    static float(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    static float(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number): ParamSpecFloat
     
-    static boolean(name: string, nick: string, blurb: string, flags: ParamFlags, defaultValue: boolean)
+    static boolean(name: string, nick: string, blurb: string, flags: ParamFlags, defaultValue: boolean): ParamSpecBoolean
     
-    static flags(name: string, nick: string, blurb: string, flags: ParamFlags, flagsType: GType<unknown>, defaultValue: number) 
+    static flags(name: string, nick: string, blurb: string, flags: ParamFlags, flagsType: GType<unknown>, defaultValue: number): ParamSpecFlags
     
-    static enum(name: string, nick: string, blurb: string, flags: ParamFlags, enumType: GType<unknown>, defaultValue: number) 
+    static enum(name: string, nick: string, blurb: string, flags: ParamFlags, enumType: GType<unknown>, defaultValue: number): ParamSpecEnum
     
-    static double(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number)
+    static double(name: string, nick: string, blurb: string, flags: ParamFlags, minimum: number, maximum: number, defaultValue: number): ParamSpecDouble
     
-    static string(name: string, nick: string, blurb: string, flags: ParamFlags, defaultValue: string | null)
+    static string(name: string, nick: string, blurb: string, flags: ParamFlags, defaultValue: string | null): ParamSpecString
     
-    static boxed(name: string, nick: string, blurb: string, flags: ParamFlags, boxedType: GType<unknown>)
+    static boxed(name: string, nick: string, blurb: string, flags: ParamFlags, boxedType: GType<unknown>): ParamSpecBoxed
 
-    static object(name: string, nick: string, blurb: string, flags: ParamFlags, objectType: GType<unknown>)
+    static object(name: string, nick: string, blurb: string, flags: ParamFlags, objectType: GType<unknown>): ParamSpecObject
     
-    static jsobject(name: string, nick: string, blurb: string, flags: ParamFlags)
+    static jsobject(name: string, nick: string, blurb: string, flags: ParamFlags): ParamSpecBoxed
     
-    static param(name: string, nick: string, blurb: string, flags: ParamFlags, paramType: GType<unknown>)
+    static param(name: string, nick: string, blurb: string, flags: ParamFlags, paramType: GType<unknown>): ParamSpecParam
 
     static override: typeof ObjectClass['override_property'];
 }

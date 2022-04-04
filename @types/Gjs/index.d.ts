@@ -6,49 +6,20 @@
  */
 
 import type * as Gjs from "./Gjs";
-  
-      import type Gtk40 from "./Gtk-4.0";
-    
-  
-      import type Polkit10 from "./Polkit-1.0";
-    
-  
-      import type Gsk40 from "./Gsk-4.0";
-    
-  
-      import type Gdk40 from "./Gdk-4.0";
-    
-  
-      import type GObject20 from "./GObject-2.0";
-    
-  
-      import type Graphene10 from "./Graphene-1.0";
-    
-  
-      import type Cairo10 from "./cairo-1.0";
-    
-  
-      import type PangoCairo10 from "./PangoCairo-1.0";
-    
-  
-      import type Pango10 from "./Pango-1.0";
-    
-  
-      import type Gio20 from "./Gio-2.0";
-    
-  
-      import type GdkPixbuf20 from "./GdkPixbuf-2.0";
-    
-  
-      import type GLib20 from "./GLib-2.0";
-    
-  
-      import type HarfBuzz00 from "./HarfBuzz-0.0";
-    
-  
-      import type GModule20 from "./GModule-2.0";
-    
-
+import type Gtk40 from "./Gtk-4.0";
+import type Polkit10 from "./Polkit-1.0";
+import type Gsk40 from "./Gsk-4.0";
+import type Gdk40 from "./Gdk-4.0";
+import type GObject20 from "./GObject-2.0";
+import type Graphene10 from "./Graphene-1.0";
+import type Cairo10 from "./cairo-1.0";
+import type PangoCairo10 from "./PangoCairo-1.0";
+import type Pango10 from "./Pango-1.0";
+import type Gio20 from "./Gio-2.0";
+import type GdkPixbuf20 from "./GdkPixbuf-2.0";
+import type GLib20 from "./GLib-2.0";
+import type HarfBuzz00 from "./HarfBuzz-0.0";
+import type GModule20 from "./GModule-2.0";
 declare global {
     function print(...args: any[]): void;
     function printerr(...args: any[]): void
@@ -60,30 +31,32 @@ declare global {
     // See https://gitlab.gnome.org/GNOME/gjs/-/blob/master/modules/esm/_timers.js
 
     /**
-     * @this {typeof globalThis}
+     * Since Gjs >= 1.71.1
      * @param callback a callback function
      * @param delay the duration in milliseconds to wait before running callback
      * @param args arguments to pass to callback
      */
-     function setTimeout(callback: (...args: any[]) => any, delay: number, ...args: any[])
+     function setTimeout(callback: (...args: any[]) => any, delay: number, ...args: any[]): GLib20.Source
 
      /**
-      * @this {typeof globalThis}
+      * Since Gjs >= 1.71.1
       * @param callback a callback function
       * @param delay the duration in milliseconds to wait between calling callback
       * @param args arguments to pass to callback
       */
-    function setInterval(callback, delay: number, ...args: any[])
+    function setInterval(callback: (...args: any[]) => any, delay: number, ...args: any[]): GLib20.Source
  
      /**
+      * Since Gjs >= 1.71.1
       * @param timeout the timeout to clear
       */
-    function clearTimeout(timeout: GLib20.Source)
+    function clearTimeout(timeout: GLib20.Source): void
  
      /**
+      * Since Gjs >= 1.71.1
       * @param timeout the timeout to clear
       */
-    function clearInterval(timeout: GLib20.Source)
+    function clearInterval(timeout: GLib20.Source): void
 
     const imports: typeof Gjs & {
         gi: {
