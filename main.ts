@@ -19,6 +19,8 @@
  */
 
 import './@types/Gjs/index.js'
+import './polyfills/index.js'
+import { System } from './@types/Gjs/Gjs.js'
 import Gtk from './@types/Gjs/Gtk-4.0.js'
 import GObject from './@types/Gjs/GObject-2.0.js'
 import Gio from './@types/Gjs/Gio-2.0.js'
@@ -37,6 +39,11 @@ class _MyWindow extends Window {
     columnView?: Gtk.ColumnView;
 
     stack?: _Stack;
+
+    leftRightPaned?: Gtk.Paned;
+    topBottomPaned?: Gtk.Paned;
+
+    bottomBox?: Gtk.Box;
 
     override _init(config?: Gtk.ApplicationWindow_ConstructProps) {
 
@@ -304,7 +311,7 @@ class _MyWindow extends Window {
         // Left/Right Paned
         // Orientation is the ways the separator is moving, not the way it is facing
         // So HORIZONTAL split in Left/Right and VERTICAL split in Top/Down
-        this.left_right_paned = new Gtk.Paned({
+        this.leftRightPaned = new Gtk.Paned({
             orientation: Gtk.Orientation.HORIZONTAL})
     
         // Left Side
@@ -329,8 +336,8 @@ class _MyWindow extends Window {
         // separator
         const separator = new Gtk.Separator({orientation:Gtk.Orientation.HORIZONTAL})
         left_box.append(separator)
-        this.left_right_paned.set_start_child(left_box)
-        this.left_right_paned.set_shrink_start_child(false)  // Can't shrink
+        this.leftRightPaned.set_start_child(left_box)
+        this.leftRightPaned.set_shrink_start_child(false)  // Can't shrink
 
         // Right Side
         const right_box = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
@@ -381,19 +388,19 @@ class _MyWindow extends Window {
         right_box.append(lockBtn)
 
         // Add the box to paned
-        this.left_right_paned.set_end_child(right_box)
-        this.left_right_paned.set_shrink_end_child(false)  // Can't shrink
+        this.leftRightPaned.set_end_child(right_box)
+        this.leftRightPaned.set_shrink_end_child(false)  // Can't shrink
 
         // Top/Down Paned
-        this.top_botton_paned = new Gtk.Paned({orientation: Gtk.Orientation.VERTICAL})
+        this.topBottomPaned = new Gtk.Paned({orientation: Gtk.Orientation.VERTICAL})
 
         // Top
-        this.top_botton_paned.set_start_child(this.left_right_paned)
-        this.top_botton_paned.set_shrink_start_child(false)
+        this.topBottomPaned.set_start_child(this.leftRightPaned)
+        this.topBottomPaned.set_shrink_start_child(false)
 
         // Bottom
-        this.bottom_box = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
-        this.bottom_box.set_vexpand(false)
+        this.bottomBox = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
+        this.bottomBox.set_vexpand(false)
 
         // Add a label with custom font in the center
         let label = new Gtk.Label()
@@ -404,7 +411,7 @@ class _MyWindow extends Window {
         // fill the whole page, will make the Label centered.
         label.set_halign(Gtk.Align.CENTER)
         label.set_vexpand(false)
-        this.bottom_box.append(label)
+        this.bottomBox.append(label)
         label = new Gtk.Label()
         markup = get_font_markup(
             'Noto Sans Regular 18', `UGLY AS HELL, but shows how it is working`)
@@ -413,7 +420,7 @@ class _MyWindow extends Window {
         // fill the whole page, will make the Label centered.
         label.set_halign(Gtk.Align.CENTER)
         label.set_vexpand(false)
-        this.bottom_box.append(label)
+        this.bottomBox.append(label)
 
         // Revealer
         this.revealer = new Gtk.Revealer()
@@ -425,10 +432,10 @@ class _MyWindow extends Window {
         this.revealer.set_transition_type(Gtk.RevealerTransitionType.CROSSFADE)
         this.revealer.set_transition_duration(200)
         this.revealer.set_reveal_child(true)
-        this.bottom_box.append(this.revealer)
-        this.top_botton_paned.set_end_child(this.bottom_box)
-        this.top_botton_paned.set_shrink_end_child(false)  // Can't shrink
-        frame.set_child(this.top_botton_paned)
+        this.bottomBox.append(this.revealer)
+        this.topBottomPaned.set_end_child(this.bottomBox)
+        this.topBottomPaned.set_shrink_end_child(false)  // Can't shrink
+        frame.set_child(this.topBottomPaned)
         this.page3_label = label
 
         // add custom styling to widgets
@@ -537,7 +544,7 @@ class _MyWindow extends Window {
             this.showShortcuts()
     }
 
-    onColorSelected(widget) {
+    onColorSelected(widget: any /* TODO */) {
         const selectedColor = this.chooser.get_rgba()
         const colorTxt = selectedColor.to_string()
         const markup = this._get_text_markup(
@@ -546,7 +553,7 @@ class _MyWindow extends Window {
     }
 
     /** callback for button clicked (Page5) */
-    onButtonChooser(widget) {
+    onButtonChooser(/*widget: ButtonRow*/) {
         // TODO:
         // const dialog = new MaterialColorDialog("Select Color", this)
         // dialog.connect('response', this.onDialogResponse.bind(this))
@@ -554,7 +561,7 @@ class _MyWindow extends Window {
     }
 
     /** callback for the searchbar entry */
-    onSearch(widget) {
+    onSearch(widget: Gtk.SearchEntry) {
         print(`Searching for : ${widget.get_text()}`)
     }
 
@@ -572,17 +579,14 @@ class _MyWindow extends Window {
 
     /** callback for reveal switch (Page3) */
     onSwitchActivate(widget: Gtk.Switch, state: boolean) {
-        print("onSwitchActivate state: ", state)
         if(this.revealer) {
             this.revealer.set_reveal_child(state)
-            if (typeof setTimeout === 'function') {
-                setTimeout(() => {
-                    this.top_botton_paned.set_position(1000)
-                }, 500);
-            } else {
-                this.top_botton_paned.set_position(1000)
-                printerr("setTimeout not defined, your GJS version is too old", setTimeout)
-            }
+            print("setTimeout of 500ms")
+            setTimeout(() => {
+                print("setTimeout done")
+                // This has a different behavior than in the python version?
+                this.topBottomPaned?.set_position(1000)
+            }, 500);
         }
     }
 
@@ -594,13 +598,13 @@ class _MyWindow extends Window {
     }
 
     /** callback for button clicked (Page1) */
-    onButtonClicked(widget) {
+    onButtonClicked(widget: Gtk.Button) {
         const markup = this._get_text_markup(`${widget.get_label()} was pressed`)
         this.page1_label.set_markup(markup)
     }
 
     /** callback for calendar selection (Page1) */
-    onCalendarChanged(widget) {
+    onCalendarChanged(widget: Gtk.Calendar) {
         const date = widget.get_date().format('%F')
         const txt = `${date} was selected in calendar`
         const markup = this._get_text_markup(txt)
@@ -608,22 +612,22 @@ class _MyWindow extends Window {
     }
 
     /** callback for entry activation (Page1) */
-    onEntryActivate(widget) {
+    onEntryActivate(widget: Gtk.Entry) {
         const txt = `${widget.get_buffer().get_text()} was typed in entry`
         const markup = this._get_text_markup(txt)
         this.page1_label.set_markup(markup)
     }
 
-    onDialogResponse(widget, response_id) {
-        if (response_id == Gtk.ResponseType.OK) {
+    onDialogResponse(widget: any /* TODO */, responseId: number) {
+        if (responseId == Gtk.ResponseType.OK) {
             // get selected color in hex format
             const color = widget.get_color()
             const markup = `<span size="xx-large" foreground="${color}">the color ${color} was selected</span>`
             this.page5_label.set_markup(markup)
-        } else if (response_id == Gtk.ResponseType.CANCEL) {
+        } else if (responseId == Gtk.ResponseType.CANCEL) {
             print("cancel")
             // if the message dialog is destroyed (by pressing ESC)
-        } else if (response_id == Gtk.ResponseType.DELETE_EVENT) {
+        } else if (responseId == Gtk.ResponseType.DELETE_EVENT) {
             print("dialog closed or cancelled")
         }
         widget.destroy()
@@ -667,11 +671,10 @@ const Application = GObject.registerClass({
  
  /** Run the main application */
 const main = () => {
-    Gtk.init();
-    const loop = GLib.MainLoop.new(null, false);
+    // The proper way to run a Gtk.Application or Gio.Application is take ARGV and
+    // prepend the program name to it, and pass that to run()
     const app = new Application();
-    app.run(/*argv*/ null);
-    loop.run();
+    app.run([System.programInvocationName, ...ARGV]);
 }
 
 main();
