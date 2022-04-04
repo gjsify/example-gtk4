@@ -1,0 +1,20 @@
+import GObject from './@types/Gjs/GObject-2.0.js'
+
+/** custom data element for a ColumnView model (Must be based on GObject) */
+export class _ColumnElem extends GObject.Object {
+
+    name = "";
+
+    _init(name = "") {
+        super._init();
+        this.name = name
+    }
+
+    _repr() {
+        return `ColumnElem(name: ${this.name})`
+    }
+}
+
+export const ColumnElem = GObject.registerClass({
+    GTypeName: 'ColumnElem'
+}, _ColumnElem );

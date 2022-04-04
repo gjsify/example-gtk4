@@ -1,6 +1,8 @@
 import Gtk from '../@types/Gjs/Gtk-4.0.js'
 import GObject from '../@types/Gjs/GObject-2.0.js'
 
+import { NotImplemented } from "../constants.js"
+
 /** Selector base class */
 export class _SelectorBase extends Gtk.ListBox {
 
@@ -19,9 +21,14 @@ export class _SelectorBase extends Gtk.ListBox {
         this.connect('row-selected', this.onRowChanges.bind(this))
     }
 
-    /** Overload this in a subclass */
+    /**
+     * Overload this in a subclass
+     * @abstract
+     * @param name 
+     * @param markup 
+     */
     addRow(name: string, markup: string) {
-        throw new Error("Not implemented!");
+        throw NotImplemented;
     }
 
     onRowChanges(widget: Gtk.ListBox, row: Gtk.ListBoxRow | null) {
@@ -50,6 +57,5 @@ export const SelectorBase = GObject.registerClass({
             Number.MAX_SAFE_INTEGER,
             0
         ),
-        
     }
 }, _SelectorBase );

@@ -1,5 +1,4 @@
 import Polkit from './@types/Gjs/Polkit-1.0.js'
-import Gio from './@types/Gjs/Gio-2.0'
 
 export const isInt = (n: Number) => {
     return !Number.isNaN(n) && Number.isInteger(n);
@@ -23,7 +22,7 @@ export const rgb_to_hex = (r: number, g: number, b: number) => {
     return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
-export const color_to_hex = (color) => {
+export const color_to_hex = (color: {red: number, green: number, blue: number}) => {
     return rgb_to_hex(color.red, color.green, color.blue)
 }
 

@@ -20,6 +20,7 @@ import type GdkPixbuf20 from "./GdkPixbuf-2.0";
 import type GLib20 from "./GLib-2.0";
 import type HarfBuzz00 from "./HarfBuzz-0.0";
 import type GModule20 from "./GModule-2.0";
+
 declare global {
     function print(...args: any[]): void;
     function printerr(...args: any[]): void
