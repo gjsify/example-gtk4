@@ -2,15 +2,15 @@ import Gtk from './@types/Gjs/Gtk-4.0.js'
 import GObject from './@types/Gjs/GObject-2.0.js'
 
 import { ColumnViewListStore } from "./widgets/index.js";
-import { ColumnElem, _ColumnElem } from "./column-elem.js";
-import type { _MyWindow } from "./my-window";
+import { ColumnElem, IColumnElem } from "./column-elem.js";
+import type { IMyWindow } from "./my-window";
 
 /** Custom ColumnViewColumn */
-export class _MyColumnViewColumn extends ColumnViewListStore {
+export class IMyColumnViewColumn extends ColumnViewListStore {
 
-    win?: _MyWindow
+    win?: IMyWindow
 
-    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, cls?: any, col_view?: Gtk.ColumnView, data: string[] = [], win?: _MyWindow) {
+    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, cls?: any, col_view?: Gtk.ColumnView, data: string[] = [], win?: IMyWindow) {
         // Init ListView with store model class.
         super(config, ColumnElem, col_view)
         this.win = win
@@ -43,7 +43,7 @@ export class _MyColumnViewColumn extends ColumnViewListStore {
      */
     factory_bind(widget: Gtk.ColumnViewColumn, item: Gtk.ListItem) {
         const label = item.get_child() as Gtk.Label;   // Get the Gtk.Label stored in the ListItem
-        const data = item.get_item() as _ColumnElem;   // get the model item, connected to current ListItem
+        const data = item.get_item() as IColumnElem;   // get the model item, connected to current ListItem
         label?.set_text(data.name)                     // Update Gtk.Label with data from model item
     }
 
@@ -70,4 +70,4 @@ export class _MyColumnViewColumn extends ColumnViewListStore {
 
 export const MyColumnViewColumn = GObject.registerClass({
     GTypeName: 'MyColumnViewColumn'
-}, _MyColumnViewColumn );
+}, IMyColumnViewColumn );

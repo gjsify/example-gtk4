@@ -4,7 +4,7 @@ import Gtk from '../@types/Gjs/Gtk-4.0.js'
 import GObject from '../@types/Gjs/GObject-2.0.js'
 
 /** custom Gtk.ApplicationWindow with a headerbar */
-class _Window extends Gtk.ApplicationWindow {
+class IWindow extends Gtk.ApplicationWindow {
 
     /** custom CSS provider */
     cssProvider?: Gtk.CssProvider;
@@ -68,4 +68,4 @@ class _Window extends Gtk.ApplicationWindow {
 
 export const Window = GObject.registerClass({
     GTypeName: 'Window'
-}, _Window );
+}, IWindow );

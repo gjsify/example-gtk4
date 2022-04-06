@@ -4,7 +4,7 @@ import GObject from '../@types/Gjs/GObject-2.0.js'
 import { SelectorBase } from "./selector-base.js";
 
 /** Vertical Selector Widget that contains a number of strings where one can be selected */
-export class _TextSelector extends SelectorBase {
+export class ITextSelector extends SelectorBase {
 
     /** Add a named row to the selector with at given icon name */
     override addRow(name: string, markup: string) {
@@ -28,4 +28,4 @@ export class _TextSelector extends SelectorBase {
 
 export const TextSelector = GObject.registerClass({
     GTypeName: 'TextSelector'
-}, _TextSelector );
+}, ITextSelector );

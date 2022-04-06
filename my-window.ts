@@ -2,22 +2,22 @@ import Gtk from './@types/Gjs/Gtk-4.0.js'
 import GObject from './@types/Gjs/GObject-2.0.js'
 import Gio from './@types/Gjs/Gio-2.0.js'
 
-import { Window, MenuButton, SearchBar, _SearchBar, Stack, _Stack, IconSelector, TextSelector, SwitchRow } from "./widgets/index.js";
+import { Window, MenuButton, SearchBar, ISearchBar, Stack, IStack, IconSelector, TextSelector, SwitchRow } from "./widgets/index.js";
 import { get_font_markup, getPermission, range } from "./utils.js";
 import { LOREM_IPSUM } from "./constants.js";
 import { MyColumnViewColumn } from "./my-column-view-column.js";
-import { MyListView, _MyListView } from "./my-list-view.js" 
+import { MyListView, IMyListView } from "./my-list-view.js" 
 
-export class _MyWindow extends Window {
+export class IMyWindow extends Window {
 
     revealer?: Gtk.Revealer;
-    search?: _SearchBar;
+    search?: ISearchBar;
     columnView?: Gtk.ColumnView;
-    stack?: _Stack;
+    stack?: IStack;
     leftRightPaned?: Gtk.Paned;
     topBottomPaned?: Gtk.Paned;
     bottomBox?: Gtk.Box;
-    listview?: _MyListView;
+    listview?: IMyListView;
     overlaInfo?: Gtk.InfoBar;
 
     page1?: Gtk.StackPage;
@@ -637,4 +637,4 @@ export class _MyWindow extends Window {
 
 export const MyWindow = GObject.registerClass({
     GTypeName: 'MyWindow'
-}, _MyWindow );
+}, IMyWindow );

@@ -11,7 +11,7 @@ import { ListElem } from '../list-elem.js';
  * ListView base class, it setup the basic factory, selection model & data model
  * handlers must be overloaded & implemented in a sub class
  */
-class _ListViewBase extends Gtk.ListView {
+class IListViewBase extends Gtk.ListView {
 
     store?: Gio.ListStore;
 
@@ -183,4 +183,4 @@ export const ListViewBase = GObject.registerClass({
             GObject.ParamFlags.CONSTRUCT | GObject.ParamFlags.READWRITE,
         ),
     }
-}, _ListViewBase );
+}, IListViewBase );

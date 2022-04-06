@@ -10,7 +10,7 @@ import { ListElem } from "../list-elem.js"
  * ListView base with an Gio.ListStore as data model
  * It can contain misc objects derived from GObject
  */
-export class _ListViewListStore extends ListViewBase {
+export class IListViewListStore extends ListViewBase {
     constructor({}, model_cls: any /* TODO */) {
         super({}, model_cls)
     }
@@ -24,4 +24,4 @@ export class _ListViewListStore extends ListViewBase {
 
 export const ListViewListStore = GObject.registerClass({
     GTypeName: 'ListViewListStore'
-}, _ListViewListStore );
+}, IListViewListStore );

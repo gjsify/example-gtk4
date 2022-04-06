@@ -4,7 +4,7 @@ import GObject from '../@types/Gjs/GObject-2.0.js'
 import { SelectorBase } from "./selector-base.js";
 
 /** Vertical Selector Widget that contains a number of icons where one can be selected */
-export class _IconSelector extends SelectorBase {
+export class IIconSelector extends SelectorBase {
 
     /** Add a named row to the selector with at given icon name */
     override addRow(name: string, icon_name: string) {
@@ -24,4 +24,4 @@ export class _IconSelector extends SelectorBase {
 
 export const IconSelector = GObject.registerClass({
     GTypeName: 'IconSelector'
-}, _IconSelector );
+}, IIconSelector );

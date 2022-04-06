@@ -1,7 +1,7 @@
 import Gtk from '../@types/Gjs/Gtk-4.0.js'
 import GObject from '../@types/Gjs/GObject-2.0.js'
 
-export class _SwitchRow extends Gtk.Box {
+export class ISwitchRow extends Gtk.Box {
 
     label?: Gtk.Label;
     switch?: Gtk.Switch;
@@ -37,4 +37,4 @@ export class _SwitchRow extends Gtk.Box {
 
 export const SwitchRow = GObject.registerClass({
     GTypeName: 'SwitchRow'
-}, _SwitchRow );
+}, ISwitchRow );

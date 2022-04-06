@@ -1,7 +1,7 @@
 import GObject from './@types/Gjs/GObject-2.0.js'
 
 /** custom data element for a ColumnView model (Must be based on GObject) */
-export class _ColumnElem extends GObject.Object {
+export class IColumnElem extends GObject.Object {
 
     name = "";
 
@@ -17,4 +17,4 @@ export class _ColumnElem extends GObject.Object {
 
 export const ColumnElem = GObject.registerClass({
     GTypeName: 'ColumnElem'
-}, _ColumnElem );
+}, IColumnElem );

@@ -915,6 +915,10 @@ class TypePlugin {
     use(): void
     static name: string
 }
+// A few things here are inspired by gi.ts 
+// See https://gitlab.gnome.org/ewlsh/gi.ts/-/blob/master/packages/lib/src/generators/dts/gobject.ts
+// Copyright Evan Welsh
+
 export type GType<T = unknown> = {
     __type__(arg: never): T
     name: string
@@ -1105,10 +1109,6 @@ export function signal_handlers_unblock_by_func(instance: Object, func: (...args
 export function signal_handlers_disconnect_by_func(instance: Object, func: (...args: any[]) => any): number;
 export function signal_handlers_disconnect_by_data(): void;
 
-// The following are part of gi.ts
-// See https://gitlab.gnome.org/ewlsh/gi.ts/-/blob/master/packages/lib/src/generators/dts/gobject.ts
-// Copyright Evan Welsh
-
 export type Property<K extends ParamSpec> = K extends ParamSpecBoolean
     ? boolean
     : K extends ParamSpecDouble | ParamSpecInt | ParamSpecUInt | ParamSpecFloat | ParamSpecLong
@@ -1134,8 +1134,8 @@ export type Property<K extends ParamSpec> = K extends ParamSpecBoolean
 // TODO: What about the generated class Closure 
 export type TClosure<R = any, P = any> = (...args: P[]) => R;
 
-// This should be replaces by GObject.Object as soon as once we have implemented inheritance
-class AnyClass {}
+// This should be replaces by a class of GObject.Object as soon as once we have implemented inheritance
+export class AnyClass {}
 
 export function registerClass<
     T extends AnyClass,
@@ -1153,7 +1153,6 @@ export function registerClass<
 ): T;
 
 export function registerClass<T extends AnyClass>(cls: T): T
-
 
 interface Binding_ConstructProps extends Object_ConstructProps {
     /* Constructor properties of GObject-2.0.GObject.Binding */

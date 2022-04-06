@@ -3,7 +3,7 @@ import Gio from '../@types/Gjs/Gio-2.0.js'
 import GObject from '../@types/Gjs/GObject-2.0.js'
 
 import { NotImplemented } from "../constants.js"
-import type { _ColumnElem } from "../column-elem";
+import type { IColumnElem } from "../column-elem";
 
 // TODO: see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/examples/glistmodel.js
 
@@ -11,7 +11,7 @@ import type { _ColumnElem } from "../column-elem";
  * ColumnViewColumn base class, it setup the basic factory, selection model & data model
  * handlers must be overloaded & implemented in a sub class
  */
-export class _ViewColumnBase extends Gtk.ColumnViewColumn {
+export class IViewColumnBase extends Gtk.ColumnViewColumn {
 
     store?: Gio.ListStore
     model?: Gtk.SelectionModel
@@ -56,7 +56,7 @@ export class _ViewColumnBase extends Gtk.ColumnViewColumn {
      * @abstract
      * @param model_cls 
      */
-    setup_store(model_cls: typeof _ColumnElem): Gio.ListStore {
+    setup_store(model_cls: typeof IColumnElem): Gio.ListStore {
         throw NotImplemented;
     }
 
@@ -178,4 +178,4 @@ export const ViewColumnBase = GObject.registerClass({
             GObject.ParamFlags.CONSTRUCT | GObject.ParamFlags.READWRITE,
         ),
     }
-}, _ViewColumnBase );
+}, IViewColumnBase );

@@ -11,9 +11,9 @@ import { ColumnElem } from "../column-elem.js"
  * ColumnViewColumn base with an Gio.ListStore as data model
  * It can contain misc objects derived from GObject
  **/
-export class _ColumnViewListStore extends ViewColumnBase {
+export class IColumnViewListStore extends ViewColumnBase {
 
-    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, model_cls: any, col_view) {
+    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, model_cls: typeof ColumnElem, col_view) {
         super(config, model_cls, col_view)
     }
 
@@ -26,4 +26,4 @@ export class _ColumnViewListStore extends ViewColumnBase {
 
 export const ColumnViewListStore = GObject.registerClass({
     GTypeName: 'ColumnViewListStore',
-}, _ColumnViewListStore );
+}, IColumnViewListStore );

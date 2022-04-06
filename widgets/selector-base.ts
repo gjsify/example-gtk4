@@ -4,7 +4,7 @@ import GObject from '../@types/Gjs/GObject-2.0.js'
 import { NotImplemented } from "../constants.js"
 
 /** Selector base class */
-export class _SelectorBase extends Gtk.ListBox {
+export class ISelectorBase extends Gtk.ListBox {
 
     public _rows: { [i: number]: string } = {};
 
@@ -58,4 +58,4 @@ export const SelectorBase = GObject.registerClass({
             0
         ),
     }
-}, _SelectorBase );
+}, ISelectorBase );

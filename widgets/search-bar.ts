@@ -2,7 +2,7 @@ import Gtk from '../@types/Gjs/Gtk-4.0.js'
 import GObject from '../@types/Gjs/GObject-2.0.js'
 
 /** Wrapper for Gtk.Searchbar Gtk.SearchEntry */
-export class _SearchBar extends Gtk.SearchBar {
+export class ISearchBar extends Gtk.SearchBar {
 
     entry?: Gtk.SearchEntry;
     searchOptions?: Gtk.MenuButton;
@@ -47,4 +47,4 @@ export class _SearchBar extends Gtk.SearchBar {
 
 export const SearchBar = GObject.registerClass({
     GTypeName: 'SearchBar'
-}, _SearchBar );
+}, ISearchBar );

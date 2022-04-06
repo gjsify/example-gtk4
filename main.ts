@@ -19,14 +19,13 @@
  */
 
 import './@types/Gjs/index.js'
-import './polyfills/index.js'
 import { System } from './@types/Gjs/Gjs.js'
 import Gtk from './@types/Gjs/Gtk-4.0.js'
 import GObject from './@types/Gjs/GObject-2.0.js'
 import Gio from './@types/Gjs/Gio-2.0.js'
 
-import { _SearchBar, _Stack } from "./widgets/index.js";
-import { MyWindow, _MyWindow } from './my-window.js'
+import { ISearchBar, IStack } from "./widgets/index.js";
+import { MyWindow, IMyWindow } from './my-window.js'
 
 class _Application extends Gtk.Application {
     constructor(constructProperties = {

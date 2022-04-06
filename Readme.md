@@ -1,21 +1,52 @@
-### Misc classes to build Gtk4 Applications in python 3.9
+# Gtk4 Applications Example
 
-It takes the hassle away from building Gtk4 application in Python
+## Misc classes to build Gtk4 Applications in Gjs and Typescript
+
+It takes the hassle away from building Gtk4 application in Gjs 
 So you can create a cool application, without all the boilerplate code
 
- * main.py     is a sample application
- * widgets.py  contains classes to make it easy to create your UI
+ * main.ts          is a sample application
+ * widgets/*.js     contains classes to make it easy to create your UI
 
-### Requirements (Fedora 35)
+## Requirements (Fedora 36)
 * gtk4
-* python3-gobject
-* Python 3.9 (or later)
+* gjs 1.72.0 (or later)
+* node 16 (can be installed via [nvm](https://github.com/nvm-sh/nvm))
 
 ```bash
-sudo dnf install gtk4-devel polkit-devel 
+sudo dnf install gtk4-devel polkit-devel
 ```
 
-Will properly work fine in other distros, but I have only tested in Fedora 35
+```bash
+npm install
+```
+
+Will properly work fine in other distros, but I have only tested in Fedora 36
+
+## Build types
+
+The types in the @types directory were created with [ts-for-gir](https://github.com/sammydre/ts-for-gir).
+If you want to create the types yourself install ts-for-gir and run the following command:
+
+```bash
+npm run build:types
+```
+
+## Build Typescript
+
+```bash
+npm run build:app
+```
+
+## Start
+
+```bash
+npm run start
+
+# or alternatively
+gjs -m dist/main.js
+
+```
 
 ### Screenshoots
 ![gtk4python_page1](https://user-images.githubusercontent.com/283985/138865212-6d67f2e0-c844-4ef6-bfbe-6cb064dfb2ab.png)

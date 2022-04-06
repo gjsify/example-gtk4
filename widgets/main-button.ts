@@ -8,7 +8,7 @@ import { APP_MENU } from "../constants.js";
  * Wrapper class for at Gtk.Menubutton with a menu defined
  * in a Gtk.Builder xml string
  */
-export class _MenuButton extends Gtk.MenuButton {
+export class IMenuButton extends Gtk.MenuButton {
 
     constructor(config: Gtk.MenuButton_ConstructProps = {}) {
         super(config)
@@ -26,4 +26,4 @@ export class _MenuButton extends Gtk.MenuButton {
 
 export const MenuButton = GObject.registerClass({
     GTypeName: 'MenuButton'
-}, _MenuButton );
+}, IMenuButton );

@@ -2,16 +2,16 @@ import Gtk from './@types/Gjs/Gtk-4.0.js'
 import GObject from './@types/Gjs/GObject-2.0.js'
 
 import { ListViewListStore } from './widgets/list-view-list-store.js';
-import { ListElem, _ListElem } from "./list-elem.js";
+import { ListElem, IListElem } from "./list-elem.js";
 import { NotImplemented } from "./constants.js";
-import type { _MyWindow } from "./my-window.js";
+import type { IMyWindow } from "./my-window.js";
 
 /** Custom ListView */
-export class _MyListView extends ListViewListStore {
+export class IMyListView extends ListViewListStore {
 
-    win?: _MyWindow
+    win?: IMyWindow
 
-    constructor(config: Gtk.ListView_ConstructProps = {}, win?: _MyWindow) {
+    constructor(config: Gtk.ListView_ConstructProps = {}, win?: IMyWindow) {
         // Init ListView with store model class.
         super(config, ListElem)
         
@@ -54,7 +54,7 @@ export class _MyListView extends ListViewListStore {
         // get the Gtk.Box stored in the ListItem
         const box = item.get_child()
         // get the model item, connected to current ListItem
-        const data = item.get_item() as _ListElem
+        const data = item.get_item() as IListElem
         // get the Gtk.Label (first item in box)
         const label = box?.get_first_child() as Gtk.Label
         // get the Gtk.Switch (next sibling to the Label)
@@ -110,4 +110,4 @@ export class _MyListView extends ListViewListStore {
 
 export const MyListView = GObject.registerClass({
     GTypeName: 'MyListView'
-}, _MyListView );
+}, IMyListView );

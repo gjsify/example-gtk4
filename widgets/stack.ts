@@ -2,7 +2,7 @@ import Gtk from '../@types/Gjs/Gtk-4.0.js'
 import GObject from '../@types/Gjs/GObject-2.0.js'
 
 /** Wrapper for Gtk.Stack with  with a StackSwitcher */
-export class _Stack extends Gtk.Stack {
+export class IStack extends Gtk.Stack {
 
     public switcher?: Gtk.StackSwitcher;
 
@@ -36,4 +36,4 @@ export class _Stack extends Gtk.Stack {
 
 export const Stack = GObject.registerClass({
     GTypeName: 'Stack',
-}, _Stack );
+}, IStack );
