@@ -4307,7 +4307,7 @@ function atomic_ref_count_inc(arc: number): void
 function atomic_ref_count_init(arc: number): void
 function base64_decode(text: string): Uint8Array
 function base64_decode_inplace(text: Uint8Array): [ /* returnType */ number, /* text */ Uint8Array ]
-function base64_encode(data: Uint8Array): string
+function base64_encode(data: Uint8Array | null): string
 function base64_encode_close(break_lines: boolean, state: number, save: number): [ /* returnType */ number, /* out */ Uint8Array, /* state */ number, /* save */ number ]
 function base64_encode_step(in_: Uint8Array, break_lines: boolean, state: number, save: number): [ /* returnType */ number, /* out */ Uint8Array, /* state */ number, /* save */ number ]
 function basename(file_name: string): string
@@ -4363,19 +4363,19 @@ function date_valid_julian(julian_date: number): boolean
 function date_valid_month(month: DateMonth): boolean
 function date_valid_weekday(weekday: DateWeekday): boolean
 function date_valid_year(year: DateYear): boolean
-function dcgettext(domain: string, msgid: string, category: number): string
-function dgettext(domain: string, msgid: string): string
+function dcgettext(domain: string | null, msgid: string, category: number): string
+function dgettext(domain: string | null, msgid: string): string
 function dir_make_tmp(tmpl: string | null): string
 function direct_equal(v1: object | null, v2: object | null): boolean
 function direct_hash(v: object | null): number
-function dngettext(domain: string, msgid: string, msgid_plural: string, n: number): string
+function dngettext(domain: string | null, msgid: string, msgid_plural: string, n: number): string
 function double_equal(v1: object, v2: object): boolean
 function double_hash(v: object): number
-function dpgettext(domain: string, msgctxtid: string, msgidoffset: number): string
-function dpgettext2(domain: string, context: string, msgid: string): string
-function environ_getenv(envp: string[], variable: string): string | null
-function environ_setenv(envp: string[], variable: string, value: string, overwrite: boolean): string[]
-function environ_unsetenv(envp: string[], variable: string): string[]
+function dpgettext(domain: string | null, msgctxtid: string, msgidoffset: number): string
+function dpgettext2(domain: string | null, context: string, msgid: string): string
+function environ_getenv(envp: string[] | null, variable: string): string | null
+function environ_setenv(envp: string[] | null, variable: string, value: string, overwrite: boolean): string[]
+function environ_unsetenv(envp: string[] | null, variable: string): string[]
 function file_error_from_errno(err_no: number): FileError
 function file_error_quark(): Quark
 function file_get_contents(filename: string): [ /* returnType */ boolean, /* contents */ Uint8Array ]
@@ -4443,7 +4443,7 @@ function hash_table_unref(hash_table: HashTable): void
 function hook_destroy(hook_list: HookList, hook_id: number): boolean
 function hook_destroy_link(hook_list: HookList, hook: Hook): void
 function hook_free(hook_list: HookList, hook: Hook): void
-function hook_insert_before(hook_list: HookList, sibling: Hook, hook: Hook): void
+function hook_insert_before(hook_list: HookList, sibling: Hook | null, hook: Hook): void
 function hook_prepend(hook_list: HookList, hook: Hook): void
 function hook_unref(hook_list: HookList, hook: Hook): void
 function hostname_is_ascii_encoded(hostname: string): boolean
@@ -4468,16 +4468,16 @@ function key_file_error_quark(): Quark
 function listenv(): string[]
 function locale_from_utf8(utf8string: string, len: number): [ /* returnType */ Uint8Array, /* bytes_read */ number ]
 function locale_to_utf8(opsysstring: Uint8Array): [ /* returnType */ string, /* bytes_read */ number, /* bytes_written */ number ]
-function log_default_handler(log_domain: string, log_level: LogLevelFlags, message: string | null, unused_data: object | null): void
+function log_default_handler(log_domain: string | null, log_level: LogLevelFlags, message: string | null, unused_data: object | null): void
 function log_get_debug_enabled(): boolean
 function log_remove_handler(log_domain: string, handler_id: number): void
 function log_set_always_fatal(fatal_mask: LogLevelFlags): LogLevelFlags
 function log_set_debug_enabled(enabled: boolean): void
 function log_set_fatal_mask(log_domain: string, fatal_mask: LogLevelFlags): LogLevelFlags
-function log_set_handler(log_domain: string, log_levels: LogLevelFlags, log_func: LogFunc): number
+function log_set_handler(log_domain: string | null, log_levels: LogLevelFlags, log_func: LogFunc): number
 function log_set_writer_func(): void
 function log_structured_array(log_level: LogLevelFlags, fields: LogField[]): void
-function log_variant(log_domain: string, log_level: LogLevelFlags, fields: Variant): void
+function log_variant(log_domain: string | null, log_level: LogLevelFlags, fields: Variant): void
 function log_writer_default(log_level: LogLevelFlags, fields: LogField[], user_data: object | null): LogWriterOutput
 function log_writer_default_set_use_stderr(use_stderr: boolean): void
 function log_writer_default_would_drop(log_level: LogLevelFlags, log_domain: string | null): boolean
@@ -4500,8 +4500,8 @@ function markup_escape_text(text: string, length: number): string
 function mem_is_system_malloc(): boolean
 function mem_profile(): void
 function mem_set_vtable(vtable: MemVTable): void
-function memdup(mem: object, byte_size: number): object | null
-function memdup2(mem: object, byte_size: number): object | null
+function memdup(mem: object | null, byte_size: number): object | null
+function memdup2(mem: object | null, byte_size: number): object | null
 function mkdir_with_parents(pathname: string, mode: number): number
 function nullify_pointer(nullify_location: object): void
 function number_parser_error_quark(): Quark
@@ -4510,7 +4510,7 @@ function on_error_stack_trace(prg_name: string): void
 function once_init_enter(location: object): boolean
 function once_init_leave(location: object, result: number): void
 function option_error_quark(): Quark
-function parse_debug_string(string: string, keys: DebugKey[]): number
+function parse_debug_string(string: string | null, keys: DebugKey[]): number
 function path_get_basename(file_name: string): string
 function path_get_dirname(file_name: string): string
 function path_is_absolute(file_name: string): boolean
@@ -4520,8 +4520,8 @@ function pointer_bit_lock(address: object, lock_bit: number): void
 function pointer_bit_trylock(address: object, lock_bit: number): boolean
 function pointer_bit_unlock(address: object, lock_bit: number): void
 function poll(fds: PollFD, nfds: number, timeout: number): number
-function prefix_error_literal(err: Error, prefix: string): void
-function propagate_error(src: Error): /* dest */ Error
+function prefix_error_literal(err: Error | null, prefix: string): void
+function propagate_error(src: Error): /* dest */ Error | null
 function quark_from_static_string(string: string | null): Quark
 function quark_from_string(string: string | null): Quark
 function quark_to_string(quark: Quark): string
@@ -4538,8 +4538,8 @@ function rc_box_dup(block_size: number, mem_block: object): object
 function rc_box_get_size(mem_block: object): number
 function rc_box_release(mem_block: object): void
 function rc_box_release_full(mem_block: object, clear_func: DestroyNotify): void
-function realloc(mem: object, n_bytes: number): object | null
-function realloc_n(mem: object, n_blocks: number, n_block_bytes: number): object | null
+function realloc(mem: object | null, n_bytes: number): object | null
+function realloc_n(mem: object | null, n_blocks: number, n_block_bytes: number): object | null
 function ref_count_compare(rc: number, val: number): boolean
 function ref_count_dec(rc: number): boolean
 function ref_count_inc(rc: number): void
@@ -4579,7 +4579,7 @@ function slice_alloc(block_size: number): object | null
 function slice_alloc0(block_size: number): object | null
 function slice_copy(block_size: number, mem_block: object | null): object | null
 function slice_free1(block_size: number, mem_block: object | null): void
-function slice_free_chain_with_offset(block_size: number, mem_chain: object, next_offset: number): void
+function slice_free_chain_with_offset(block_size: number, mem_chain: object | null, next_offset: number): void
 function slice_get_config(ckey: SliceConfig): number
 function slice_get_config_state(ckey: SliceConfig, address: number, n_values: number): number
 function slice_set_config(ckey: SliceConfig, value: number): void
@@ -4588,10 +4588,10 @@ function source_remove_by_funcs_user_data(funcs: SourceFuncs, user_data: object 
 function source_remove_by_user_data(user_data: object | null): boolean
 function source_set_name_by_id(tag: number, name: string): void
 function spaced_primes_closest(num: number): number
-function spawn_async(working_directory: string, argv: string[], envp: string[], flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* child_pid */ Pid ]
-function spawn_async_with_fds(working_directory: string, argv: string[], envp: string[], flags: SpawnFlags, child_setup: SpawnChildSetupFunc, stdin_fd: number, stdout_fd: number, stderr_fd: number): [ /* returnType */ boolean, /* child_pid */ Pid ]
-function spawn_async_with_pipes(working_directory: string, argv: string[], envp: string[], flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* child_pid */ Pid, /* standard_input */ number, /* standard_output */ number, /* standard_error */ number ]
-function spawn_async_with_pipes_and_fds(working_directory: string, argv: string[], envp: string[], flags: SpawnFlags, child_setup: SpawnChildSetupFunc, stdin_fd: number, stdout_fd: number, stderr_fd: number, source_fds: number[], target_fds: number[]): [ /* returnType */ boolean, /* child_pid_out */ Pid, /* stdin_pipe_out */ number, /* stdout_pipe_out */ number, /* stderr_pipe_out */ number ]
+function spawn_async(working_directory: string | null, argv: string[], envp: string[] | null, flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* child_pid */ Pid ]
+function spawn_async_with_fds(working_directory: string | null, argv: string[], envp: string[] | null, flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null, stdin_fd: number, stdout_fd: number, stderr_fd: number): [ /* returnType */ boolean, /* child_pid */ Pid ]
+function spawn_async_with_pipes(working_directory: string | null, argv: string[], envp: string[] | null, flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* child_pid */ Pid, /* standard_input */ number, /* standard_output */ number, /* standard_error */ number ]
+function spawn_async_with_pipes_and_fds(working_directory: string | null, argv: string[], envp: string[] | null, flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null, stdin_fd: number, stdout_fd: number, stderr_fd: number, source_fds: number[] | null, target_fds: number[] | null): [ /* returnType */ boolean, /* child_pid_out */ Pid, /* stdin_pipe_out */ number, /* stdout_pipe_out */ number, /* stderr_pipe_out */ number ]
 function spawn_check_exit_status(wait_status: number): boolean
 function spawn_check_wait_status(wait_status: number): boolean
 function spawn_close_pid(pid: Pid): void
@@ -4599,7 +4599,7 @@ function spawn_command_line_async(command_line: string): boolean
 function spawn_command_line_sync(command_line: string): [ /* returnType */ boolean, /* standard_output */ Uint8Array, /* standard_error */ Uint8Array, /* wait_status */ number ]
 function spawn_error_quark(): Quark
 function spawn_exit_error_quark(): Quark
-function spawn_sync(working_directory: string, argv: string[], envp: string[], flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* standard_output */ Uint8Array, /* standard_error */ Uint8Array, /* wait_status */ number ]
+function spawn_sync(working_directory: string | null, argv: string[], envp: string[] | null, flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* standard_output */ Uint8Array, /* standard_error */ Uint8Array, /* wait_status */ number ]
 function stpcpy(dest: string, src: string): string
 function str_equal(v1: object, v2: object): boolean
 function str_has_prefix(str: string, prefix: string): boolean
@@ -4615,14 +4615,14 @@ function strchomp(string: string): string
 function strchug(string: string): string
 function strcmp0(str1: string | null, str2: string | null): number
 function strcompress(source: string): string
-function strdelimit(string: string, delimiters: string, new_delimiter: number): string
+function strdelimit(string: string, delimiters: string | null, new_delimiter: number): string
 function strdown(string: string): string
 function strdup(str: string | null): string
 function strerror(errnum: number): string
 function strescape(source: string, exceptions: string | null): string
 function strfreev(str_array: string | null): void
 function strip_context(msgid: string, msgval: string): string
-function strjoinv(separator: string, str_array: string): string
+function strjoinv(separator: string | null, str_array: string): string
 function strlcat(dest: string, src: string, dest_size: number): number
 function strlcpy(dest: string, src: string, dest_size: number): number
 function strncasecmp(s1: string, s2: string, n: number): number
@@ -4639,13 +4639,13 @@ function strv_contains(strv: string, str: string): boolean
 function strv_equal(strv1: string, strv2: string): boolean
 function strv_get_type(): GObject.GType
 function strv_length(str_array: string): number
-function test_add_data_func(testpath: string, test_data: object, test_func: TestDataFunc): void
-function test_add_data_func_full(testpath: string, test_data: object, test_func: TestDataFunc): void
+function test_add_data_func(testpath: string, test_data: object | null, test_func: TestDataFunc): void
+function test_add_data_func_full(testpath: string, test_data: object | null, test_func: TestDataFunc): void
 function test_add_func(testpath: string, test_func: TestFunc): void
 function test_assert_expected_messages_internal(domain: string, file: string, line: number, func: string): void
 function test_bug(bug_uri_snippet: string): void
 function test_bug_base(uri_pattern: string): void
-function test_expect_message(log_domain: string, log_level: LogLevelFlags, pattern: string): void
+function test_expect_message(log_domain: string | null, log_level: LogLevelFlags, pattern: string): void
 function test_fail(): void
 function test_failed(): boolean
 function test_get_dir(file_type: TestFileType): string
@@ -4671,7 +4671,7 @@ function test_trap_assertions(domain: string, file: string, line: number, func: 
 function test_trap_fork(usec_timeout: number, test_trap_flags: TestTrapFlags): boolean
 function test_trap_has_passed(): boolean
 function test_trap_reached_timeout(): boolean
-function test_trap_subprocess(test_path: string, usec_timeout: number, test_flags: TestSubprocessFlags): void
+function test_trap_subprocess(test_path: string | null, usec_timeout: number, test_flags: TestSubprocessFlags): void
 function thread_error_quark(): Quark
 function thread_exit(retval: object | null): void
 function thread_pool_get_max_idle_time(): number
@@ -4695,8 +4695,8 @@ function try_malloc(n_bytes: number): object | null
 function try_malloc0(n_bytes: number): object | null
 function try_malloc0_n(n_blocks: number, n_block_bytes: number): object | null
 function try_malloc_n(n_blocks: number, n_block_bytes: number): object | null
-function try_realloc(mem: object, n_bytes: number): object | null
-function try_realloc_n(mem: object, n_blocks: number, n_block_bytes: number): object | null
+function try_realloc(mem: object | null, n_bytes: number): object | null
+function try_realloc_n(mem: object | null, n_blocks: number, n_block_bytes: number): object | null
 function ucs4_to_utf16(str: string, len: number): [ /* returnType */ number, /* items_read */ number, /* items_written */ number ]
 function ucs4_to_utf8(str: string, len: number): [ /* returnType */ string, /* items_read */ number, /* items_written */ number ]
 function unichar_break_type(c: string): UnicodeBreakType
@@ -4745,20 +4745,20 @@ function unix_signal_add(priority: number, signum: number, handler: SourceFunc):
 function unix_signal_source_new(signum: number): Source
 function unlink(filename: string): number
 function unsetenv(variable: string): void
-function uri_build(flags: UriFlags, scheme: string, userinfo: string, host: string, port: number, path: string, query: string | null, fragment: string | null): Uri
-function uri_build_with_user(flags: UriFlags, scheme: string, user: string, password: string, auth_params: string, host: string, port: number, path: string, query: string | null, fragment: string | null): Uri
+function uri_build(flags: UriFlags, scheme: string, userinfo: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): Uri
+function uri_build_with_user(flags: UriFlags, scheme: string, user: string | null, password: string | null, auth_params: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): Uri
 function uri_error_quark(): Quark
 function uri_escape_bytes(unescaped: Uint8Array, reserved_chars_allowed: string | null): string
-function uri_escape_string(unescaped: string, reserved_chars_allowed: string, allow_utf8: boolean): string
+function uri_escape_string(unescaped: string, reserved_chars_allowed: string | null, allow_utf8: boolean): string
 function uri_is_valid(uri_string: string, flags: UriFlags): boolean
-function uri_join(flags: UriFlags, scheme: string, userinfo: string, host: string, port: number, path: string, query: string | null, fragment: string | null): string
-function uri_join_with_user(flags: UriFlags, scheme: string, user: string, password: string, auth_params: string, host: string, port: number, path: string, query: string | null, fragment: string | null): string
+function uri_join(flags: UriFlags, scheme: string | null, userinfo: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): string
+function uri_join_with_user(flags: UriFlags, scheme: string | null, user: string | null, password: string | null, auth_params: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): string
 function uri_list_extract_uris(uri_list: string): string[]
 function uri_parse(uri_string: string, flags: UriFlags): Uri
 function uri_parse_params(params: string, length: number, separators: string, flags: UriParamsFlags): HashTable
 function uri_parse_scheme(uri: string): string | null
 function uri_peek_scheme(uri: string): string | null
-function uri_resolve_relative(base_uri_string: string, uri_ref: string, flags: UriFlags): string
+function uri_resolve_relative(base_uri_string: string | null, uri_ref: string, flags: UriFlags): string
 function uri_split(uri_ref: string, flags: UriFlags): [ /* returnType */ boolean, /* scheme */ string | null, /* userinfo */ string | null, /* host */ string | null, /* port */ number, /* path */ string, /* query */ string | null, /* fragment */ string | null ]
 function uri_split_network(uri_string: string, flags: UriFlags): [ /* returnType */ boolean, /* scheme */ string | null, /* host */ string | null, /* port */ number ]
 function uri_split_with_user(uri_ref: string, flags: UriFlags): [ /* returnType */ boolean, /* scheme */ string | null, /* user */ string | null, /* password */ string | null, /* auth_params */ string | null, /* host */ string | null, /* port */ number, /* path */ string, /* query */ string | null, /* fragment */ string | null ]
@@ -4799,7 +4799,7 @@ function uuid_string_random(): string
 function variant_get_gtype(): GObject.GType
 function variant_is_object_path(string: string): boolean
 function variant_is_signature(string: string): boolean
-function variant_parse(type: VariantType, text: string, limit: string | null, endptr: string | null): Variant
+function variant_parse(type: VariantType | null, text: string, limit: string | null, endptr: string | null): Variant
 function variant_parse_error_print_context(error: Error, source_str: string): string
 function variant_parse_error_quark(): Quark
 function variant_parser_get_error_quark(): Quark
@@ -5874,7 +5874,7 @@ class BookmarkFile {
      * @param uri a valid URI or %NULL
      * @param description a string
      */
-    set_description(uri: string, description: string): void
+    set_description(uri: string | null, description: string): void
     /**
      * Sets a list of group names for the item with URI `uri`.  Each previously
      * set group name list is removed.
@@ -5883,7 +5883,7 @@ class BookmarkFile {
      * @param uri an item's URI
      * @param groups an array of    group names, or %NULL to remove all groups
      */
-    set_groups(uri: string, groups: string[]): void
+    set_groups(uri: string, groups: string[] | null): void
     /**
      * Sets the icon for the bookmark for `uri`. If `href` is %NULL, unsets
      * the currently set icon. `href` can either be a full URL for the icon
@@ -5894,7 +5894,7 @@ class BookmarkFile {
      * @param href the URI of the icon for the bookmark, or %NULL
      * @param mime_type the MIME type of the icon for the bookmark
      */
-    set_icon(uri: string, href: string, mime_type: string): void
+    set_icon(uri: string, href: string | null, mime_type: string): void
     /**
      * Sets the private flag of the bookmark for `uri`.
      * 
@@ -5947,7 +5947,7 @@ class BookmarkFile {
      * @param uri a valid URI or %NULL
      * @param title a UTF-8 encoded string
      */
-    set_title(uri: string, title: string): void
+    set_title(uri: string | null, title: string): void
     /**
      * Sets the time the bookmark for `uri` was last visited.
      * 
@@ -6173,11 +6173,11 @@ class Bytes {
      */
     unref_to_data(): Uint8Array
     static name: string
-    static new(data: Uint8Array): Bytes
-    constructor(data: Uint8Array)
+    static new(data: Uint8Array | null): Bytes
+    constructor(data: Uint8Array | null)
     /* Static methods and pseudo-constructors */
-    static new(data: Uint8Array): Bytes
-    static new_take(data: Uint8Array): Bytes
+    static new(data: Uint8Array | null): Bytes
+    static new_take(data: Uint8Array | null): Bytes
 }
 class Checksum {
     /* Methods of GLib-2.0.GLib.Checksum */
@@ -7584,7 +7584,7 @@ class Hook {
      * @param sibling the #GHook to insert the new #GHook before
      * @param hook the #GHook to insert
      */
-    static insert_before(hook_list: HookList, sibling: Hook, hook: Hook): void
+    static insert_before(hook_list: HookList, sibling: Hook | null, hook: Hook): void
     /**
      * Prepends a #GHook on the start of a #GHookList.
      * @param hook_list a #GHookList
@@ -7861,7 +7861,7 @@ class IOChannel {
      * @param line_term The line termination string. Use %NULL for             autodetect.  Autodetection breaks on "\n", "\r\n", "\r", "\0",             and the Unicode paragraph separator. Autodetection should not be             used for anything other than file-based channels.
      * @param length The length of the termination string. If -1 is passed, the          string is assumed to be nul-terminated. This option allows          termination strings with embedded nuls.
      */
-    set_line_term(line_term: string, length: number): void
+    set_line_term(line_term: string | null, length: number): void
     /**
      * Close an IO channel. Any pending data to be written will be
      * flushed if `flush` is %TRUE. The channel will not be freed until the
@@ -8260,7 +8260,7 @@ class KeyFile {
      * @param key a key
      * @param comment a comment
      */
-    set_comment(group_name: string, key: string, comment: string): boolean
+    set_comment(group_name: string | null, key: string | null, comment: string): boolean
     /**
      * Associates a new double value with `key` under `group_name`.
      * If `key` cannot be found then it is created.
@@ -8738,10 +8738,10 @@ class MainLoop {
      */
     unref(): void
     static name: string
-    static new(context: MainContext, is_running: boolean): MainLoop
-    constructor(context: MainContext, is_running: boolean)
+    static new(context: MainContext | null, is_running: boolean): MainLoop
+    constructor(context: MainContext | null, is_running: boolean)
     /* Static methods and pseudo-constructors */
-    static new(context: MainContext, is_running: boolean): MainLoop
+    static new(context: MainContext | null, is_running: boolean): MainLoop
 }
 class MappedFile {
     /* Methods of GLib-2.0.GLib.MappedFile */
@@ -8996,10 +8996,10 @@ class MarkupParseContext {
      */
     unref(): void
     static name: string
-    static new(parser: MarkupParser, flags: MarkupParseFlags, user_data: object, user_data_dnotify: DestroyNotify): MarkupParseContext
-    constructor(parser: MarkupParser, flags: MarkupParseFlags, user_data: object, user_data_dnotify: DestroyNotify)
+    static new(parser: MarkupParser, flags: MarkupParseFlags, user_data: object | null, user_data_dnotify: DestroyNotify): MarkupParseContext
+    constructor(parser: MarkupParser, flags: MarkupParseFlags, user_data: object | null, user_data_dnotify: DestroyNotify)
     /* Static methods and pseudo-constructors */
-    static new(parser: MarkupParser, flags: MarkupParseFlags, user_data: object, user_data_dnotify: DestroyNotify): MarkupParseContext
+    static new(parser: MarkupParser, flags: MarkupParseFlags, user_data: object | null, user_data_dnotify: DestroyNotify): MarkupParseContext
 }
 class MarkupParser {
     /* Fields of GLib-2.0.GLib.MarkupParser */
@@ -9879,7 +9879,7 @@ class Queue {
      * @param data the data for the new element
      * @param n the position to insert the new element. If `n` is negative or     larger than the number of elements in the `queue,` the element is     added to the end of the queue.
      */
-    push_nth(data: object, n: number): void
+    push_nth(data: object | null, n: number): void
     /**
      * Adds a new element at the tail of the queue.
      * @param data the data for the new element
@@ -11366,7 +11366,7 @@ class Source {
      * @param callback_data pointer to callback data "object"
      * @param callback_funcs functions for reference counting `callback_data`                  and getting the callback and data
      */
-    set_callback_indirect(callback_data: object, callback_funcs: SourceCallbackFuncs): void
+    set_callback_indirect(callback_data: object | null, callback_funcs: SourceCallbackFuncs): void
     /**
      * Sets whether a source can be called recursively. If `can_recurse` is
      * %TRUE, then while the source is being dispatched then this source
@@ -11967,11 +11967,11 @@ class Thread {
      */
     unref(): void
     static name: string
-    static new(name: string, func: ThreadFunc): Thread
-    constructor(name: string, func: ThreadFunc)
+    static new(name: string | null, func: ThreadFunc): Thread
+    constructor(name: string | null, func: ThreadFunc)
     /* Static methods and pseudo-constructors */
-    static new(name: string, func: ThreadFunc): Thread
-    static try_new(name: string, func: ThreadFunc): Thread
+    static new(name: string | null, func: ThreadFunc): Thread
+    static try_new(name: string | null, func: ThreadFunc): Thread
     static error_quark(): Quark
     /**
      * Terminates the current thread.
@@ -12725,7 +12725,7 @@ class Uri {
      * @param query the query component, or %NULL
      * @param fragment the fragment, or %NULL
      */
-    static build(flags: UriFlags, scheme: string, userinfo: string, host: string, port: number, path: string, query: string | null, fragment: string | null): Uri
+    static build(flags: UriFlags, scheme: string, userinfo: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): Uri
     /**
      * Creates a new #GUri from the given components according to `flags`
      * (%G_URI_FLAGS_HAS_PASSWORD is added unconditionally). The `flags` must be
@@ -12746,7 +12746,7 @@ class Uri {
      * @param query the query component, or %NULL
      * @param fragment the fragment, or %NULL
      */
-    static build_with_user(flags: UriFlags, scheme: string, user: string, password: string, auth_params: string, host: string, port: number, path: string, query: string | null, fragment: string | null): Uri
+    static build_with_user(flags: UriFlags, scheme: string, user: string | null, password: string | null, auth_params: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): Uri
     static error_quark(): Quark
     /**
      * Escapes arbitrary data for use in a URI.
@@ -12777,7 +12777,7 @@ class Uri {
      * @param reserved_chars_allowed a string of reserved   characters that are allowed to be used, or %NULL.
      * @param allow_utf8 %TRUE if the result can include UTF-8 characters.
      */
-    static escape_string(unescaped: string, reserved_chars_allowed: string, allow_utf8: boolean): string
+    static escape_string(unescaped: string, reserved_chars_allowed: string | null, allow_utf8: boolean): string
     /**
      * Parses `uri_string` according to `flags,` to determine whether it is a valid
      * [absolute URI][relative-absolute-uris], i.e. it does not need to be resolved
@@ -12815,7 +12815,7 @@ class Uri {
      * @param query the query component, or %NULL
      * @param fragment the fragment, or %NULL
      */
-    static join(flags: UriFlags, scheme: string, userinfo: string, host: string, port: number, path: string, query: string | null, fragment: string | null): string
+    static join(flags: UriFlags, scheme: string | null, userinfo: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): string
     /**
      * Joins the given components together according to `flags` to create
      * an absolute URI string. `path` may not be %NULL (though it may be the empty
@@ -12837,7 +12837,7 @@ class Uri {
      * @param query the query component, or %NULL
      * @param fragment the fragment, or %NULL
      */
-    static join_with_user(flags: UriFlags, scheme: string, user: string, password: string, auth_params: string, host: string, port: number, path: string, query: string | null, fragment: string | null): string
+    static join_with_user(flags: UriFlags, scheme: string | null, user: string | null, password: string | null, auth_params: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): string
     /**
      * Splits an URI list conforming to the text/uri-list
      * mime type defined in RFC 2483 into individual URIs,
@@ -12923,7 +12923,7 @@ class Uri {
      * @param uri_ref a string representing a relative or absolute URI
      * @param flags flags describing how to parse `uri_ref`
      */
-    static resolve_relative(base_uri_string: string, uri_ref: string, flags: UriFlags): string
+    static resolve_relative(base_uri_string: string | null, uri_ref: string, flags: UriFlags): string
     /**
      * Parses `uri_ref` (which can be an
      * [absolute or relative URI][relative-absolute-uris]) according to `flags,` and
@@ -13666,14 +13666,14 @@ class Variant {
     unref(): void
     static name: string
     /* Static methods and pseudo-constructors */
-    static new_array(child_type: VariantType, children: Variant[]): Variant
+    static new_array(child_type: VariantType | null, children: Variant[] | null): Variant
     static new_boolean(value: boolean): Variant
     static new_byte(value: number): Variant
     static new_bytestring(string: Uint8Array): Variant
     static new_bytestring_array(strv: string[]): Variant
     static new_dict_entry(key: Variant, value: Variant): Variant
     static new_double(value: number): Variant
-    static new_fixed_array(element_type: VariantType, elements: object, n_elements: number, element_size: number): Variant
+    static new_fixed_array(element_type: VariantType, elements: object | null, n_elements: number, element_size: number): Variant
     static new_from_bytes(type: VariantType, bytes: Bytes, trusted: boolean): Variant
     static new_from_data(type: VariantType, data: Uint8Array, trusted: boolean, notify: DestroyNotify, user_data: object | null): Variant
     static new_handle(value: number): Variant
@@ -13754,7 +13754,7 @@ class Variant {
      * @param limit a pointer to the end of `text,` or %NULL
      * @param endptr a location to store the end pointer, or %NULL
      */
-    static parse(type: VariantType, text: string, limit: string | null, endptr: string | null): Variant
+    static parse(type: VariantType | null, text: string, limit: string | null, endptr: string | null): Variant
     /**
      * Pretty-prints a message showing the context of a #GVariant parse
      * error within the string for which parsing was attempted.

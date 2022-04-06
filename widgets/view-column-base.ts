@@ -17,9 +17,11 @@ export class _ViewColumnBase extends Gtk.ColumnViewColumn {
     model?: Gtk.SelectionModel
     col_view?: any; // TODO:
 
-    _init(config: Gtk.ColumnViewColumn_ConstructProps = {}, model_cls?: any /* TODO */, col_view?) {
-        super._init(config)
-        this.col_view = col_view
+    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, model_cls?: any /* TODO */, col_view?) {
+        super(config)
+        if (col_view) {
+            this.col_view = col_view
+        }
     
         // Use the signal Factory, so we can connect our own methods to setup
         this.factory = new Gtk.SignalListItemFactory()

@@ -5,8 +5,8 @@ export class _ColumnElem extends GObject.Object {
 
     name = "";
 
-    _init(name = "") {
-        super._init();
+    constructor(name: string) {
+        super();
         this.name = name
     }
 

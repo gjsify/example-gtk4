@@ -7,8 +7,8 @@ export class _SearchBar extends Gtk.SearchBar {
     entry?: Gtk.SearchEntry;
     searchOptions?: Gtk.MenuButton;
 
-    override _init(config: Gtk.SearchBar_ConstructProps = {}, win?: Gtk.ApplicationWindow) {
-        super._init(config);
+    constructor(config: Gtk.SearchBar_ConstructProps = {}, win?: Gtk.ApplicationWindow) {
+        super(config);
 
         const box = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL})
         box.set_spacing(10);

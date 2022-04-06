@@ -12,8 +12,8 @@ export class _SelectorBase extends Gtk.ListBox {
 
     callback: null | ((name: string) => void) = null;
 
-    _init() {
-        super._init()
+    constructor() {
+        super()
         this._rows = {};
         this.callback = null;
         // Setup the list box

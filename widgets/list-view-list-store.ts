@@ -11,8 +11,8 @@ import { ListElem } from "../list-elem.js"
  * It can contain misc objects derived from GObject
  */
 export class _ListViewListStore extends ListViewBase {
-    _init({}, model_cls: any /* TODO */) {
-        super._init({}, model_cls)
+    constructor({}, model_cls: any /* TODO */) {
+        super({}, model_cls)
     }
 
     /** Setup the data model */

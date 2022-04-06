@@ -26,14 +26,14 @@ import GObject from './@types/Gjs/GObject-2.0.js'
 import Gio from './@types/Gjs/Gio-2.0.js'
 
 import { _SearchBar, _Stack } from "./widgets/index.js";
-import { MyWindow } from './my-window.js'
+import { MyWindow, _MyWindow } from './my-window.js'
 
 class _Application extends Gtk.Application {
-    _init(constructProperties = {
+    constructor(constructProperties = {
         application_id: 'org.gjsify.example-gtk4',
         flags: Gio.ApplicationFlags.FLAGS_NONE
     }) {
-        super._init(constructProperties);
+        super(constructProperties);
     }
 
     override vfunc_activate() {

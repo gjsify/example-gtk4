@@ -234,7 +234,7 @@ interface PixbufModuleFillVtableFunc {
  * Incrementally loads a buffer into the image data.
  */
 interface PixbufModuleIncrementLoadFunc {
-    (context: object, buf: Uint8Array): boolean
+    (context: object | null, buf: Uint8Array): boolean
 }
 /**
  * Loads a file from a standard C file stream into a new `GdkPixbufAnimation`.
@@ -277,7 +277,7 @@ interface PixbufModulePreparedFunc {
  * data.
  */
 interface PixbufModuleSaveFunc {
-    (f: object, pixbuf: Pixbuf, param_keys: string[] | null, param_values: string[] | null): boolean
+    (f: object | null, pixbuf: Pixbuf, param_keys: string[] | null, param_values: string[] | null): boolean
 }
 /**
  * Checks whether the given `option_key` is supported when saving.

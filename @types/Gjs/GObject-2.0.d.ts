@@ -419,13 +419,13 @@ function param_spec_long(name: string, nick: string, blurb: string, minimum: num
 function param_spec_object(name: string, nick: string, blurb: string, object_type: GType, flags: ParamFlags): ParamSpec
 function param_spec_param(name: string, nick: string, blurb: string, param_type: GType, flags: ParamFlags): ParamSpec
 function param_spec_pointer(name: string, nick: string, blurb: string, flags: ParamFlags): ParamSpec
-function param_spec_string(name: string, nick: string, blurb: string, default_value: string, flags: ParamFlags): ParamSpec
+function param_spec_string(name: string, nick: string, blurb: string, default_value: string | null, flags: ParamFlags): ParamSpec
 function param_spec_uchar(name: string, nick: string, blurb: string, minimum: number, maximum: number, default_value: number, flags: ParamFlags): ParamSpec
 function param_spec_uint(name: string, nick: string, blurb: string, minimum: number, maximum: number, default_value: number, flags: ParamFlags): ParamSpec
 function param_spec_uint64(name: string, nick: string, blurb: string, minimum: number, maximum: number, default_value: number, flags: ParamFlags): ParamSpec
 function param_spec_ulong(name: string, nick: string, blurb: string, minimum: number, maximum: number, default_value: number, flags: ParamFlags): ParamSpec
 function param_spec_unichar(name: string, nick: string, blurb: string, default_value: string, flags: ParamFlags): ParamSpec
-function param_spec_variant(name: string, nick: string, blurb: string, type: GLib.VariantType, default_value: GLib.Variant, flags: ParamFlags): ParamSpec
+function param_spec_variant(name: string, nick: string, blurb: string, type: GLib.VariantType, default_value: GLib.Variant | null, flags: ParamFlags): ParamSpec
 function param_type_register_static(name: string, pspec_info: ParamSpecTypeInfo): GType
 function param_value_convert(pspec: ParamSpec, src_value: any, dest_value: any, strict_validation: boolean): boolean
 function param_value_defaults(pspec: ParamSpec, value: any): boolean
@@ -478,7 +478,7 @@ function type_check_is_value_type(type: GType): boolean
 function type_check_value(value: any): boolean
 function type_check_value_holds(value: any, type: GType): boolean
 function type_children(type: GType): GType[]
-function type_class_adjust_private_offset(g_class: object, private_size_or_offset: number): void
+function type_class_adjust_private_offset(g_class: object | null, private_size_or_offset: number): void
 function type_class_peek(type: GType): TypeClass
 function type_class_peek_static(type: GType): TypeClass
 function type_class_ref(type: GType): TypeClass
@@ -708,14 +708,14 @@ interface ClassInitFunc {
  * The type used for marshaller functions.
  */
 interface ClosureMarshal {
-    (closure: TClosure, return_value: any, param_values: any[], invocation_hint: object | null, marshal_data: object | null): void
+    (closure: TClosure, return_value: any | null, param_values: any[], invocation_hint: object | null, marshal_data: object | null): void
 }
 /**
  * The type used for the various notification callbacks which can be registered
  * on closures.
  */
 interface ClosureNotify {
-    (data: object, closure: TClosure): void
+    (data: object | null, closure: TClosure): void
 }
 /**
  * A callback function used by the type system to initialize a new
@@ -806,7 +806,7 @@ interface SignalEmissionHook {
  * See also: g_object_add_toggle_ref()
  */
 interface ToggleNotify {
-    (data: object, object: Object, is_last_ref: boolean): void
+    (data: object | null, object: Object, is_last_ref: boolean): void
 }
 /**
  * A callback function which is called when the reference count of a class
@@ -821,7 +821,7 @@ interface ToggleNotify {
  * classes are routed through the same #GTypeClassCacheFunc chain.
  */
 interface TypeClassCacheFunc {
-    (cache_data: object, g_class: TypeClass): boolean
+    (cache_data: object | null, g_class: TypeClass): boolean
 }
 /**
  * A callback called after an interface vtable is initialized.
@@ -829,7 +829,7 @@ interface TypeClassCacheFunc {
  * See g_type_add_interface_check().
  */
 interface TypeInterfaceCheckFunc {
-    (check_data: object, g_iface: TypeInterface): void
+    (check_data: object | null, g_iface: TypeInterface): void
 }
 /**
  * The type of the `complete_interface_info` function of #GTypePluginClass.
@@ -879,7 +879,7 @@ interface ValueTransform {
  * them on the object from this callback.
  */
 interface WeakNotify {
-    (data: object, where_the_object_was: Object): void
+    (data: object | null, where_the_object_was: Object): void
 }
 class TypePlugin {
     /* Methods of GObject-2.0.GObject.TypePlugin */
@@ -941,6 +941,7 @@ export interface MetaInfo<Props, Interfaces, Sigs> {
     InternalChildren?: string[]
 }
 
+/** Interface ob GObject Interface should be implemented by all GObject interfaces */
 export class Interface<T = unknown> {
     static _classInit: (cls: any) => any;
     __name__: string;
@@ -1130,77 +1131,14 @@ export type Property<K extends ParamSpec> = K extends ParamSpecBoolean
     ? GLib.Variant
     : any;
 
-export type Properties<Prototype extends {}, Properties extends { [key: string]: ParamSpec }> = Omit<
-    {
-        [key in keyof Properties | keyof Prototype]: key extends keyof Prototype
-        ? never
-        : key extends keyof Properties
-        ? Property<Properties[key]>
-        : never;
-    },
-    keyof Prototype
->;
-
-type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) extends (x: infer R) => any ? R : never;
-
-type IFaces<Interfaces extends { $gtype: GType<any> }[]> = {
-    [key in keyof Interfaces]: Interfaces[key] extends { $gtype: GType<infer I> } ? I : never;
-};
-
-export type RegisteredPrototype<
-    P extends {},
-    Props extends { [key: string]: ParamSpec },
-    Interfaces extends any[]
-    > = Properties<P, SnakeToCamel<Props> & SnakeToUnderscore<Props>> & UnionToIntersection<Interfaces[number]> & P;
-
-type SnakeToUnderscoreCase<S extends string> = S extends `${infer T}-${infer U}`
-    ? `${T}_${SnakeToUnderscoreCase<U>}`
-    : S extends `${infer T}`
-    ? `${T}`
-    : never;
-
-type SnakeToCamelCase<S extends string> = S extends `${infer T}-${infer U}`
-    ? `${Lowercase<T>}${SnakeToPascalCase<U>}`
-    : S extends `${infer T}`
-    ? `${Lowercase<T>}`
-    : SnakeToPascalCase<S>;
-
-type SnakeToPascalCase<S extends string> = string extends S
-    ? string
-    : S extends `${infer T}-${infer U}`
-    ? `${Capitalize<Lowercase<T>>}${SnakeToPascalCase<U>}`
-    : S extends `${infer T}`
-    ? `${Capitalize<Lowercase<T>>}`
-    : never;
-
-type SnakeToCamel<T> = { [P in keyof T as P extends string ? SnakeToCamelCase<P> : P]: T[P] };
-type SnakeToUnderscore<T> = { [P in keyof T as P extends string ? SnakeToUnderscoreCase<P> : P]: T[P] };
-
-type Ctor<T extends object = any> = new (...a: any[]) => T;
-
-type Init = { _init(...args: any[]): void };
-
 // TODO: What about the generated class Closure 
 export type TClosure<R = any, P = any> = (...args: P[]) => R;
 
-export type RegisteredClass<
-    T extends Ctor,
-    Props extends { [key: string]: ParamSpec },
-    Interfaces extends { $gtype: GType<any> }[]
-    > = T extends { prototype: infer P }
-    ? {
-        $gtype: GType<RegisteredClass<T, Props, IFaces<Interfaces>>>;
-        new(...args: P extends Init ? Parameters<P["_init"]> : [void]): RegisteredPrototype<
-            P,
-            Props,
-            IFaces<Interfaces>
-        >;
-        prototype: RegisteredPrototype<P, Props, IFaces<Interfaces>>;
-    }
-    : never;
+// This should be replaces by GObject.Object as soon as once we have implemented inheritance
+class AnyClass {}
 
 export function registerClass<
-    T extends Ctor,
+    T extends AnyClass,
     Props extends { [key: string]: ParamSpec },
     Interfaces extends { $gtype: GType }[],
     Sigs extends {
@@ -1212,9 +1150,9 @@ export function registerClass<
 >(
     options: MetaInfo<Props, Interfaces, Sigs>,
     cls: T
-): RegisteredClass<T, Props, Interfaces>;
+): T;
 
-export function registerClass<P extends {}, T extends Ctor<P>>(cls: T): RegisteredClass<T, {}, []>;
+export function registerClass<T extends AnyClass>(cls: T): T
 
 
 interface Binding_ConstructProps extends Object_ConstructProps {
@@ -7225,7 +7163,7 @@ class TypeClass {
     unref(): void
     static name: string
     /* Static methods and pseudo-constructors */
-    static adjust_private_offset(g_class: object, private_size_or_offset: number): void
+    static adjust_private_offset(g_class: object | null, private_size_or_offset: number): void
     /**
      * This function is essentially the same as g_type_class_ref(),
      * except that the classes reference count isn't incremented.

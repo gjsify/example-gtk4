@@ -17,8 +17,8 @@ export class _MyWindow extends Window {
     leftRightPaned?: Gtk.Paned;
     topBottomPaned?: Gtk.Paned;
     bottomBox?: Gtk.Box;
-    page4Label?: Gtk.Label;
     listview?: _MyListView;
+    overlaInfo?: Gtk.InfoBar;
 
     page1?: Gtk.StackPage;
     page2?: Gtk.StackPage;
@@ -26,9 +26,14 @@ export class _MyWindow extends Window {
     page4?: Gtk.StackPage;
     page5?: Gtk.StackPage;
 
-    override _init(config?: Gtk.ApplicationWindow_ConstructProps, title = "") {
+    page1Label?: Gtk.Label;
+    page2Label?: Gtk.Label;
+    page3Label?: Gtk.Label;
+    page4Label?: Gtk.Label;
+    page5Label?: Gtk.Label;
 
-        super._init(config)
+    constructor(config?: Gtk.ApplicationWindow_ConstructProps, title = "") {
+        super(config)
 
         // load the custom css, so we can use it later
         this.loadCSS('main.css');
@@ -146,7 +151,7 @@ export class _MyWindow extends Window {
         selector.setCallback(this.onSelectIconSelector.bind(this))
         main.append(selector)
         const { frame: page_frame, content: content_right, label: lbl } = this.setupPageHeader(name, title)
-        this.page1_label = lbl
+        this.page1Label = lbl
 
         // Lock button
         const lockBtn = Gtk.LockButton.new(getPermission())
@@ -230,15 +235,15 @@ export class _MyWindow extends Window {
 
         // Add a label with custom font in the center
         const {frame, content: content_right, label } = this.setupPageHeader(name, title)
-        this.page2_label = label
+        this.page2Label = label
 
         // Overlay
-        const overlay_info = new Gtk.InfoBar()
-        overlay_info.set_halign(Gtk.Align.FILL)
-        overlay_info.set_valign(Gtk.Align.START)
-        overlay_info.set_margin_top(10)
-        overlay_info.set_margin_start(10)
-        overlay_info.set_margin_end(10)
+        const overlaInfo = new Gtk.InfoBar()
+        overlaInfo.set_halign(Gtk.Align.FILL)
+        overlaInfo.set_valign(Gtk.Align.START)
+        overlaInfo.set_margin_top(10)
+        overlaInfo.set_margin_start(10)
+        overlaInfo.set_margin_end(10)
         const lbl = new Gtk.Label()
         lbl.set_halign(Gtk.Align.FILL)
         lbl.set_valign(Gtk.Align.FILL)
@@ -246,8 +251,8 @@ export class _MyWindow extends Window {
         lbl.set_vexpand(true)
         lbl.set_markup(
             '<span foreground="#ff0000" size="xx-large">This is an Gtk.Infobar as an overlay</span>')
-        overlay_info.add_child(lbl)
-        this.overlay_info = overlay_info
+        overlaInfo.add_child(lbl)
+        this.overlaInfo = overlaInfo
         const frame_child = new Gtk.Frame()
 
         // TexkView
@@ -272,7 +277,7 @@ export class _MyWindow extends Window {
         overlay.set_margin_end(20)
         overlay.set_margin_bottom(20)
         overlay.set_child(frame_child)
-        overlay.add_overlay(overlay_info)
+        overlay.add_overlay(overlaInfo)
         content_right.append(overlay)
 
         // Switch to control overlay visibility
@@ -429,7 +434,7 @@ export class _MyWindow extends Window {
         this.topBottomPaned.set_end_child(this.bottomBox)
         this.topBottomPaned.set_shrink_end_child(false)  // Can't shrink
         frame.set_child(this.topBottomPaned)
-        this.page3_label = label
+        this.page3Label = label
 
         // add custom styling to widgets
         this.addCustomStyling(frame)
@@ -452,7 +457,7 @@ export class _MyWindow extends Window {
             data.push(`Data Row: ${row}`)
         }
         for (const i of range(4)) {
-            const column = new MyColumnViewColumn({}, this, this.columnView, data)
+            const column = new MyColumnViewColumn({}, null, this.columnView, data, this)
             column.set_title(`Column ${i}`)
             this.columnView.append_column(column)
         }
@@ -541,11 +546,11 @@ export class _MyWindow extends Window {
     }
 
     onColorSelected(widget: any /* TODO */) {
-        const selectedColor = this.chooser.get_rgba()
-        const colorTxt = selectedColor.to_string()
-        const markup = this.getTextMarkup(
-            `${widget.get_label()} was pressed. ${colorTxt}`)
-        this.page5_label.set_markup(markup)
+        // const selectedColor = this.chooser.get_rgba()
+        // const colorTxt = selectedColor.to_string()
+        // const markup = this.getTextMarkup(
+        //     `${widget.get_label()} was pressed. ${colorTxt}`)
+        // this.page5Label?.set_markup(markup)
     }
 
     /** callback for button clicked (Page5) */
@@ -564,13 +569,13 @@ export class _MyWindow extends Window {
     /** called when icon_selector selection is changed (Page1) */
     onSelectIconSelector(name: string) {
         const markup = this.getTextMarkup(`${name} is selected`)
-        this.page1_label.set_markup(markup)
+        this.page1Label?.set_markup(markup)
     }
 
     /** called when text_selector is changed (Page2) */
     onSelectTextSelector(name: string) {
         const markup = this.getTextMarkup(`${name} is selected`)
-        this.page2_label.set_markup(markup)
+        this.page2Label?.set_markup(markup)
     }
 
     /** callback for reveal switch (Page3) */
@@ -589,14 +594,14 @@ export class _MyWindow extends Window {
     /** callback for overlay switch (Page2) */
     onSwitchOverlay(widget: Gtk.Switch, state: boolean) {
         print("onSwitchOverlay state: ", state);
-        if (this.overlay_info)
-            this.overlay_info.set_revealed(state)
+        if (this.overlaInfo)
+            this.overlaInfo.set_revealed(state)
     }
 
     /** callback for button clicked (Page1) */
     onButtonClicked(widget: Gtk.Button) {
         const markup = this.getTextMarkup(`${widget.get_label()} was pressed`)
-        this.page1_label.set_markup(markup)
+        this.page1Label?.set_markup(markup)
     }
 
     /** callback for calendar selection (Page1) */
@@ -604,14 +609,14 @@ export class _MyWindow extends Window {
         const date = widget.get_date().format('%F')
         const txt = `${date} was selected in calendar`
         const markup = this.getTextMarkup(txt)
-        this.page1_label.set_markup(markup)
+        this.page1Label?.set_markup(markup)
     }
 
     /** callback for entry activation (Page1) */
     onEntryActivate(widget: Gtk.Entry) {
         const txt = `${widget.get_buffer().get_text()} was typed in entry`
         const markup = this.getTextMarkup(txt)
-        this.page1_label.set_markup(markup)
+        this.page1Label?.set_markup(markup)
     }
 
     onDialogResponse(widget: any /* TODO */, responseId: number) {
@@ -619,7 +624,7 @@ export class _MyWindow extends Window {
             // get selected color in hex format
             const color = widget.get_color()
             const markup = `<span size="xx-large" foreground="${color}">the color ${color} was selected</span>`
-            this.page5_label.set_markup(markup)
+            this.page5Label?.set_markup(markup)
         } else if (responseId == Gtk.ResponseType.CANCEL) {
             print("cancel")
             // if the message dialog is destroyed (by pressing ESC)

@@ -511,7 +511,7 @@ class Euler {
      * @param m a rotation matrix
      * @param order the order used to apply the rotations
      */
-    init_from_matrix(m: Matrix, order: EulerOrder): Euler
+    init_from_matrix(m: Matrix | null, order: EulerOrder): Euler
     /**
      * Initializes a #graphene_euler_t using the given normalized quaternion.
      * 
@@ -520,7 +520,7 @@ class Euler {
      * @param q a normalized #graphene_quaternion_t
      * @param order the order used to apply the rotations
      */
-    init_from_quaternion(q: Quaternion, order: EulerOrder): Euler
+    init_from_quaternion(q: Quaternion | null, order: EulerOrder): Euler
     /**
      * Initializes a #graphene_euler_t using the given angles
      * and order of rotation.
@@ -539,7 +539,7 @@ class Euler {
      * @param v a #graphene_vec3_t containing the rotation   angles in degrees
      * @param order the order used to apply the rotations
      */
-    init_from_vec3(v: Vec3, order: EulerOrder): Euler
+    init_from_vec3(v: Vec3 | null, order: EulerOrder): Euler
     /**
      * Initializes a #graphene_euler_t with the given angles and `order`.
      * @param x rotation angle on the X axis, in degrees
@@ -1193,7 +1193,7 @@ class Plane {
      * @param normal a unit length normal vector defining the plane   pointing towards the origin; if unset, we use the X axis by default
      * @param constant the distance from the origin to the plane along the   normal vector; the sign determines the half-space occupied by the   plane
      */
-    init(normal: Vec3, constant: number): Plane
+    init(normal: Vec3 | null, constant: number): Plane
     /**
      * Initializes the given #graphene_plane_t using the normal
      * vector and constant of another #graphene_plane_t.
@@ -2099,7 +2099,7 @@ class Sphere {
      * @param center the coordinates of the center of the sphere, or %NULL   for a center in (0, 0, 0)
      * @param radius the radius of the sphere
      */
-    init(center: Point3D, radius: number): Sphere
+    init(center: Point3D | null, radius: number): Sphere
     /**
      * Initializes the given #graphene_sphere_t using the given array
      * of 3D coordinates so that the sphere includes them.
@@ -2216,7 +2216,7 @@ class Triangle {
      * @param uv_b the UV coordinates of the second point
      * @param uv_c the UV coordinates of the third point
      */
-    get_uv(p: Point3D, uv_a: Vec2, uv_b: Vec2, uv_c: Vec2): [ /* returnType */ boolean, /* res */ Vec2 ]
+    get_uv(p: Point3D | null, uv_a: Vec2, uv_b: Vec2, uv_c: Vec2): [ /* returnType */ boolean, /* res */ Vec2 ]
     /**
      * Retrieves the three vertices of the given #graphene_triangle_t.
      */

@@ -770,7 +770,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    check_authorization(subject: Subject, action_id: string, details: Details, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    check_authorization(subject: Subject, action_id: string, details: Details | null, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking if a subject is authorized for an action.
      * @param res A #GAsyncResult obtained from the callback.
@@ -804,7 +804,7 @@ class Authority {
      * @param flags A set of #PolkitCheckAuthorizationFlags.
      * @param cancellable A #GCancellable or %NULL.
      */
-    check_authorization_sync(subject: Subject, action_id: string, details: Details, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null): AuthorizationResult
+    check_authorization_sync(subject: Subject, action_id: string, details: Details | null, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null): AuthorizationResult
     /**
      * Asynchronously retrieves all registered actions.
      * 

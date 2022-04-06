@@ -7,8 +7,8 @@ export class _ListElem extends GObject.Object {
     name = "";
     state = false
 
-    _init(name = "", state = false) {
-        super._init();
+    constructor(name = "", state = false) {
+        super();
         this.name = name
         this.state = state
     }

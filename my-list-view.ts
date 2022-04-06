@@ -11,9 +11,10 @@ export class _MyListView extends ListViewListStore {
 
     win?: _MyWindow
 
-    _init({}, win?: _MyWindow) {
+    constructor(config: Gtk.ListView_ConstructProps = {}, win?: _MyWindow) {
         // Init ListView with store model class.
-        super._init({}, ListElem)
+        super(config, ListElem)
+        
         this.win = win
         this.set_valign(Gtk.Align.FILL)
 

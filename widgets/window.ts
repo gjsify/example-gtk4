@@ -11,9 +11,9 @@ class _Window extends Gtk.ApplicationWindow {
 
     headerbar?: Gtk.HeaderBar;
 
-    override _init(config: Gtk.ApplicationWindow_ConstructProps = {}) {
+    constructor(config: Gtk.ApplicationWindow_ConstructProps = {}) {
         const title = config?.title || "";
-        super._init(config);
+        super(config);
         
         this.headerbar = new Gtk.HeaderBar();
         this.set_titlebar(this.headerbar)

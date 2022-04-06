@@ -6058,7 +6058,7 @@ class Toplevel {
      * @param y surface Y coordinate of mouse click that began the drag
      * @param timestamp timestamp of mouse click that began the drag (use   [method`Gdk`.Event.get_time])
      */
-    begin_resize(edge: SurfaceEdge, device: Device, button: number, x: number, y: number, timestamp: number): void
+    begin_resize(edge: SurfaceEdge, device: Device | null, button: number, x: number, y: number, timestamp: number): void
     /**
      * Sets keyboard focus to `surface`.
      * 
@@ -8761,7 +8761,7 @@ class ContentDeserializer {
      * @param data data to associate with this operation
      * @param notify destroy notify for `data`
      */
-    set_task_data(data: object, notify: GLib.DestroyNotify): void
+    set_task_data(data: object | null, notify: GLib.DestroyNotify): void
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -9695,7 +9695,7 @@ class ContentProvider {
     /* Static methods and pseudo-constructors */
     static new_for_bytes(mime_type: string, bytes: GLib.Bytes): ContentProvider
     static new_for_value(value: any): ContentProvider
-    static new_union(providers: ContentProvider[]): ContentProvider
+    static new_union(providers: ContentProvider[] | null): ContentProvider
     static $gtype: GObject.GType<ContentProvider>
 }
 interface ContentSerializer_ConstructProps extends GObject.Object_ConstructProps {
@@ -9760,7 +9760,7 @@ class ContentSerializer {
      * @param data data to associate with this operation
      * @param notify destroy notify for `data`
      */
-    set_task_data(data: object, notify: GLib.DestroyNotify): void
+    set_task_data(data: object | null, notify: GLib.DestroyNotify): void
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -23175,10 +23175,10 @@ class ContentFormats {
      */
     unref(): void
     static name: string
-    static new(mime_types: string[]): ContentFormats
-    constructor(mime_types: string[])
+    static new(mime_types: string[] | null): ContentFormats
+    constructor(mime_types: string[] | null)
     /* Static methods and pseudo-constructors */
-    static new(mime_types: string[]): ContentFormats
+    static new(mime_types: string[] | null): ContentFormats
     static new_for_gtype(type: GObject.GType): ContentFormats
     /**
      * Parses the given `string` into `GdkContentFormats` and

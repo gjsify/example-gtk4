@@ -8,8 +8,8 @@ export class _Stack extends Gtk.Stack {
 
     private _pages: {[name: string]: Gtk.StackPage} = {};
 
-    override _init(config: Gtk.Stack_ConstructProps = {}) {
-        super._init(config);
+    constructor(config: Gtk.Stack_ConstructProps = {}) {
+        super(config);
         this._pages = {};
         this.switcher = new Gtk.StackSwitcher()
         this.switcher.set_stack(this)

@@ -3184,10 +3184,10 @@ class GLShaderNode {
      */
     write_to_file(filename: string): boolean
     static name: string
-    static new(shader: GLShader, bounds: Graphene.Rect, args: GLib.Bytes, children: RenderNode[]): GLShaderNode
-    constructor(shader: GLShader, bounds: Graphene.Rect, args: GLib.Bytes, children: RenderNode[])
+    static new(shader: GLShader, bounds: Graphene.Rect, args: GLib.Bytes, children: RenderNode[] | null): GLShaderNode
+    constructor(shader: GLShader, bounds: Graphene.Rect, args: GLib.Bytes, children: RenderNode[] | null)
     /* Static methods and pseudo-constructors */
-    static new(shader: GLShader, bounds: Graphene.Rect, args: GLib.Bytes, children: RenderNode[]): GLShaderNode
+    static new(shader: GLShader, bounds: Graphene.Rect, args: GLib.Bytes, children: RenderNode[] | null): GLShaderNode
 }
 class InsetShadowNode {
     /* Methods of Gsk-4.0.Gsk.InsetShadowNode */

@@ -12,8 +12,9 @@ import { ColumnElem } from "../column-elem.js"
  * It can contain misc objects derived from GObject
  **/
 export class _ColumnViewListStore extends ViewColumnBase {
-    _init(config: Gtk.ColumnViewColumn_ConstructProps = {}, model_cls, col_view) {
-        super._init(config, model_cls, col_view)
+
+    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, model_cls: any, col_view) {
+        super(config, model_cls, col_view)
     }
 
     /** Setup the data model */

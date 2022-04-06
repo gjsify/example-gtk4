@@ -15,8 +15,8 @@ class _ListViewBase extends Gtk.ListView {
 
     store?: Gio.ListStore;
 
-    _init({}, model_cls?: any /* TODO */) {
-        super._init({})
+    constructor({}, model_cls?: any /* TODO */) {
+        super({})
     
         // Use the signal Factory, so we can connect our own methods to setup
         this.factory = new Gtk.SignalListItemFactory()

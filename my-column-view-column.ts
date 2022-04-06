@@ -10,9 +10,9 @@ export class _MyColumnViewColumn extends ColumnViewListStore {
 
     win?: _MyWindow
 
-    _init(config: Gtk.ColumnViewColumn_ConstructProps = {}, win?: _MyWindow, col_view?: Gtk.ColumnView, data: string[] = []) {
+    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, cls?: any, col_view?: Gtk.ColumnView, data: string[] = [], win?: _MyWindow) {
         // Init ListView with store model class.
-        super._init(config, ColumnElem, col_view)
+        super(config, ColumnElem, col_view)
         this.win = win
 
         // put some data into the model
