@@ -749,6 +749,7 @@ const inheritanceTable: { [key: string]: string[] } = {
     'Gtk.IconPaintable': [
     'GObject.Object',
     'Gdk.Paintable',
+    'Gtk.SymbolicPaintable',
 ],
     'Gtk.IconTheme': [
     'GObject.Object',
@@ -1783,6 +1784,8 @@ const inheritanceTable: { [key: string]: string[] } = {
     'Gdk.GLTexture': [
     'Gdk.Texture',
     'Gdk.Paintable',
+    'Gio.Icon',
+    'Gio.LoadableIcon',
     'GObject.Object',
 ],
     'Gdk.GrabBrokenEvent': [
@@ -1794,6 +1797,8 @@ const inheritanceTable: { [key: string]: string[] } = {
     'Gdk.MemoryTexture': [
     'Gdk.Texture',
     'Gdk.Paintable',
+    'Gio.Icon',
+    'Gio.LoadableIcon',
     'GObject.Object',
 ],
     'Gdk.Monitor': [
@@ -1823,6 +1828,8 @@ const inheritanceTable: { [key: string]: string[] } = {
     'Gdk.Texture': [
     'GObject.Object',
     'Gdk.Paintable',
+    'Gio.Icon',
+    'Gio.LoadableIcon',
 ],
     'Gdk.TouchEvent': [
     'Gdk.Event',
@@ -1836,6 +1843,9 @@ const inheritanceTable: { [key: string]: string[] } = {
     'GObject.Object',
 ],
     'GObject.Binding': [
+    'GObject.Object',
+],
+    'GObject.BindingGroup': [
     'GObject.Object',
 ],
     'GObject.InitiallyUnowned': [
@@ -1909,6 +1919,9 @@ const inheritanceTable: { [key: string]: string[] } = {
 ],
     'GObject.ParamSpecVariant': [
     'GObject.ParamSpec',
+],
+    'GObject.SignalGroup': [
+    'GObject.Object',
 ],
     'GObject.TypeModule': [
     'GObject.Object',
@@ -2066,6 +2079,11 @@ const inheritanceTable: { [key: string]: string[] } = {
     'Gio.Seekable',
     'Gio.OutputStream',
     'GObject.Object',
+],
+    'Gio.DebugControllerDBus': [
+    'GObject.Object',
+    'Gio.DebugController',
+    'Gio.Initable',
 ],
     'Gio.DesktopAppInfo': [
     'GObject.Object',

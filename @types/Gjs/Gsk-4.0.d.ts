@@ -364,6 +364,10 @@ enum TransformCategory {
 }
 function serialization_error_quark(): GLib.Quark
 function transform_parse(string: string): [ /* returnType */ boolean, /* out_transform */ Transform ]
+function value_dup_render_node(value: any): RenderNode | null
+function value_get_render_node(value: any): RenderNode | null
+function value_set_render_node(value: any, node: RenderNode): void
+function value_take_render_node(value: any, node: RenderNode | null): void
 /**
  * Type of callback that is called when an error occurs
  * during node deserialization.
@@ -391,7 +395,7 @@ class BlendNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -432,8 +436,8 @@ class BlendNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -464,7 +468,7 @@ class BlurNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -505,8 +509,8 @@ class BlurNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -541,7 +545,7 @@ class BorderNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -582,8 +586,8 @@ class BorderNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -603,7 +607,7 @@ interface BroadwayRenderer_ConstructProps extends Renderer_ConstructProps {
 class BroadwayRenderer {
     /* Properties of Gsk-4.0.Gsk.Renderer */
     /**
-     * Whether the renderer has been associated with a surface.
+     * Whether the renderer has been associated with a surface or draw context.
      */
     readonly realized: boolean
     /**
@@ -626,12 +630,20 @@ class BroadwayRenderer {
     /**
      * Creates the resources needed by the `renderer` to render the scene
      * graph.
+     * 
+     * Since GTK 4.6, the surface may be `NULL`, which allows using
+     * renderers without having to create a surface.
+     * 
+     * Note that it is mandatory to call [method`Gsk`.Renderer.unrealize] before
+     * destroying the renderer.
      * @param surface the `GdkSurface` renderer will be used on
      */
-    realize(surface: Gdk.Surface): boolean
+    realize(surface: Gdk.Surface | null): boolean
     /**
-     * Renders the scene graph, described by a tree of `GskRenderNode` instances,
-     * ensuring that the given `region` gets redrawn.
+     * Renders the scene graph, described by a tree of `GskRenderNode` instances
+     * to the renderer's surface,  ensuring that the given `region` gets redrawn.
+     * 
+     * If the renderer has no associated surface, this function does nothing.
      * 
      * Renderers must ensure that changes of the contents given by the `root`
      * node as well as the area given by `region` are redrawn. They are however
@@ -1043,7 +1055,7 @@ class BroadwayRenderer {
     _init (config?: BroadwayRenderer_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new(): BroadwayRenderer
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<BroadwayRenderer>
 }
 class CairoNode {
     /* Methods of Gsk-4.0.Gsk.CairoNode */
@@ -1065,7 +1077,7 @@ class CairoNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -1106,8 +1118,8 @@ class CairoNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -1127,7 +1139,7 @@ interface CairoRenderer_ConstructProps extends Renderer_ConstructProps {
 class CairoRenderer {
     /* Properties of Gsk-4.0.Gsk.Renderer */
     /**
-     * Whether the renderer has been associated with a surface.
+     * Whether the renderer has been associated with a surface or draw context.
      */
     readonly realized: boolean
     /**
@@ -1150,12 +1162,20 @@ class CairoRenderer {
     /**
      * Creates the resources needed by the `renderer` to render the scene
      * graph.
+     * 
+     * Since GTK 4.6, the surface may be `NULL`, which allows using
+     * renderers without having to create a surface.
+     * 
+     * Note that it is mandatory to call [method`Gsk`.Renderer.unrealize] before
+     * destroying the renderer.
      * @param surface the `GdkSurface` renderer will be used on
      */
-    realize(surface: Gdk.Surface): boolean
+    realize(surface: Gdk.Surface | null): boolean
     /**
-     * Renders the scene graph, described by a tree of `GskRenderNode` instances,
-     * ensuring that the given `region` gets redrawn.
+     * Renders the scene graph, described by a tree of `GskRenderNode` instances
+     * to the renderer's surface,  ensuring that the given `region` gets redrawn.
+     * 
+     * If the renderer has no associated surface, this function does nothing.
      * 
      * Renderers must ensure that changes of the contents given by the `root`
      * node as well as the area given by `region` are redrawn. They are however
@@ -1567,7 +1587,7 @@ class CairoRenderer {
     _init (config?: CairoRenderer_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new(): CairoRenderer
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<CairoRenderer>
 }
 class ClipNode {
     /* Methods of Gsk-4.0.Gsk.ClipNode */
@@ -1585,7 +1605,7 @@ class ClipNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -1626,8 +1646,8 @@ class ClipNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -1662,7 +1682,7 @@ class ColorMatrixNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -1703,8 +1723,8 @@ class ColorMatrixNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -1731,7 +1751,7 @@ class ColorNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -1772,8 +1792,8 @@ class ColorNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -1821,7 +1841,7 @@ class ConicGradientNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -1862,8 +1882,8 @@ class ConicGradientNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -1895,7 +1915,7 @@ class ContainerNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -1936,8 +1956,8 @@ class ContainerNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -1972,7 +1992,7 @@ class CrossFadeNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -2013,8 +2033,8 @@ class CrossFadeNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -2045,7 +2065,7 @@ class DebugNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -2086,8 +2106,8 @@ class DebugNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -2107,7 +2127,7 @@ interface GLRenderer_ConstructProps extends Renderer_ConstructProps {
 class GLRenderer {
     /* Properties of Gsk-4.0.Gsk.Renderer */
     /**
-     * Whether the renderer has been associated with a surface.
+     * Whether the renderer has been associated with a surface or draw context.
      */
     readonly realized: boolean
     /**
@@ -2130,12 +2150,20 @@ class GLRenderer {
     /**
      * Creates the resources needed by the `renderer` to render the scene
      * graph.
+     * 
+     * Since GTK 4.6, the surface may be `NULL`, which allows using
+     * renderers without having to create a surface.
+     * 
+     * Note that it is mandatory to call [method`Gsk`.Renderer.unrealize] before
+     * destroying the renderer.
      * @param surface the `GdkSurface` renderer will be used on
      */
-    realize(surface: Gdk.Surface): boolean
+    realize(surface: Gdk.Surface | null): boolean
     /**
-     * Renders the scene graph, described by a tree of `GskRenderNode` instances,
-     * ensuring that the given `region` gets redrawn.
+     * Renders the scene graph, described by a tree of `GskRenderNode` instances
+     * to the renderer's surface,  ensuring that the given `region` gets redrawn.
+     * 
+     * If the renderer has no associated surface, this function does nothing.
      * 
      * Renderers must ensure that changes of the contents given by the `root`
      * node as well as the area given by `region` are redrawn. They are however
@@ -2547,7 +2575,7 @@ class GLRenderer {
     _init (config?: GLRenderer_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new(): GLRenderer
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<GLRenderer>
 }
 interface GLShader_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gsk-4.0.Gsk.GLShader */
@@ -2557,8 +2585,8 @@ interface GLShader_ConstructProps extends GObject.Object_ConstructProps {
      * If the shader source is not coming from a resource, this
      * will be %NULL.
      */
-    resource?: string
-    source?: GLib.Bytes
+    resource?: string | null
+    source?: GLib.Bytes | null
 }
 class GLShader {
     /* Properties of Gsk-4.0.Gsk.GLShader */
@@ -3077,7 +3105,7 @@ class GLShader {
     /* Static methods and pseudo-constructors */
     static new_from_bytes(sourcecode: GLib.Bytes): GLShader
     static new_from_resource(resource_path: string): GLShader
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<GLShader>
 }
 class GLShaderNode {
     /* Methods of Gsk-4.0.Gsk.GLShaderNode */
@@ -3104,7 +3132,7 @@ class GLShaderNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -3145,8 +3173,8 @@ class GLShaderNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -3193,7 +3221,7 @@ class InsetShadowNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -3234,8 +3262,8 @@ class InsetShadowNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -3274,7 +3302,7 @@ class LinearGradientNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -3315,8 +3343,8 @@ class LinearGradientNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -3336,7 +3364,7 @@ interface NglRenderer_ConstructProps extends Renderer_ConstructProps {
 class NglRenderer {
     /* Properties of Gsk-4.0.Gsk.Renderer */
     /**
-     * Whether the renderer has been associated with a surface.
+     * Whether the renderer has been associated with a surface or draw context.
      */
     readonly realized: boolean
     /**
@@ -3359,12 +3387,20 @@ class NglRenderer {
     /**
      * Creates the resources needed by the `renderer` to render the scene
      * graph.
+     * 
+     * Since GTK 4.6, the surface may be `NULL`, which allows using
+     * renderers without having to create a surface.
+     * 
+     * Note that it is mandatory to call [method`Gsk`.Renderer.unrealize] before
+     * destroying the renderer.
      * @param surface the `GdkSurface` renderer will be used on
      */
-    realize(surface: Gdk.Surface): boolean
+    realize(surface: Gdk.Surface | null): boolean
     /**
-     * Renders the scene graph, described by a tree of `GskRenderNode` instances,
-     * ensuring that the given `region` gets redrawn.
+     * Renders the scene graph, described by a tree of `GskRenderNode` instances
+     * to the renderer's surface,  ensuring that the given `region` gets redrawn.
+     * 
+     * If the renderer has no associated surface, this function does nothing.
      * 
      * Renderers must ensure that changes of the contents given by the `root`
      * node as well as the area given by `region` are redrawn. They are however
@@ -3776,7 +3812,7 @@ class NglRenderer {
     _init (config?: NglRenderer_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new(): NglRenderer
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<NglRenderer>
 }
 class OpacityNode {
     /* Methods of Gsk-4.0.Gsk.OpacityNode */
@@ -3794,7 +3830,7 @@ class OpacityNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -3835,8 +3871,8 @@ class OpacityNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -3883,7 +3919,7 @@ class OutsetShadowNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -3924,8 +3960,8 @@ class OutsetShadowNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -3976,7 +4012,7 @@ class RadialGradientNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -4017,8 +4053,8 @@ class RadialGradientNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -4040,7 +4076,7 @@ class RenderNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -4081,8 +4117,8 @@ class RenderNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -4094,7 +4130,7 @@ class RenderNode {
     static name: string
     /* Static methods and pseudo-constructors */
     /**
-     * Loads data previously created via gsk_render_node_serialize().
+     * Loads data previously created via [method`Gsk`.RenderNode.serialize].
      * 
      * For a discussion of the supported format, see that function.
      * @param bytes the bytes containing the data
@@ -4106,7 +4142,7 @@ interface Renderer_ConstructProps extends GObject.Object_ConstructProps {
 class Renderer {
     /* Properties of Gsk-4.0.Gsk.Renderer */
     /**
-     * Whether the renderer has been associated with a surface.
+     * Whether the renderer has been associated with a surface or draw context.
      */
     readonly realized: boolean
     /**
@@ -4129,12 +4165,20 @@ class Renderer {
     /**
      * Creates the resources needed by the `renderer` to render the scene
      * graph.
+     * 
+     * Since GTK 4.6, the surface may be `NULL`, which allows using
+     * renderers without having to create a surface.
+     * 
+     * Note that it is mandatory to call [method`Gsk`.Renderer.unrealize] before
+     * destroying the renderer.
      * @param surface the `GdkSurface` renderer will be used on
      */
-    realize(surface: Gdk.Surface): boolean
+    realize(surface: Gdk.Surface | null): boolean
     /**
-     * Renders the scene graph, described by a tree of `GskRenderNode` instances,
-     * ensuring that the given `region` gets redrawn.
+     * Renders the scene graph, described by a tree of `GskRenderNode` instances
+     * to the renderer's surface,  ensuring that the given `region` gets redrawn.
+     * 
+     * If the renderer has no associated surface, this function does nothing.
      * 
      * Renderers must ensure that changes of the contents given by the `root`
      * node as well as the area given by `region` are redrawn. They are however
@@ -4546,7 +4590,7 @@ class Renderer {
     _init (config?: Renderer_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new_for_surface(surface: Gdk.Surface): Renderer
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Renderer>
 }
 class RepeatNode {
     /* Methods of Gsk-4.0.Gsk.RepeatNode */
@@ -4564,7 +4608,7 @@ class RepeatNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -4605,8 +4649,8 @@ class RepeatNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -4628,7 +4672,7 @@ class RepeatingLinearGradientNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -4669,8 +4713,8 @@ class RepeatingLinearGradientNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -4692,7 +4736,7 @@ class RepeatingRadialGradientNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -4733,8 +4777,8 @@ class RepeatingRadialGradientNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -4765,7 +4809,7 @@ class RoundedClipNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -4806,8 +4850,8 @@ class RoundedClipNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -4843,7 +4887,7 @@ class ShadowNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -4884,8 +4928,8 @@ class ShadowNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -4932,7 +4976,7 @@ class TextNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -4973,8 +5017,8 @@ class TextNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -5001,7 +5045,7 @@ class TextureNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -5042,8 +5086,8 @@ class TextureNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -5074,7 +5118,7 @@ class TransformNode {
      * 
      * Typically, you'll use this function to implement fallback rendering
      * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-     * the drawing context associated to a `GdkSurface`'s rendering buffer.
+     * the drawing context associated to a [class`Gdk`.Surface]'s rendering buffer.
      * 
      * For advanced nodes that cannot be supported using Cairo, in particular
      * for nodes doing 3D operations, this function may fail.
@@ -5115,8 +5159,8 @@ class TransformNode {
      */
     unref(): void
     /**
-     * This function is equivalent to calling gsk_render_node_serialize()
-     * followed by g_file_set_contents().
+     * This function is equivalent to calling [method`Gsk`.RenderNode.serialize]
+     * followed by [func`GLib`.file_set_contents].
      * 
      * See those two functions for details on the arguments.
      * 
@@ -5155,9 +5199,6 @@ abstract class GLRendererClass {
 abstract class GLShaderClass {
     /* Fields of Gsk-4.0.Gsk.GLShaderClass */
     parent_class: GObject.ObjectClass
-    static name: string
-}
-abstract class NglRendererClass {
     static name: string
 }
 class ParseLocation {
@@ -5437,12 +5478,12 @@ class Transform {
     /**
      * Acquires a reference on the given `GskTransform`.
      */
-    ref(): Transform
+    ref(): Transform | null
     /**
      * Rotates `next` `angle` degrees in 2D - or in 3D-speak, around the z axis.
      * @param angle the rotation angle, in degrees (clockwise)
      */
-    rotate(angle: number): Transform
+    rotate(angle: number): Transform | null
     /**
      * Rotates `next` `angle` degrees around `axis`.
      * 
@@ -5450,7 +5491,7 @@ class Transform {
      * @param angle the rotation angle, in degrees (clockwise)
      * @param axis The rotation axis
      */
-    rotate_3d(angle: number, axis: Graphene.Vec3): Transform
+    rotate_3d(angle: number, axis: Graphene.Vec3): Transform | null
     /**
      * Scales `next` in 2-dimensional space by the given factors.
      * 
@@ -5458,14 +5499,20 @@ class Transform {
      * @param factor_x scaling factor on the X axis
      * @param factor_y scaling factor on the Y axis
      */
-    scale(factor_x: number, factor_y: number): Transform
+    scale(factor_x: number, factor_y: number): Transform | null
     /**
      * Scales `next` by the given factors.
      * @param factor_x scaling factor on the X axis
      * @param factor_y scaling factor on the Y axis
      * @param factor_z scaling factor on the Z axis
      */
-    scale_3d(factor_x: number, factor_y: number, factor_z: number): Transform
+    scale_3d(factor_x: number, factor_y: number, factor_z: number): Transform | null
+    /**
+     * Applies a skew transform.
+     * @param skew_x skew factor, in degrees, on the X axis
+     * @param skew_y skew factor, in degrees, on the Y axis
+     */
+    skew(skew_x: number, skew_y: number): Transform | null
     /**
      * Converts a `GskTransform` to a 2D transformation matrix.
      * 
@@ -5487,9 +5534,37 @@ class Transform {
      */
     to_2d(): [ /* out_xx */ number, /* out_yx */ number, /* out_xy */ number, /* out_yy */ number, /* out_dx */ number, /* out_dy */ number ]
     /**
+     * Converts a `GskTransform` to 2D transformation factors.
+     * 
+     * To recreate an equivalent transform from the factors returned
+     * by this function, use
+     * 
+     *     gsk_transform_skew (
+     *         gsk_transform_scale (
+     *             gsk_transform_rotate (
+     *                 gsk_transform_translate (NULL, &GRAPHENE_POINT_T (dx, dy)),
+     *                 angle),
+     *             scale_x, scale_y),
+     *         skew_x, skew_y)
+     * 
+     * `self` must be a 2D transformation. If you are not sure, use
+     * 
+     *     gsk_transform_get_category() >= %GSK_TRANSFORM_CATEGORY_2D
+     * 
+     * to check.
+     */
+    to_2d_components(): [ /* out_skew_x */ number, /* out_skew_y */ number, /* out_scale_x */ number, /* out_scale_y */ number, /* out_angle */ number, /* out_dx */ number, /* out_dy */ number ]
+    /**
      * Converts a `GskTransform` to 2D affine transformation factors.
      * 
-     * `self` must be a 2D transformation. If you are not
+     * To recreate an equivalent transform from the factors returned
+     * by this function, use
+     * 
+     *     gsk_transform_scale (gsk_transform_translate (NULL,
+     *                                                   &GRAPHENE_POINT_T (dx, dy)),
+     *                          sx, sy)
+     * 
+     * `self` must be a 2D affine transformation. If you are not
      * sure, use
      * 
      *     gsk_transform_get_category() >= %GSK_TRANSFORM_CATEGORY_2D_AFFINE
@@ -5526,7 +5601,7 @@ class Transform {
      * Applies all the operations from `other` to `next`.
      * @param other Transform to apply
      */
-    transform(other: Transform | null): Transform
+    transform(other: Transform | null): Transform | null
     /**
      * Transforms a `graphene_rect_t` using the given transform `self`.
      * 
@@ -5543,12 +5618,12 @@ class Transform {
      * Translates `next` in 2-dimensional space by `point`.
      * @param point the point to translate the transform by
      */
-    translate(point: Graphene.Point): Transform
+    translate(point: Graphene.Point): Transform | null
     /**
      * Translates `next` by `point`.
      * @param point the point to translate the transform by
      */
-    translate_3d(point: Graphene.Point3D): Transform
+    translate_3d(point: Graphene.Point3D): Transform | null
     /**
      * Releases a reference on the given `GskTransform`.
      * 

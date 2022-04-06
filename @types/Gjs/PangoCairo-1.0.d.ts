@@ -150,7 +150,7 @@ class Font {
      * Returns whether the font provides a glyph for this character.
      * @param wc a Unicode character
      */
-    has_char(wc: number): boolean
+    has_char(wc: string): boolean
     /**
      * Serializes the `font` in a way that can be uniquely identified.
      * 
@@ -606,7 +606,7 @@ class Font {
     static name: string
     constructor (config?: Font_ConstructProps)
     _init (config?: Font_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Font>
 }
 interface FontMap_ConstructProps extends Pango.FontMap_ConstructProps {
 }
@@ -1178,7 +1178,7 @@ class FontMap {
      * @param fonttype desired #cairo_font_type_t
      */
     static new_for_font_type(fonttype: cairo.FontType): Pango.FontMap | null
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<FontMap>
 }
 }
 export default PangoCairo;

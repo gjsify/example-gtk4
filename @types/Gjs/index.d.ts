@@ -26,13 +26,26 @@ declare global {
     function printerr(...args: any[]): void
     function log(message?: string): void
     function logError(exception: any, message?: string): void
+
+    interface BooleanConstructor {
+        $gtype: GObject20.GType<boolean>;
+    }
+
+    interface NumberConstructor {
+        $gtype: GObject20.GType<number>;
+    }
+
+    interface StringConstructor {
+        $gtype: GObject20.GType<string>;
+    }
+
     const ARGV: string[]
 
     // Timers
     // See https://gitlab.gnome.org/GNOME/gjs/-/blob/master/modules/esm/_timers.js
 
     /**
-     * Since Gjs >= 1.71.1
+     * @version Gjs 1.71.1
      * @param callback a callback function
      * @param delay the duration in milliseconds to wait before running callback
      * @param args arguments to pass to callback
@@ -40,7 +53,7 @@ declare global {
      function setTimeout(callback: (...args: any[]) => any, delay: number, ...args: any[]): GLib20.Source
 
      /**
-      * Since Gjs >= 1.71.1
+      * @version Gjs 1.71.1
       * @param callback a callback function
       * @param delay the duration in milliseconds to wait between calling callback
       * @param args arguments to pass to callback
@@ -48,13 +61,13 @@ declare global {
     function setInterval(callback: (...args: any[]) => any, delay: number, ...args: any[]): GLib20.Source
  
      /**
-      * Since Gjs >= 1.71.1
+      * @version Gjs 1.71.1
       * @param timeout the timeout to clear
       */
     function clearTimeout(timeout: GLib20.Source): void
  
      /**
-      * Since Gjs >= 1.71.1
+      * @version Gjs 1.71.1
       * @param timeout the timeout to clear
       */
     function clearInterval(timeout: GLib20.Source): void

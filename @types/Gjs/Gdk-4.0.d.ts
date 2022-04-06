@@ -324,6 +324,11 @@ enum EventType {
      */
     PAD_GROUP_MODE,
     /**
+     * A touchpad hold gesture event, the current state
+     *   is determined by its phase field. Since: 4.6
+     */
+    TOUCHPAD_HOLD,
+    /**
      * marks the end of the GdkEventType enumeration.
      */
     EVENT_LAST,
@@ -470,7 +475,7 @@ enum KeyMatch {
     EXACT,
 }
 /**
- * `GdkMemoryFormat` describes a format that bytes can have in memory.
+ * `GdkMemoryFormat` describes formats that image data can have in memory.
  * 
  * It describes formats by listing the contents of the memory passed to it.
  * So GDK_MEMORY_A8R8G8B8 will be 1 byte (8 bits) of alpha, followed by a
@@ -522,6 +527,49 @@ enum MemoryFormat {
      * 3 bytes; for blue, green, red. The data is opaque.
      */
     B8G8R8,
+    /**
+     * 3 guint16 values; for red, green, blue. Since: 4.6
+     */
+    R16G16B16,
+    /**
+     * 4 guint16 values; for red, green,
+     *   blue, alpha. The color values are premultiplied with the alpha value.
+     *  Since: 4.6
+     */
+    R16G16B16A16_PREMULTIPLIED,
+    /**
+     * 4 guint16 values; for red, green, blue, alpha.
+     *  Since: 4.6
+     */
+    R16G16B16A16,
+    /**
+     * 3 half-float values; for red, green, blue.
+     *   The data is opaque. Since: 4.6
+     */
+    R16G16B16_FLOAT,
+    /**
+     * 4 half-float values; for
+     *   red, green, blue and alpha. The color values are premultiplied with
+     *   the alpha value. Since: 4.6
+     */
+    R16G16B16A16_FLOAT_PREMULTIPLIED,
+    /**
+     * 4 half-float values; for red, green,
+     *   blue and alpha. Since: 4.6
+     */
+    R16G16B16A16_FLOAT,
+    R32G32B32_FLOAT,
+    /**
+     * 4 float values; for
+     *   red, green, blue and alpha. The color values are premultiplied with
+     *   the alpha value. Since: 4.6
+     */
+    R32G32B32A32_FLOAT_PREMULTIPLIED,
+    /**
+     * 4 float values; for red, green, blue and
+     *   alpha. Since: 4.6
+     */
+    R32G32B32A32_FLOAT,
     /**
      * The number of formats. This value will change as
      *   more formats get added, so do not rely on its concrete integer.
@@ -659,6 +707,28 @@ enum SurfaceEdge {
      * the lower right corner.
      */
     SOUTH_EAST,
+}
+/**
+ * Possible errors that can be returned by `GdkTexture` constructors.
+ */
+enum TextureError {
+    /**
+     * Not enough memory to handle this image
+     */
+    TOO_LARGE,
+    /**
+     * The image data appears corrupted
+     */
+    CORRUPT_IMAGE,
+    /**
+     * The image contains features
+     *   that cannot be loaded
+     */
+    UNSUPPORTED_CONTENT,
+    /**
+     * The image format is not supported
+     */
+    UNSUPPORTED_FORMAT,
 }
 enum TitlebarGesture {
     DOUBLE_CLICK,
@@ -886,6 +956,19 @@ enum FrameClockPhase {
      * corresponds to GdkFrameClock::after-paint. Should not be handled by applications.
      */
     AFTER_PAINT,
+}
+/**
+ * The list of the different APIs that GdkGLContext can potentially support.
+ */
+enum GLAPI {
+    /**
+     * The OpenGL API
+     */
+    GL,
+    /**
+     * The OpenGL ES API
+     */
+    GLES,
 }
 /**
  * Flags to indicate the state of modifier keys and mouse buttons
@@ -3411,7 +3494,7 @@ function cairo_region_create_from_surface(surface: cairo.Surface): cairo.Region
 function cairo_set_source_pixbuf(cr: cairo.Context, pixbuf: GdkPixbuf.Pixbuf, pixbuf_x: number, pixbuf_y: number): void
 function cairo_set_source_rgba(cr: cairo.Context, rgba: RGBA): void
 function content_deserialize_async(stream: Gio.InputStream, mime_type: string, type: GObject.GType, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
-function content_deserialize_finish(result: Gio.AsyncResult, value: any): boolean
+function content_deserialize_finish(result: Gio.AsyncResult): [ /* returnType */ boolean, /* value */ any ]
 function content_formats_parse(string: string): ContentFormats | null
 function content_register_deserializer(mime_type: string, type: GObject.GType, deserialize: ContentDeserializeFunc): void
 function content_register_serializer(type: GObject.GType, mime_type: string, serialize: ContentSerializeFunc): void
@@ -3435,6 +3518,7 @@ function paintable_new_empty(intrinsic_width: number, intrinsic_height: number):
 function pixbuf_get_from_surface(surface: cairo.Surface, src_x: number, src_y: number, width: number, height: number): GdkPixbuf.Pixbuf | null
 function pixbuf_get_from_texture(texture: Texture): GdkPixbuf.Pixbuf | null
 function set_allowed_backends(backends: string): void
+function texture_error_quark(): GLib.Quark
 function toplevel_size_get_type(): GObject.GType
 function unicode_to_keyval(wc: number): number
 function vulkan_error_quark(): GLib.Quark
@@ -3584,7 +3668,7 @@ class DevicePad {
     /**
      * Retrieves the current tool for `device`.
      */
-    get_device_tool(): DeviceTool
+    get_device_tool(): DeviceTool | null
     /**
      * Returns the direction of effective layout of the keyboard.
      * 
@@ -4030,7 +4114,7 @@ class DevicePad {
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
     /* Signals of Gdk-4.0.Gdk.Device */
     /**
-     * Emitted either when the the number of either axes or keys changes.
+     * Emitted either when the number of either axes or keys changes.
      * 
      * On X11 this will normally happen when the physical device
      * routing events through the logical device changes (for
@@ -4121,7 +4205,7 @@ class DevicePad {
     static name: string
     constructor (config?: DevicePad_ConstructProps)
     _init (config?: DevicePad_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<DevicePad>
 }
 interface DragSurface_ConstructProps extends Surface_ConstructProps {
 }
@@ -4184,7 +4268,7 @@ class DragSurface {
      * Before using the returned `GdkGLContext`, you will need to
      * call [method`Gdk`.GLContext.make_current] or [method`Gdk`.GLContext.realize].
      */
-    create_gl_context(): GLContext | null
+    create_gl_context(): GLContext
     /**
      * Create a new Cairo surface that is as compatible as possible with the
      * given `surface`.
@@ -4828,7 +4912,7 @@ class DragSurface {
     static name: string
     constructor (config?: DragSurface_ConstructProps)
     _init (config?: DragSurface_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<DragSurface>
 }
 class Paintable {
     /* Methods of Gdk-4.0.Gdk.Paintable */
@@ -5068,11 +5152,11 @@ interface Popup_ConstructProps extends Surface_ConstructProps {
     /**
      * Whether to hide on outside clicks.
      */
-    autohide?: boolean
+    autohide?: boolean | null
     /**
      * The parent surface.
      */
-    parent?: Surface
+    parent?: Surface | null
 }
 class Popup {
     /* Properties of Gdk-4.0.Gdk.Popup */
@@ -5123,7 +5207,7 @@ class Popup {
     /**
      * Returns the parent surface of a popup.
      */
-    get_parent(): Surface
+    get_parent(): Surface | null
     /**
      * Obtains the position of the popup relative to its parent.
      */
@@ -5187,7 +5271,7 @@ class Popup {
      * Before using the returned `GdkGLContext`, you will need to
      * call [method`Gdk`.GLContext.make_current] or [method`Gdk`.GLContext.realize].
      */
-    create_gl_context(): GLContext | null
+    create_gl_context(): GLContext
     /**
      * Create a new Cairo surface that is as compatible as possible with the
      * given `surface`.
@@ -5835,45 +5919,45 @@ class Popup {
     static name: string
     constructor (config?: Popup_ConstructProps)
     _init (config?: Popup_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Popup>
 }
 interface Toplevel_ConstructProps extends Surface_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.Toplevel */
     /**
      * Whether the window manager should add decorations.
      */
-    decorated?: boolean
+    decorated?: boolean | null
     /**
      * Whether the window manager should allow to close the surface.
      */
-    deletable?: boolean
+    deletable?: boolean | null
     /**
      * The fullscreen mode of the surface.
      */
-    fullscreen_mode?: FullscreenMode
+    fullscreen_mode?: FullscreenMode | null
     /**
      * A list of textures to use as icon.
      */
-    icon_list?: object
+    icon_list?: object | null
     /**
      * Whether the surface is modal.
      */
-    modal?: boolean
+    modal?: boolean | null
     /**
      * The startup ID of the surface.
      * 
      * See [class`Gdk`.AppLaunchContext] for more information about
      * startup feedback.
      */
-    startup_id?: string
+    startup_id?: string | null
     /**
      * The title of the surface.
      */
-    title?: string
+    title?: string | null
     /**
      * The transient parent of the surface.
      */
-    transient_for?: Surface
+    transient_for?: Surface | null
 }
 class Toplevel {
     /* Properties of Gdk-4.0.Gdk.Toplevel */
@@ -5974,7 +6058,7 @@ class Toplevel {
      * @param y surface Y coordinate of mouse click that began the drag
      * @param timestamp timestamp of mouse click that began the drag (use   [method`Gdk`.Event.get_time])
      */
-    begin_resize(edge: SurfaceEdge, device: Device | null, button: number, x: number, y: number, timestamp: number): void
+    begin_resize(edge: SurfaceEdge, device: Device, button: number, x: number, y: number, timestamp: number): void
     /**
      * Sets keyboard focus to `surface`.
      * 
@@ -6156,7 +6240,7 @@ class Toplevel {
      * Before using the returned `GdkGLContext`, you will need to
      * call [method`Gdk`.GLContext.make_current] or [method`Gdk`.GLContext.realize].
      */
-    create_gl_context(): GLContext | null
+    create_gl_context(): GLContext
     /**
      * Create a new Cairo surface that is as compatible as possible with the
      * given `surface`.
@@ -6838,14 +6922,14 @@ class Toplevel {
     static name: string
     constructor (config?: Toplevel_ConstructProps)
     _init (config?: Toplevel_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Toplevel>
 }
 interface AppLaunchContext_ConstructProps extends Gio.AppLaunchContext_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.AppLaunchContext */
     /**
      * The display that the `GdkAppLaunchContext` is on.
      */
-    display?: Display
+    display?: Display | null
 }
 class AppLaunchContext {
     /* Properties of Gdk-4.0.Gdk.AppLaunchContext */
@@ -6868,6 +6952,10 @@ class AppLaunchContext {
      * This only works when running under a window manager that
      * supports multiple workspaces, as described in the
      * [Extended Window Manager Hints](http://www.freedesktop.org/Standards/wm-spec).
+     * Specifically this sets the `_NET_WM_DESKTOP` property described
+     * in that spec.
+     * 
+     * This only works when using the X11 backend.
      * 
      * When the workspace is not specified or `desktop` is set to -1,
      * it is up to the window manager to pick one, typically it will
@@ -7296,6 +7384,7 @@ class AppLaunchContext {
      * @param startup_notify_id the startup notification id that was returned by g_app_launch_context_get_startup_notify_id().
      */
     vfunc_launch_failed(startup_notify_id: string): void
+    vfunc_launch_started(info: Gio.AppInfo, platform_data: GLib.Variant): void
     vfunc_launched(info: Gio.AppInfo, platform_data: GLib.Variant): void
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
@@ -7320,7 +7409,7 @@ class AppLaunchContext {
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
     /* Signals of Gio-2.0.Gio.AppLaunchContext */
     /**
-     * The ::launch-failed signal is emitted when a #GAppInfo launch
+     * The #GAppLaunchContext::launch-failed signal is emitted when a #GAppInfo launch
      * fails. The startup notification id is provided, so that the launcher
      * can cancel the startup notification.
      * @param startup_notify_id the startup notification id for the failed launch
@@ -7329,11 +7418,36 @@ class AppLaunchContext {
     connect_after(sigName: "launch-failed", callback: (($obj: AppLaunchContext, startup_notify_id: string) => void)): number
     emit(sigName: "launch-failed", startup_notify_id: string): void
     /**
-     * The ::launched signal is emitted when a #GAppInfo is successfully
+     * The #GAppLaunchContext::launch-started signal is emitted when a #GAppInfo is
+     * about to be launched. If non-null the `platform_data` is an
+     * GVariant dictionary mapping strings to variants (ie `a{sv}`), which
+     * contains additional, platform-specific data about this launch. On
+     * UNIX, at least the `startup-notification-id` keys will be
+     * present.
+     * 
+     * The value of the `startup-notification-id` key (type `s`) is a startup
+     * notification ID corresponding to the format from the [startup-notification
+     * specification](https://specifications.freedesktop.org/startup-notification-spec/startup-notification-0.1.txt).
+     * It allows tracking the progress of the launchee through startup.
+     * 
+     * It is guaranteed that this signal is followed by either a #GAppLaunchContext::launched or
+     * #GAppLaunchContext::launch-failed signal.
+     * @param info the #GAppInfo that is about to be launched
+     * @param platform_data additional platform-specific data for this launch
+     */
+    connect(sigName: "launch-started", callback: (($obj: AppLaunchContext, info: Gio.AppInfo, platform_data: GLib.Variant | null) => void)): number
+    connect_after(sigName: "launch-started", callback: (($obj: AppLaunchContext, info: Gio.AppInfo, platform_data: GLib.Variant | null) => void)): number
+    emit(sigName: "launch-started", info: Gio.AppInfo, platform_data: GLib.Variant | null): void
+    /**
+     * The #GAppLaunchContext::launched signal is emitted when a #GAppInfo is successfully
      * launched. The `platform_data` is an GVariant dictionary mapping
-     * strings to variants (ie a{sv}), which contains additional,
+     * strings to variants (ie `a{sv}`), which contains additional,
      * platform-specific data about this launch. On UNIX, at least the
-     * "pid" and "startup-notification-id" keys will be present.
+     * `pid` and `startup-notification-id` keys will be present.
+     * 
+     * Since 2.72 the `pid` may be 0 if the process id wasn't known (for
+     * example if the process was launched via D-Bus). The `pid` may not be
+     * set at all in subsequent releases.
      * @param info the #GAppInfo that was just launched
      * @param platform_data additional platform-specific data for this launch
      */
@@ -7383,7 +7497,7 @@ class AppLaunchContext {
     static name: string
     constructor (config?: AppLaunchContext_ConstructProps)
     _init (config?: AppLaunchContext_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<AppLaunchContext>
 }
 class ButtonEvent {
     /* Methods of Gdk-4.0.Gdk.ButtonEvent */
@@ -7422,11 +7536,17 @@ class ButtonEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -7470,7 +7590,8 @@ class ButtonEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -7494,7 +7615,7 @@ class ButtonEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -7997,14 +8118,14 @@ class CairoContext {
     static name: string
     constructor (config?: CairoContext_ConstructProps)
     _init (config?: CairoContext_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<CairoContext>
 }
 interface Clipboard_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.Clipboard */
     /**
      * The `GdkDisplay` that the clipboard belongs to.
      */
-    display?: Display
+    display?: Display | null
 }
 class Clipboard {
     /* Properties of Gdk-4.0.Gdk.Clipboard */
@@ -8576,7 +8697,7 @@ class Clipboard {
     static name: string
     constructor (config?: Clipboard_ConstructProps)
     _init (config?: Clipboard_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Clipboard>
 }
 interface ContentDeserializer_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -8589,7 +8710,7 @@ class ContentDeserializer {
      * 
      * This is the `GCancellable` that was passed to [func`Gdk`.content_deserialize_async].
      */
-    get_cancellable(): Gio.Cancellable
+    get_cancellable(): Gio.Cancellable | null
     /**
      * Gets the `GType` to create an instance of.
      */
@@ -8640,7 +8761,7 @@ class ContentDeserializer {
      * @param data data to associate with this operation
      * @param notify destroy notify for `data`
      */
-    set_task_data(data: object | null, notify: GLib.DestroyNotify): void
+    set_task_data(data: object, notify: GLib.DestroyNotify): void
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -9056,7 +9177,7 @@ class ContentDeserializer {
     static name: string
     constructor (config?: ContentDeserializer_ConstructProps)
     _init (config?: ContentDeserializer_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<ContentDeserializer>
 }
 interface ContentProvider_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -9085,9 +9206,8 @@ class ContentProvider {
      * returned by [method`Gdk`.ContentProvider.ref_formats]. However, if the
      * given `GType` is not supported, this operation can fail and
      * `G_IO_ERROR_NOT_SUPPORTED` will be reported.
-     * @param value the `GValue` to fill
      */
-    get_value(value: any): boolean
+    get_value(): [ /* returnType */ boolean, /* value */ any ]
     /**
      * Gets the formats that the provider can provide its current contents in.
      */
@@ -9457,9 +9577,8 @@ class ContentProvider {
      * returned by [method`Gdk`.ContentProvider.ref_formats]. However, if the
      * given `GType` is not supported, this operation can fail and
      * `G_IO_ERROR_NOT_SUPPORTED` will be reported.
-     * @param value the `GValue` to fill
      */
-    vfunc_get_value(value: any): boolean
+    vfunc_get_value(): [ /* returnType */ boolean, /* value */ any ]
     /**
      * Gets the formats that the provider can provide its current contents in.
      */
@@ -9576,8 +9695,8 @@ class ContentProvider {
     /* Static methods and pseudo-constructors */
     static new_for_bytes(mime_type: string, bytes: GLib.Bytes): ContentProvider
     static new_for_value(value: any): ContentProvider
-    static new_union(providers: ContentProvider[] | null): ContentProvider
-    static $gtype: GObject.GType
+    static new_union(providers: ContentProvider[]): ContentProvider
+    static $gtype: GObject.GType<ContentProvider>
 }
 interface ContentSerializer_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -9590,7 +9709,7 @@ class ContentSerializer {
      * 
      * This is the `GCancellable` that was passed to [func`content_serialize_async]`.
      */
-    get_cancellable(): Gio.Cancellable
+    get_cancellable(): Gio.Cancellable | null
     /**
      * Gets the `GType` to of the object to serialize.
      */
@@ -9641,7 +9760,7 @@ class ContentSerializer {
      * @param data data to associate with this operation
      * @param notify destroy notify for `data`
      */
-    set_task_data(data: object | null, notify: GLib.DestroyNotify): void
+    set_task_data(data: object, notify: GLib.DestroyNotify): void
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -10057,7 +10176,7 @@ class ContentSerializer {
     static name: string
     constructor (config?: ContentSerializer_ConstructProps)
     _init (config?: ContentSerializer_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<ContentSerializer>
 }
 class CrossingEvent {
     /* Methods of Gdk-4.0.Gdk.CrossingEvent */
@@ -10104,11 +10223,17 @@ class CrossingEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -10152,7 +10277,8 @@ class CrossingEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -10176,7 +10302,7 @@ class CrossingEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -10211,27 +10337,27 @@ interface Cursor_ConstructProps extends GObject.Object_ConstructProps {
     /**
      * Cursor to fall back to if this cursor cannot be displayed.
      */
-    fallback?: Cursor
+    fallback?: Cursor | null
     /**
      * X position of the cursor hotspot in the cursor image.
      */
-    hotspot_x?: number
+    hotspot_x?: number | null
     /**
      * Y position of the cursor hotspot in the cursor image.
      */
-    hotspot_y?: number
+    hotspot_y?: number | null
     /**
      * Name of this this cursor.
      * 
      * The name will be %NULL if the cursor was created from a texture.
      */
-    name?: string
+    name?: string | null
     /**
      * The texture displayed by this cursor.
      * 
      * The texture will be %NULL if the cursor was created from a name.
      */
-    texture?: Texture
+    texture?: Texture | null
 }
 class Cursor {
     /* Properties of Gdk-4.0.Gdk.Cursor */
@@ -10693,7 +10819,7 @@ class Cursor {
     /* Static methods and pseudo-constructors */
     static new_from_name(name: string, fallback: Cursor | null): Cursor
     static new_from_texture(texture: Texture, hotspot_x: number, hotspot_y: number, fallback: Cursor | null): Cursor
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Cursor>
 }
 class DNDEvent {
     /* Methods of Gdk-4.0.Gdk.DNDEvent */
@@ -10732,11 +10858,17 @@ class DNDEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -10780,7 +10912,8 @@ class DNDEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -10804,7 +10937,7 @@ class DNDEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -10866,11 +10999,17 @@ class DeleteEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -10914,7 +11053,8 @@ class DeleteEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -10938,7 +11078,7 @@ class DeleteEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -10973,42 +11113,42 @@ interface Device_ConstructProps extends GObject.Object_ConstructProps {
     /**
      * The `GdkDisplay` the `GdkDevice` pertains to.
      */
-    display?: Display
+    display?: Display | null
     /**
      * Whether the device is represented by a cursor on the screen.
      */
-    has_cursor?: boolean
+    has_cursor?: boolean | null
     /**
      * The device name.
      */
-    name?: string
+    name?: string | null
     /**
      * The maximal number of concurrent touches on a touch device.
      * 
      * Will be 0 if the device is not a touch device or if the number
      * of touches is unknown.
      */
-    num_touches?: number
+    num_touches?: number | null
     /**
      * Product ID of this device.
      * 
      * See [method`Gdk`.Device.get_product_id].
      */
-    product_id?: string
+    product_id?: string | null
     /**
      * `GdkSeat` of this device.
      */
-    seat?: Seat
+    seat?: Seat | null
     /**
      * Source type for the device.
      */
-    source?: InputSource
+    source?: InputSource | null
     /**
      * Vendor ID of this device.
      * 
      * See [method`Gdk`.Device.get_vendor_id].
      */
-    vendor_id?: string
+    vendor_id?: string | null
 }
 class Device {
     /* Properties of Gdk-4.0.Gdk.Device */
@@ -11107,7 +11247,7 @@ class Device {
     /**
      * Retrieves the current tool for `device`.
      */
-    get_device_tool(): DeviceTool
+    get_device_tool(): DeviceTool | null
     /**
      * Returns the direction of effective layout of the keyboard.
      * 
@@ -11553,7 +11693,7 @@ class Device {
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
     /* Signals of Gdk-4.0.Gdk.Device */
     /**
-     * Emitted either when the the number of either axes or keys changes.
+     * Emitted either when the number of either axes or keys changes.
      * 
      * On X11 this will normally happen when the physical device
      * routing events through the logical device changes (for
@@ -11644,26 +11784,26 @@ class Device {
     static name: string
     constructor (config?: Device_ConstructProps)
     _init (config?: Device_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Device>
 }
 interface DeviceTool_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.DeviceTool */
     /**
      * The axes of the tool.
      */
-    axes?: AxisFlags
+    axes?: AxisFlags | null
     /**
      * The hardware ID of the tool.
      */
-    hardware_id?: number
+    hardware_id?: number | null
     /**
      * The serial number of the tool.
      */
-    serial?: number
+    serial?: number | null
     /**
      * The type of the tool.
      */
-    tool_type?: DeviceToolType
+    tool_type?: DeviceToolType | null
 }
 class DeviceTool {
     /* Properties of Gdk-4.0.Gdk.DeviceTool */
@@ -12099,7 +12239,7 @@ class DeviceTool {
     static name: string
     constructor (config?: DeviceTool_ConstructProps)
     _init (config?: DeviceTool_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<DeviceTool>
 }
 interface Display_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -12130,6 +12270,18 @@ class Display {
      * This cleans up associated resources.
      */
     close(): void
+    /**
+     * Creates a new `GdkGLContext` for the `GdkDisplay`.
+     * 
+     * The context is disconnected from any particular surface or surface
+     * and cannot be used to draw to any surface. It can only be used to
+     * draw to non-surface framebuffers like textures.
+     * 
+     * If the creation of the `GdkGLContext` failed, `error` will be set.
+     * Before using the returned `GdkGLContext`, you will need to
+     * call [method`Gdk`.GLContext.make_current] or [method`Gdk`.GLContext.realize].
+     */
+    create_gl_context(): GLContext
     /**
      * Returns %TRUE if there is an ongoing grab on `device` for `display`.
      * @param device a `GdkDevice`
@@ -12790,14 +12942,14 @@ class Display {
      * @param display_name the name of the display to open
      */
     static open(display_name: string): Display | null
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Display>
 }
 interface DisplayManager_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.DisplayManager */
     /**
      * The default display.
      */
-    default_display?: Display
+    default_display?: Display | null
 }
 class DisplayManager {
     /* Properties of Gdk-4.0.Gdk.DisplayManager */
@@ -13225,34 +13377,34 @@ class DisplayManager {
      * backends wil be used.
      */
     static get(): DisplayManager
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<DisplayManager>
 }
 interface Drag_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.Drag */
     /**
      * The possible actions of this drag.
      */
-    actions?: DragAction
+    actions?: DragAction | null
     /**
      * The `GdkContentProvider`.
      */
-    content?: ContentProvider
+    content?: ContentProvider | null
     /**
      * The `GdkDevice` that is performing the drag.
      */
-    device?: Device
+    device?: Device | null
     /**
      * The possible formats that the drag can provide its data in.
      */
-    formats?: ContentFormats
+    formats?: ContentFormats | null
     /**
      * The currently selected action of the drag.
      */
-    selected_action?: DragAction
+    selected_action?: DragAction | null
     /**
      * The surface where the drag originates.
      */
-    surface?: Surface
+    surface?: Surface | null
 }
 class Drag {
     /* Properties of Gdk-4.0.Gdk.Drag */
@@ -13785,18 +13937,18 @@ class Drag {
      * @param dy the y offset to `device'`s position where the drag nominally started
      */
     static begin(surface: Surface, device: Device, content: ContentProvider, actions: DragAction, dx: number, dy: number): Drag | null
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Drag>
 }
 interface DrawContext_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.DrawContext */
     /**
      * The `GdkDisplay` used to create the `GdkDrawContext`.
      */
-    display?: Display
+    display?: Display | null
     /**
      * The `GdkSurface` the context is bound to.
      */
-    surface?: Surface
+    surface?: Surface | null
 }
 class DrawContext {
     /* Properties of Gdk-4.0.Gdk.DrawContext */
@@ -14257,30 +14409,30 @@ class DrawContext {
     static name: string
     constructor (config?: DrawContext_ConstructProps)
     _init (config?: DrawContext_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<DrawContext>
 }
 interface Drop_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.Drop */
     /**
      * The possible actions for this drop
      */
-    actions?: DragAction
+    actions?: DragAction | null
     /**
      * The `GdkDevice` performing the drop
      */
-    device?: Device
+    device?: Device | null
     /**
      * The `GdkDrag` that initiated this drop
      */
-    drag?: Drag
+    drag?: Drag | null
     /**
      * The possible formats that the drop can provide its data in.
      */
-    formats?: ContentFormats
+    formats?: ContentFormats | null
     /**
      * The `GdkSurface` the drop happens on
      */
-    surface?: Surface
+    surface?: Surface | null
 }
 class Drop {
     /* Properties of Gdk-4.0.Gdk.Drop */
@@ -14811,7 +14963,7 @@ class Drop {
     static name: string
     constructor (config?: Drop_ConstructProps)
     _init (config?: Drop_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Drop>
 }
 class Event {
     /* Methods of Gdk-4.0.Gdk.Event */
@@ -14845,11 +14997,17 @@ class Event {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -14893,7 +15051,8 @@ class Event {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -14917,7 +15076,7 @@ class Event {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -14985,11 +15144,17 @@ class FocusEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -15033,7 +15198,8 @@ class FocusEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -15057,7 +15223,7 @@ class FocusEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -15623,20 +15789,32 @@ class FrameClock {
     static name: string
     constructor (config?: FrameClock_ConstructProps)
     _init (config?: FrameClock_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<FrameClock>
 }
 interface GLContext_ConstructProps extends DrawContext_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.GLContext */
+    /**
+     * The allowed APIs.
+     */
+    allowed_apis?: GLAPI | null
     /**
      * Always %NULL
      * 
      * As many contexts can share data now and no single shared context exists
      * anymore, this function has been deprecated and now always returns %NULL.
      */
-    shared_context?: GLContext
+    shared_context?: GLContext | null
 }
 class GLContext {
     /* Properties of Gdk-4.0.Gdk.GLContext */
+    /**
+     * The allowed APIs.
+     */
+    allowed_apis: GLAPI
+    /**
+     * The API currently in use.
+     */
+    readonly api: GLAPI
     /**
      * Always %NULL
      * 
@@ -15656,6 +15834,16 @@ class GLContext {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of Gdk-4.0.Gdk.GLContext */
+    /**
+     * Gets the allowed APIs set via gdk_gl_context_set_allowed_apis().
+     */
+    get_allowed_apis(): GLAPI
+    /**
+     * Gets the API currently in use.
+     * 
+     * If the renderer has not been realized yet, 0 is returned.
+     */
+    get_api(): GLAPI
     /**
      * Retrieves whether the context is doing extra validations and runtime checking.
      * 
@@ -15744,6 +15932,17 @@ class GLContext {
      * It is safe to call this function on a realized `GdkGLContext`.
      */
     realize(): boolean
+    /**
+     * Sets the allowed APIs. When gdk_gl_context_realize() is called, only the
+     * allowed APIs will be tried. If you set this to 0, realizing will always fail.
+     * 
+     * If you set it on a realized context, the property will not have any effect.
+     * It is only relevant during gdk_gl_context_realize().
+     * 
+     * By default, all APIs are allowed.
+     * @param apis the allowed APIs
+     */
+    set_allowed_apis(apis: GLAPI): void
     /**
      * Sets whether the `GdkGLContext` should perform extra validations and
      * runtime checking.
@@ -16224,6 +16423,10 @@ class GLContext {
     connect(sigName: "notify", callback: (($obj: GLContext, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify", callback: (($obj: GLContext, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify", pspec: GObject.ParamSpec): void
+    connect(sigName: "notify::allowed-apis", callback: (($obj: GLContext, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::allowed-apis", callback: (($obj: GLContext, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::api", callback: (($obj: GLContext, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::api", callback: (($obj: GLContext, pspec: GObject.ParamSpec) => void)): number
     connect(sigName: "notify::shared-context", callback: (($obj: GLContext, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::shared-context", callback: (($obj: GLContext, pspec: GObject.ParamSpec) => void)): number
     connect(sigName: "notify::display", callback: (($obj: GLContext, pspec: GObject.ParamSpec) => void)): number
@@ -16249,7 +16452,7 @@ class GLContext {
      * Retrieves the current `GdkGLContext`.
      */
     static get_current(): GLContext | null
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<GLContext>
 }
 interface GLTexture_ConstructProps extends Texture_ConstructProps {
 }
@@ -16312,11 +16515,51 @@ class GLTexture {
      * 
      * This is a utility function intended for debugging and testing.
      * If you want more control over formats, proper error handling or
-     * want to store to a `GFile` or other location, you might want to
-     * look into using the gdk-pixbuf library.
+     * want to store to a [iface`Gio`.File] or other location, you might want to
+     * use [method`Gdk`.Texture.save_to_png_bytes] or look into the
+     * gdk-pixbuf library.
      * @param filename the filename to store to
      */
     save_to_png(filename: string): boolean
+    /**
+     * Store the given `texture` in memory as a PNG file.
+     * 
+     * Use [ctor`Gdk`.Texture.new_from_bytes] to read it back.
+     * 
+     * If you want to serialize a texture, this is a convenient and
+     * portable way to do that.
+     * 
+     * If you need more control over the generated image, such as
+     * attaching metadata, you should look into an image handling
+     * library such as the gdk-pixbuf library.
+     * 
+     * If you are dealing with high dynamic range float data, you
+     * might also want to consider [method`Gdk`.Texture.save_to_tiff_bytes]
+     * instead.
+     */
+    save_to_png_bytes(): GLib.Bytes
+    /**
+     * Store the given `texture` to the `filename` as a TIFF file.
+     * 
+     * GTK will attempt to store data without loss.
+     * @param filename the filename to store to
+     */
+    save_to_tiff(filename: string): boolean
+    /**
+     * Store the given `texture` in memory as a TIFF file.
+     * 
+     * Use [ctor`Gdk`.Texture.new_from_bytes] to read it back.
+     * 
+     * This function is intended to store a representation of the
+     * texture's data that is as accurate as possible. This is
+     * particularly relevant when working with high dynamic range
+     * images and floating-point texture data.
+     * 
+     * If that is not your concern and you are interested in a
+     * smaller size and a more portable format, you might want to
+     * use [method`Gdk`.Texture.save_to_png_bytes].
+     */
+    save_to_tiff_bytes(): GLib.Bytes
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -16749,6 +16992,61 @@ class GLTexture {
      * @param height height to snapshot in
      */
     snapshot(snapshot: Snapshot, width: number, height: number): void
+    /* Methods of Gio-2.0.Gio.Icon */
+    /**
+     * Checks if two icons are equal.
+     * @param icon2 pointer to the second #GIcon.
+     */
+    equal(icon2: Gio.Icon | null): boolean
+    /**
+     * Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
+     * back by calling g_icon_deserialize() on the returned value.
+     * As serialization will avoid using raw icon data when possible, it only
+     * makes sense to transfer the #GVariant between processes on the same machine,
+     * (as opposed to over the network), and within the same file system namespace.
+     */
+    serialize(): GLib.Variant | null
+    /**
+     * Generates a textual representation of `icon` that can be used for
+     * serialization such as when passing `icon` to a different process or
+     * saving it to persistent storage. Use g_icon_new_for_string() to
+     * get `icon` back from the returned string.
+     * 
+     * The encoding of the returned string is proprietary to #GIcon except
+     * in the following two cases
+     * 
+     * - If `icon` is a #GFileIcon, the returned string is a native path
+     *   (such as `/path/to/my icon.png`) without escaping
+     *   if the #GFile for `icon` is a native file.  If the file is not
+     *   native, the returned string is the result of g_file_get_uri()
+     *   (such as `sftp://path/to/my%20icon.png`).
+     * 
+     * - If `icon` is a #GThemedIcon with exactly one name and no fallbacks,
+     *   the encoding is simply the name (such as `network-server`).
+     */
+    to_string(): string | null
+    /* Methods of Gio-2.0.Gio.LoadableIcon */
+    /**
+     * Loads a loadable icon. For the asynchronous version of this function,
+     * see g_loadable_icon_load_async().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     */
+    load(size: number, cancellable: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string ]
+    /**
+     * Loads an icon asynchronously. To finish this function, see
+     * g_loadable_icon_load_finish(). For the synchronous, blocking
+     * version of this function, see g_loadable_icon_load().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
+     */
+    load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    /**
+     * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @param res a #GAsyncResult.
+     */
+    load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /* Virtual methods of Gdk-4.0.Gdk.GLTexture */
     /**
      * Gets an immutable paintable for the current contents displayed by `paintable`.
@@ -16824,6 +17122,44 @@ class GLTexture {
      * @param height height to snapshot in
      */
     vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
+    /**
+     * Checks if two icons are equal.
+     * @param icon2 pointer to the second #GIcon.
+     */
+    vfunc_equal(icon2: Gio.Icon | null): boolean
+    /**
+     * Gets a hash for an icon.
+     */
+    vfunc_hash(): number
+    /**
+     * Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
+     * back by calling g_icon_deserialize() on the returned value.
+     * As serialization will avoid using raw icon data when possible, it only
+     * makes sense to transfer the #GVariant between processes on the same machine,
+     * (as opposed to over the network), and within the same file system namespace.
+     */
+    vfunc_serialize(): GLib.Variant | null
+    /**
+     * Loads a loadable icon. For the asynchronous version of this function,
+     * see g_loadable_icon_load_async().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     */
+    vfunc_load(size: number, cancellable: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string ]
+    /**
+     * Loads an icon asynchronously. To finish this function, see
+     * g_loadable_icon_load_finish(). For the synchronous, blocking
+     * version of this function, see g_loadable_icon_load().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
+     */
+    vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    /**
+     * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @param res a #GAsyncResult.
+     */
+    vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /* Virtual methods of Gdk-4.0.Gdk.Texture */
     /**
      * Gets an immutable paintable for the current contents displayed by `paintable`.
@@ -16899,6 +17235,44 @@ class GLTexture {
      * @param height height to snapshot in
      */
     vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
+    /**
+     * Checks if two icons are equal.
+     * @param icon2 pointer to the second #GIcon.
+     */
+    vfunc_equal(icon2: Gio.Icon | null): boolean
+    /**
+     * Gets a hash for an icon.
+     */
+    vfunc_hash(): number
+    /**
+     * Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
+     * back by calling g_icon_deserialize() on the returned value.
+     * As serialization will avoid using raw icon data when possible, it only
+     * makes sense to transfer the #GVariant between processes on the same machine,
+     * (as opposed to over the network), and within the same file system namespace.
+     */
+    vfunc_serialize(): GLib.Variant | null
+    /**
+     * Loads a loadable icon. For the asynchronous version of this function,
+     * see g_loadable_icon_load_async().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     */
+    vfunc_load(size: number, cancellable: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string ]
+    /**
+     * Loads an icon asynchronously. To finish this function, see
+     * g_loadable_icon_load_finish(). For the synchronous, blocking
+     * version of this function, see g_loadable_icon_load().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
+     */
+    vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    /**
+     * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @param res a #GAsyncResult.
+     */
+    vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -17003,7 +17377,27 @@ class GLTexture {
      * @param intrinsic_height The intrinsic height to report. Can be 0 for no height.
      */
     static new_empty(intrinsic_width: number, intrinsic_height: number): Paintable
-    static $gtype: GObject.GType
+    /**
+     * Deserializes a #GIcon previously serialized using g_icon_serialize().
+     * @param value a #GVariant created with g_icon_serialize()
+     */
+    static deserialize(value: GLib.Variant): Gio.Icon | null
+    /**
+     * Gets a hash for an icon.
+     * @param icon #gconstpointer to an icon object.
+     */
+    static hash(icon: object): number
+    /**
+     * Generate a #GIcon instance from `str`. This function can fail if
+     * `str` is not valid - see g_icon_to_string() for discussion.
+     * 
+     * If your application or library provides one or more #GIcon
+     * implementations you need to ensure that each #GType is registered
+     * with the type system prior to calling g_icon_new_for_string().
+     * @param str A string obtained via g_icon_to_string().
+     */
+    static new_for_string(str: string): Gio.Icon
+    static $gtype: GObject.GType<GLTexture>
 }
 class GrabBrokenEvent {
     /* Methods of Gdk-4.0.Gdk.GrabBrokenEvent */
@@ -17046,11 +17440,17 @@ class GrabBrokenEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -17094,7 +17494,8 @@ class GrabBrokenEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -17118,7 +17519,7 @@ class GrabBrokenEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -17225,11 +17626,17 @@ class KeyEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -17273,7 +17680,8 @@ class KeyEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -17297,7 +17705,7 @@ class KeyEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -17379,11 +17787,51 @@ class MemoryTexture {
      * 
      * This is a utility function intended for debugging and testing.
      * If you want more control over formats, proper error handling or
-     * want to store to a `GFile` or other location, you might want to
-     * look into using the gdk-pixbuf library.
+     * want to store to a [iface`Gio`.File] or other location, you might want to
+     * use [method`Gdk`.Texture.save_to_png_bytes] or look into the
+     * gdk-pixbuf library.
      * @param filename the filename to store to
      */
     save_to_png(filename: string): boolean
+    /**
+     * Store the given `texture` in memory as a PNG file.
+     * 
+     * Use [ctor`Gdk`.Texture.new_from_bytes] to read it back.
+     * 
+     * If you want to serialize a texture, this is a convenient and
+     * portable way to do that.
+     * 
+     * If you need more control over the generated image, such as
+     * attaching metadata, you should look into an image handling
+     * library such as the gdk-pixbuf library.
+     * 
+     * If you are dealing with high dynamic range float data, you
+     * might also want to consider [method`Gdk`.Texture.save_to_tiff_bytes]
+     * instead.
+     */
+    save_to_png_bytes(): GLib.Bytes
+    /**
+     * Store the given `texture` to the `filename` as a TIFF file.
+     * 
+     * GTK will attempt to store data without loss.
+     * @param filename the filename to store to
+     */
+    save_to_tiff(filename: string): boolean
+    /**
+     * Store the given `texture` in memory as a TIFF file.
+     * 
+     * Use [ctor`Gdk`.Texture.new_from_bytes] to read it back.
+     * 
+     * This function is intended to store a representation of the
+     * texture's data that is as accurate as possible. This is
+     * particularly relevant when working with high dynamic range
+     * images and floating-point texture data.
+     * 
+     * If that is not your concern and you are interested in a
+     * smaller size and a more portable format, you might want to
+     * use [method`Gdk`.Texture.save_to_png_bytes].
+     */
+    save_to_tiff_bytes(): GLib.Bytes
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -17816,6 +18264,61 @@ class MemoryTexture {
      * @param height height to snapshot in
      */
     snapshot(snapshot: Snapshot, width: number, height: number): void
+    /* Methods of Gio-2.0.Gio.Icon */
+    /**
+     * Checks if two icons are equal.
+     * @param icon2 pointer to the second #GIcon.
+     */
+    equal(icon2: Gio.Icon | null): boolean
+    /**
+     * Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
+     * back by calling g_icon_deserialize() on the returned value.
+     * As serialization will avoid using raw icon data when possible, it only
+     * makes sense to transfer the #GVariant between processes on the same machine,
+     * (as opposed to over the network), and within the same file system namespace.
+     */
+    serialize(): GLib.Variant | null
+    /**
+     * Generates a textual representation of `icon` that can be used for
+     * serialization such as when passing `icon` to a different process or
+     * saving it to persistent storage. Use g_icon_new_for_string() to
+     * get `icon` back from the returned string.
+     * 
+     * The encoding of the returned string is proprietary to #GIcon except
+     * in the following two cases
+     * 
+     * - If `icon` is a #GFileIcon, the returned string is a native path
+     *   (such as `/path/to/my icon.png`) without escaping
+     *   if the #GFile for `icon` is a native file.  If the file is not
+     *   native, the returned string is the result of g_file_get_uri()
+     *   (such as `sftp://path/to/my%20icon.png`).
+     * 
+     * - If `icon` is a #GThemedIcon with exactly one name and no fallbacks,
+     *   the encoding is simply the name (such as `network-server`).
+     */
+    to_string(): string | null
+    /* Methods of Gio-2.0.Gio.LoadableIcon */
+    /**
+     * Loads a loadable icon. For the asynchronous version of this function,
+     * see g_loadable_icon_load_async().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     */
+    load(size: number, cancellable: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string ]
+    /**
+     * Loads an icon asynchronously. To finish this function, see
+     * g_loadable_icon_load_finish(). For the synchronous, blocking
+     * version of this function, see g_loadable_icon_load().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
+     */
+    load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    /**
+     * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @param res a #GAsyncResult.
+     */
+    load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /* Virtual methods of Gdk-4.0.Gdk.MemoryTexture */
     /**
      * Gets an immutable paintable for the current contents displayed by `paintable`.
@@ -17891,6 +18394,44 @@ class MemoryTexture {
      * @param height height to snapshot in
      */
     vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
+    /**
+     * Checks if two icons are equal.
+     * @param icon2 pointer to the second #GIcon.
+     */
+    vfunc_equal(icon2: Gio.Icon | null): boolean
+    /**
+     * Gets a hash for an icon.
+     */
+    vfunc_hash(): number
+    /**
+     * Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
+     * back by calling g_icon_deserialize() on the returned value.
+     * As serialization will avoid using raw icon data when possible, it only
+     * makes sense to transfer the #GVariant between processes on the same machine,
+     * (as opposed to over the network), and within the same file system namespace.
+     */
+    vfunc_serialize(): GLib.Variant | null
+    /**
+     * Loads a loadable icon. For the asynchronous version of this function,
+     * see g_loadable_icon_load_async().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     */
+    vfunc_load(size: number, cancellable: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string ]
+    /**
+     * Loads an icon asynchronously. To finish this function, see
+     * g_loadable_icon_load_finish(). For the synchronous, blocking
+     * version of this function, see g_loadable_icon_load().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
+     */
+    vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    /**
+     * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @param res a #GAsyncResult.
+     */
+    vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /* Virtual methods of Gdk-4.0.Gdk.Texture */
     /**
      * Gets an immutable paintable for the current contents displayed by `paintable`.
@@ -17966,6 +18507,44 @@ class MemoryTexture {
      * @param height height to snapshot in
      */
     vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
+    /**
+     * Checks if two icons are equal.
+     * @param icon2 pointer to the second #GIcon.
+     */
+    vfunc_equal(icon2: Gio.Icon | null): boolean
+    /**
+     * Gets a hash for an icon.
+     */
+    vfunc_hash(): number
+    /**
+     * Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
+     * back by calling g_icon_deserialize() on the returned value.
+     * As serialization will avoid using raw icon data when possible, it only
+     * makes sense to transfer the #GVariant between processes on the same machine,
+     * (as opposed to over the network), and within the same file system namespace.
+     */
+    vfunc_serialize(): GLib.Variant | null
+    /**
+     * Loads a loadable icon. For the asynchronous version of this function,
+     * see g_loadable_icon_load_async().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     */
+    vfunc_load(size: number, cancellable: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string ]
+    /**
+     * Loads an icon asynchronously. To finish this function, see
+     * g_loadable_icon_load_finish(). For the synchronous, blocking
+     * version of this function, see g_loadable_icon_load().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
+     */
+    vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    /**
+     * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @param res a #GAsyncResult.
+     */
+    vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -18070,14 +18649,34 @@ class MemoryTexture {
      * @param intrinsic_height The intrinsic height to report. Can be 0 for no height.
      */
     static new_empty(intrinsic_width: number, intrinsic_height: number): Paintable
-    static $gtype: GObject.GType
+    /**
+     * Deserializes a #GIcon previously serialized using g_icon_serialize().
+     * @param value a #GVariant created with g_icon_serialize()
+     */
+    static deserialize(value: GLib.Variant): Gio.Icon | null
+    /**
+     * Gets a hash for an icon.
+     * @param icon #gconstpointer to an icon object.
+     */
+    static hash(icon: object): number
+    /**
+     * Generate a #GIcon instance from `str`. This function can fail if
+     * `str` is not valid - see g_icon_to_string() for discussion.
+     * 
+     * If your application or library provides one or more #GIcon
+     * implementations you need to ensure that each #GType is registered
+     * with the type system prior to calling g_icon_new_for_string().
+     * @param str A string obtained via g_icon_to_string().
+     */
+    static new_for_string(str: string): Gio.Icon
+    static $gtype: GObject.GType<MemoryTexture>
 }
 interface Monitor_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.Monitor */
     /**
      * The `GdkDisplay` of the monitor.
      */
-    display?: Display
+    display?: Display | null
 }
 class Monitor {
     /* Properties of Gdk-4.0.Gdk.Monitor */
@@ -18603,7 +19202,7 @@ class Monitor {
     static name: string
     constructor (config?: Monitor_ConstructProps)
     _init (config?: Monitor_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Monitor>
 }
 class MotionEvent {
     /* Methods of Gdk-4.0.Gdk.Event */
@@ -18637,11 +19236,17 @@ class MotionEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -18685,7 +19290,8 @@ class MotionEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -18709,7 +19315,7 @@ class MotionEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -18785,11 +19391,17 @@ class PadEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -18833,7 +19445,8 @@ class PadEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -18857,7 +19470,7 @@ class PadEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -18919,11 +19532,17 @@ class ProximityEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -18967,7 +19586,8 @@ class ProximityEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -18991,7 +19611,7 @@ class ProximityEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -19077,11 +19697,17 @@ class ScrollEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -19125,7 +19751,8 @@ class ScrollEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -19149,7 +19776,7 @@ class ScrollEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -19184,7 +19811,7 @@ interface Seat_ConstructProps extends GObject.Object_ConstructProps {
     /**
      * `GdkDisplay` of this seat.
      */
-    display?: Display
+    display?: Display | null
 }
 class Seat {
     /* Properties of Gdk-4.0.Gdk.Seat */
@@ -19633,7 +20260,7 @@ class Seat {
     static name: string
     constructor (config?: Seat_ConstructProps)
     _init (config?: Seat_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Seat>
 }
 interface Snapshot_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -20016,22 +20643,22 @@ class Snapshot {
     static name: string
     constructor (config?: Snapshot_ConstructProps)
     _init (config?: Snapshot_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Snapshot>
 }
 interface Surface_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.Surface */
     /**
      * The mouse pointer for the `GdkSurface`.
      */
-    cursor?: Cursor
+    cursor?: Cursor | null
     /**
      * The `GdkDisplay` connection of the surface.
      */
-    display?: Display
+    display?: Display | null
     /**
      * The `GdkFrameClock` of the surface.
      */
-    frame_clock?: FrameClock
+    frame_clock?: FrameClock | null
 }
 class Surface {
     /* Properties of Gdk-4.0.Gdk.Surface */
@@ -20085,7 +20712,7 @@ class Surface {
      * Before using the returned `GdkGLContext`, you will need to
      * call [method`Gdk`.GLContext.make_current] or [method`Gdk`.GLContext.realize].
      */
-    create_gl_context(): GLContext | null
+    create_gl_context(): GLContext
     /**
      * Create a new Cairo surface that is as compatible as possible with the
      * given `surface`.
@@ -20732,18 +21359,18 @@ class Surface {
     /* Static methods and pseudo-constructors */
     static new_popup(parent: Surface, autohide: boolean): Surface
     static new_toplevel(display: Display): Surface
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Surface>
 }
 interface Texture_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.Texture */
     /**
      * The height of the texture, in pixels.
      */
-    height?: number
+    height?: number | null
     /**
      * The width of the texture, in pixels.
      */
-    width?: number
+    width?: number | null
 }
 class Texture {
     /* Properties of Gdk-4.0.Gdk.Texture */
@@ -20795,11 +21422,51 @@ class Texture {
      * 
      * This is a utility function intended for debugging and testing.
      * If you want more control over formats, proper error handling or
-     * want to store to a `GFile` or other location, you might want to
-     * look into using the gdk-pixbuf library.
+     * want to store to a [iface`Gio`.File] or other location, you might want to
+     * use [method`Gdk`.Texture.save_to_png_bytes] or look into the
+     * gdk-pixbuf library.
      * @param filename the filename to store to
      */
     save_to_png(filename: string): boolean
+    /**
+     * Store the given `texture` in memory as a PNG file.
+     * 
+     * Use [ctor`Gdk`.Texture.new_from_bytes] to read it back.
+     * 
+     * If you want to serialize a texture, this is a convenient and
+     * portable way to do that.
+     * 
+     * If you need more control over the generated image, such as
+     * attaching metadata, you should look into an image handling
+     * library such as the gdk-pixbuf library.
+     * 
+     * If you are dealing with high dynamic range float data, you
+     * might also want to consider [method`Gdk`.Texture.save_to_tiff_bytes]
+     * instead.
+     */
+    save_to_png_bytes(): GLib.Bytes
+    /**
+     * Store the given `texture` to the `filename` as a TIFF file.
+     * 
+     * GTK will attempt to store data without loss.
+     * @param filename the filename to store to
+     */
+    save_to_tiff(filename: string): boolean
+    /**
+     * Store the given `texture` in memory as a TIFF file.
+     * 
+     * Use [ctor`Gdk`.Texture.new_from_bytes] to read it back.
+     * 
+     * This function is intended to store a representation of the
+     * texture's data that is as accurate as possible. This is
+     * particularly relevant when working with high dynamic range
+     * images and floating-point texture data.
+     * 
+     * If that is not your concern and you are interested in a
+     * smaller size and a more portable format, you might want to
+     * use [method`Gdk`.Texture.save_to_png_bytes].
+     */
+    save_to_tiff_bytes(): GLib.Bytes
     /* Methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
@@ -21232,6 +21899,61 @@ class Texture {
      * @param height height to snapshot in
      */
     snapshot(snapshot: Snapshot, width: number, height: number): void
+    /* Methods of Gio-2.0.Gio.Icon */
+    /**
+     * Checks if two icons are equal.
+     * @param icon2 pointer to the second #GIcon.
+     */
+    equal(icon2: Gio.Icon | null): boolean
+    /**
+     * Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
+     * back by calling g_icon_deserialize() on the returned value.
+     * As serialization will avoid using raw icon data when possible, it only
+     * makes sense to transfer the #GVariant between processes on the same machine,
+     * (as opposed to over the network), and within the same file system namespace.
+     */
+    serialize(): GLib.Variant | null
+    /**
+     * Generates a textual representation of `icon` that can be used for
+     * serialization such as when passing `icon` to a different process or
+     * saving it to persistent storage. Use g_icon_new_for_string() to
+     * get `icon` back from the returned string.
+     * 
+     * The encoding of the returned string is proprietary to #GIcon except
+     * in the following two cases
+     * 
+     * - If `icon` is a #GFileIcon, the returned string is a native path
+     *   (such as `/path/to/my icon.png`) without escaping
+     *   if the #GFile for `icon` is a native file.  If the file is not
+     *   native, the returned string is the result of g_file_get_uri()
+     *   (such as `sftp://path/to/my%20icon.png`).
+     * 
+     * - If `icon` is a #GThemedIcon with exactly one name and no fallbacks,
+     *   the encoding is simply the name (such as `network-server`).
+     */
+    to_string(): string | null
+    /* Methods of Gio-2.0.Gio.LoadableIcon */
+    /**
+     * Loads a loadable icon. For the asynchronous version of this function,
+     * see g_loadable_icon_load_async().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     */
+    load(size: number, cancellable: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string ]
+    /**
+     * Loads an icon asynchronously. To finish this function, see
+     * g_loadable_icon_load_finish(). For the synchronous, blocking
+     * version of this function, see g_loadable_icon_load().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
+     */
+    load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    /**
+     * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @param res a #GAsyncResult.
+     */
+    load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /* Virtual methods of Gdk-4.0.Gdk.Texture */
     /**
      * Gets an immutable paintable for the current contents displayed by `paintable`.
@@ -21307,6 +22029,44 @@ class Texture {
      * @param height height to snapshot in
      */
     vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
+    /**
+     * Checks if two icons are equal.
+     * @param icon2 pointer to the second #GIcon.
+     */
+    vfunc_equal(icon2: Gio.Icon | null): boolean
+    /**
+     * Gets a hash for an icon.
+     */
+    vfunc_hash(): number
+    /**
+     * Serializes a #GIcon into a #GVariant. An equivalent #GIcon can be retrieved
+     * back by calling g_icon_deserialize() on the returned value.
+     * As serialization will avoid using raw icon data when possible, it only
+     * makes sense to transfer the #GVariant between processes on the same machine,
+     * (as opposed to over the network), and within the same file system namespace.
+     */
+    vfunc_serialize(): GLib.Variant | null
+    /**
+     * Loads a loadable icon. For the asynchronous version of this function,
+     * see g_loadable_icon_load_async().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     */
+    vfunc_load(size: number, cancellable: Gio.Cancellable | null): [ /* returnType */ Gio.InputStream, /* type */ string ]
+    /**
+     * Loads an icon asynchronously. To finish this function, see
+     * g_loadable_icon_load_finish(). For the synchronous, blocking
+     * version of this function, see g_loadable_icon_load().
+     * @param size an integer.
+     * @param cancellable optional #GCancellable object, %NULL to ignore.
+     * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
+     */
+    vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    /**
+     * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @param res a #GAsyncResult.
+     */
+    vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
     /* Virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
@@ -21400,7 +22160,9 @@ class Texture {
     _init (config?: Texture_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new_for_pixbuf(pixbuf: GdkPixbuf.Pixbuf): Texture
+    static new_from_bytes(bytes: GLib.Bytes): Texture
     static new_from_file(file: Gio.File): Texture
+    static new_from_filename(path: string): Texture
     static new_from_resource(resource_path: string): Texture
     /**
      * Returns a paintable that has the given intrinsic size and draws nothing.
@@ -21413,7 +22175,27 @@ class Texture {
      * @param intrinsic_height The intrinsic height to report. Can be 0 for no height.
      */
     static new_empty(intrinsic_width: number, intrinsic_height: number): Paintable
-    static $gtype: GObject.GType
+    /**
+     * Deserializes a #GIcon previously serialized using g_icon_serialize().
+     * @param value a #GVariant created with g_icon_serialize()
+     */
+    static deserialize(value: GLib.Variant): Gio.Icon | null
+    /**
+     * Gets a hash for an icon.
+     * @param icon #gconstpointer to an icon object.
+     */
+    static hash(icon: object): number
+    /**
+     * Generate a #GIcon instance from `str`. This function can fail if
+     * `str` is not valid - see g_icon_to_string() for discussion.
+     * 
+     * If your application or library provides one or more #GIcon
+     * implementations you need to ensure that each #GType is registered
+     * with the type system prior to calling g_icon_new_for_string().
+     * @param str A string obtained via g_icon_to_string().
+     */
+    static new_for_string(str: string): Gio.Icon
+    static $gtype: GObject.GType<Texture>
 }
 class TouchEvent {
     /* Methods of Gdk-4.0.Gdk.TouchEvent */
@@ -21452,11 +22234,17 @@ class TouchEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -21500,7 +22288,8 @@ class TouchEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -21524,7 +22313,7 @@ class TouchEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -21607,11 +22396,17 @@ class TouchpadEvent {
     _get_distance(event2: Event): [ /* returnType */ boolean, /* distance */ number ]
     /**
      * Extracts all axis values from an event.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      */
     get_axes(): [ /* returnType */ boolean, /* axes */ number[] ]
     /**
      * Extract the axis value for a particular axis use from
      * an event structure.
+     * 
+     * To find out which axes are used, use [method`Gdk`.DeviceTool.get_axes]
+     * on the device tool returned by [method`Gdk`.Event.get_device_tool].
      * @param axis_use the axis use to look for
      */
     get_axis(axis_use: AxisUse): [ /* returnType */ boolean, /* value */ number ]
@@ -21655,7 +22450,8 @@ class TouchpadEvent {
      * to the application because they occurred in the same frame as `event`.
      * 
      * Note that only motion and scroll events record history, and motion
-     * events do it only if one of the mouse buttons is down.
+     * events do it only if one of the mouse buttons is down, or the device
+     * has a tool.
      */
     get_history(): TimeCoord[] | null
     /**
@@ -21679,7 +22475,7 @@ class TouchpadEvent {
     /**
      * Extracts the surface associated with an event.
      */
-    get_surface(): Surface
+    get_surface(): Surface | null
     /**
      * Returns the timestamp of `event`.
      * 
@@ -22276,7 +23072,7 @@ class VulkanContext {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable: Gio.Cancellable | null): GObject.Object
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<VulkanContext>
 }
 class ContentFormats {
     /* Methods of Gdk-4.0.Gdk.ContentFormats */
@@ -22379,10 +23175,10 @@ class ContentFormats {
      */
     unref(): void
     static name: string
-    static new(mime_types: string[] | null): ContentFormats
-    constructor(mime_types: string[] | null)
+    static new(mime_types: string[]): ContentFormats
+    constructor(mime_types: string[])
     /* Static methods and pseudo-constructors */
-    static new(mime_types: string[] | null): ContentFormats
+    static new(mime_types: string[]): ContentFormats
     static new_for_gtype(type: GObject.GType): ContentFormats
     /**
      * Parses the given `string` into `GdkContentFormats` and
@@ -22452,7 +23248,7 @@ abstract class ContentProviderClass {
     ref_storable_formats: (provider: ContentProvider) => ContentFormats
     write_mime_type_async: (provider: ContentProvider, mime_type: string, stream: Gio.OutputStream, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null) => void
     write_mime_type_finish: (provider: ContentProvider, result: Gio.AsyncResult) => boolean
-    get_value: (provider: ContentProvider, value: any) => boolean
+    get_value: (provider: ContentProvider) => [ /* returnType */ boolean, /* value */ any ]
     static name: string
 }
 abstract class DevicePadInterface {
@@ -22462,6 +23258,16 @@ abstract class DragSurfaceInterface {
     static name: string
 }
 class EventSequence {
+    static name: string
+}
+class FileList {
+    /* Methods of Gdk-4.0.Gdk.FileList */
+    /**
+     * Retrieves the list of files inside a `GdkFileList`.
+     * 
+     * This function is meant for language bindings.
+     */
+    get_files(): Gio.File[]
     static name: string
 }
 abstract class FrameClockClass {
@@ -22739,7 +23545,7 @@ class RGBA {
      * 
      * The string can be either one of:
      * 
-     * - A standard name (Taken from the X11 rgb.txt file).
+     * - A standard name (Taken from the Css specification).
      * - A hexadecimal value in the form “\#rgb”, “\#rrggbb”,
      *   “\#rrrgggbbb” or ”\#rrrrggggbbbb”
      * - A hexadecimal value in the form “\#rgba”, “\#rrggbbaa”,

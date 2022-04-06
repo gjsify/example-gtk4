@@ -13,8 +13,8 @@ export class _Stack extends Gtk.Stack {
         this._pages = {};
         this.switcher = new Gtk.StackSwitcher()
         this.switcher.set_stack(this)
+        print("Create Gtk.StackSwitcher", this.switcher)
     }
-
 
     public addPage(name: string, title: string, widget: Gtk.Widget) {
         const page = this.add_child(widget)
@@ -23,8 +23,17 @@ export class _Stack extends Gtk.Stack {
         this._pages[name] = page
         return page
     }
+
+    public setParent(headerBar: Gtk.HeaderBar) {
+        if (!this.switcher) {
+            printerr('TODO this.switcher is not defined!')
+            this.switcher = new Gtk.StackSwitcher()
+            this.switcher.set_stack(this)
+        }
+        headerBar.set_title_widget(this.switcher);
+    }
 }
 
 export const Stack = GObject.registerClass({
-    GTypeName: 'Stack'
+    GTypeName: 'Stack',
 }, _Stack );

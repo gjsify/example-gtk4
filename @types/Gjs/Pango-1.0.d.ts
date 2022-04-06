@@ -1576,20 +1576,20 @@ function attr_underline_new(underline: Underline): Attribute
 function attr_variant_new(variant: Variant): Attribute
 function attr_weight_new(weight: Weight): Attribute
 function attr_word_new(): Attribute
-function bidi_type_for_unichar(ch: number): BidiType
+function bidi_type_for_unichar(ch: string): BidiType
 function break_TODO(text: string, length: number, analysis: Analysis, attrs: LogAttr[]): void
-function default_break(text: string, length: number, analysis: Analysis | null, attrs: LogAttr, attrs_len: number): void
+function default_break(text: string, length: number, analysis: Analysis, attrs: LogAttr, attrs_len: number): void
 function extents_to_pixels(inclusive: Rectangle | null, nearest: Rectangle | null): void
 function find_base_dir(text: string, length: number): Direction
 function find_paragraph_boundary(text: string, length: number): [ /* paragraph_delimiter_index */ number, /* next_paragraph_start */ number ]
 function font_description_from_string(str: string): FontDescription
 function get_log_attrs(text: string, length: number, level: number, language: Language, attrs: LogAttr[]): void
-function get_mirror_char(ch: number, mirrored_ch: number): boolean
+function get_mirror_char(ch: string, mirrored_ch: string): boolean
 function gravity_get_for_matrix(matrix: Matrix | null): Gravity
 function gravity_get_for_script(script: Script, base_gravity: Gravity, hint: GravityHint): Gravity
 function gravity_get_for_script_and_width(script: Script, wide: boolean, base_gravity: Gravity, hint: GravityHint): Gravity
 function gravity_to_rotation(gravity: Gravity): number
-function is_zero_width(ch: number): boolean
+function is_zero_width(ch: string): boolean
 function itemize(context: Context, text: string, start_index: number, length: number, attrs: AttrList, cached_iter: AttrIterator | null): Item[]
 function itemize_with_base_dir(context: Context, base_dir: Direction, text: string, start_index: number, length: number, attrs: AttrList, cached_iter: AttrIterator | null): Item[]
 function language_from_string(language: string | null): Language | null
@@ -1597,32 +1597,32 @@ function language_get_default(): Language
 function language_get_preferred(): Language | null
 function layout_deserialize_error_quark(): GLib.Quark
 function log2vis_get_embedding_levels(text: string, length: number, pbase_dir: Direction): number
-function markup_parser_finish(context: GLib.MarkupParseContext): [ /* returnType */ boolean, /* attr_list */ AttrList, /* text */ string, /* accel_char */ number ]
-function markup_parser_new(accel_marker: number): GLib.MarkupParseContext
-function parse_enum(type: GObject.GType, str: string | null, warn: boolean): [ /* returnType */ boolean, /* value */ number, /* possible_values */ string ]
-function parse_markup(markup_text: string, length: number, accel_marker: number): [ /* returnType */ boolean, /* attr_list */ AttrList, /* text */ string, /* accel_char */ number ]
+function markup_parser_finish(context: GLib.MarkupParseContext): [ /* returnType */ boolean, /* attr_list */ AttrList, /* text */ string, /* accel_char */ string ]
+function markup_parser_new(accel_marker: string): GLib.MarkupParseContext
+function parse_enum(type: GObject.GType, str: string, warn: boolean): [ /* returnType */ boolean, /* value */ number, /* possible_values */ string ]
+function parse_markup(markup_text: string, length: number, accel_marker: string): [ /* returnType */ boolean, /* attr_list */ AttrList, /* text */ string, /* accel_char */ string ]
 function parse_stretch(str: string, warn: boolean): [ /* returnType */ boolean, /* stretch */ Stretch ]
 function parse_style(str: string, warn: boolean): [ /* returnType */ boolean, /* style */ Style ]
 function parse_variant(str: string, warn: boolean): [ /* returnType */ boolean, /* variant */ Variant ]
 function parse_weight(str: string, warn: boolean): [ /* returnType */ boolean, /* weight */ Weight ]
 function quantize_line_geometry(thickness: number, position: number): [ /* thickness */ number, /* position */ number ]
-function read_line(stream: object | null, str: GLib.String): number
+function read_line(stream: object, str: GLib.String): number
 function reorder_items(items: Item[]): Item[]
 function scan_int(pos: string): [ /* returnType */ boolean, /* pos */ string, /* out */ number ]
 function scan_string(pos: string, out: GLib.String): [ /* returnType */ boolean, /* pos */ string ]
 function scan_word(pos: string, out: GLib.String): [ /* returnType */ boolean, /* pos */ string ]
-function script_for_unichar(ch: number): Script
+function script_for_unichar(ch: string): Script
 function script_get_sample_language(script: Script): Language | null
 function shape(text: string, length: number, analysis: Analysis, glyphs: GlyphString): void
-function shape_full(item_text: string, item_length: number, paragraph_text: string | null, paragraph_length: number, analysis: Analysis, glyphs: GlyphString): void
-function shape_item(item: Item, paragraph_text: string | null, paragraph_length: number, log_attrs: LogAttr | null, glyphs: GlyphString, flags: ShapeFlags): void
-function shape_with_flags(item_text: string, item_length: number, paragraph_text: string | null, paragraph_length: number, analysis: Analysis, glyphs: GlyphString, flags: ShapeFlags): void
+function shape_full(item_text: string, item_length: number, paragraph_text: string, paragraph_length: number, analysis: Analysis, glyphs: GlyphString): void
+function shape_item(item: Item, paragraph_text: string, paragraph_length: number, log_attrs: LogAttr, glyphs: GlyphString, flags: ShapeFlags): void
+function shape_with_flags(item_text: string, item_length: number, paragraph_text: string, paragraph_length: number, analysis: Analysis, glyphs: GlyphString, flags: ShapeFlags): void
 function skip_space(pos: string): [ /* returnType */ boolean, /* pos */ string ]
 function split_file_list(str: string): string[]
 function tab_array_from_string(text: string): TabArray | null
 function tailor_break(text: string, length: number, analysis: Analysis, offset: number, attrs: LogAttr[]): void
 function trim_string(str: string): string
-function unichar_direction(ch: number): Direction
+function unichar_direction(ch: string): Direction
 function units_from_double(d: number): number
 function units_to_double(i: number): number
 function version(): number
@@ -2218,7 +2218,7 @@ class Context {
     _init (config?: Context_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new(): Context
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Context>
 }
 interface Coverage_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -2636,7 +2636,7 @@ class Coverage {
      * @param bytes binary data   representing a `PangoCoverage`
      */
     static from_bytes(bytes: Uint8Array): Coverage | null
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Coverage>
 }
 interface Font_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -2734,7 +2734,7 @@ class Font {
      * Returns whether the font provides a glyph for this character.
      * @param wc a Unicode character
      */
-    has_char(wc: number): boolean
+    has_char(wc: string): boolean
     /**
      * Serializes the `font` in a way that can be uniquely identified.
      * 
@@ -3195,7 +3195,7 @@ class Font {
      * Frees an array of font descriptions.
      * @param descs a pointer   to an array of `PangoFontDescription`, may be %NULL
      */
-    static descriptions_free(descs: FontDescription[] | null): void
+    static descriptions_free(descs: FontDescription[]): void
     /**
      * Loads data previously created via [method`Pango`.Font.serialize].
      * 
@@ -3208,7 +3208,7 @@ class Font {
      * @param bytes the bytes containing the data
      */
     static deserialize(context: Context, bytes: GLib.Bytes): Font | null
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Font>
 }
 interface FontFace_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -3667,7 +3667,7 @@ class FontFace {
     static name: string
     constructor (config?: FontFace_ConstructProps)
     _init (config?: FontFace_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<FontFace>
 }
 interface FontFamily_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -4154,7 +4154,7 @@ class FontFamily {
     static name: string
     constructor (config?: FontFamily_ConstructProps)
     _init (config?: FontFamily_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<FontFamily>
 }
 interface FontMap_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -4657,7 +4657,7 @@ class FontMap {
     static name: string
     constructor (config?: FontMap_ConstructProps)
     _init (config?: FontMap_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<FontMap>
 }
 interface Fontset_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -5079,7 +5079,7 @@ class Fontset {
     static name: string
     constructor (config?: Fontset_ConstructProps)
     _init (config?: Fontset_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Fontset>
 }
 interface FontsetSimple_ConstructProps extends Fontset_ConstructProps {
 }
@@ -5517,7 +5517,7 @@ class FontsetSimple {
     _init (config?: FontsetSimple_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new(language: Language): FontsetSimple
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<FontsetSimple>
 }
 interface Layout_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -6077,7 +6077,7 @@ class Layout {
      * @param length length of marked-up text in bytes, or -1 if `markup` is   `NUL`-terminated
      * @param accel_marker marker for accelerators in the text
      */
-    set_markup_with_accel(markup: string, length: number, accel_marker: number): /* accel_char */ number
+    set_markup_with_accel(markup: string, length: number, accel_marker: string): /* accel_char */ string
     /**
      * Sets the single paragraph mode of `layout`.
      * 
@@ -6580,7 +6580,7 @@ class Layout {
      * @param flags `PangoLayoutDeserializeFlags`
      */
     static deserialize(context: Context, bytes: GLib.Bytes, flags: LayoutDeserializeFlags): Layout | null
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Layout>
 }
 interface Renderer_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -6654,7 +6654,7 @@ class Renderer {
      * @param x X position of left edge of baseline, in user space coordinates   in Pango units
      * @param y Y position of left edge of baseline, in user space coordinates   in Pango units
      */
-    draw_glyph_item(text: string | null, glyph_item: GlyphItem, x: number, y: number): void
+    draw_glyph_item(text: string, glyph_item: GlyphItem, x: number, y: number): void
     /**
      * Draws the glyphs in `glyphs` with the specified `PangoRenderer`.
      * @param font a `PangoFont`
@@ -7151,7 +7151,7 @@ class Renderer {
      * @param x X position of left edge of baseline, in user space coordinates   in Pango units
      * @param y Y position of left edge of baseline, in user space coordinates   in Pango units
      */
-    vfunc_draw_glyph_item(text: string | null, glyph_item: GlyphItem, x: number, y: number): void
+    vfunc_draw_glyph_item(text: string, glyph_item: GlyphItem, x: number, y: number): void
     /**
      * Draws the glyphs in `glyphs` with the specified `PangoRenderer`.
      * @param font a `PangoFont`
@@ -7269,7 +7269,7 @@ class Renderer {
     static name: string
     constructor (config?: Renderer_ConstructProps)
     _init (config?: Renderer_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Renderer>
 }
 class Analysis {
     /* Fields of Pango-1.0.Pango.Analysis */
@@ -7841,7 +7841,7 @@ abstract class FontClass {
     parent_class: GObject.ObjectClass
     describe: (font: Font) => FontDescription
     get_coverage: (font: Font, language: Language) => Coverage
-    get_glyph_extents: (font: Font | null, glyph: Glyph) => [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
+    get_glyph_extents: (font: Font, glyph: Glyph) => [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
     get_metrics: (font: Font | null, language: Language | null) => FontMetrics
     get_font_map: (font: Font | null) => FontMap | null
     describe_absolute: (font: Font) => FontDescription
@@ -7866,7 +7866,7 @@ class FontDescription {
      * @param old_match a `PangoFontDescription`, or %NULL
      * @param new_match a `PangoFontDescription`
      */
-    better_match(old_match: FontDescription | null, new_match: FontDescription): boolean
+    better_match(old_match: FontDescription, new_match: FontDescription): boolean
     /**
      * Make a copy of a `PangoFontDescription`.
      */
@@ -7974,7 +7974,7 @@ class FontDescription {
      * @param desc_to_merge the `PangoFontDescription` to merge from,   or %NULL
      * @param replace_existing if %TRUE, replace fields in `desc` with the   corresponding values from `desc_to_merge,` even if they   are already exist.
      */
-    merge(desc_to_merge: FontDescription | null, replace_existing: boolean): void
+    merge(desc_to_merge: FontDescription, replace_existing: boolean): void
     /**
      * Merges the fields that are set in `desc_to_merge` into the fields in
      * `desc,` without copying allocated fields.
@@ -8604,7 +8604,7 @@ class GlyphString {
      * @param index_ the byte index within `text`
      * @param trailing whether we should compute the result for the beginning (%FALSE)   or end (%TRUE) of the character.
      */
-    index_to_x_full(text: string, length: number, analysis: Analysis, attrs: LogAttr | null, index_: number, trailing: boolean): /* x_pos */ number
+    index_to_x_full(text: string, length: number, analysis: Analysis, attrs: LogAttr, index_: number, trailing: boolean): /* x_pos */ number
     /**
      * Resize a glyph string to the given length.
      * @param new_len the new length of the string
@@ -9416,7 +9416,7 @@ abstract class RendererClass {
     begin: (renderer: Renderer) => void
     end: (renderer: Renderer) => void
     prepare_run: (renderer: Renderer, run: LayoutRun) => void
-    draw_glyph_item: (renderer: Renderer, text: string | null, glyph_item: GlyphItem, x: number, y: number) => void
+    draw_glyph_item: (renderer: Renderer, text: string, glyph_item: GlyphItem, x: number, y: number) => void
     static name: string
 }
 class RendererPrivate {
@@ -9474,7 +9474,7 @@ class TabArray {
      * decimal point according to the current locale.
      * @param tab_index the index of a tab stop
      */
-    get_decimal_point(tab_index: number): number
+    get_decimal_point(tab_index: number): string
     /**
      * Returns %TRUE if the tab positions are in pixels,
      * %FALSE if they are in Pango units.
@@ -9517,7 +9517,7 @@ class TabArray {
      * @param tab_index the index of a tab stop
      * @param decimal_point the decimal point to use
      */
-    set_decimal_point(tab_index: number, decimal_point: number): void
+    set_decimal_point(tab_index: number, decimal_point: string): void
     /**
      * Sets whether positions in this array are specified in
      * pixels.

@@ -20,9 +20,14 @@ export class _MyWindow extends Window {
     page4Label?: Gtk.Label;
     listview?: _MyListView;
 
-    override _init(config?: Gtk.ApplicationWindow_ConstructProps) {
+    page1?: Gtk.StackPage;
+    page2?: Gtk.StackPage;
+    page3?: Gtk.StackPage;
+    page4?: Gtk.StackPage;
+    page5?: Gtk.StackPage;
 
-        const title = config?.title || "";
+    override _init(config?: Gtk.ApplicationWindow_ConstructProps, title = "") {
+
         super._init(config)
 
         // load the custom css, so we can use it later
@@ -72,8 +77,17 @@ export class _MyWindow extends Window {
         // Stack Page 5
         this.page5 = this.setupPageFive('page5', 'Page 5')
 
+        if (!this.stack) {
+            throw new Error("this.stack not defined!");
+        }
+
+        if (!this.headerbar) {
+            throw new Error("this.headerbar not defined!");
+        }       
+
         // add stack switcher to center of titlebar
-        this.headerbar?.set_title_widget(this.stack?.switcher || null)
+        // this.headerbar?.set_title_widget(this.stack?.switcher || null);
+        this.stack.setParent(this.headerbar);
 
         // Add stack to window
         content.append(this.stack)
@@ -267,6 +281,10 @@ export class _MyWindow extends Window {
         switchRow.connect('state-set', this.onSwitchOverlay.bind(this))
         content_right.append(switchRow)
         main.append(frame)
+
+        if (!this.stack) {
+            throw new Error('this.stack is not defined!');
+        }
 
         // Add the content box as a new page in the stack
         return this.stack?.addPage(name, title, main)
@@ -488,14 +506,14 @@ export class _MyWindow extends Window {
 
     /** Add a new page to the stack */
     setupPageFive(name: string, title: string) {
-        // // Content box for the page
-        // const {frame, content, label} = this.setupPageHeader(name, title)
+        // Content box for the page
+        const {frame, content, label} = this.setupPageHeader(name, title)
         // this.page5_label = label
         // // Material Color button
         // const btn_row = new ButtonRow(["Material Color"], this.onButtonChooser.bind(this))
         // content.append(btn_row)
         // // Add the content box as a new page in the stack
-        // return this.stack.addPage(name, title, frame)
+        return this.stack?.addPage(name, title, frame)
     }
 
     public getTextMarkup(txt: string) {

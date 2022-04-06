@@ -677,7 +677,7 @@ class ActionDescription {
     static name: string
     constructor (config?: ActionDescription_ConstructProps)
     _init (config?: ActionDescription_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<ActionDescription>
 }
 interface Authority_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -770,7 +770,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    check_authorization(subject: Subject, action_id: string, details: Details | null, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    check_authorization(subject: Subject, action_id: string, details: Details, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking if a subject is authorized for an action.
      * @param res A #GAsyncResult obtained from the callback.
@@ -804,7 +804,7 @@ class Authority {
      * @param flags A set of #PolkitCheckAuthorizationFlags.
      * @param cancellable A #GCancellable or %NULL.
      */
-    check_authorization_sync(subject: Subject, action_id: string, details: Details | null, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null): AuthorizationResult
+    check_authorization_sync(subject: Subject, action_id: string, details: Details, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null): AuthorizationResult
     /**
      * Asynchronously retrieves all registered actions.
      * 
@@ -1687,7 +1687,7 @@ class Authority {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable: Gio.Cancellable | null): GObject.Object
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Authority>
 }
 interface AuthorizationResult_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -2125,7 +2125,7 @@ class AuthorizationResult {
     _init (config?: AuthorizationResult_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new(is_authorized: boolean, is_challenge: boolean, details: Details | null): AuthorizationResult
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<AuthorizationResult>
 }
 interface Details_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -2528,19 +2528,19 @@ class Details {
     _init (config?: Details_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new(): Details
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Details>
 }
 interface Permission_ConstructProps extends Gio.Permission_ConstructProps {
     /* Constructor properties of Polkit-1.0.Polkit.Permission */
     /**
      * The action identifier to use for the permission.
      */
-    action_id?: string
+    action_id?: string | null
     /**
      * The #PolkitSubject to use for the permission. If not set during
      * construction, it will be set to match the current process.
      */
-    subject?: Subject
+    subject?: Subject | null
 }
 class Permission {
     /* Properties of Polkit-1.0.Polkit.Permission */
@@ -3363,14 +3363,14 @@ class Permission {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable: Gio.Cancellable | null): GObject.Object
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Permission>
 }
 interface SystemBusName_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Polkit-1.0.Polkit.SystemBusName */
     /**
      * The unique name on the system message bus.
      */
-    name?: string
+    name?: string | null
 }
 class SystemBusName {
     /* Properties of Polkit-1.0.Polkit.SystemBusName */
@@ -3877,7 +3877,7 @@ class SystemBusName {
      * @param str A string obtained from polkit_subject_to_string().
      */
     static from_string(str: string): Subject
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<SystemBusName>
 }
 interface TemporaryAuthorization_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -4287,14 +4287,14 @@ class TemporaryAuthorization {
     static name: string
     constructor (config?: TemporaryAuthorization_ConstructProps)
     _init (config?: TemporaryAuthorization_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<TemporaryAuthorization>
 }
 interface UnixGroup_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Polkit-1.0.Polkit.UnixGroup */
     /**
      * The UNIX group id.
      */
-    gid?: number
+    gid?: number | null
 }
 class UnixGroup {
     /* Properties of Polkit-1.0.Polkit.UnixGroup */
@@ -4739,14 +4739,14 @@ class UnixGroup {
      * @param str A string obtained from polkit_identity_to_string().
      */
     static from_string(str: string): Identity | null
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<UnixGroup>
 }
 interface UnixNetgroup_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Polkit-1.0.Polkit.UnixNetgroup */
     /**
      * The NIS netgroup name.
      */
-    name?: string
+    name?: string | null
 }
 class UnixNetgroup {
     /* Properties of Polkit-1.0.Polkit.UnixNetgroup */
@@ -5185,24 +5185,24 @@ class UnixNetgroup {
      * @param str A string obtained from polkit_identity_to_string().
      */
     static from_string(str: string): Identity | null
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<UnixNetgroup>
 }
 interface UnixProcess_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Polkit-1.0.Polkit.UnixProcess */
     /**
      * The UNIX process id.
      */
-    pid?: number
+    pid?: number | null
     /**
      * The start time of the process.
      */
-    start_time?: number
+    start_time?: number | null
     /**
      * The UNIX user id of the process or -1 if unknown.
      * 
      * Note that this is the real user-id, not the effective user-id.
      */
-    uid?: number
+    uid?: number | null
 }
 class UnixProcess {
     /* Properties of Polkit-1.0.Polkit.UnixProcess */
@@ -5757,18 +5757,18 @@ class UnixProcess {
      * @param str A string obtained from polkit_subject_to_string().
      */
     static from_string(str: string): Subject
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<UnixProcess>
 }
 interface UnixSession_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Polkit-1.0.Polkit.UnixSession */
     /**
      * The UNIX process id to look up the session.
      */
-    pid?: number
+    pid?: number | null
     /**
      * The UNIX session id.
      */
-    session_id?: string
+    session_id?: string | null
 }
 class UnixSession {
     /* Properties of Polkit-1.0.Polkit.UnixSession */
@@ -6514,14 +6514,14 @@ class UnixSession {
      * @param str A string obtained from polkit_subject_to_string().
      */
     static from_string(str: string): Subject
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<UnixSession>
 }
 interface UnixUser_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Polkit-1.0.Polkit.UnixUser */
     /**
      * The UNIX user id.
      */
-    uid?: number
+    uid?: number | null
 }
 class UnixUser {
     /* Properties of Polkit-1.0.Polkit.UnixUser */
@@ -6970,7 +6970,7 @@ class UnixUser {
      * @param str A string obtained from polkit_identity_to_string().
      */
     static from_string(str: string): Identity | null
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<UnixUser>
 }
 abstract class ActionDescriptionClass {
     static name: string

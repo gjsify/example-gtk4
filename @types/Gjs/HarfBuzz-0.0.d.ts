@@ -1360,15 +1360,23 @@ enum ot_layout_baseline_tag_t {
      */
     IDEO_FACE_TOP_OR_RIGHT,
     /**
+     * The center of the ideographic character face. Since: 4.0.0
+     */
+    IDEO_FACE_CENTRAL,
+    /**
      * Ideographic em-box bottom or left edge,
      * if the direction is horizontal or vertical, respectively.
      */
     IDEO_EMBOX_BOTTOM_OR_LEFT,
     /**
      * Ideographic em-box top or right edge baseline,
-     * if the direction is horizontal or vertical, respectively.
      */
     IDEO_EMBOX_TOP_OR_RIGHT,
+    /**
+     * The center of the ideographic em-box. Since: 4.0.0
+     * if the direction is horizontal or vertical, respectively.
+     */
+    IDEO_EMBOX_CENTRAL,
     /**
      * The baseline about which mathematical characters are centered.
      * In vertical writing mode when mathematical characters rotated 90 degrees clockwise, are centered.
@@ -2424,9 +2432,75 @@ enum script_t {
      */
     YEZIDI,
     /**
+     * `Cpmn`, Since: 3.0.0
+     */
+    CYPRO_MINOAN,
+    /**
+     * `Ougr`, Since: 3.0.0
+     */
+    OLD_UYGHUR,
+    /**
+     * `Tnsa`, Since: 3.0.0
+     */
+    TANGSA,
+    /**
+     * `Toto`, Since: 3.0.0
+     */
+    TOTO,
+    /**
+     * `Vith`, Since: 3.0.0
+     */
+    VITHKUQI,
+    /**
+     * `Zmth`, Since: 3.4.0
+     */
+    MATH,
+    /**
      * No script set
      */
     INVALID,
+}
+/**
+ * Defined by [OpenType Design-Variation Axis Tag Registry](https://docs.microsoft.com/en-us/typography/opentype/spec/dvaraxisreg).
+ */
+enum style_tag_t {
+    /**
+     * Used to vary between non-italic and italic.
+     * A value of 0 can be interpreted as "Roman" (non-italic); a value of 1 can
+     * be interpreted as (fully) italic.
+     */
+    ITALIC,
+    /**
+     * Used to vary design to suit different text sizes.
+     * Non-zero. Values can be interpreted as text size, in points.
+     */
+    OPTICAL_SIZE,
+    /**
+     * Used to vary between upright and slanted text. Values
+     * must be greater than -90 and less than +90. Values can be interpreted as
+     * the angle, in counter-clockwise degrees, of oblique slant from whatever the
+     * designer considers to be upright for that font design. Typical right-leaning
+     * Italic fonts have a negative slant angle (typically around -12)
+     */
+    SLANT_ANGLE,
+    /**
+     * same as `HB_STYLE_TAG_SLANT_ANGLE` expression as ratio.
+     * Typical right-leaning Italic fonts have a positive slant ratio (typically around 0.2)
+     */
+    SLANT_RATIO,
+    /**
+     * Used to vary width of text from narrower to wider.
+     * Non-zero. Values can be interpreted as a percentage of whatever the font
+     * designer considers “normal width” for that font design.
+     */
+    WIDTH,
+    /**
+     * Used to vary stroke thicknesses or other design details
+     * to give variation from lighter to blacker. Values can be interpreted in direct
+     * comparison to values for usWeightClass in the OS/2 table,
+     * or the CSS font-weight property.
+     */
+    WEIGHT,
 }
 /**
  * Data type for the Canonical_Combining_Class (ccc) property
@@ -2888,9 +2962,25 @@ enum buffer_flags_t {
     /**
      * flag indicating that a dotted circle should
      *                      not be inserted in the rendering of incorrect
-     *                      character sequences (such at <0905 093E>). Since: 2.4
+     *                      character sequences (such at <0905 093E>). Since: 2.4.0
      */
     DO_NOT_INSERT_DOTTED_CIRCLE,
+    /**
+     * flag indicating that the hb_shape() call and its variants
+     *                      should perform various verification processes on the results
+     *                      of the shaping operation on the buffer.  If the verification
+     *                      fails, then either a buffer message is sent, if a message
+     *                      handler is installed on the buffer, or a message is written
+     *                      to standard error.  In either case, the shaping result might
+     *                      be modified to show the failed output. Since: 3.4.0
+     */
+    VERIFY,
+    /**
+     * flag indicating that the `HB_GLYPH_FLAG_UNSAFE_TO_CONCAT`
+     *                      glyph-flag should be produced by the shaper. By default
+     *                      it will not be produced since it incurs a cost. Since: 4.0.0
+     */
+    PRODUCE_UNSAFE_TO_CONCAT,
 }
 /**
  * Flags that control what glyph information are serialized in hb_buffer_serialize_glyphs().
@@ -2934,20 +3024,77 @@ enum glyph_flags_t {
      * Indicates that if input text is broken at the
      * 				   beginning of the cluster this glyph is part of,
      * 				   then both sides need to be re-shaped, as the
-     * 				   result might be different.  On the flip side,
-     * 				   it means that when this flag is not present,
-     * 				   then it's safe to break the glyph-run at the
-     * 				   beginning of this cluster, and the two sides
-     * 				   represent the exact same result one would get
-     * 				   if breaking input text at the beginning of
-     * 				   this cluster and shaping the two sides
-     * 				   separately.  This can be used to optimize
-     * 				   paragraph layout, by avoiding re-shaping
-     * 				   of each line after line-breaking, or limiting
-     * 				   the reshaping to a small piece around the
-     * 				   breaking point only.
+     * 				   result might be different.
+     * 				   On the flip side, it means that when this
+     * 				   flag is not present, then it is safe to break
+     * 				   the glyph-run at the beginning of this
+     * 				   cluster, and the two sides will represent the
+     * 				   exact same result one would get if breaking
+     * 				   input text at the beginning of this cluster
+     * 				   and shaping the two sides separately.
+     * 				   This can be used to optimize paragraph
+     * 				   layout, by avoiding re-shaping of each line
+     * 				   after line-breaking.
      */
     UNSAFE_TO_BREAK,
+    /**
+     * Indicates that if input text is changed on one
+     * 				   side of the beginning of the cluster this glyph
+     * 				   is part of, then the shaping results for the
+     * 				   other side might change.
+     * 				   Note that the absence of this flag will NOT by
+     * 				   itself mean that it IS safe to concat text.
+     * 				   Only two pieces of text both of which clear of
+     * 				   this flag can be concatenated safely.
+     * 				   This can be used to optimize paragraph
+     * 				   layout, by avoiding re-shaping of each line
+     * 				   after line-breaking, by limiting the
+     * 				   reshaping to a small piece around the
+     * 				   breaking positin only, even if the breaking
+     * 				   position carries the
+     * 				   #HB_GLYPH_FLAG_UNSAFE_TO_BREAK or when
+     * 				   hyphenation or other text transformation
+     * 				   happens at line-break position, in the following
+     * 				   way:
+     * 				   1. Iterate back from the line-break position
+     * 				   until the first cluster start position that is
+     * 				   NOT unsafe-to-concat, 2. shape the segment from
+     * 				   there till the end of line, 3. check whether the
+     * 				   resulting glyph-run also is clear of the
+     * 				   unsafe-to-concat at its start-of-text position;
+     * 				   if it is, just splice it into place and the line
+     * 				   is shaped; If not, move on to a position further
+     * 				   back that is clear of unsafe-to-concat and retry
+     * 				   from there, and repeat.
+     * 				   At the start of next line a similar algorithm can
+     * 				   be implemented. That is: 1. Iterate forward from
+     * 				   the line-break position untill the first cluster
+     * 				   start position that is NOT unsafe-to-concat, 2.
+     * 				   shape the segment from beginning of the line to
+     * 				   that position, 3. check whether the resulting
+     * 				   glyph-run also is clear of the unsafe-to-concat
+     * 				   at its end-of-text position; if it is, just splice
+     * 				   it into place and the beginning is shaped; If not,
+     * 				   move on to a position further forward that is clear
+     * 				   of unsafe-to-concat and retry up to there, and repeat.
+     * 				   A slight complication will arise in the
+     * 				   implementation of the algorithm above,
+     * 				   because while our buffer API has a way to
+     * 				   return flags for position corresponding to
+     * 				   start-of-text, there is currently no position
+     * 				   corresponding to end-of-text.  This limitation
+     * 				   can be alleviated by shaping more text than needed
+     * 				   and looking for unsafe-to-concat flag within text
+     * 				   clusters.
+     * 				   The #HB_GLYPH_FLAG_UNSAFE_TO_BREAK flag will
+     * 				   always imply this flag.
+     * 			   To use this flag, you must enable the buffer flag
+     * 			   `HB_BUFFER_FLAG_PRODUCE_UNSAFE_TO_CONCAT` during
+     * 			   shaping, otherwise the buffer flag will not be
+     * 			   reliably produced.
+     * 				   Since: 4.0.0
+     */
+    UNSAFE_TO_CONCAT,
     /**
      * All the currently defined flags.
      */
@@ -3097,7 +3244,8 @@ function buffer_allocation_successful(buffer: buffer_t): bool_t
 function buffer_append(buffer: buffer_t, source: buffer_t, start: number, end: number): void
 function buffer_clear_contents(buffer: buffer_t): void
 function buffer_create(): buffer_t
-function buffer_deserialize_glyphs(buffer: buffer_t, buf: string[], font: font_t | null, format: buffer_serialize_format_t): [ /* returnType */ bool_t, /* end_ptr */ string ]
+function buffer_create_similar(src: buffer_t): buffer_t
+function buffer_deserialize_glyphs(buffer: buffer_t, buf: string[], font: font_t, format: buffer_serialize_format_t): [ /* returnType */ bool_t, /* end_ptr */ string ]
 function buffer_deserialize_unicode(buffer: buffer_t, buf: string[], format: buffer_serialize_format_t): [ /* returnType */ bool_t, /* end_ptr */ string ]
 function buffer_diff(buffer: buffer_t, reference: buffer_t, dottedcircle_glyph: codepoint_t, position_fuzz: number): buffer_diff_flags_t
 function buffer_get_cluster_level(buffer: buffer_t): buffer_cluster_level_t
@@ -3110,6 +3258,7 @@ function buffer_get_glyph_positions(buffer: buffer_t): glyph_position_t[]
 function buffer_get_invisible_glyph(buffer: buffer_t): codepoint_t
 function buffer_get_language(buffer: buffer_t): language_t
 function buffer_get_length(buffer: buffer_t): number
+function buffer_get_not_found_glyph(buffer: buffer_t): codepoint_t
 function buffer_get_replacement_codepoint(buffer: buffer_t): codepoint_t
 function buffer_get_script(buffer: buffer_t): script_t
 function buffer_get_segment_properties(buffer: buffer_t): /* props */ segment_properties_t
@@ -3122,10 +3271,10 @@ function buffer_reset(buffer: buffer_t): void
 function buffer_reverse(buffer: buffer_t): void
 function buffer_reverse_clusters(buffer: buffer_t): void
 function buffer_reverse_range(buffer: buffer_t, start: number, end: number): void
-function buffer_serialize(buffer: buffer_t, start: number, end: number, font: font_t | null, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number ]
+function buffer_serialize(buffer: buffer_t, start: number, end: number, font: font_t, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number ]
 function buffer_serialize_format_from_string(str: Uint8Array): buffer_serialize_format_t
 function buffer_serialize_format_to_string(format: buffer_serialize_format_t): string
-function buffer_serialize_glyphs(buffer: buffer_t, start: number, end: number, font: font_t | null, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number ]
+function buffer_serialize_glyphs(buffer: buffer_t, start: number, end: number, font: font_t, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number ]
 function buffer_serialize_list_formats(): string[]
 function buffer_serialize_unicode(buffer: buffer_t, start: number, end: number, format: buffer_serialize_format_t, flags: buffer_serialize_flags_t): [ /* returnType */ number, /* buf */ Uint8Array, /* buf_consumed */ number ]
 function buffer_set_cluster_level(buffer: buffer_t, cluster_level: buffer_cluster_level_t): void
@@ -3136,6 +3285,7 @@ function buffer_set_invisible_glyph(buffer: buffer_t, invisible: codepoint_t): v
 function buffer_set_language(buffer: buffer_t, language: language_t): void
 function buffer_set_length(buffer: buffer_t, length: number): bool_t
 function buffer_set_message_func(buffer: buffer_t, func: buffer_message_func_t): void
+function buffer_set_not_found_glyph(buffer: buffer_t, not_found: codepoint_t): void
 function buffer_set_replacement_codepoint(buffer: buffer_t, replacement: codepoint_t): void
 function buffer_set_script(buffer: buffer_t, script: script_t): void
 function buffer_set_segment_properties(buffer: buffer_t, props: segment_properties_t): void
@@ -3146,6 +3296,19 @@ function color_get_green(color: color_t): number
 function color_get_red(color: color_t): number
 function direction_from_string(str: Uint8Array): direction_t
 function direction_to_string(direction: direction_t): string
+function draw_close_path(dfuncs: draw_funcs_t, draw_data: object, st: draw_state_t): void
+function draw_cubic_to(dfuncs: draw_funcs_t, draw_data: object, st: draw_state_t, control1_x: number, control1_y: number, control2_x: number, control2_y: number, to_x: number, to_y: number): void
+function draw_funcs_create(): draw_funcs_t
+function draw_funcs_is_immutable(dfuncs: draw_funcs_t): bool_t
+function draw_funcs_make_immutable(dfuncs: draw_funcs_t): void
+function draw_funcs_set_close_path_func(dfuncs: draw_funcs_t, func: draw_close_path_func_t): void
+function draw_funcs_set_cubic_to_func(dfuncs: draw_funcs_t, func: draw_cubic_to_func_t): void
+function draw_funcs_set_line_to_func(dfuncs: draw_funcs_t, func: draw_line_to_func_t): void
+function draw_funcs_set_move_to_func(dfuncs: draw_funcs_t, func: draw_move_to_func_t): void
+function draw_funcs_set_quadratic_to_func(dfuncs: draw_funcs_t, func: draw_quadratic_to_func_t): void
+function draw_line_to(dfuncs: draw_funcs_t, draw_data: object, st: draw_state_t, to_x: number, to_y: number): void
+function draw_move_to(dfuncs: draw_funcs_t, draw_data: object, st: draw_state_t, to_x: number, to_y: number): void
+function draw_quadratic_to(dfuncs: draw_funcs_t, draw_data: object, st: draw_state_t, control_x: number, control_y: number, to_x: number, to_y: number): void
 function face_builder_add_table(face: face_t, tag: tag_t, blob: blob_t): bool_t
 function face_builder_create(): face_t
 function face_collect_unicodes(face: face_t, out: set_t): void
@@ -3186,6 +3349,7 @@ function font_funcs_set_glyph_h_advances_func(ffuncs: font_funcs_t, func: font_g
 function font_funcs_set_glyph_h_kerning_func(ffuncs: font_funcs_t, func: font_get_glyph_h_kerning_func_t): void
 function font_funcs_set_glyph_h_origin_func(ffuncs: font_funcs_t, func: font_get_glyph_h_origin_func_t): void
 function font_funcs_set_glyph_name_func(ffuncs: font_funcs_t, func: font_get_glyph_name_func_t): void
+function font_funcs_set_glyph_shape_func(ffuncs: font_funcs_t, func: font_get_glyph_shape_func_t): void
 function font_funcs_set_glyph_v_advance_func(ffuncs: font_funcs_t, func: font_get_glyph_v_advance_func_t): void
 function font_funcs_set_glyph_v_advances_func(ffuncs: font_funcs_t, func: font_get_glyph_v_advances_func_t): void
 function font_funcs_set_glyph_v_kerning_func(ffuncs: font_funcs_t, func: font_get_glyph_v_kerning_func_t): void
@@ -3211,6 +3375,7 @@ function font_get_glyph_h_origin(font: font_t, glyph: codepoint_t): [ /* returnT
 function font_get_glyph_kerning_for_direction(font: font_t, first_glyph: codepoint_t, second_glyph: codepoint_t, direction: direction_t): [ /* x */ position_t, /* y */ position_t ]
 function font_get_glyph_name(font: font_t, glyph: codepoint_t): [ /* returnType */ bool_t, /* name */ string[] ]
 function font_get_glyph_origin_for_direction(font: font_t, glyph: codepoint_t, direction: direction_t): [ /* x */ position_t, /* y */ position_t ]
+function font_get_glyph_shape(font: font_t, glyph: codepoint_t, dfuncs: draw_funcs_t, draw_data: object | null): void
 function font_get_glyph_v_advance(font: font_t, glyph: codepoint_t): position_t
 function font_get_glyph_v_advances(font: font_t, count: number, first_glyph: codepoint_t, glyph_stride: number): [ /* first_advance */ position_t, /* advance_stride */ number ]
 function font_get_glyph_v_kerning(font: font_t, top_glyph: codepoint_t, bottom_glyph: codepoint_t): position_t
@@ -3222,8 +3387,10 @@ function font_get_parent(font: font_t): font_t
 function font_get_ppem(font: font_t): [ /* x_ppem */ number, /* y_ppem */ number ]
 function font_get_ptem(font: font_t): number
 function font_get_scale(font: font_t): [ /* x_scale */ number, /* y_scale */ number ]
+function font_get_synthetic_slant(font: font_t): number
 function font_get_v_extents(font: font_t): [ /* returnType */ bool_t, /* extents */ font_extents_t ]
-function font_get_var_coords_normalized(font: font_t, length: number): number
+function font_get_var_coords_design(font: font_t): [ /* returnType */ number, /* length */ number ]
+function font_get_var_coords_normalized(font: font_t): [ /* returnType */ number, /* length */ number ]
 function font_get_variation_glyph(font: font_t, unicode: codepoint_t, variation_selector: codepoint_t): [ /* returnType */ bool_t, /* glyph */ codepoint_t ]
 function font_glyph_from_string(font: font_t, s: Uint8Array): [ /* returnType */ bool_t, /* glyph */ codepoint_t ]
 function font_glyph_to_string(font: font_t, glyph: codepoint_t): /* s */ string[]
@@ -3236,6 +3403,7 @@ function font_set_parent(font: font_t, parent: font_t): void
 function font_set_ppem(font: font_t, x_ppem: number, y_ppem: number): void
 function font_set_ptem(font: font_t, ptem: number): void
 function font_set_scale(font: font_t, x_scale: number, y_scale: number): void
+function font_set_synthetic_slant(font: font_t, slant: number): void
 function font_set_var_coords_design(font: font_t, coords: number[]): void
 function font_set_var_coords_normalized(font: font_t, coords: number[]): void
 function font_set_var_named_instance(font: font_t, instance_index: number): void
@@ -3284,9 +3452,11 @@ function ot_layout_feature_get_lookups(face: face_t, table_tag: tag_t, feature_i
 function ot_layout_feature_get_name_ids(face: face_t, table_tag: tag_t, feature_index: number): [ /* returnType */ bool_t, /* label_id */ ot_name_id_t, /* tooltip_id */ ot_name_id_t, /* sample_id */ ot_name_id_t, /* num_named_parameters */ number, /* first_param_id */ ot_name_id_t ]
 function ot_layout_feature_with_variations_get_lookups(face: face_t, table_tag: tag_t, feature_index: number, variations_index: number, start_offset: number): [ /* returnType */ number, /* lookup_indexes */ number[] ]
 function ot_layout_get_attach_points(face: face_t, glyph: codepoint_t, start_offset: number): [ /* returnType */ number, /* point_array */ number[] ]
-function ot_layout_get_baseline(font: font_t, baseline_tag: ot_layout_baseline_tag_t, direction: direction_t, script_tag: tag_t, language_tag: tag_t): [ /* returnType */ bool_t, /* coord */ position_t ]
+function ot_layout_get_baseline(font: font_t, baseline_tag: ot_layout_baseline_tag_t, direction: direction_t, script_tag: tag_t, language_tag: tag_t): [ /* returnType */ bool_t, /* coord */ position_t | null ]
+function ot_layout_get_baseline_with_fallback(font: font_t, baseline_tag: ot_layout_baseline_tag_t, direction: direction_t, script_tag: tag_t, language_tag: tag_t): /* coord */ position_t
 function ot_layout_get_glyph_class(face: face_t, glyph: codepoint_t): ot_layout_glyph_class_t
 function ot_layout_get_glyphs_in_class(face: face_t, klass: ot_layout_glyph_class_t): /* glyphs */ set_t
+function ot_layout_get_horizontal_baseline_tag_for_script(script: script_t): ot_layout_baseline_tag_t
 function ot_layout_get_ligature_carets(font: font_t, direction: direction_t, glyph: codepoint_t, start_offset: number): [ /* returnType */ number, /* caret_array */ position_t[] ]
 function ot_layout_get_size_params(face: face_t): [ /* returnType */ bool_t, /* design_size */ number, /* subfamily_id */ number, /* subfamily_name_id */ ot_name_id_t, /* range_start */ number, /* range_end */ number ]
 function ot_layout_has_glyph_classes(face: face_t): bool_t
@@ -3316,6 +3486,7 @@ function ot_math_get_constant(font: font_t, constant: ot_math_constant_t): posit
 function ot_math_get_glyph_assembly(font: font_t, glyph: codepoint_t, direction: direction_t, start_offset: number): [ /* returnType */ number, /* parts */ ot_math_glyph_part_t[], /* italics_correction */ position_t ]
 function ot_math_get_glyph_italics_correction(font: font_t, glyph: codepoint_t): position_t
 function ot_math_get_glyph_kerning(font: font_t, glyph: codepoint_t, kern: ot_math_kern_t, correction_height: position_t): position_t
+function ot_math_get_glyph_kernings(font: font_t, glyph: codepoint_t, kern: ot_math_kern_t, start_offset: number): [ /* returnType */ number, /* kern_entries */ ot_math_kern_entry_t[] ]
 function ot_math_get_glyph_top_accent_attachment(font: font_t, glyph: codepoint_t): position_t
 function ot_math_get_glyph_variants(font: font_t, glyph: codepoint_t, direction: direction_t, start_offset: number): [ /* returnType */ number, /* variants */ ot_math_glyph_variant_t[] ]
 function ot_math_get_min_connector_overlap(font: font_t, direction: direction_t): position_t
@@ -3324,6 +3495,7 @@ function ot_math_is_glyph_extended_shape(face: face_t, glyph: codepoint_t): bool
 function ot_meta_get_entry_tags(face: face_t, start_offset: number): [ /* returnType */ number, /* entries */ ot_meta_tag_t[] ]
 function ot_meta_reference_entry(face: face_t, meta_tag: ot_meta_tag_t): blob_t
 function ot_metrics_get_position(font: font_t, metrics_tag: ot_metrics_tag_t): [ /* returnType */ bool_t, /* position */ position_t ]
+function ot_metrics_get_position_with_fallback(font: font_t, metrics_tag: ot_metrics_tag_t): /* position */ position_t
 function ot_metrics_get_variation(font: font_t, metrics_tag: ot_metrics_tag_t): number
 function ot_metrics_get_x_variation(font: font_t, metrics_tag: ot_metrics_tag_t): position_t
 function ot_metrics_get_y_variation(font: font_t, metrics_tag: ot_metrics_tag_t): position_t
@@ -3357,6 +3529,7 @@ function script_get_horizontal_direction(script: script_t): direction_t
 function script_to_iso15924_tag(script: script_t): tag_t
 function segment_properties_equal(a: segment_properties_t, b: segment_properties_t): bool_t
 function segment_properties_hash(p: segment_properties_t): number
+function segment_properties_overlay(p: segment_properties_t, src: segment_properties_t): void
 function set_add(set: set_t, codepoint: codepoint_t): void
 function set_add_range(set: set_t, first: codepoint_t, last: codepoint_t): void
 function set_allocation_successful(set: set_t): bool_t
@@ -3383,8 +3556,8 @@ function set_set(set: set_t, other: set_t): void
 function set_subtract(set: set_t, other: set_t): void
 function set_symmetric_difference(set: set_t, other: set_t): void
 function set_union(set: set_t, other: set_t): void
-function shape(font: font_t, buffer: buffer_t, features: feature_t[] | null): void
-function shape_full(font: font_t, buffer: buffer_t, features: feature_t[] | null, shaper_list: string[] | null): bool_t
+function shape(font: font_t, buffer: buffer_t, features: feature_t[]): void
+function shape_full(font: font_t, buffer: buffer_t, features: feature_t[], shaper_list: string[] | null): bool_t
 function shape_list_shapers(): string[]
 function shape_plan_create(face: face_t, props: segment_properties_t, user_features: feature_t[], shaper_list: string[]): shape_plan_t
 function shape_plan_create2(face: face_t, props: segment_properties_t, user_features: feature_t[], coords: number[], shaper_list: string[]): shape_plan_t
@@ -3393,6 +3566,7 @@ function shape_plan_create_cached2(face: face_t, props: segment_properties_t, us
 function shape_plan_execute(shape_plan: shape_plan_t, font: font_t, buffer: buffer_t, features: feature_t[]): bool_t
 function shape_plan_get_empty(): shape_plan_t
 function shape_plan_get_shaper(shape_plan: shape_plan_t): string
+function style_get_value(font: font_t, style_tag: style_tag_t): number
 function tag_from_string(str: Uint8Array): tag_t
 function tag_to_string(tag: tag_t): /* buf */ Uint8Array
 function unicode_combining_class(ufuncs: unicode_funcs_t, unicode: codepoint_t): unicode_combining_class_t
@@ -3439,6 +3613,41 @@ interface destroy_func_t {
     (): void
 }
 /**
+ * A virtual method for the #hb_draw_funcs_t to perform a "close-path" draw
+ * operation.
+ */
+interface draw_close_path_func_t {
+    (dfuncs: draw_funcs_t, draw_data: object, st: draw_state_t): void
+}
+/**
+ * A virtual method for the #hb_draw_funcs_t to perform a "cubic-to" draw
+ * operation.
+ */
+interface draw_cubic_to_func_t {
+    (dfuncs: draw_funcs_t, draw_data: object, st: draw_state_t, control1_x: number, control1_y: number, control2_x: number, control2_y: number, to_x: number, to_y: number): void
+}
+/**
+ * A virtual method for the #hb_draw_funcs_t to perform a "line-to" draw
+ * operation.
+ */
+interface draw_line_to_func_t {
+    (dfuncs: draw_funcs_t, draw_data: object, st: draw_state_t, to_x: number, to_y: number): void
+}
+/**
+ * A virtual method for the #hb_draw_funcs_t to perform a "move-to" draw
+ * operation.
+ */
+interface draw_move_to_func_t {
+    (dfuncs: draw_funcs_t, draw_data: object, st: draw_state_t, to_x: number, to_y: number): void
+}
+/**
+ * A virtual method for the #hb_draw_funcs_t to perform a "quadratic-to" draw
+ * operation.
+ */
+interface draw_quadratic_to_func_t {
+    (dfuncs: draw_funcs_t, draw_data: object, st: draw_state_t, control_x: number, control_y: number, to_x: number, to_y: number): void
+}
+/**
  * This method should retrieve the extents for a font.
  */
 interface font_get_font_extents_func_t {
@@ -3451,7 +3660,7 @@ interface font_get_font_extents_func_t {
  * method must return an #hb_position_t.
  */
 interface font_get_glyph_advance_func_t {
-    (font: font_t, font_data: object | null, glyph: codepoint_t): position_t
+    (font: font_t, font_data: object, glyph: codepoint_t): position_t
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -3459,7 +3668,7 @@ interface font_get_glyph_advance_func_t {
  * This method should retrieve the advances for a sequence of glyphs.
  */
 interface font_get_glyph_advances_func_t {
-    (font: font_t, font_data: object | null, count: number, first_glyph: codepoint_t, glyph_stride: number, advance_stride: number): void
+    (font: font_t, font_data: object, count: number, first_glyph: codepoint_t, glyph_stride: number, advance_stride: number): void
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -3469,7 +3678,7 @@ interface font_get_glyph_advances_func_t {
  * an #hb_position_t output parameter.
  */
 interface font_get_glyph_contour_point_func_t {
-    (font: font_t, font_data: object | null, glyph: codepoint_t, point_index: number): bool_t
+    (font: font_t, font_data: object, glyph: codepoint_t, point_index: number): bool_t
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -3478,7 +3687,7 @@ interface font_get_glyph_contour_point_func_t {
  * returned in an #hb_glyph_extents output parameter.
  */
 interface font_get_glyph_extents_func_t {
-    (font: font_t, font_data: object | null, glyph: codepoint_t): bool_t
+    (font: font_t, font_data: object, glyph: codepoint_t): bool_t
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -3487,7 +3696,7 @@ interface font_get_glyph_extents_func_t {
  * string.
  */
 interface font_get_glyph_from_name_func_t {
-    (font: font_t, font_data: object | null, name: string[]): bool_t
+    (font: font_t, font_data: object, name: string[]): bool_t
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -3496,14 +3705,14 @@ interface font_get_glyph_from_name_func_t {
  * font, with an optional variation selector.
  */
 interface font_get_glyph_func_t {
-    (font: font_t, font_data: object | null, unicode: codepoint_t, variation_selector: codepoint_t): bool_t
+    (font: font_t, font_data: object, unicode: codepoint_t, variation_selector: codepoint_t): bool_t
 }
 /**
  * This method should retrieve the kerning-adjustment value for a glyph-pair in
  * the specified font, for horizontal text segments.
  */
 interface font_get_glyph_kerning_func_t {
-    (font: font_t, font_data: object | null, first_glyph: codepoint_t, second_glyph: codepoint_t): position_t
+    (font: font_t, font_data: object, first_glyph: codepoint_t, second_glyph: codepoint_t): position_t
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -3512,7 +3721,7 @@ interface font_get_glyph_kerning_func_t {
  * glyph ID. The name should be returned in a string output parameter.
  */
 interface font_get_glyph_name_func_t {
-    (font: font_t, font_data: object | null, glyph: codepoint_t): bool_t
+    (font: font_t, font_data: object, glyph: codepoint_t): bool_t
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -3522,7 +3731,13 @@ interface font_get_glyph_name_func_t {
  * output parameter.
  */
 interface font_get_glyph_origin_func_t {
-    (font: font_t, font_data: object | null, glyph: codepoint_t): bool_t
+    (font: font_t, font_data: object, glyph: codepoint_t): bool_t
+}
+/**
+ * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
+ */
+interface font_get_glyph_shape_func_t {
+    (font: font_t, font_data: object, glyph: codepoint_t, draw_funcs: draw_funcs_t, draw_data: object | null): void
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -3531,7 +3746,7 @@ interface font_get_glyph_origin_func_t {
  * point. Glyph IDs must be returned in a #hb_codepoint_t output parameter.
  */
 interface font_get_nominal_glyph_func_t {
-    (font: font_t, font_data: object | null, unicode: codepoint_t): bool_t
+    (font: font_t, font_data: object, unicode: codepoint_t): bool_t
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -3541,7 +3756,7 @@ interface font_get_nominal_glyph_func_t {
  * output parameter.
  */
 interface font_get_nominal_glyphs_func_t {
-    (font: font_t, font_data: object | null, count: number, first_unicode: codepoint_t, unicode_stride: number, glyph_stride: number): number
+    (font: font_t, font_data: object, count: number, first_unicode: codepoint_t, unicode_stride: number, glyph_stride: number): number
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -3551,7 +3766,7 @@ interface font_get_nominal_glyphs_func_t {
  * returned in a #hb_codepoint_t output parameter.
  */
 interface font_get_variation_glyph_func_t {
-    (font: font_t, font_data: object | null, unicode: codepoint_t, variation_selector: codepoint_t): bool_t
+    (font: font_t, font_data: object, unicode: codepoint_t, variation_selector: codepoint_t): bool_t
 }
 /**
  * Callback function for hb_face_create_for_tables().
@@ -3661,6 +3876,33 @@ class blob_t {
     static name: string
 }
 class buffer_t {
+    static name: string
+}
+class draw_funcs_t {
+    static name: string
+}
+class draw_state_t {
+    /* Fields of HarfBuzz-0.0.HarfBuzz.draw_state_t */
+    /**
+     * Whether there is an open path
+     */
+    path_open: bool_t
+    /**
+     * X component of the start of current path
+     */
+    path_start_x: number
+    /**
+     * Y component of the start of current path
+     */
+    path_start_y: number
+    /**
+     * X component of current point
+     */
+    current_x: number
+    /**
+     * Y component of current point
+     */
+    current_y: number
     static name: string
 }
 class face_t {
@@ -3843,6 +4085,18 @@ class ot_math_glyph_variant_t {
     advance: position_t
     static name: string
 }
+class ot_math_kern_entry_t {
+    /* Fields of HarfBuzz-0.0.HarfBuzz.ot_math_kern_entry_t */
+    /**
+     * The maximum height at which this entry should be used
+     */
+    max_correction_height: position_t
+    /**
+     * The kern value of the entry
+     */
+    kern_value: position_t
+    static name: string
+}
 class ot_name_entry_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.ot_name_entry_t */
     /**
@@ -3874,7 +4128,7 @@ class ot_var_axis_info_t {
      */
     flags: ot_var_axis_flags_t
     /**
-     * The mininum value on the variation axis that the font covers
+     * The minimum value on the variation axis that the font covers
      */
     min_value: number
     /**
@@ -3959,6 +4213,9 @@ class variation_t {
     static name: string
 }
 class var_int_t {
+    static name: string
+}
+class var_num_t {
     static name: string
 }
     type bool_t = number

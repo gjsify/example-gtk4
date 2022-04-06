@@ -200,8 +200,8 @@ enum DateMonth {
     DECEMBER,
 }
 /**
- * Enumeration representing a day of the week; #G_DATE_MONDAY,
- * #G_DATE_TUESDAY, etc. #G_DATE_BAD_WEEKDAY is an invalid weekday.
+ * Enumeration representing a day of the week; %G_DATE_MONDAY,
+ * %G_DATE_TUESDAY, etc. %G_DATE_BAD_WEEKDAY is an invalid weekday.
  */
 enum DateWeekday {
     /**
@@ -2211,6 +2211,30 @@ enum UnicodeScript {
      * Yezidi. Since: 2.66
      */
     YEZIDI,
+    /**
+     * Cypro-Minoan. Since: 2.72
+     */
+    CYPRO_MINOAN,
+    /**
+     * Old Uyghur. Since: 2.72
+     */
+    OLD_UYGHUR,
+    /**
+     * Tangsa. Since: 2.72
+     */
+    TANGSA,
+    /**
+     * Toto. Since: 2.72
+     */
+    TOTO,
+    /**
+     * Vithkuqi. Since: 2.72
+     */
+    VITHKUQI,
+    /**
+     * Mathematical notation. Since: 2.72
+     */
+    MATH,
 }
 /**
  * These are the possible character classifications from the
@@ -2868,6 +2892,23 @@ enum LogLevelFlags {
     LEVEL_MASK,
 }
 /**
+ * Flags to pass to g_main_context_new_with_flags() which affect the behaviour
+ * of a #GMainContext.
+ */
+enum MainContextFlags {
+    /**
+     * Default behaviour.
+     */
+    NONE,
+    /**
+     * Assume that polling for events will
+     * free the thread to process other jobs. That's useful if you're using
+     * `g_main_context_{prepare,query,check,dispatch}` to integrate GMainContext in
+     * other event loops.
+     */
+    OWNERLESS_POLLING,
+}
+/**
  * A mixed enumerated type and flags field. You must specify one type
  * (string, strdup, boolean, tristate).  Additionally, you may  optionally
  * bitwise OR the type with the flag %G_MARKUP_COLLECT_OPTIONAL.
@@ -3015,8 +3056,8 @@ enum RegexCompileFlags {
      *     newlines). The "start of line" metacharacter ("^") matches only
      *     at the start of the string, while the "end of line" metacharacter
      *     ("$") matches only at the end of the string, or before a terminating
-     *     newline (unless #G_REGEX_DOLLAR_ENDONLY is set). When
-     *     #G_REGEX_MULTILINE is set, the "start of line" and "end of line"
+     *     newline (unless %G_REGEX_DOLLAR_ENDONLY is set). When
+     *     %G_REGEX_MULTILINE is set, the "start of line" and "end of line"
      *     constructs match immediately following or immediately before any
      *     newline in the string, respectively, as well as at the very start
      *     and end. This can be changed within a pattern by a "(?m)" option
@@ -3051,7 +3092,7 @@ enum RegexCompileFlags {
      *     matches only at the end of the string. Without this option, a
      *     dollar also matches immediately before the final character if
      *     it is a newline (but not before any other newlines). This option
-     *     is ignored if #G_REGEX_MULTILINE is set.
+     *     is ignored if %G_REGEX_MULTILINE is set.
      */
     DOLLAR_ENDONLY,
     /**
@@ -3142,7 +3183,7 @@ enum RegexMatchFlags {
     /**
      * Specifies that first character of the string is
      *     not the beginning of a line, so the circumflex metacharacter should
-     *     not match before it. Setting this without #G_REGEX_MULTILINE (at
+     *     not match before it. Setting this without %G_REGEX_MULTILINE (at
      *     compile time) causes circumflex never to match. This option affects
      *     only the behaviour of the circumflex metacharacter, it does not
      *     affect "\A".
@@ -3152,7 +3193,7 @@ enum RegexMatchFlags {
      * Specifies that the end of the subject string is
      *     not the end of a line, so the dollar metacharacter should not match
      *     it nor (except in multiline mode) a newline immediately before it.
-     *     Setting this without #G_REGEX_MULTILINE (at compile time) causes
+     *     Setting this without %G_REGEX_MULTILINE (at compile time) causes
      *     dollar never to match. This option affects only the behaviour of
      *     the dollar metacharacter, it does not affect "\Z" or "\z".
      */
@@ -3219,18 +3260,18 @@ enum RegexMatchFlags {
      */
     BSR_ANY,
     /**
-     * An alias for #G_REGEX_MATCH_PARTIAL. Since: 2.34
+     * An alias for %G_REGEX_MATCH_PARTIAL. Since: 2.34
      */
     PARTIAL_SOFT,
     /**
      * Turns on the partial matching feature. In contrast to
-     *     to #G_REGEX_MATCH_PARTIAL_SOFT, this stops matching as soon as a partial match
+     *     to %G_REGEX_MATCH_PARTIAL_SOFT, this stops matching as soon as a partial match
      *     is found, without continuing to search for a possible complete match. See
      *     g_match_info_is_partial_match() for more information. Since: 2.34
      */
     PARTIAL_HARD,
     /**
-     * Like #G_REGEX_MATCH_NOTEMPTY, but only applied to
+     * Like %G_REGEX_MATCH_NOTEMPTY, but only applied to
      *     the start of the matched string. For anchored
      *     patterns this can only happen for pattern containing "\K". Since: 2.34
      */
@@ -3524,7 +3565,7 @@ const ANALYZER_ANALYZING: number
 const ASCII_DTOSTR_BUF_SIZE: number
 /**
  * Specifies one of the possible types of byte order.
- * See #G_BYTE_ORDER.
+ * See %G_BYTE_ORDER.
  */
 const BIG_ENDIAN: number
 /**
@@ -3612,18 +3653,18 @@ const GINT16_FORMAT: string
 const GINT16_MODIFIER: string
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #gint32. See also #G_GINT16_FORMAT.
+ * and printing values of type #gint32. See also %G_GINT16_FORMAT.
  */
 const GINT32_FORMAT: string
 /**
  * The platform dependent length modifier for conversion specifiers
  * for scanning and printing values of type #gint32 or #guint32. It
- * is a string literal. See also #G_GINT16_MODIFIER.
+ * is a string literal. See also %G_GINT16_MODIFIER.
  */
 const GINT32_MODIFIER: string
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #gint64. See also #G_GINT16_FORMAT.
+ * and printing values of type #gint64. See also %G_GINT16_FORMAT.
  * 
  * Some platforms do not support scanning and printing 64-bit integers,
  * even though the types are supported. On such platforms %G_GINT64_FORMAT
@@ -3666,7 +3707,7 @@ const GNUC_FUNCTION: string
 const GNUC_PRETTY_FUNCTION: string
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #gsize. See also #G_GINT16_FORMAT.
+ * and printing values of type #gsize. See also %G_GINT16_FORMAT.
  */
 const GSIZE_FORMAT: string
 /**
@@ -3677,7 +3718,7 @@ const GSIZE_FORMAT: string
 const GSIZE_MODIFIER: string
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #gssize. See also #G_GINT16_FORMAT.
+ * and printing values of type #gssize. See also %G_GINT16_FORMAT.
  */
 const GSSIZE_FORMAT: string
 /**
@@ -3688,17 +3729,17 @@ const GSSIZE_FORMAT: string
 const GSSIZE_MODIFIER: string
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #guint16. See also #G_GINT16_FORMAT
+ * and printing values of type #guint16. See also %G_GINT16_FORMAT
  */
 const GUINT16_FORMAT: string
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #guint32. See also #G_GINT16_FORMAT.
+ * and printing values of type #guint32. See also %G_GINT16_FORMAT.
  */
 const GUINT32_FORMAT: string
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #guint64. See also #G_GINT16_FORMAT.
+ * and printing values of type #guint64. See also %G_GINT16_FORMAT.
  * 
  * Some platforms do not support scanning and printing 64-bit integers,
  * even though the types are supported. On such platforms %G_GUINT64_FORMAT
@@ -3884,7 +3925,7 @@ const KEY_FILE_DESKTOP_TYPE_DIRECTORY: string
 const KEY_FILE_DESKTOP_TYPE_LINK: string
 /**
  * Specifies one of the possible types of byte order.
- * See #G_BYTE_ORDER.
+ * See %G_BYTE_ORDER.
  */
 const LITTLE_ENDIAN: number
 /**
@@ -4019,14 +4060,14 @@ const MODULE_SUFFIX: string
  * or %G_OPTION_ARG_FILENAME_ARRAY.
  * 
  * 
- * Using #G_OPTION_REMAINING instead of simply scanning `argv`
+ * Using %G_OPTION_REMAINING instead of simply scanning `argv`
  * for leftover arguments has the advantage that GOption takes care of
  * necessary encoding conversions for strings or filenames.
  */
 const OPTION_REMAINING: string
 /**
  * Specifies one of the possible types of byte order
- * (currently unused). See #G_BYTE_ORDER.
+ * (currently unused). See %G_BYTE_ORDER.
  */
 const PDP_ENDIAN: number
 /**
@@ -4075,8 +4116,8 @@ const PRIORITY_HIGH: number
 /**
  * Use this for high priority idle functions.
  * 
- * GTK+ uses #G_PRIORITY_HIGH_IDLE + 10 for resizing operations,
- * and #G_PRIORITY_HIGH_IDLE + 20 for redrawing operations. (This is
+ * GTK+ uses %G_PRIORITY_HIGH_IDLE + 10 for resizing operations,
+ * and %G_PRIORITY_HIGH_IDLE + 20 for redrawing operations. (This is
  * done to ensure that any pending resizes are processed before any
  * pending redraws, so that widgets are not redrawn twice unnecessarily.)
  */
@@ -4143,6 +4184,7 @@ const SYSDEF_MSG_PEEK: number
  *  - g_get_user_config_dir()
  *  - g_get_system_data_dirs()
  *  - g_get_user_data_dir()
+ *  - g_get_user_state_dir()
  *  - g_get_user_runtime_dir()
  * 
  * The subdirectories may not be created by the test harness; as with normal
@@ -4211,6 +4253,9 @@ const VERSION_MIN_REQUIRED: number
 const WIN32_MSG_HANDLE: number
 const macro__has_attribute___noreturn__: number
 function access(filename: string, mode: number): number
+function aligned_alloc(n_blocks: number, n_block_bytes: number, alignment: number): object | null
+function aligned_alloc0(n_blocks: number, n_block_bytes: number, alignment: number): object | null
+function aligned_free(mem: object | null): void
 function ascii_digit_value(c: number): number
 function ascii_dtostr(buffer: string, buf_len: number, d: number): string
 function ascii_formatd(buffer: string, buf_len: number, format: string, d: number): string
@@ -4262,7 +4307,7 @@ function atomic_ref_count_inc(arc: number): void
 function atomic_ref_count_init(arc: number): void
 function base64_decode(text: string): Uint8Array
 function base64_decode_inplace(text: Uint8Array): [ /* returnType */ number, /* text */ Uint8Array ]
-function base64_encode(data: Uint8Array | null): string
+function base64_encode(data: Uint8Array): string
 function base64_encode_close(break_lines: boolean, state: number, save: number): [ /* returnType */ number, /* out */ Uint8Array, /* state */ number, /* save */ number ]
 function base64_encode_step(in_: Uint8Array, break_lines: boolean, state: number, save: number): [ /* returnType */ number, /* out */ Uint8Array, /* state */ number, /* save */ number ]
 function basename(file_name: string): string
@@ -4318,19 +4363,19 @@ function date_valid_julian(julian_date: number): boolean
 function date_valid_month(month: DateMonth): boolean
 function date_valid_weekday(weekday: DateWeekday): boolean
 function date_valid_year(year: DateYear): boolean
-function dcgettext(domain: string | null, msgid: string, category: number): string
-function dgettext(domain: string | null, msgid: string): string
+function dcgettext(domain: string, msgid: string, category: number): string
+function dgettext(domain: string, msgid: string): string
 function dir_make_tmp(tmpl: string | null): string
 function direct_equal(v1: object | null, v2: object | null): boolean
 function direct_hash(v: object | null): number
-function dngettext(domain: string | null, msgid: string, msgid_plural: string, n: number): string
+function dngettext(domain: string, msgid: string, msgid_plural: string, n: number): string
 function double_equal(v1: object, v2: object): boolean
 function double_hash(v: object): number
-function dpgettext(domain: string | null, msgctxtid: string, msgidoffset: number): string
-function dpgettext2(domain: string | null, context: string, msgid: string): string
-function environ_getenv(envp: string[] | null, variable: string): string
-function environ_setenv(envp: string[] | null, variable: string, value: string, overwrite: boolean): string[]
-function environ_unsetenv(envp: string[] | null, variable: string): string[]
+function dpgettext(domain: string, msgctxtid: string, msgidoffset: number): string
+function dpgettext2(domain: string, context: string, msgid: string): string
+function environ_getenv(envp: string[], variable: string): string | null
+function environ_setenv(envp: string[], variable: string, value: string, overwrite: boolean): string[]
+function environ_unsetenv(envp: string[], variable: string): string[]
 function file_error_from_errno(err_no: number): FileError
 function file_error_quark(): Quark
 function file_get_contents(filename: string): [ /* returnType */ boolean, /* contents */ Uint8Array ]
@@ -4377,14 +4422,16 @@ function get_user_config_dir(): string
 function get_user_data_dir(): string
 function get_user_name(): string
 function get_user_runtime_dir(): string
-function get_user_special_dir(directory: UserDirectory): string
-function getenv(variable: string): string
+function get_user_special_dir(directory: UserDirectory): string | null
+function get_user_state_dir(): string
+function getenv(variable: string): string | null
 function hash_table_add(hash_table: HashTable, key: object | null): boolean
 function hash_table_contains(hash_table: HashTable, key: object | null): boolean
 function hash_table_destroy(hash_table: HashTable): void
 function hash_table_insert(hash_table: HashTable, key: object | null, value: object | null): boolean
 function hash_table_lookup(hash_table: HashTable, key: object | null): object | null
 function hash_table_lookup_extended(hash_table: HashTable, lookup_key: object | null): [ /* returnType */ boolean, /* orig_key */ object | null, /* value */ object | null ]
+function hash_table_new_similar(other_hash_table: HashTable): HashTable
 function hash_table_remove(hash_table: HashTable, key: object | null): boolean
 function hash_table_remove_all(hash_table: HashTable): void
 function hash_table_replace(hash_table: HashTable, key: object | null, value: object | null): boolean
@@ -4396,7 +4443,7 @@ function hash_table_unref(hash_table: HashTable): void
 function hook_destroy(hook_list: HookList, hook_id: number): boolean
 function hook_destroy_link(hook_list: HookList, hook: Hook): void
 function hook_free(hook_list: HookList, hook: Hook): void
-function hook_insert_before(hook_list: HookList, sibling: Hook | null, hook: Hook): void
+function hook_insert_before(hook_list: HookList, sibling: Hook, hook: Hook): void
 function hook_prepend(hook_list: HookList, hook: Hook): void
 function hook_unref(hook_list: HookList, hook: Hook): void
 function hostname_is_ascii_encoded(hostname: string): boolean
@@ -4421,14 +4468,16 @@ function key_file_error_quark(): Quark
 function listenv(): string[]
 function locale_from_utf8(utf8string: string, len: number): [ /* returnType */ Uint8Array, /* bytes_read */ number ]
 function locale_to_utf8(opsysstring: Uint8Array): [ /* returnType */ string, /* bytes_read */ number, /* bytes_written */ number ]
-function log_default_handler(log_domain: string | null, log_level: LogLevelFlags, message: string | null, unused_data: object | null): void
+function log_default_handler(log_domain: string, log_level: LogLevelFlags, message: string | null, unused_data: object | null): void
+function log_get_debug_enabled(): boolean
 function log_remove_handler(log_domain: string, handler_id: number): void
 function log_set_always_fatal(fatal_mask: LogLevelFlags): LogLevelFlags
+function log_set_debug_enabled(enabled: boolean): void
 function log_set_fatal_mask(log_domain: string, fatal_mask: LogLevelFlags): LogLevelFlags
-function log_set_handler(log_domain: string | null, log_levels: LogLevelFlags, log_func: LogFunc): number
+function log_set_handler(log_domain: string, log_levels: LogLevelFlags, log_func: LogFunc): number
 function log_set_writer_func(): void
 function log_structured_array(log_level: LogLevelFlags, fields: LogField[]): void
-function log_variant(log_domain: string | null, log_level: LogLevelFlags, fields: Variant): void
+function log_variant(log_domain: string, log_level: LogLevelFlags, fields: Variant): void
 function log_writer_default(log_level: LogLevelFlags, fields: LogField[], user_data: object | null): LogWriterOutput
 function log_writer_default_set_use_stderr(use_stderr: boolean): void
 function log_writer_default_would_drop(log_level: LogLevelFlags, log_domain: string | null): boolean
@@ -4451,8 +4500,8 @@ function markup_escape_text(text: string, length: number): string
 function mem_is_system_malloc(): boolean
 function mem_profile(): void
 function mem_set_vtable(vtable: MemVTable): void
-function memdup(mem: object | null, byte_size: number): object | null
-function memdup2(mem: object | null, byte_size: number): object | null
+function memdup(mem: object, byte_size: number): object | null
+function memdup2(mem: object, byte_size: number): object | null
 function mkdir_with_parents(pathname: string, mode: number): number
 function nullify_pointer(nullify_location: object): void
 function number_parser_error_quark(): Quark
@@ -4461,7 +4510,7 @@ function on_error_stack_trace(prg_name: string): void
 function once_init_enter(location: object): boolean
 function once_init_leave(location: object, result: number): void
 function option_error_quark(): Quark
-function parse_debug_string(string: string | null, keys: DebugKey[]): number
+function parse_debug_string(string: string, keys: DebugKey[]): number
 function path_get_basename(file_name: string): string
 function path_get_dirname(file_name: string): string
 function path_is_absolute(file_name: string): boolean
@@ -4471,8 +4520,8 @@ function pointer_bit_lock(address: object, lock_bit: number): void
 function pointer_bit_trylock(address: object, lock_bit: number): boolean
 function pointer_bit_unlock(address: object, lock_bit: number): void
 function poll(fds: PollFD, nfds: number, timeout: number): number
-function prefix_error_literal(err: Error | null, prefix: string): void
-function propagate_error(src: Error): /* dest */ Error | null
+function prefix_error_literal(err: Error, prefix: string): void
+function propagate_error(src: Error): /* dest */ Error
 function quark_from_static_string(string: string | null): Quark
 function quark_from_string(string: string | null): Quark
 function quark_to_string(quark: Quark): string
@@ -4489,8 +4538,8 @@ function rc_box_dup(block_size: number, mem_block: object): object
 function rc_box_get_size(mem_block: object): number
 function rc_box_release(mem_block: object): void
 function rc_box_release_full(mem_block: object, clear_func: DestroyNotify): void
-function realloc(mem: object | null, n_bytes: number): object | null
-function realloc_n(mem: object | null, n_blocks: number, n_block_bytes: number): object | null
+function realloc(mem: object, n_bytes: number): object | null
+function realloc_n(mem: object, n_blocks: number, n_block_bytes: number): object | null
 function ref_count_compare(rc: number, val: number): boolean
 function ref_count_dec(rc: number): boolean
 function ref_count_inc(rc: number): void
@@ -4530,7 +4579,7 @@ function slice_alloc(block_size: number): object | null
 function slice_alloc0(block_size: number): object | null
 function slice_copy(block_size: number, mem_block: object | null): object | null
 function slice_free1(block_size: number, mem_block: object | null): void
-function slice_free_chain_with_offset(block_size: number, mem_chain: object | null, next_offset: number): void
+function slice_free_chain_with_offset(block_size: number, mem_chain: object, next_offset: number): void
 function slice_get_config(ckey: SliceConfig): number
 function slice_get_config_state(ckey: SliceConfig, address: number, n_values: number): number
 function slice_set_config(ckey: SliceConfig, value: number): void
@@ -4539,10 +4588,10 @@ function source_remove_by_funcs_user_data(funcs: SourceFuncs, user_data: object 
 function source_remove_by_user_data(user_data: object | null): boolean
 function source_set_name_by_id(tag: number, name: string): void
 function spaced_primes_closest(num: number): number
-function spawn_async(working_directory: string | null, argv: string[], envp: string[] | null, flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* child_pid */ Pid ]
-function spawn_async_with_fds(working_directory: string | null, argv: string[], envp: string[] | null, flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null, stdin_fd: number, stdout_fd: number, stderr_fd: number): [ /* returnType */ boolean, /* child_pid */ Pid ]
-function spawn_async_with_pipes(working_directory: string | null, argv: string[], envp: string[] | null, flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* child_pid */ Pid, /* standard_input */ number, /* standard_output */ number, /* standard_error */ number ]
-function spawn_async_with_pipes_and_fds(working_directory: string | null, argv: string[], envp: string[] | null, flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null, stdin_fd: number, stdout_fd: number, stderr_fd: number, source_fds: number[] | null, target_fds: number[] | null): [ /* returnType */ boolean, /* child_pid_out */ Pid, /* stdin_pipe_out */ number, /* stdout_pipe_out */ number, /* stderr_pipe_out */ number ]
+function spawn_async(working_directory: string, argv: string[], envp: string[], flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* child_pid */ Pid ]
+function spawn_async_with_fds(working_directory: string, argv: string[], envp: string[], flags: SpawnFlags, child_setup: SpawnChildSetupFunc, stdin_fd: number, stdout_fd: number, stderr_fd: number): [ /* returnType */ boolean, /* child_pid */ Pid ]
+function spawn_async_with_pipes(working_directory: string, argv: string[], envp: string[], flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* child_pid */ Pid, /* standard_input */ number, /* standard_output */ number, /* standard_error */ number ]
+function spawn_async_with_pipes_and_fds(working_directory: string, argv: string[], envp: string[], flags: SpawnFlags, child_setup: SpawnChildSetupFunc, stdin_fd: number, stdout_fd: number, stderr_fd: number, source_fds: number[], target_fds: number[]): [ /* returnType */ boolean, /* child_pid_out */ Pid, /* stdin_pipe_out */ number, /* stdout_pipe_out */ number, /* stderr_pipe_out */ number ]
 function spawn_check_exit_status(wait_status: number): boolean
 function spawn_check_wait_status(wait_status: number): boolean
 function spawn_close_pid(pid: Pid): void
@@ -4550,7 +4599,7 @@ function spawn_command_line_async(command_line: string): boolean
 function spawn_command_line_sync(command_line: string): [ /* returnType */ boolean, /* standard_output */ Uint8Array, /* standard_error */ Uint8Array, /* wait_status */ number ]
 function spawn_error_quark(): Quark
 function spawn_exit_error_quark(): Quark
-function spawn_sync(working_directory: string | null, argv: string[], envp: string[] | null, flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* standard_output */ Uint8Array, /* standard_error */ Uint8Array, /* wait_status */ number ]
+function spawn_sync(working_directory: string, argv: string[], envp: string[], flags: SpawnFlags, child_setup: SpawnChildSetupFunc | null): [ /* returnType */ boolean, /* standard_output */ Uint8Array, /* standard_error */ Uint8Array, /* wait_status */ number ]
 function stpcpy(dest: string, src: string): string
 function str_equal(v1: object, v2: object): boolean
 function str_has_prefix(str: string, prefix: string): boolean
@@ -4566,14 +4615,14 @@ function strchomp(string: string): string
 function strchug(string: string): string
 function strcmp0(str1: string | null, str2: string | null): number
 function strcompress(source: string): string
-function strdelimit(string: string, delimiters: string | null, new_delimiter: number): string
+function strdelimit(string: string, delimiters: string, new_delimiter: number): string
 function strdown(string: string): string
 function strdup(str: string | null): string
 function strerror(errnum: number): string
 function strescape(source: string, exceptions: string | null): string
 function strfreev(str_array: string | null): void
 function strip_context(msgid: string, msgval: string): string
-function strjoinv(separator: string | null, str_array: string): string
+function strjoinv(separator: string, str_array: string): string
 function strlcat(dest: string, src: string, dest_size: number): number
 function strlcpy(dest: string, src: string, dest_size: number): number
 function strncasecmp(s1: string, s2: string, n: number): number
@@ -4590,13 +4639,13 @@ function strv_contains(strv: string, str: string): boolean
 function strv_equal(strv1: string, strv2: string): boolean
 function strv_get_type(): GObject.GType
 function strv_length(str_array: string): number
-function test_add_data_func(testpath: string, test_data: object | null, test_func: TestDataFunc): void
-function test_add_data_func_full(testpath: string, test_data: object | null, test_func: TestDataFunc): void
+function test_add_data_func(testpath: string, test_data: object, test_func: TestDataFunc): void
+function test_add_data_func_full(testpath: string, test_data: object, test_func: TestDataFunc): void
 function test_add_func(testpath: string, test_func: TestFunc): void
 function test_assert_expected_messages_internal(domain: string, file: string, line: number, func: string): void
 function test_bug(bug_uri_snippet: string): void
 function test_bug_base(uri_pattern: string): void
-function test_expect_message(log_domain: string | null, log_level: LogLevelFlags, pattern: string): void
+function test_expect_message(log_domain: string, log_level: LogLevelFlags, pattern: string): void
 function test_fail(): void
 function test_failed(): boolean
 function test_get_dir(file_type: TestFileType): string
@@ -4622,7 +4671,7 @@ function test_trap_assertions(domain: string, file: string, line: number, func: 
 function test_trap_fork(usec_timeout: number, test_trap_flags: TestTrapFlags): boolean
 function test_trap_has_passed(): boolean
 function test_trap_reached_timeout(): boolean
-function test_trap_subprocess(test_path: string | null, usec_timeout: number, test_flags: TestSubprocessFlags): void
+function test_trap_subprocess(test_path: string, usec_timeout: number, test_flags: TestSubprocessFlags): void
 function thread_error_quark(): Quark
 function thread_exit(retval: object | null): void
 function thread_pool_get_max_idle_time(): number
@@ -4646,44 +4695,44 @@ function try_malloc(n_bytes: number): object | null
 function try_malloc0(n_bytes: number): object | null
 function try_malloc0_n(n_blocks: number, n_block_bytes: number): object | null
 function try_malloc_n(n_blocks: number, n_block_bytes: number): object | null
-function try_realloc(mem: object | null, n_bytes: number): object | null
-function try_realloc_n(mem: object | null, n_blocks: number, n_block_bytes: number): object | null
-function ucs4_to_utf16(str: number, len: number): [ /* returnType */ number, /* items_read */ number, /* items_written */ number ]
-function ucs4_to_utf8(str: number, len: number): [ /* returnType */ string, /* items_read */ number, /* items_written */ number ]
-function unichar_break_type(c: number): UnicodeBreakType
-function unichar_combining_class(uc: number): number
-function unichar_compose(a: number, b: number): [ /* returnType */ boolean, /* ch */ number ]
-function unichar_decompose(ch: number): [ /* returnType */ boolean, /* a */ number, /* b */ number ]
-function unichar_digit_value(c: number): number
-function unichar_fully_decompose(ch: number, compat: boolean, result_len: number): [ /* returnType */ number, /* result */ number ]
-function unichar_get_mirror_char(ch: number, mirrored_ch: number): boolean
-function unichar_get_script(ch: number): UnicodeScript
-function unichar_isalnum(c: number): boolean
-function unichar_isalpha(c: number): boolean
-function unichar_iscntrl(c: number): boolean
-function unichar_isdefined(c: number): boolean
-function unichar_isdigit(c: number): boolean
-function unichar_isgraph(c: number): boolean
-function unichar_islower(c: number): boolean
-function unichar_ismark(c: number): boolean
-function unichar_isprint(c: number): boolean
-function unichar_ispunct(c: number): boolean
-function unichar_isspace(c: number): boolean
-function unichar_istitle(c: number): boolean
-function unichar_isupper(c: number): boolean
-function unichar_iswide(c: number): boolean
-function unichar_iswide_cjk(c: number): boolean
-function unichar_isxdigit(c: number): boolean
-function unichar_iszerowidth(c: number): boolean
-function unichar_to_utf8(c: number): [ /* returnType */ number, /* outbuf */ string ]
-function unichar_tolower(c: number): number
-function unichar_totitle(c: number): number
-function unichar_toupper(c: number): number
-function unichar_type(c: number): UnicodeType
-function unichar_validate(ch: number): boolean
-function unichar_xdigit_value(c: number): number
-function unicode_canonical_decomposition(ch: number, result_len: number): number
-function unicode_canonical_ordering(string: number, len: number): void
+function try_realloc(mem: object, n_bytes: number): object | null
+function try_realloc_n(mem: object, n_blocks: number, n_block_bytes: number): object | null
+function ucs4_to_utf16(str: string, len: number): [ /* returnType */ number, /* items_read */ number, /* items_written */ number ]
+function ucs4_to_utf8(str: string, len: number): [ /* returnType */ string, /* items_read */ number, /* items_written */ number ]
+function unichar_break_type(c: string): UnicodeBreakType
+function unichar_combining_class(uc: string): number
+function unichar_compose(a: string, b: string): [ /* returnType */ boolean, /* ch */ string ]
+function unichar_decompose(ch: string): [ /* returnType */ boolean, /* a */ string, /* b */ string ]
+function unichar_digit_value(c: string): number
+function unichar_fully_decompose(ch: string, compat: boolean, result_len: number): [ /* returnType */ number, /* result */ string ]
+function unichar_get_mirror_char(ch: string, mirrored_ch: string): boolean
+function unichar_get_script(ch: string): UnicodeScript
+function unichar_isalnum(c: string): boolean
+function unichar_isalpha(c: string): boolean
+function unichar_iscntrl(c: string): boolean
+function unichar_isdefined(c: string): boolean
+function unichar_isdigit(c: string): boolean
+function unichar_isgraph(c: string): boolean
+function unichar_islower(c: string): boolean
+function unichar_ismark(c: string): boolean
+function unichar_isprint(c: string): boolean
+function unichar_ispunct(c: string): boolean
+function unichar_isspace(c: string): boolean
+function unichar_istitle(c: string): boolean
+function unichar_isupper(c: string): boolean
+function unichar_iswide(c: string): boolean
+function unichar_iswide_cjk(c: string): boolean
+function unichar_isxdigit(c: string): boolean
+function unichar_iszerowidth(c: string): boolean
+function unichar_to_utf8(c: string): [ /* returnType */ number, /* outbuf */ string ]
+function unichar_tolower(c: string): string
+function unichar_totitle(c: string): string
+function unichar_toupper(c: string): string
+function unichar_type(c: string): UnicodeType
+function unichar_validate(ch: string): boolean
+function unichar_xdigit_value(c: string): number
+function unicode_canonical_decomposition(ch: string, result_len: number): string
+function unicode_canonical_ordering(string: string, len: number): void
 function unicode_script_from_iso15924(iso15924: number): UnicodeScript
 function unicode_script_to_iso15924(script: UnicodeScript): number
 function unix_error_quark(): Quark
@@ -4696,20 +4745,20 @@ function unix_signal_add(priority: number, signum: number, handler: SourceFunc):
 function unix_signal_source_new(signum: number): Source
 function unlink(filename: string): number
 function unsetenv(variable: string): void
-function uri_build(flags: UriFlags, scheme: string, userinfo: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): Uri
-function uri_build_with_user(flags: UriFlags, scheme: string, user: string | null, password: string | null, auth_params: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): Uri
+function uri_build(flags: UriFlags, scheme: string, userinfo: string, host: string, port: number, path: string, query: string | null, fragment: string | null): Uri
+function uri_build_with_user(flags: UriFlags, scheme: string, user: string, password: string, auth_params: string, host: string, port: number, path: string, query: string | null, fragment: string | null): Uri
 function uri_error_quark(): Quark
 function uri_escape_bytes(unescaped: Uint8Array, reserved_chars_allowed: string | null): string
-function uri_escape_string(unescaped: string, reserved_chars_allowed: string | null, allow_utf8: boolean): string
+function uri_escape_string(unescaped: string, reserved_chars_allowed: string, allow_utf8: boolean): string
 function uri_is_valid(uri_string: string, flags: UriFlags): boolean
-function uri_join(flags: UriFlags, scheme: string | null, userinfo: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): string
-function uri_join_with_user(flags: UriFlags, scheme: string | null, user: string | null, password: string | null, auth_params: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): string
+function uri_join(flags: UriFlags, scheme: string, userinfo: string, host: string, port: number, path: string, query: string | null, fragment: string | null): string
+function uri_join_with_user(flags: UriFlags, scheme: string, user: string, password: string, auth_params: string, host: string, port: number, path: string, query: string | null, fragment: string | null): string
 function uri_list_extract_uris(uri_list: string): string[]
 function uri_parse(uri_string: string, flags: UriFlags): Uri
 function uri_parse_params(params: string, length: number, separators: string, flags: UriParamsFlags): HashTable
 function uri_parse_scheme(uri: string): string | null
 function uri_peek_scheme(uri: string): string | null
-function uri_resolve_relative(base_uri_string: string | null, uri_ref: string, flags: UriFlags): string
+function uri_resolve_relative(base_uri_string: string, uri_ref: string, flags: UriFlags): string
 function uri_split(uri_ref: string, flags: UriFlags): [ /* returnType */ boolean, /* scheme */ string | null, /* userinfo */ string | null, /* host */ string | null, /* port */ number, /* path */ string, /* query */ string | null, /* fragment */ string | null ]
 function uri_split_network(uri_string: string, flags: UriFlags): [ /* returnType */ boolean, /* scheme */ string | null, /* host */ string | null, /* port */ number ]
 function uri_split_with_user(uri_ref: string, flags: UriFlags): [ /* returnType */ boolean, /* scheme */ string | null, /* user */ string | null, /* password */ string | null, /* auth_params */ string | null, /* host */ string | null, /* port */ number, /* path */ string, /* query */ string | null, /* fragment */ string | null ]
@@ -4717,7 +4766,7 @@ function uri_unescape_bytes(escaped_string: string, length: number, illegal_char
 function uri_unescape_segment(escaped_string: string | null, escaped_string_end: string | null, illegal_characters: string | null): string | null
 function uri_unescape_string(escaped_string: string, illegal_characters: string | null): string | null
 function usleep(microseconds: number): void
-function utf16_to_ucs4(str: number, len: number): [ /* returnType */ number, /* items_read */ number, /* items_written */ number ]
+function utf16_to_ucs4(str: number, len: number): [ /* returnType */ string, /* items_read */ number, /* items_written */ number ]
 function utf16_to_utf8(str: number, len: number): [ /* returnType */ string, /* items_read */ number, /* items_written */ number ]
 function utf8_casefold(str: string, len: number): string
 function utf8_collate(str1: string, str2: string): number
@@ -4725,23 +4774,23 @@ function utf8_collate_key(str: string, len: number): string
 function utf8_collate_key_for_filename(str: string, len: number): string
 function utf8_find_next_char(p: string, end: string | null): string | null
 function utf8_find_prev_char(str: string, p: string): string | null
-function utf8_get_char(p: string): number
-function utf8_get_char_validated(p: string, max_len: number): number
+function utf8_get_char(p: string): string
+function utf8_get_char_validated(p: string, max_len: number): string
 function utf8_make_valid(str: string, len: number): string
 function utf8_normalize(str: string, len: number, mode: NormalizeMode): string | null
 function utf8_offset_to_pointer(str: string, offset: number): string
 function utf8_pointer_to_offset(str: string, pos: string): number
 function utf8_prev_char(p: string): string
-function utf8_strchr(p: string, len: number, c: number): string | null
+function utf8_strchr(p: string, len: number, c: string): string | null
 function utf8_strdown(str: string, len: number): string
 function utf8_strlen(p: string, max: number): number
 function utf8_strncpy(dest: string, src: string, n: number): string
-function utf8_strrchr(p: string, len: number, c: number): string | null
+function utf8_strrchr(p: string, len: number, c: string): string | null
 function utf8_strreverse(str: string, len: number): string
 function utf8_strup(str: string, len: number): string
 function utf8_substring(str: string, start_pos: number, end_pos: number): string
-function utf8_to_ucs4(str: string, len: number): [ /* returnType */ number, /* items_read */ number, /* items_written */ number ]
-function utf8_to_ucs4_fast(str: string, len: number): [ /* returnType */ number, /* items_written */ number ]
+function utf8_to_ucs4(str: string, len: number): [ /* returnType */ string, /* items_read */ number, /* items_written */ number ]
+function utf8_to_ucs4_fast(str: string, len: number): [ /* returnType */ string, /* items_written */ number ]
 function utf8_to_utf16(str: string, len: number): [ /* returnType */ number, /* items_read */ number, /* items_written */ number ]
 function utf8_validate(str: Uint8Array): [ /* returnType */ boolean, /* end */ string ]
 function utf8_validate_len(str: Uint8Array): [ /* returnType */ boolean, /* end */ string ]
@@ -4750,7 +4799,7 @@ function uuid_string_random(): string
 function variant_get_gtype(): GObject.GType
 function variant_is_object_path(string: string): boolean
 function variant_is_signature(string: string): boolean
-function variant_parse(type: VariantType | null, text: string, limit: string | null, endptr: string | null): Variant
+function variant_parse(type: VariantType, text: string, limit: string | null, endptr: string | null): Variant
 function variant_parse_error_print_context(error: Error, source_str: string): string
 function variant_parse_error_quark(): Quark
 function variant_parser_get_error_quark(): Quark
@@ -5484,7 +5533,7 @@ class BookmarkFile {
      * Gets the time the bookmark for `uri` was added to `bookmark`
      * 
      * In the event the URI cannot be found, -1 is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      */
     get_added(uri: string): number
@@ -5492,7 +5541,7 @@ class BookmarkFile {
      * Gets the time the bookmark for `uri` was added to `bookmark`
      * 
      * In the event the URI cannot be found, %NULL is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      */
     get_added_date_time(uri: string): DateTime
@@ -5504,11 +5553,11 @@ class BookmarkFile {
      * The string returned in `app_exec` must be freed.
      * 
      * In the event the URI cannot be found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
      * event that no application with name `app_name` has registered a bookmark
      * for `uri,`  %FALSE is returned and error is set to
-     * #G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. In the event that unquoting
-     * the command line fails, an error of the #G_SHELL_ERROR domain is
+     * %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. In the event that unquoting
+     * the command line fails, an error of the %G_SHELL_ERROR domain is
      * set and %FALSE is returned.
      * @param uri a valid URI
      * @param name an application's name
@@ -5522,11 +5571,11 @@ class BookmarkFile {
      * The string returned in `app_exec` must be freed.
      * 
      * In the event the URI cannot be found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
      * event that no application with name `app_name` has registered a bookmark
      * for `uri,`  %FALSE is returned and error is set to
-     * #G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. In the event that unquoting
-     * the command line fails, an error of the #G_SHELL_ERROR domain is
+     * %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. In the event that unquoting
+     * the command line fails, an error of the %G_SHELL_ERROR domain is
      * set and %FALSE is returned.
      * @param uri a valid URI
      * @param name an application's name
@@ -5537,7 +5586,7 @@ class BookmarkFile {
      * bookmark for `uri`.
      * 
      * In the event the URI cannot be found, %NULL is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      */
     get_applications(uri: string): string[]
@@ -5545,7 +5594,7 @@ class BookmarkFile {
      * Retrieves the description of the bookmark for `uri`.
      * 
      * In the event the URI cannot be found, %NULL is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      */
     get_description(uri: string): string
@@ -5553,7 +5602,7 @@ class BookmarkFile {
      * Retrieves the list of group names of the bookmark for `uri`.
      * 
      * In the event the URI cannot be found, %NULL is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * 
      * The returned array is %NULL terminated, so `length` may optionally
      * be %NULL.
@@ -5564,7 +5613,7 @@ class BookmarkFile {
      * Gets the icon of the bookmark for `uri`.
      * 
      * In the event the URI cannot be found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      */
     get_icon(uri: string): [ /* returnType */ boolean, /* href */ string, /* mime_type */ string ]
@@ -5572,9 +5621,9 @@ class BookmarkFile {
      * Gets whether the private flag of the bookmark for `uri` is set.
      * 
      * In the event the URI cannot be found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
      * event that the private flag cannot be found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
      * @param uri a valid URI
      */
     get_is_private(uri: string): boolean
@@ -5582,9 +5631,9 @@ class BookmarkFile {
      * Retrieves the MIME type of the resource pointed by `uri`.
      * 
      * In the event the URI cannot be found, %NULL is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
      * event that the MIME type cannot be found, %NULL is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
      * @param uri a valid URI
      */
     get_mime_type(uri: string): string
@@ -5592,7 +5641,7 @@ class BookmarkFile {
      * Gets the time when the bookmark for `uri` was last modified.
      * 
      * In the event the URI cannot be found, -1 is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      */
     get_modified(uri: string): number
@@ -5600,7 +5649,7 @@ class BookmarkFile {
      * Gets the time when the bookmark for `uri` was last modified.
      * 
      * In the event the URI cannot be found, %NULL is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      */
     get_modified_date_time(uri: string): DateTime
@@ -5614,7 +5663,7 @@ class BookmarkFile {
      * If `uri` is %NULL, the title of `bookmark` is returned.
      * 
      * In the event the URI cannot be found, %NULL is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI or %NULL
      */
     get_title(uri: string | null): string
@@ -5628,7 +5677,7 @@ class BookmarkFile {
      * Gets the time the bookmark for `uri` was last visited.
      * 
      * In the event the URI cannot be found, -1 is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      */
     get_visited(uri: string): number
@@ -5636,7 +5685,7 @@ class BookmarkFile {
      * Gets the time the bookmark for `uri` was last visited.
      * 
      * In the event the URI cannot be found, %NULL is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      */
     get_visited_date_time(uri: string): DateTime
@@ -5645,7 +5694,7 @@ class BookmarkFile {
      * registered by application `name`.
      * 
      * In the event the URI cannot be found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      * @param name the name of the application
      */
@@ -5655,7 +5704,7 @@ class BookmarkFile {
      * the bookmark for `uri` belongs to.
      * 
      * In the event the URI cannot be found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param uri a valid URI
      * @param group the group name to be searched
      */
@@ -5694,7 +5743,7 @@ class BookmarkFile {
      * %NULL, then the bookmark is removed.
      * 
      * In the event the URI cannot be found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * @param old_uri a valid URI
      * @param new_uri a valid URI, or %NULL
      */
@@ -5704,10 +5753,10 @@ class BookmarkFile {
      * that have registered a bookmark for `uri` inside `bookmark`.
      * 
      * In the event the URI cannot be found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * In the event that no application with name `app_name` has registered
      * a bookmark for `uri,`  %FALSE is returned and error is set to
-     * #G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.
+     * %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.
      * @param uri a valid URI
      * @param name the name of the application
      */
@@ -5717,9 +5766,9 @@ class BookmarkFile {
      * for `uri` belongs to.
      * 
      * In the event the URI cannot be found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
      * In the event no group was defined, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
      * @param uri a valid URI
      * @param group the group name to be removed
      */
@@ -5769,10 +5818,10 @@ class BookmarkFile {
      * 
      * If you try to remove an application by setting its registration count to
      * zero, and no bookmark for `uri` is found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND; similarly,
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND; similarly,
      * in the event that no application `name` has registered a bookmark
      * for `uri,`  %FALSE is returned and error is set to
-     * #G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.  Otherwise, if no bookmark
+     * %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.  Otherwise, if no bookmark
      * for `uri` is found, one is created.
      * @param uri a valid URI
      * @param name an application's name
@@ -5804,10 +5853,10 @@ class BookmarkFile {
      * 
      * If you try to remove an application by setting its registration count to
      * zero, and no bookmark for `uri` is found, %FALSE is returned and
-     * `error` is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND; similarly,
+     * `error` is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND; similarly,
      * in the event that no application `name` has registered a bookmark
      * for `uri,`  %FALSE is returned and error is set to
-     * #G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.  Otherwise, if no bookmark
+     * %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.  Otherwise, if no bookmark
      * for `uri` is found, one is created.
      * @param uri a valid URI
      * @param name an application's name
@@ -5825,7 +5874,7 @@ class BookmarkFile {
      * @param uri a valid URI or %NULL
      * @param description a string
      */
-    set_description(uri: string | null, description: string): void
+    set_description(uri: string, description: string): void
     /**
      * Sets a list of group names for the item with URI `uri`.  Each previously
      * set group name list is removed.
@@ -5834,7 +5883,7 @@ class BookmarkFile {
      * @param uri an item's URI
      * @param groups an array of    group names, or %NULL to remove all groups
      */
-    set_groups(uri: string, groups: string[] | null): void
+    set_groups(uri: string, groups: string[]): void
     /**
      * Sets the icon for the bookmark for `uri`. If `href` is %NULL, unsets
      * the currently set icon. `href` can either be a full URL for the icon
@@ -5845,7 +5894,7 @@ class BookmarkFile {
      * @param href the URI of the icon for the bookmark, or %NULL
      * @param mime_type the MIME type of the icon for the bookmark
      */
-    set_icon(uri: string, href: string | null, mime_type: string): void
+    set_icon(uri: string, href: string, mime_type: string): void
     /**
      * Sets the private flag of the bookmark for `uri`.
      * 
@@ -5898,7 +5947,7 @@ class BookmarkFile {
      * @param uri a valid URI or %NULL
      * @param title a UTF-8 encoded string
      */
-    set_title(uri: string | null, title: string): void
+    set_title(uri: string, title: string): void
     /**
      * Sets the time the bookmark for `uri` was last visited.
      * 
@@ -6124,11 +6173,11 @@ class Bytes {
      */
     unref_to_data(): Uint8Array
     static name: string
-    static new(data: Uint8Array | null): Bytes
-    constructor(data: Uint8Array | null)
+    static new(data: Uint8Array): Bytes
+    constructor(data: Uint8Array)
     /* Static methods and pseudo-constructors */
-    static new(data: Uint8Array | null): Bytes
-    static new_take(data: Uint8Array | null): Bytes
+    static new(data: Uint8Array): Bytes
+    static new_take(data: Uint8Array): Bytes
 }
 class Checksum {
     /* Methods of GLib-2.0.GLib.Checksum */
@@ -7140,7 +7189,7 @@ class Dir {
 class Error {
     /* Fields of GLib-2.0.GLib.Error */
     /**
-     * error domain, e.g. #G_FILE_ERROR
+     * error domain, e.g. %G_FILE_ERROR
      */
     domain: Quark
     /**
@@ -7258,6 +7307,18 @@ class HashTable {
      * @param lookup_key the key to look up
      */
     static lookup_extended(hash_table: HashTable, lookup_key: object | null): [ /* returnType */ boolean, /* orig_key */ object | null, /* value */ object | null ]
+    /**
+     * Creates a new #GHashTable like g_hash_table_new_full() with a reference
+     * count of 1.
+     * 
+     * It inherits the hash function, the key equal function, the key destroy function,
+     * as well as the value destroy function, from `other_hash_table`.
+     * 
+     * The returned hash table will be empty; it will not contain the keys
+     * or values from `other_hash_table`.
+     * @param other_hash_table Another #GHashTable
+     */
+    static new_similar(other_hash_table: HashTable): HashTable
     /**
      * Removes a key and its associated value from a #GHashTable.
      * 
@@ -7523,7 +7584,7 @@ class Hook {
      * @param sibling the #GHook to insert the new #GHook before
      * @param hook the #GHook to insert
      */
-    static insert_before(hook_list: HookList, sibling: Hook | null, hook: Hook): void
+    static insert_before(hook_list: HookList, sibling: Hook, hook: Hook): void
     /**
      * Prepends a #GHook on the start of a #GHookList.
      * @param hook_list a #GHookList
@@ -7695,7 +7756,7 @@ class IOChannel {
      * Reads a Unicode character from `channel`.
      * This function cannot be called on a channel with %NULL encoding.
      */
-    read_unichar(): [ /* returnType */ IOStatus, /* thechar */ number ]
+    read_unichar(): [ /* returnType */ IOStatus, /* thechar */ string ]
     /**
      * Increments the reference count of a #GIOChannel.
      */
@@ -7800,7 +7861,7 @@ class IOChannel {
      * @param line_term The line termination string. Use %NULL for             autodetect.  Autodetection breaks on "\n", "\r\n", "\r", "\0",             and the Unicode paragraph separator. Autodetection should not be             used for anything other than file-based channels.
      * @param length The length of the termination string. If -1 is passed, the          string is assumed to be nul-terminated. This option allows          termination strings with embedded nuls.
      */
-    set_line_term(line_term: string | null, length: number): void
+    set_line_term(line_term: string, length: number): void
     /**
      * Close an IO channel. Any pending data to be written will be
      * flushed if `flush` is %TRUE. The channel will not be freed until the
@@ -7842,7 +7903,7 @@ class IOChannel {
      * This function cannot be called on a channel with %NULL encoding.
      * @param thechar a character
      */
-    write_unichar(thechar: number): IOStatus
+    write_unichar(thechar: string): IOStatus
     static name: string
     /* Static methods and pseudo-constructors */
     static new_file(filename: string, mode: string): IOChannel
@@ -7873,9 +7934,9 @@ class KeyFile {
      * boolean.
      * 
      * If `key` cannot be found then %FALSE is returned and `error` is set
-     * to #G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value
+     * to %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value
      * associated with `key` cannot be interpreted as a boolean then %FALSE
-     * is returned and `error` is set to #G_KEY_FILE_ERROR_INVALID_VALUE.
+     * is returned and `error` is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
      * @param group_name a group name
      * @param key a key
      */
@@ -7885,9 +7946,9 @@ class KeyFile {
      * booleans.
      * 
      * If `key` cannot be found then %NULL is returned and `error` is set to
-     * #G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
+     * %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
      * with `key` cannot be interpreted as booleans then %NULL is returned
-     * and `error` is set to #G_KEY_FILE_ERROR_INVALID_VALUE.
+     * and `error` is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
      * @param group_name a group name
      * @param key a key
      */
@@ -7910,9 +7971,9 @@ class KeyFile {
      * double. If `group_name` is %NULL, the start_group is used.
      * 
      * If `key` cannot be found then 0.0 is returned and `error` is set to
-     * #G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value associated
+     * %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value associated
      * with `key` cannot be interpreted as a double then 0.0 is returned
-     * and `error` is set to #G_KEY_FILE_ERROR_INVALID_VALUE.
+     * and `error` is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
      * @param group_name a group name
      * @param key a key
      */
@@ -7922,9 +7983,9 @@ class KeyFile {
      * doubles.
      * 
      * If `key` cannot be found then %NULL is returned and `error` is set to
-     * #G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
+     * %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
      * with `key` cannot be interpreted as doubles then %NULL is returned
-     * and `error` is set to #G_KEY_FILE_ERROR_INVALID_VALUE.
+     * and `error` is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
      * @param group_name a group name
      * @param key a key
      */
@@ -7948,10 +8009,10 @@ class KeyFile {
      * integer.
      * 
      * If `key` cannot be found then 0 is returned and `error` is set to
-     * #G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value associated
+     * %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value associated
      * with `key` cannot be interpreted as an integer, or is out of range
      * for a #gint, then 0 is returned
-     * and `error` is set to #G_KEY_FILE_ERROR_INVALID_VALUE.
+     * and `error` is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
      * @param group_name a group name
      * @param key a key
      */
@@ -7961,10 +8022,10 @@ class KeyFile {
      * integers.
      * 
      * If `key` cannot be found then %NULL is returned and `error` is set to
-     * #G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
+     * %G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
      * with `key` cannot be interpreted as integers, or are out of range for
      * #gint, then %NULL is returned
-     * and `error` is set to #G_KEY_FILE_ERROR_INVALID_VALUE.
+     * and `error` is set to %G_KEY_FILE_ERROR_INVALID_VALUE.
      * @param group_name a group name
      * @param key a key
      */
@@ -7974,7 +8035,7 @@ class KeyFile {
      * returned keys will be %NULL-terminated, so `length` may
      * optionally be %NULL. In the event that the `group_name` cannot
      * be found, %NULL is returned and `error` is set to
-     * #G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
+     * %G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
      * @param group_name a group name
      */
     get_keys(group_name: string): [ /* returnType */ string[], /* length */ number ]
@@ -8003,7 +8064,7 @@ class KeyFile {
      * %G_KEY_FILE_KEEP_TRANSLATIONS in order to load strings for all locales.
      * 
      * If `key` cannot be found then %NULL is returned and `error` is set
-     * to #G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the value associated
+     * to %G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the value associated
      * with `key` cannot be interpreted or no suitable translation can
      * be found then the untranslated value is returned.
      * @param group_name a group name
@@ -8021,7 +8082,7 @@ class KeyFile {
      * %G_KEY_FILE_KEEP_TRANSLATIONS in order to load strings for all locales.
      * 
      * If `key` cannot be found then %NULL is returned and `error` is set
-     * to #G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the values associated
+     * to %G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the values associated
      * with `key` cannot be interpreted or no suitable translations
      * can be found then the untranslated values are returned. The
      * returned array is %NULL-terminated, so `length` may optionally
@@ -8041,9 +8102,9 @@ class KeyFile {
      * like \s.
      * 
      * In the event the key cannot be found, %NULL is returned and
-     * `error` is set to #G_KEY_FILE_ERROR_KEY_NOT_FOUND.  In the
+     * `error` is set to %G_KEY_FILE_ERROR_KEY_NOT_FOUND.  In the
      * event that the `group_name` cannot be found, %NULL is returned
-     * and `error` is set to #G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
+     * and `error` is set to %G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
      * @param group_name a group name
      * @param key a key
      */
@@ -8052,9 +8113,9 @@ class KeyFile {
      * Returns the values associated with `key` under `group_name`.
      * 
      * In the event the key cannot be found, %NULL is returned and
-     * `error` is set to #G_KEY_FILE_ERROR_KEY_NOT_FOUND.  In the
+     * `error` is set to %G_KEY_FILE_ERROR_KEY_NOT_FOUND.  In the
      * event that the `group_name` cannot be found, %NULL is returned
-     * and `error` is set to #G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
+     * and `error` is set to %G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
      * @param group_name a group name
      * @param key a key
      */
@@ -8072,9 +8133,9 @@ class KeyFile {
      * Use g_key_file_get_string() to retrieve an unescaped UTF-8 string.
      * 
      * In the event the key cannot be found, %NULL is returned and
-     * `error` is set to #G_KEY_FILE_ERROR_KEY_NOT_FOUND.  In the
+     * `error` is set to %G_KEY_FILE_ERROR_KEY_NOT_FOUND.  In the
      * event that the `group_name` cannot be found, %NULL is returned
-     * and `error` is set to #G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
+     * and `error` is set to %G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
      * @param group_name a group name
      * @param key a key
      */
@@ -8199,7 +8260,7 @@ class KeyFile {
      * @param key a key
      * @param comment a comment
      */
-    set_comment(group_name: string | null, key: string | null, comment: string): boolean
+    set_comment(group_name: string, key: string, comment: string): boolean
     /**
      * Associates a new double value with `key` under `group_name`.
      * If `key` cannot be found then it is created.
@@ -8325,7 +8386,7 @@ class KeyFile {
     static new(): KeyFile
     static error_quark(): Quark
 }
-class List {
+class List<A = any> {
     /* Fields of GLib-2.0.GLib.List */
     /**
      * holds the element's data, which can be a pointer to any kind
@@ -8610,6 +8671,7 @@ class MainContext {
     constructor()
     /* Static methods and pseudo-constructors */
     static new(): MainContext
+    static new_with_flags(flags: MainContextFlags): MainContext
     /**
      * Returns the global default main context. This is the main context
      * used for main loop functions when a main loop is not explicitly
@@ -8676,10 +8738,10 @@ class MainLoop {
      */
     unref(): void
     static name: string
-    static new(context: MainContext | null, is_running: boolean): MainLoop
-    constructor(context: MainContext | null, is_running: boolean)
+    static new(context: MainContext, is_running: boolean): MainLoop
+    constructor(context: MainContext, is_running: boolean)
     /* Static methods and pseudo-constructors */
-    static new(context: MainContext | null, is_running: boolean): MainLoop
+    static new(context: MainContext, is_running: boolean): MainLoop
 }
 class MappedFile {
     /* Methods of GLib-2.0.GLib.MappedFile */
@@ -8934,10 +8996,10 @@ class MarkupParseContext {
      */
     unref(): void
     static name: string
-    static new(parser: MarkupParser, flags: MarkupParseFlags, user_data: object | null, user_data_dnotify: DestroyNotify): MarkupParseContext
-    constructor(parser: MarkupParser, flags: MarkupParseFlags, user_data: object | null, user_data_dnotify: DestroyNotify)
+    static new(parser: MarkupParser, flags: MarkupParseFlags, user_data: object, user_data_dnotify: DestroyNotify): MarkupParseContext
+    constructor(parser: MarkupParser, flags: MarkupParseFlags, user_data: object, user_data_dnotify: DestroyNotify)
     /* Static methods and pseudo-constructors */
-    static new(parser: MarkupParser, flags: MarkupParseFlags, user_data: object | null, user_data_dnotify: DestroyNotify): MarkupParseContext
+    static new(parser: MarkupParser, flags: MarkupParseFlags, user_data: object, user_data_dnotify: DestroyNotify): MarkupParseContext
 }
 class MarkupParser {
     /* Fields of GLib-2.0.GLib.MarkupParser */
@@ -8956,7 +9018,7 @@ class MatchInfo {
      * match done with `string` against `regex` and have the same syntax used by
      * g_regex_replace().
      * 
-     * The `string_to_expand` must be UTF-8 encoded even if #G_REGEX_RAW was
+     * The `string_to_expand` must be UTF-8 encoded even if %G_REGEX_RAW was
      * passed to g_regex_new().
      * 
      * The backreferences are extracted from the string passed to the match
@@ -9091,19 +9153,19 @@ class MatchInfo {
      * able to raise an error as soon as a mistake is made.
      * 
      * GRegex supports the concept of partial matching by means of the
-     * #G_REGEX_MATCH_PARTIAL_SOFT and #G_REGEX_MATCH_PARTIAL_HARD flags.
+     * %G_REGEX_MATCH_PARTIAL_SOFT and %G_REGEX_MATCH_PARTIAL_HARD flags.
      * When they are used, the return code for
      * g_regex_match() or g_regex_match_full() is, as usual, %TRUE
      * for a complete match, %FALSE otherwise. But, when these functions
      * return %FALSE, you can check if the match was partial calling
      * g_match_info_is_partial_match().
      * 
-     * The difference between #G_REGEX_MATCH_PARTIAL_SOFT and
-     * #G_REGEX_MATCH_PARTIAL_HARD is that when a partial match is encountered
-     * with #G_REGEX_MATCH_PARTIAL_SOFT, matching continues to search for a
-     * possible complete match, while with #G_REGEX_MATCH_PARTIAL_HARD matching
+     * The difference between %G_REGEX_MATCH_PARTIAL_SOFT and
+     * %G_REGEX_MATCH_PARTIAL_HARD is that when a partial match is encountered
+     * with %G_REGEX_MATCH_PARTIAL_SOFT, matching continues to search for a
+     * possible complete match, while with %G_REGEX_MATCH_PARTIAL_HARD matching
      * stops at the partial match.
-     * When both #G_REGEX_MATCH_PARTIAL_SOFT and #G_REGEX_MATCH_PARTIAL_HARD
+     * When both %G_REGEX_MATCH_PARTIAL_SOFT and %G_REGEX_MATCH_PARTIAL_HARD
      * are set, the latter takes precedence.
      * 
      * There were formerly some restrictions on the pattern for partial matching.
@@ -9773,7 +9835,7 @@ class Queue {
     /**
      * A statically-allocated #GQueue must be initialized with this function
      * before it can be used. Alternatively you can initialize it with
-     * #G_QUEUE_INIT. It is not necessary to initialize queues created with
+     * %G_QUEUE_INIT. It is not necessary to initialize queues created with
      * g_queue_new().
      */
     init(): void
@@ -9817,7 +9879,7 @@ class Queue {
      * @param data the data for the new element
      * @param n the position to insert the new element. If `n` is negative or     larger than the number of elements in the `queue,` the element is     added to the end of the queue.
      */
-    push_nth(data: object | null, n: number): void
+    push_nth(data: object, n: number): void
     /**
      * Adds a new element at the tail of the queue.
      * @param data the data for the new element
@@ -10192,7 +10254,7 @@ class Regex {
      * is not able to capture substrings, so backreferences do not work.
      * 
      * Setting `start_position` differs from just passing over a shortened
-     * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern
+     * string and setting %G_REGEX_MATCH_NOTBOL in the case of a pattern
      * that begins with any kind of lookbehind assertion, such as "\b".
      * 
      * Unless %G_REGEX_RAW is specified in the options, `string` must be valid UTF-8.
@@ -10218,7 +10280,7 @@ class Regex {
      * flexibility in reusing #GRegex structures.
      * 
      * Setting `start_position` differs from just passing over a shortened
-     * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern
+     * string and setting %G_REGEX_MATCH_NOTBOL in the case of a pattern
      * that begins with any kind of lookbehind assertion, such as "\b".
      * 
      * Unless %G_REGEX_RAW is specified in the options, `string` must be valid UTF-8.
@@ -10294,12 +10356,12 @@ class Regex {
      * 
      * If you do not need to use backreferences use g_regex_replace_literal().
      * 
-     * The `replacement` string must be UTF-8 encoded even if #G_REGEX_RAW was
+     * The `replacement` string must be UTF-8 encoded even if %G_REGEX_RAW was
      * passed to g_regex_new(). If you want to use not UTF-8 encoded strings
      * you can use g_regex_replace_literal().
      * 
      * Setting `start_position` differs from just passing over a shortened
-     * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern that
+     * string and setting %G_REGEX_MATCH_NOTBOL in the case of a pattern that
      * begins with any kind of lookbehind assertion, such as "\b".
      * @param string the string to perform matches against
      * @param start_position starting index of the string to match, in bytes
@@ -10313,7 +10375,7 @@ class Regex {
      * include backreferences use g_regex_replace().
      * 
      * Setting `start_position` differs from just passing over a
-     * shortened string and setting #G_REGEX_MATCH_NOTBOL in the
+     * shortened string and setting %G_REGEX_MATCH_NOTBOL in the
      * case of a pattern that begins with any kind of lookbehind
      * assertion, such as "\b".
      * @param string the string to perform matches against
@@ -10364,7 +10426,7 @@ class Regex {
      * "a", "b" and "c".
      * 
      * Setting `start_position` differs from just passing over a shortened
-     * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern
+     * string and setting %G_REGEX_MATCH_NOTBOL in the case of a pattern
      * that begins with any kind of lookbehind assertion, such as "\b".
      * @param string the string to split with the pattern
      * @param start_position starting index of the string to match, in bytes
@@ -10671,14 +10733,14 @@ class ScannerConfig {
     cset_skip_characters: string
     /**
      * specifies the characters which can start
-     *     identifiers (the default is #G_CSET_a_2_z, "_", and #G_CSET_A_2_Z).
+     *     identifiers (the default is %G_CSET_a_2_z, "_", and %G_CSET_A_2_Z).
      */
     cset_identifier_first: string
     /**
      * specifies the characters which can be used
      *     in identifiers, after the first character (the default is
-     *     #G_CSET_a_2_z, "_0123456789", #G_CSET_A_2_Z, #G_CSET_LATINS,
-     *     #G_CSET_LATINC).
+     *     %G_CSET_a_2_z, "_0123456789", %G_CSET_A_2_Z, %G_CSET_LATINS,
+     *     %G_CSET_LATINC).
      */
     cset_identifier_nth: string
     /**
@@ -10765,7 +10827,7 @@ class ScannerConfig {
     scan_string_dq: number
     /**
      * specifies if binary, octal and hexadecimal numbers
-     *     are reported as #G_TOKEN_INT (the default is %TRUE).
+     *     are reported as %G_TOKEN_INT (the default is %TRUE).
      */
     numbers_2_int: number
     /**
@@ -11304,7 +11366,7 @@ class Source {
      * @param callback_data pointer to callback data "object"
      * @param callback_funcs functions for reference counting `callback_data`                  and getting the callback and data
      */
-    set_callback_indirect(callback_data: object | null, callback_funcs: SourceCallbackFuncs): void
+    set_callback_indirect(callback_data: object, callback_funcs: SourceCallbackFuncs): void
     /**
      * Sets whether a source can be called recursively. If `can_recurse` is
      * %TRUE, then while the source is being dispatched then this source
@@ -11526,7 +11588,7 @@ class String {
      * to the string.
      * @param wc a Unicode character
      */
-    append_unichar(wc: number): String
+    append_unichar(wc: string): String
     /**
      * Appends `unescaped` to `string,` escaping any characters that
      * are reserved in URIs using URI-style escape sequences.
@@ -11626,7 +11688,7 @@ class String {
      * @param pos the position at which to insert character, or -1     to append at the end of the string
      * @param wc a Unicode character
      */
-    insert_unichar(pos: number, wc: number): String
+    insert_unichar(pos: number, wc: string): String
     /**
      * Overwrites part of a string, lengthening it if necessary.
      * @param pos the position at which to start overwriting
@@ -11672,7 +11734,7 @@ class String {
      * to the string.
      * @param wc a Unicode character
      */
-    prepend_unichar(wc: number): String
+    prepend_unichar(wc: string): String
     /**
      * Replaces the string `find` with the string `replace` in a #GString up to
      * `limit` times. If the number of instances of `find` in the #GString is
@@ -11905,11 +11967,11 @@ class Thread {
      */
     unref(): void
     static name: string
-    static new(name: string | null, func: ThreadFunc): Thread
-    constructor(name: string | null, func: ThreadFunc)
+    static new(name: string, func: ThreadFunc): Thread
+    constructor(name: string, func: ThreadFunc)
     /* Static methods and pseudo-constructors */
-    static new(name: string | null, func: ThreadFunc): Thread
-    static try_new(name: string | null, func: ThreadFunc): Thread
+    static new(name: string, func: ThreadFunc): Thread
+    static try_new(name: string, func: ThreadFunc): Thread
     static error_quark(): Quark
     /**
      * Terminates the current thread.
@@ -12663,7 +12725,7 @@ class Uri {
      * @param query the query component, or %NULL
      * @param fragment the fragment, or %NULL
      */
-    static build(flags: UriFlags, scheme: string, userinfo: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): Uri
+    static build(flags: UriFlags, scheme: string, userinfo: string, host: string, port: number, path: string, query: string | null, fragment: string | null): Uri
     /**
      * Creates a new #GUri from the given components according to `flags`
      * (%G_URI_FLAGS_HAS_PASSWORD is added unconditionally). The `flags` must be
@@ -12684,7 +12746,7 @@ class Uri {
      * @param query the query component, or %NULL
      * @param fragment the fragment, or %NULL
      */
-    static build_with_user(flags: UriFlags, scheme: string, user: string | null, password: string | null, auth_params: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): Uri
+    static build_with_user(flags: UriFlags, scheme: string, user: string, password: string, auth_params: string, host: string, port: number, path: string, query: string | null, fragment: string | null): Uri
     static error_quark(): Quark
     /**
      * Escapes arbitrary data for use in a URI.
@@ -12715,7 +12777,7 @@ class Uri {
      * @param reserved_chars_allowed a string of reserved   characters that are allowed to be used, or %NULL.
      * @param allow_utf8 %TRUE if the result can include UTF-8 characters.
      */
-    static escape_string(unescaped: string, reserved_chars_allowed: string | null, allow_utf8: boolean): string
+    static escape_string(unescaped: string, reserved_chars_allowed: string, allow_utf8: boolean): string
     /**
      * Parses `uri_string` according to `flags,` to determine whether it is a valid
      * [absolute URI][relative-absolute-uris], i.e. it does not need to be resolved
@@ -12753,7 +12815,7 @@ class Uri {
      * @param query the query component, or %NULL
      * @param fragment the fragment, or %NULL
      */
-    static join(flags: UriFlags, scheme: string | null, userinfo: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): string
+    static join(flags: UriFlags, scheme: string, userinfo: string, host: string, port: number, path: string, query: string | null, fragment: string | null): string
     /**
      * Joins the given components together according to `flags` to create
      * an absolute URI string. `path` may not be %NULL (though it may be the empty
@@ -12775,7 +12837,7 @@ class Uri {
      * @param query the query component, or %NULL
      * @param fragment the fragment, or %NULL
      */
-    static join_with_user(flags: UriFlags, scheme: string | null, user: string | null, password: string | null, auth_params: string | null, host: string | null, port: number, path: string, query: string | null, fragment: string | null): string
+    static join_with_user(flags: UriFlags, scheme: string, user: string, password: string, auth_params: string, host: string, port: number, path: string, query: string | null, fragment: string | null): string
     /**
      * Splits an URI list conforming to the text/uri-list
      * mime type defined in RFC 2483 into individual URIs,
@@ -12861,7 +12923,7 @@ class Uri {
      * @param uri_ref a string representing a relative or absolute URI
      * @param flags flags describing how to parse `uri_ref`
      */
-    static resolve_relative(base_uri_string: string | null, uri_ref: string, flags: UriFlags): string
+    static resolve_relative(base_uri_string: string, uri_ref: string, flags: UriFlags): string
     /**
      * Parses `uri_ref` (which can be an
      * [absolute or relative URI][relative-absolute-uris]) according to `flags,` and
@@ -13604,14 +13666,14 @@ class Variant {
     unref(): void
     static name: string
     /* Static methods and pseudo-constructors */
-    static new_array(child_type: VariantType | null, children: Variant[] | null): Variant
+    static new_array(child_type: VariantType, children: Variant[]): Variant
     static new_boolean(value: boolean): Variant
     static new_byte(value: number): Variant
     static new_bytestring(string: Uint8Array): Variant
     static new_bytestring_array(strv: string[]): Variant
     static new_dict_entry(key: Variant, value: Variant): Variant
     static new_double(value: number): Variant
-    static new_fixed_array(element_type: VariantType, elements: object | null, n_elements: number, element_size: number): Variant
+    static new_fixed_array(element_type: VariantType, elements: object, n_elements: number, element_size: number): Variant
     static new_from_bytes(type: VariantType, bytes: Bytes, trusted: boolean): Variant
     static new_from_data(type: VariantType, data: Uint8Array, trusted: boolean, notify: DestroyNotify, user_data: object | null): Variant
     static new_handle(value: number): Variant
@@ -13692,7 +13754,7 @@ class Variant {
      * @param limit a pointer to the end of `text,` or %NULL
      * @param endptr a location to store the end pointer, or %NULL
      */
-    static parse(type: VariantType | null, text: string, limit: string | null, endptr: string | null): Variant
+    static parse(type: VariantType, text: string, limit: string | null, endptr: string | null): Variant
     /**
      * Pretty-prints a message showing the context of a #GVariant parse
      * error within the string for which parsing was attempted.

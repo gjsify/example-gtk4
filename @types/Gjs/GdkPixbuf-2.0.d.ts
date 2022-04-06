@@ -231,6 +231,34 @@ interface PixbufModuleFillVtableFunc {
     (module: PixbufModule): void
 }
 /**
+ * Incrementally loads a buffer into the image data.
+ */
+interface PixbufModuleIncrementLoadFunc {
+    (context: object, buf: Uint8Array): boolean
+}
+/**
+ * Loads a file from a standard C file stream into a new `GdkPixbufAnimation`.
+ * 
+ * In case of error, this function should return `NULL` and set the `error` argument.
+ */
+interface PixbufModuleLoadAnimationFunc {
+    (f: object | null): PixbufAnimation
+}
+/**
+ * Loads a file from a standard C file stream into a new `GdkPixbuf`.
+ * 
+ * In case of error, this function should return `NULL` and set the `error` argument.
+ */
+interface PixbufModuleLoadFunc {
+    (f: object | null): Pixbuf
+}
+/**
+ * Loads XPM data into a new `GdkPixbuf`.
+ */
+interface PixbufModuleLoadXpmDataFunc {
+    (data: string[]): Pixbuf
+}
+/**
  * Defines the type of the function that gets called once the initial
  * setup of `pixbuf` is done.
  * 
@@ -240,6 +268,22 @@ interface PixbufModuleFillVtableFunc {
  */
 interface PixbufModulePreparedFunc {
     (pixbuf: Pixbuf, anim: PixbufAnimation): void
+}
+/**
+ * Saves a `GdkPixbuf` into a standard C file stream.
+ * 
+ * The optional `param_keys` and `param_values` arrays contain the keys and
+ * values (in the same order) for attributes to be saved alongside the image
+ * data.
+ */
+interface PixbufModuleSaveFunc {
+    (f: object, pixbuf: Pixbuf, param_keys: string[] | null, param_values: string[] | null): boolean
+}
+/**
+ * Checks whether the given `option_key` is supported when saving.
+ */
+interface PixbufModuleSaveOptionSupportedFunc {
+    (option_key: string): boolean
 }
 /**
  * Defines the type of the function that gets called once the size
@@ -258,6 +302,14 @@ interface PixbufModulePreparedFunc {
  */
 interface PixbufModuleSizeFunc {
     (width: number, height: number): void
+}
+/**
+ * Finalizes the image loading state.
+ * 
+ * This function is called on success and error states.
+ */
+interface PixbufModuleStopLoadFunc {
+    (context: object | null): boolean
 }
 /**
  * Defines the type of the function that gets called every time a region
@@ -290,32 +342,32 @@ interface Pixbuf_ConstructProps extends GObject.Object_ConstructProps {
      * 
      * Currently only 8 bit per sample are supported.
      */
-    bits_per_sample?: number
+    bits_per_sample?: number | null
     /**
      * The color space of the pixbuf.
      * 
      * Currently, only `GDK_COLORSPACE_RGB` is supported.
      */
-    colorspace?: Colorspace
+    colorspace?: Colorspace | null
     /**
      * Whether the pixbuf has an alpha channel.
      */
-    has_alpha?: boolean
+    has_alpha?: boolean | null
     /**
      * The number of rows of the pixbuf.
      */
-    height?: number
+    height?: number | null
     /**
      * The number of samples per pixel.
      * 
      * Currently, only 3 or 4 samples per pixel are supported.
      */
-    n_channels?: number
-    pixel_bytes?: GLib.Bytes
+    n_channels?: number | null
+    pixel_bytes?: GLib.Bytes | null
     /**
      * A pointer to the pixel data of the pixbuf.
      */
-    pixels?: object
+    pixels?: object | null
     /**
      * The number of bytes between the start of a row and
      * the start of the next row.
@@ -323,11 +375,11 @@ interface Pixbuf_ConstructProps extends GObject.Object_ConstructProps {
      * This number must (obviously) be at least as large as the
      * width of the pixbuf.
      */
-    rowstride?: number
+    rowstride?: number | null
     /**
      * The number of columns of the pixbuf.
      */
-    width?: number
+    width?: number | null
 }
 class Pixbuf {
     /* Properties of GdkPixbuf-2.0.GdkPixbuf.Pixbuf */
@@ -586,7 +638,7 @@ class Pixbuf {
      * This function will cause an implicit copy of the pixbuf data if the
      * pixbuf was created from read-only data.
      * 
-     * Please see the section on [image data](#image-data) for information
+     * Please see the section on [image data](class.Pixbuf.html#image-data) for information
      * about how the pixel data is stored in memory.
      */
     get_pixels(): Uint8Array
@@ -1414,7 +1466,7 @@ class Pixbuf {
      * @param str A string obtained via g_icon_to_string().
      */
     static new_for_string(str: string): Gio.Icon
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<Pixbuf>
 }
 interface PixbufAnimation_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -1949,7 +2001,7 @@ class PixbufAnimation {
      * @param callback a `GAsyncReadyCallback` to call when the pixbuf is loaded
      */
     static new_from_stream_async(stream: Gio.InputStream, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<PixbufAnimation>
 }
 interface PixbufAnimationIter_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -2462,7 +2514,7 @@ class PixbufAnimationIter {
     static name: string
     constructor (config?: PixbufAnimationIter_ConstructProps)
     _init (config?: PixbufAnimationIter_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<PixbufAnimationIter>
 }
 interface PixbufLoader_ConstructProps extends GObject.Object_ConstructProps {
 }
@@ -2983,7 +3035,7 @@ class PixbufLoader {
     static new(): PixbufLoader
     static new_with_mime_type(mime_type: string): PixbufLoader
     static new_with_type(image_type: string): PixbufLoader
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<PixbufLoader>
 }
 interface PixbufNonAnim_ConstructProps extends PixbufAnimation_ConstructProps {
 }
@@ -3503,14 +3555,14 @@ class PixbufNonAnim {
     _init (config?: PixbufNonAnim_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new(pixbuf: Pixbuf): PixbufNonAnim
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<PixbufNonAnim>
 }
 interface PixbufSimpleAnim_ConstructProps extends PixbufAnimation_ConstructProps {
     /* Constructor properties of GdkPixbuf-2.0.GdkPixbuf.PixbufSimpleAnim */
     /**
      * Whether the animation should loop when it reaches the end.
      */
-    loop?: boolean
+    loop?: boolean | null
 }
 class PixbufSimpleAnim {
     /* Properties of GdkPixbuf-2.0.GdkPixbuf.PixbufSimpleAnim */
@@ -4052,7 +4104,7 @@ class PixbufSimpleAnim {
     _init (config?: PixbufSimpleAnim_ConstructProps): void
     /* Static methods and pseudo-constructors */
     static new(width: number, height: number, rate: number): PixbufSimpleAnim
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<PixbufSimpleAnim>
 }
 interface PixbufSimpleAnimIter_ConstructProps extends PixbufAnimationIter_ConstructProps {
 }
@@ -4567,7 +4619,7 @@ class PixbufSimpleAnimIter {
     static name: string
     constructor (config?: PixbufSimpleAnimIter_ConstructProps)
     _init (config?: PixbufSimpleAnimIter_ConstructProps): void
-    static $gtype: GObject.GType
+    static $gtype: GObject.GType<PixbufSimpleAnimIter>
 }
 abstract class PixbufAnimationClass {
     /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationClass */
@@ -4734,10 +4786,34 @@ class PixbufModule {
      * a `GdkPixbufFormat` holding information about the module.
      */
     info: PixbufFormat
-    stop_load: (context: object) => boolean
-    load_increment: (context: object, buf: number, size: number) => boolean
-    save: (f: object, pixbuf: Pixbuf, param_keys: string, param_values: string) => boolean
-    is_save_option_supported: (option_key: string) => boolean
+    /**
+     * loads an image from a file.
+     */
+    load: PixbufModuleLoadFunc
+    /**
+     * loads an image from data in memory.
+     */
+    load_xpm_data: PixbufModuleLoadXpmDataFunc
+    /**
+     * stops an incremental load.
+     */
+    stop_load: PixbufModuleStopLoadFunc
+    /**
+     * continues an incremental load.
+     */
+    load_increment: PixbufModuleIncrementLoadFunc
+    /**
+     * loads an animation from a file.
+     */
+    load_animation: PixbufModuleLoadAnimationFunc
+    /**
+     * saves a `GdkPixbuf` to a file.
+     */
+    save: PixbufModuleSaveFunc
+    /**
+     * returns whether a save option key is supported by the module
+     */
+    is_save_option_supported: PixbufModuleSaveOptionSupportedFunc
     static name: string
 }
 class PixbufModulePattern {

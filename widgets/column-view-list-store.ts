@@ -18,7 +18,7 @@ export class _ColumnViewListStore extends ViewColumnBase {
 
     /** Setup the data model */
     setup_store(model_cls: any /* TODO */): Gio.ListStore {
-        print("setup_store model_cls: ", model_cls)
+        // print("setup_store model_cls: ", model_cls)
         return new Gio.ListStore({item_type: model_cls})
     }
 }

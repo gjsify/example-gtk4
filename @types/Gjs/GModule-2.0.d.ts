@@ -50,7 +50,7 @@ enum ModuleFlags {
      */
     MASK,
 }
-function module_build_path(directory: string | null, module_name: string): string
+function module_build_path(directory: string, module_name: string): string
 function module_error(): string
 function module_error_quark(): GLib.Quark
 function module_supported(): boolean
@@ -92,7 +92,7 @@ class Module {
     name(): string
     /**
      * Gets a symbol pointer from a module, such as one exported
-     * by #G_MODULE_EXPORT. Note that a valid symbol can be %NULL.
+     * by %G_MODULE_EXPORT. Note that a valid symbol can be %NULL.
      * @param symbol_name the name of the symbol to find
      */
     symbol(symbol_name: string): [ /* returnType */ boolean, /* symbol */ object | null ]
@@ -115,7 +115,7 @@ class Module {
      * @param directory the directory where the module is. This can be     %NULL or the empty string to indicate that the standard platform-specific     directories will be used, though that is not recommended
      * @param module_name the name of the module
      */
-    static build_path(directory: string | null, module_name: string): string
+    static build_path(directory: string, module_name: string): string
     /**
      * Gets a string describing the last module error.
      */
