@@ -18,11 +18,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-import './@types/Gjs/index.js'
-import { System } from './@types/Gjs/Gjs.js'
-import Gtk from './@types/Gjs/Gtk-4.0.js'
-import GObject from './@types/Gjs/GObject-2.0.js'
-import Gio from './@types/Gjs/Gio-2.0.js'
+import '../@types/Gjs/index.js'
+import { System } from '../@types/Gjs/Gjs.js'
+import Gtk from '../@types/Gjs/Gtk-4.0.js'
+import GObject from '../@types/Gjs/GObject-2.0.js'
+import Gio from '../@types/Gjs/Gio-2.0.js'
 
 import { ISearchBar, IStack } from "./widgets/index.js";
 import { MyWindow, IMyWindow } from './my-window.js'

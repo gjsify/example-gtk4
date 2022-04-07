@@ -1,5 +1,5 @@
-import Gtk from '../@types/Gjs/Gtk-4.0.js'
-import GObject from '../@types/Gjs/GObject-2.0.js'
+import Gtk from '../../@types/Gjs/Gtk-4.0.js'
+import GObject from '../../@types/Gjs/GObject-2.0.js'
 
 /** Wrapper for Gtk.Searchbar Gtk.SearchEntry */
 export class ISearchBar extends Gtk.SearchBar {

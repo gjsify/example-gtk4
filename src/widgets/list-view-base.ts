@@ -1,6 +1,6 @@
-import Gio from '../@types/Gjs/Gio-2.0.js'
-import Gtk from '../@types/Gjs/Gtk-4.0.js'
-import GObject from '../@types/Gjs/GObject-2.0.js'
+import Gio from '../../@types/Gjs/Gio-2.0.js'
+import Gtk from '../../@types/Gjs/Gtk-4.0.js'
+import GObject from '../../@types/Gjs/GObject-2.0.js'
 
 import { NotImplemented } from '../constants.js'
 import { ListElem } from '../list-elem.js';
@@ -13,9 +13,9 @@ import { ListElem } from '../list-elem.js';
  */
 class IListViewBase extends Gtk.ListView {
 
-    store?: Gio.ListStore;
+    store?: Gio.ListStore | Gio.ListModel;
 
-    constructor(config: Gtk.ListView_ConstructProps = {}, modelCls: typeof ListElem) {
+    constructor(config: Gtk.ListView_ConstructProps = {}, modelCls: typeof GObject.Object) {
         super(config)
     
         // Use the signal Factory, so we can connect our own methods to setup
@@ -58,7 +58,7 @@ class IListViewBase extends Gtk.ListView {
      * @abstract
      * @param modelCls 
      */
-    setupStore(modelCls: typeof ListElem): Gio.ListStore {
+    setupStore(modelCls: typeof GObject.Object): Gio.ListModel {
         throw NotImplemented;
     }
 
@@ -66,8 +66,8 @@ class IListViewBase extends Gtk.ListView {
      * add element to the data model
      * @param elem 
      */
-    add(elem: GObject.Object) {
-        this.store?.append(elem)
+    add(elem: any) {
+        (this.store as Gio.ListStore)?.append(elem)
     }
 
     // Gtk.SignalListItemFactory signal callbacks

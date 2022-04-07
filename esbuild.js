@@ -2,8 +2,8 @@ import { build } from "esbuild";
 // import babel from 'esbuild-plugin-babel';
 
 await build({
-    entryPoints: ['main.ts'],
-    outfile: 'dist/main.js',
+    entryPoints: ['src/main.ts'],
+    outdir: 'dist/',
     bundle: true,
     // plugins: [babel({
     //     config: {
@@ -16,6 +16,5 @@ await build({
     target: "firefox78", // Since GJS 1.65.90
     // target: "firefox91", // Since GJS 1.71.1
     format: 'esm',
-    // platform: 'node',
     external: ['gi://*'],
 })

@@ -1,4 +1,4 @@
-import Polkit from './@types/Gjs/Polkit-1.0.js'
+import Polkit from '../@types/Gjs/Polkit-1.0.js'
 
 export const isInt = (n: Number) => {
     return !Number.isNaN(n) && Number.isInteger(n);

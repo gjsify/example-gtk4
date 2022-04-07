@@ -1,5 +1,5 @@
-import Gio from '../@types/Gjs/Gio-2.0.js'
-import GObject from '../@types/Gjs/GObject-2.0.js'
+import Gio from '../../@types/Gjs/Gio-2.0.js'
+import GObject from '../../@types/Gjs/GObject-2.0.js'
 
 import { ListViewBase } from "./list-view-base.js"
 import { IListElem } from "../list-elem.js"

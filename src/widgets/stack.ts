@@ -1,5 +1,5 @@
-import Gtk from '../@types/Gjs/Gtk-4.0.js'
-import GObject from '../@types/Gjs/GObject-2.0.js'
+import Gtk from '../../@types/Gjs/Gtk-4.0.js'
+import GObject from '../../@types/Gjs/GObject-2.0.js'
 
 /** Wrapper for Gtk.Stack with  with a StackSwitcher */
 export class IStack extends Gtk.Stack {

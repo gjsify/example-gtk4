@@ -1,5 +1,5 @@
-import Gtk from './@types/Gjs/Gtk-4.0.js'
-import GObject from './@types/Gjs/GObject-2.0.js'
+import Gtk from '../@types/Gjs/Gtk-4.0.js'
+import GObject from '../@types/Gjs/GObject-2.0.js'
 
 import { ListViewListStore } from './widgets/list-view-list-store.js';
 import { ListElem, IListElem } from "./list-elem.js";
@@ -81,7 +81,7 @@ export class IMyListView extends ListViewListStore {
     }
 
     /**
-     * Gtk.SignalListItemFactory::teardown signal callback (overloaded from parent class
+     * Gtk.SignalListItemFactory::teardown signal callback (overloaded from parent class)
      * @abstract
      * @param widget 
      * @param item 

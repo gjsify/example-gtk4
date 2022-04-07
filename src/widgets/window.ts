@@ -1,7 +1,7 @@
-import Gio from '../@types/Gjs/Gio-2.0.js'
-import GLib from '../@types/Gjs/GLib-2.0.js'
-import Gtk from '../@types/Gjs/Gtk-4.0.js'
-import GObject from '../@types/Gjs/GObject-2.0.js'
+import Gio from '../../@types/Gjs/Gio-2.0.js'
+import GLib from '../../@types/Gjs/GLib-2.0.js'
+import Gtk from '../../@types/Gjs/Gtk-4.0.js'
+import GObject from '../../@types/Gjs/GObject-2.0.js'
 
 /** custom Gtk.ApplicationWindow with a headerbar */
 class IWindow extends Gtk.ApplicationWindow {

@@ -1,6 +1,6 @@
-import Gtk from './@types/Gjs/Gtk-4.0.js'
-import GObject from './@types/Gjs/GObject-2.0.js'
-import Gio from './@types/Gjs/Gio-2.0.js'
+import Gtk from '../@types/Gjs/Gtk-4.0.js'
+import GObject from '../@types/Gjs/GObject-2.0.js'
+import Gio from '../@types/Gjs/Gio-2.0.js'
 
 import { Window, MenuButton, SearchBar, ISearchBar, Stack, IStack, IconSelector, TextSelector, SwitchRow } from "./widgets/index.js";
 import { get_font_markup, getPermission, range } from "./utils.js";
@@ -8,6 +8,7 @@ import { LOREM_IPSUM } from "./constants.js";
 import { MyColumnViewColumn } from "./my-column-view-column.js";
 import { MyListView, IMyListView } from "./my-list-view.js" 
 import { ColumnElem } from "./column-elem.js";
+import { MyListViewStrings, IMyListViewStrings } from "./my-list-view-strings.js";
 
 export class IMyWindow extends Window {
 
@@ -20,6 +21,7 @@ export class IMyWindow extends Window {
     bottomBox?: Gtk.Box;
     listview?: IMyListView;
     overlaInfo?: Gtk.InfoBar;
+    listviewStr?: IMyListViewStrings;
 
     page1?: Gtk.StackPage;
     page2?: Gtk.StackPage;
@@ -488,23 +490,23 @@ export class IMyWindow extends Window {
         lwFrame.set_child(sw)
         content.append(lwFrame)
 
-        // // Simple Listview with strings
-        // this.listview_str = new MyListViewStrings({}, this)
-        // lwFrame = new Gtk.Frame()
-        // lwFrame.set_valign(Gtk.Align.FILL)
-        // lwFrame.set_vexpand(true)
-        // lwFrame.set_margin_start(20)
-        // lwFrame.set_margin_end(20)
-        // // lwFrame.set_margin_top(10)
-        // lwFrame.set_margin_bottom(10)
-        // sw = new Gtk.ScrolledWindow()
+        // Simple Listview with strings
+        this.listviewStr = new MyListViewStrings(this)
+        lwFrame = new Gtk.Frame()
+        lwFrame.set_valign(Gtk.Align.FILL)
+        lwFrame.set_vexpand(true)
+        lwFrame.set_margin_start(20)
+        lwFrame.set_margin_end(20)
+        // lwFrame.set_margin_top(10)
+        lwFrame.set_margin_bottom(10)
+        sw = new Gtk.ScrolledWindow()
 
-        // // Create Gtk.Listview
-        // const lw = this.listview_str
-        // sw.set_child(lw)
-        // lwFrame.set_child(sw)
-        // content.append(lwFrame)
-        // frame.set_child(content)
+        // Create Gtk.Listview
+        const lw = this.listviewStr
+        sw.set_child(lw)
+        lwFrame.set_child(sw)
+        content.append(lwFrame)
+        frame.set_child(content)
 
         // Add the content box as a new page in the stack
         return this.stack?.addPage(name, title, frame)

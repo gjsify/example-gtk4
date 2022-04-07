@@ -1,4 +1,4 @@
-import GObject from './@types/Gjs/GObject-2.0.js'
+import GObject from '../@types/Gjs/GObject-2.0.js'
 
 /** custom data element for a ColumnView model (Must be based on GObject) */
 export class IColumnElem extends GObject.Object {

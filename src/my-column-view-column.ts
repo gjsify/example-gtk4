@@ -1,5 +1,5 @@
-import Gtk from './@types/Gjs/Gtk-4.0.js'
-import GObject from './@types/Gjs/GObject-2.0.js'
+import Gtk from '../@types/Gjs/Gtk-4.0.js'
+import GObject from '../@types/Gjs/GObject-2.0.js'
 
 import { ColumnViewListStore } from "./widgets/index.js";
 import { ColumnElem, IColumnElem } from "./column-elem.js";
@@ -43,12 +43,11 @@ export class IMyColumnViewColumn extends ColumnViewListStore {
      */
     factoryBind(widget: Gtk.ColumnViewColumn, item: Gtk.ListItem) {
         const label = item.get_child() as Gtk.Label;   // Get the Gtk.Label stored in the ListItem
-        const data = item.get_item() as IColumnElem;   // get the model item, connected to current ListItem
-        label?.set_text(data.name)                     // Update Gtk.Label with data from model item
+        const data = item.get_item() as IColumnElem | null;   // get the model item, connected to current ListItem
+        if(data) label?.set_text(data.name)                     // Update Gtk.Label with data from model item
     }
 
     factoryUnbind(widget: Gtk.Widget, item: Gtk.ListItem) {
-
     }
 
     factoryTeardown(widget: Gtk.Widget, item: Gtk.ListItem) {
