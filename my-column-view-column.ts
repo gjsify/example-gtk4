@@ -10,9 +10,9 @@ export class IMyColumnViewColumn extends ColumnViewListStore {
 
     win?: IMyWindow
 
-    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, cls?: any, col_view?: Gtk.ColumnView, data: string[] = [], win?: IMyWindow) {
+    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, modelCls: typeof ColumnElem, colView: Gtk.ColumnView, data: string[] = [], win: IMyWindow) {
         // Init ListView with store model class.
-        super(config, ColumnElem, col_view)
+        super(config, modelCls, colView)
         this.win = win
 
         // put some data into the model
@@ -27,7 +27,7 @@ export class IMyColumnViewColumn extends ColumnViewListStore {
      * @param widget 
      * @param item 
      */
-    factory_setup(widget, item: Gtk.ListItem) {
+    factorySetup(widget, item: Gtk.ListItem) {
         const label = new Gtk.Label()
         label.set_halign(Gtk.Align.START)
         label.set_hexpand(true)
@@ -41,17 +41,17 @@ export class IMyColumnViewColumn extends ColumnViewListStore {
      * @param widget 
      * @param item 
      */
-    factory_bind(widget: Gtk.ColumnViewColumn, item: Gtk.ListItem) {
+    factoryBind(widget: Gtk.ColumnViewColumn, item: Gtk.ListItem) {
         const label = item.get_child() as Gtk.Label;   // Get the Gtk.Label stored in the ListItem
         const data = item.get_item() as IColumnElem;   // get the model item, connected to current ListItem
         label?.set_text(data.name)                     // Update Gtk.Label with data from model item
     }
 
-    factory_unbind(widget: Gtk.Widget, item: Gtk.ListItem) {
+    factoryUnbind(widget: Gtk.Widget, item: Gtk.ListItem) {
 
     }
 
-    factory_teardown(widget: Gtk.Widget, item: Gtk.ListItem) {
+    factoryTeardown(widget: Gtk.Widget, item: Gtk.ListItem) {
 
     }
 
@@ -60,7 +60,7 @@ export class IMyColumnViewColumn extends ColumnViewListStore {
      * @param widget 
      * @param ndx 
      */
-    selection_changed(widget: Gtk.SelectionModel, ndx: number) {
+    selectionChanged(widget: Gtk.SelectionModel, ndx: number) {
         print("this.store", JSON.stringify(this.store))
         const markup = this.win?.getTextMarkup(
             `Row ${ndx} was selected ( ${this.store?.[ndx]} )`) || ""
@@ -69,5 +69,13 @@ export class IMyColumnViewColumn extends ColumnViewListStore {
 }
 
 export const MyColumnViewColumn = GObject.registerClass({
-    GTypeName: 'MyColumnViewColumn'
+    GTypeName: 'MyColumnViewColumn',
+    Properties: {
+        'store': GObject.ParamSpec.jsobject(
+            'store',
+            'store',
+            'store',
+            GObject.ParamFlags.CONSTRUCT | GObject.ParamFlags.READWRITE,
+        ),
+    }
 }, IMyColumnViewColumn );

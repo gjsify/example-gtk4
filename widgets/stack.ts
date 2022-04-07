@@ -13,7 +13,6 @@ export class IStack extends Gtk.Stack {
         this._pages = {};
         this.switcher = new Gtk.StackSwitcher()
         this.switcher.set_stack(this)
-        print("Create Gtk.StackSwitcher", this.switcher)
     }
 
     public addPage(name: string, title: string, widget: Gtk.Widget) {

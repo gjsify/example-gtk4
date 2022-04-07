@@ -257,6 +257,10 @@ function vec4_x_axis(): Vec4
 function vec4_y_axis(): Vec4
 function vec4_z_axis(): Vec4
 function vec4_zero(): Vec4
+/**
+ * A 3D box, described as the volume between a minimum and
+ * a maximum vertices.
+ */
 class Box {
     /* Methods of Graphene-1.0.Graphene.Box */
     /**
@@ -431,6 +435,12 @@ class Box {
      */
     static zero(): Box
 }
+/**
+ * Describe a rotation using Euler angles.
+ * 
+ * The contents of the #graphene_euler_t structure are private
+ * and should never be accessed directly.
+ */
 class Euler {
     /* Methods of Graphene-1.0.Graphene.Euler */
     /**
@@ -589,6 +599,12 @@ class Euler {
     /* Static methods and pseudo-constructors */
     static alloc(): Euler
 }
+/**
+ * A 3D volume delimited by 2D clip planes.
+ * 
+ * The contents of the `graphene_frustum_t` are private, and should not be
+ * modified directly.
+ */
 class Frustum {
     /* Methods of Graphene-1.0.Graphene.Frustum */
     /**
@@ -648,6 +664,12 @@ class Frustum {
     /* Static methods and pseudo-constructors */
     static alloc(): Frustum
 }
+/**
+ * A structure capable of holding a 4x4 matrix.
+ * 
+ * The contents of the #graphene_matrix_t structure are private and
+ * should never be accessed directly.
+ */
 class Matrix {
     /* Methods of Graphene-1.0.Graphene.Matrix */
     /**
@@ -1161,6 +1183,12 @@ class Matrix {
     /* Static methods and pseudo-constructors */
     static alloc(): Matrix
 }
+/**
+ * A 2D plane that extends infinitely in a 3D volume.
+ * 
+ * The contents of the `graphene_plane_t` are private, and should not be
+ * modified directly.
+ */
 class Plane {
     /* Methods of Graphene-1.0.Graphene.Plane */
     /**
@@ -1251,6 +1279,9 @@ class Plane {
     /* Static methods and pseudo-constructors */
     static alloc(): Plane
 }
+/**
+ * A point with two coordinates.
+ */
 class Point {
     /* Fields of Graphene-1.0.Graphene.Point */
     /**
@@ -1326,6 +1357,9 @@ class Point {
      */
     static zero(): Point
 }
+/**
+ * A point with three components: X, Y, and Z.
+ */
 class Point3D {
     /* Fields of Graphene-1.0.Graphene.Point3D */
     /**
@@ -1438,6 +1472,12 @@ class Point3D {
      */
     static zero(): Point3D
 }
+/**
+ * A 4 vertex quadrilateral, as represented by four #graphene_point_t.
+ * 
+ * The contents of a #graphene_quad_t are private and should never be
+ * accessed directly.
+ */
 class Quad {
     /* Methods of Graphene-1.0.Graphene.Quad */
     /**
@@ -1481,6 +1521,12 @@ class Quad {
     /* Static methods and pseudo-constructors */
     static alloc(): Quad
 }
+/**
+ * A quaternion.
+ * 
+ * The contents of the #graphene_quaternion_t structure are private
+ * and should never be accessed directly.
+ */
 class Quaternion {
     /* Methods of Graphene-1.0.Graphene.Quaternion */
     /**
@@ -1623,6 +1669,12 @@ class Quaternion {
     /* Static methods and pseudo-constructors */
     static alloc(): Quaternion
 }
+/**
+ * A ray emitted from an origin in a given direction.
+ * 
+ * The contents of the `graphene_ray_t` structure are private, and should not
+ * be modified directly.
+ */
 class Ray {
     /* Methods of Graphene-1.0.Graphene.Ray */
     /**
@@ -1737,6 +1789,20 @@ class Ray {
     /* Static methods and pseudo-constructors */
     static alloc(): Ray
 }
+/**
+ * The location and size of a rectangle region.
+ * 
+ * The width and height of a #graphene_rect_t can be negative; for instance,
+ * a #graphene_rect_t with an origin of [ 0, 0 ] and a size of [ 10, 10 ] is
+ * equivalent to a #graphene_rect_t with an origin of [ 10, 10 ] and a size
+ * of [ -10, -10 ].
+ * 
+ * Application code can normalize rectangles using graphene_rect_normalize();
+ * this function will ensure that the width and height of a rectangle are
+ * positive values. All functions taking a #graphene_rect_t as an argument
+ * will internally operate on a normalized copy; all functions returning a
+ * #graphene_rect_t will always return a normalized rectangle.
+ */
 class Rect {
     /* Fields of Graphene-1.0.Graphene.Rect */
     /**
@@ -2005,6 +2071,9 @@ class Simd4F {
 class Simd4X4F {
     static name: string
 }
+/**
+ * A size.
+ */
 class Size {
     /* Fields of Graphene-1.0.Graphene.Size */
     /**
@@ -2058,6 +2127,9 @@ class Size {
      */
     static zero(): Size
 }
+/**
+ * A sphere, represented by its center and radius.
+ */
 class Sphere {
     /* Methods of Graphene-1.0.Graphene.Sphere */
     /**
@@ -2134,6 +2206,9 @@ class Sphere {
     /* Static methods and pseudo-constructors */
     static alloc(): Sphere
 }
+/**
+ * A triangle.
+ */
 class Triangle {
     /* Methods of Graphene-1.0.Graphene.Triangle */
     /**
@@ -2248,6 +2323,12 @@ class Triangle {
     /* Static methods and pseudo-constructors */
     static alloc(): Triangle
 }
+/**
+ * A structure capable of holding a vector with two dimensions, x and y.
+ * 
+ * The contents of the #graphene_vec2_t structure are private and should
+ * never be accessed directly.
+ */
 class Vec2 {
     /* Methods of Graphene-1.0.Graphene.Vec2 */
     /**
@@ -2382,6 +2463,12 @@ class Vec2 {
      */
     static zero(): Vec2
 }
+/**
+ * A structure capable of holding a vector with three dimensions: x, y, and z.
+ * 
+ * The contents of the #graphene_vec3_t structure are private and should
+ * never be accessed directly.
+ */
 class Vec3 {
     /* Methods of Graphene-1.0.Graphene.Vec3 */
     /**
@@ -2560,6 +2647,12 @@ class Vec3 {
      */
     static zero(): Vec3
 }
+/**
+ * A structure capable of holding a vector with four dimensions: x, y, z, and w.
+ * 
+ * The contents of the #graphene_vec4_t structure are private and should
+ * never be accessed directly.
+ */
 class Vec4 {
     /* Methods of Graphene-1.0.Graphene.Vec4 */
     /**

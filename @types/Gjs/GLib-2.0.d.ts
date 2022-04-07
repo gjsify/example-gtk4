@@ -2616,6 +2616,9 @@ enum VariantParseError {
      */
     RECURSION,
 }
+/**
+ * @bitfield 
+ */
 enum AsciiType {
     ALNUM,
     ALPHA,
@@ -2632,6 +2635,7 @@ enum AsciiType {
 /**
  * Flags to pass to g_file_set_contents_full() to affect its safety and
  * performance.
+ * @bitfield 
  */
 enum FileSetContentsFlags {
     /**
@@ -2665,6 +2669,7 @@ enum FileSetContentsFlags {
 }
 /**
  * A test to perform on a file using g_file_test().
+ * @bitfield 
  */
 enum FileTest {
     /**
@@ -2693,6 +2698,7 @@ enum FileTest {
 }
 /**
  * Flags to modify the format of the string returned by g_format_size_full().
+ * @bitfield 
  */
 enum FormatSizeFlags {
     /**
@@ -2719,6 +2725,7 @@ enum FormatSizeFlags {
 }
 /**
  * Flags used internally in the #GHook implementation.
+ * @bitfield 
  */
 enum HookFlagMask {
     /**
@@ -2738,6 +2745,7 @@ enum HookFlagMask {
 /**
  * A bitwise combination representing a condition to watch for on an
  * event source.
+ * @bitfield 
  */
 enum IOCondition {
     /**
@@ -2770,6 +2778,7 @@ enum IOCondition {
  * Specifies properties of a #GIOChannel. Some of the flags can only be
  * read with g_io_channel_get_flags(), but not changed with
  * g_io_channel_set_flags().
+ * @bitfield 
  */
 enum IOFlags {
     /**
@@ -2822,6 +2831,7 @@ enum IOFlags {
 }
 /**
  * Flags which influence the parsing.
+ * @bitfield 
  */
 enum KeyFileFlags {
     /**
@@ -2848,6 +2858,7 @@ enum KeyFileFlags {
  * 
  * It is possible to change how GLib treats messages of the various
  * levels using g_log_set_handler() and g_log_set_fatal_mask().
+ * @bitfield 
  */
 enum LogLevelFlags {
     /**
@@ -2894,6 +2905,7 @@ enum LogLevelFlags {
 /**
  * Flags to pass to g_main_context_new_with_flags() which affect the behaviour
  * of a #GMainContext.
+ * @bitfield 
  */
 enum MainContextFlags {
     /**
@@ -2915,6 +2927,7 @@ enum MainContextFlags {
  * 
  * It is likely that this enum will be extended in the future to
  * support other types.
+ * @bitfield 
  */
 enum MarkupCollectType {
     /**
@@ -2959,6 +2972,7 @@ enum MarkupCollectType {
 }
 /**
  * Flags that affect the behaviour of the parser.
+ * @bitfield 
  */
 enum MarkupParseFlags {
     /**
@@ -2991,6 +3005,7 @@ enum MarkupParseFlags {
 }
 /**
  * Flags which modify individual options.
+ * @bitfield 
  */
 enum OptionFlags {
     /**
@@ -3042,6 +3057,7 @@ enum OptionFlags {
 }
 /**
  * Flags specifying compile-time options.
+ * @bitfield 
  */
 enum RegexCompileFlags {
     /**
@@ -3170,6 +3186,7 @@ enum RegexCompileFlags {
 }
 /**
  * Flags specifying match-time options.
+ * @bitfield 
  */
 enum RegexMatchFlags {
     /**
@@ -3279,6 +3296,7 @@ enum RegexMatchFlags {
 }
 /**
  * Flags passed to g_spawn_sync(), g_spawn_async() and g_spawn_async_with_pipes().
+ * @bitfield 
  */
 enum SpawnFlags {
     /**
@@ -3340,6 +3358,7 @@ enum SpawnFlags {
  * 
  * Note that in contrast with g_test_trap_fork(), the default is to
  * not show stdout and stderr.
+ * @bitfield 
  */
 enum TestSubprocessFlags {
     /**
@@ -3366,6 +3385,7 @@ enum TestSubprocessFlags {
 /**
  * Test traps are guards around forked tests.
  * These flags determine what traps to set.
+ * @bitfield 
  */
 enum TestTrapFlags {
     /**
@@ -3392,6 +3412,7 @@ enum TestTrapFlags {
 /**
  * Specifies which nodes are visited during several of the tree
  * functions, including g_node_traverse() and g_node_find().
+ * @bitfield 
  */
 enum TraverseFlags {
     /**
@@ -3430,6 +3451,7 @@ enum TraverseFlags {
  * the type of URI, you can use g_uri_peek_scheme() on the URI string
  * to check the scheme first, and use that to decide what flags to
  * parse it with.
+ * @bitfield 
  */
 enum UriFlags {
     /**
@@ -3497,6 +3519,7 @@ enum UriFlags {
  * g_uri_to_string_partial(). Note that %G_URI_HIDE_PASSWORD and
  * %G_URI_HIDE_AUTH_PARAMS will only work if the #GUri was parsed with
  * the corresponding flags.
+ * @bitfield 
  */
 enum UriHideFlags {
     /**
@@ -3527,6 +3550,7 @@ enum UriHideFlags {
 /**
  * Flags modifying the way parameters are handled by g_uri_parse_params() and
  * #GUriParamsIter.
+ * @bitfield 
  */
 enum UriParamsFlags {
     /**
@@ -4815,6 +4839,7 @@ function variant_type_string_scan(string: string, limit: string | null): [ /* re
  * for g_spawn_check_wait_status(). In particular,
  * on Unix platforms, note that it is usually not equal
  * to the integer passed to `exit()` or returned from `main()`.
+ * @callback 
  */
 interface ChildWatchFunc {
     (pid: Pid, wait_status: number): void
@@ -4824,6 +4849,7 @@ interface ChildWatchFunc {
  * The implementation is expected to free the resource identified
  * by `handle_id;` for instance, if `handle_id` is a #GSource ID,
  * g_source_remove() can be used.
+ * @callback 
  */
 interface ClearHandleFunc {
     (handle_id: number): void
@@ -4833,6 +4859,7 @@ interface ClearHandleFunc {
  * values.  The function should return a negative integer if the first
  * value comes before the second, 0 if they are equal, or a positive
  * integer if the first value comes after the second.
+ * @callback 
  */
 interface CompareDataFunc {
     (a: object | null, b: object | null): number
@@ -4842,6 +4869,7 @@ interface CompareDataFunc {
  * values.  The function should return a negative integer if the first
  * value comes before the second, 0 if they are equal, or a positive
  * integer if the first value comes after the second.
+ * @callback 
  */
 interface CompareFunc {
     (a: object | null, b: object | null): number
@@ -4849,6 +4877,7 @@ interface CompareFunc {
 /**
  * A function of this signature is used to copy the node data
  * when doing a deep-copy of a tree.
+ * @callback 
  */
 interface CopyFunc {
     (src: object, data: object | null): object
@@ -4857,6 +4886,7 @@ interface CopyFunc {
  * Specifies the type of function passed to g_dataset_foreach(). It is
  * called with each #GQuark id and associated data element, together
  * with the `user_data` parameter supplied to g_dataset_foreach().
+ * @callback 
  */
 interface DataForeachFunc {
     (key_id: Quark, data: object | null): void
@@ -4865,6 +4895,7 @@ interface DataForeachFunc {
  * Specifies the type of function which is called when a data element
  * is destroyed. It is passed the pointer to the data element and
  * should free any memory and resources allocated for it.
+ * @callback 
  */
 interface DestroyNotify {
     (data: object | null): void
@@ -4874,6 +4905,7 @@ interface DestroyNotify {
  * What this means depends on the context, it could just be
  * incrementing the reference count, if `data` is a ref-counted
  * object.
+ * @callback 
  */
 interface DuplicateFunc {
     (data: object | null): object | null
@@ -4882,6 +4914,7 @@ interface DuplicateFunc {
  * Specifies the type of a function used to test two values for
  * equality. The function should return %TRUE if both values are equal
  * and %FALSE otherwise.
+ * @callback 
  */
 interface EqualFunc {
     (a: object | null, b: object | null): boolean
@@ -4893,6 +4926,7 @@ interface EqualFunc {
  * 
  * Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
  * already takes care of getting the private data from `error`.
+ * @callback 
  */
 interface ErrorClearFunc {
     (error: Error): void
@@ -4906,6 +4940,7 @@ interface ErrorClearFunc {
  * Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
  * already takes care of getting the private data from `src_error` and
  * `dest_error`.
+ * @callback 
  */
 interface ErrorCopyFunc {
     (src_error: Error, dest_error: Error): void
@@ -4918,6 +4953,7 @@ interface ErrorCopyFunc {
  * 
  * Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
  * already takes care of getting the private data from `error`.
+ * @callback 
  */
 interface ErrorInitFunc {
     (error: Error): void
@@ -4926,6 +4962,7 @@ interface ErrorInitFunc {
  * Declares a type of function which takes an arbitrary
  * data pointer argument and has no return value. It is
  * not currently used in GLib or GTK+.
+ * @callback 
  */
 interface FreeFunc {
     (data: object | null): void
@@ -4933,6 +4970,7 @@ interface FreeFunc {
 /**
  * Specifies the type of functions passed to g_list_foreach() and
  * g_slist_foreach().
+ * @callback 
  */
 interface Func {
     (data: object | null): void
@@ -4941,6 +4979,7 @@ interface Func {
  * Specifies the type of the function passed to g_hash_table_foreach().
  * It is called with each key/value pair, together with the `user_data`
  * parameter which is passed to g_hash_table_foreach().
+ * @callback 
  */
 interface HFunc {
     (key: object | null, value: object | null): void
@@ -4951,6 +4990,7 @@ interface HFunc {
  * pair, together with the `user_data` parameter passed to
  * g_hash_table_foreach_remove(). It should return %TRUE if the
  * key/value pair should be removed from the #GHashTable.
+ * @callback 
  */
 interface HRFunc {
     (key: object | null, value: object | null): boolean
@@ -4986,6 +5026,7 @@ interface HRFunc {
  * cryptographic hashes are very easy to find collisions for when the
  * remainder is taken modulo a somewhat predictable prime number.  There
  * must be an element of randomness that an attacker is unable to guess.
+ * @callback 
  */
 interface HashFunc {
     (key: object | null): number
@@ -4993,12 +5034,14 @@ interface HashFunc {
 /**
  * Defines the type of a hook function that can be invoked
  * by g_hook_list_invoke_check().
+ * @callback 
  */
 interface HookCheckFunc {
     (data: object | null): boolean
 }
 /**
  * Defines the type of function used by g_hook_list_marshal_check().
+ * @callback 
  */
 interface HookCheckMarshaller {
     (hook: Hook, marshal_data: object | null): boolean
@@ -5006,6 +5049,7 @@ interface HookCheckMarshaller {
 /**
  * Defines the type of function used to compare #GHook elements in
  * g_hook_insert_sorted().
+ * @callback 
  */
 interface HookCompareFunc {
     (new_hook: Hook, sibling: Hook): number
@@ -5013,12 +5057,14 @@ interface HookCompareFunc {
 /**
  * Defines the type of function to be called when a hook in a
  * list of hooks gets finalized.
+ * @callback 
  */
 interface HookFinalizeFunc {
     (hook_list: HookList, hook: Hook): void
 }
 /**
  * Defines the type of the function passed to g_hook_find().
+ * @callback 
  */
 interface HookFindFunc {
     (hook: Hook, data: object | null): boolean
@@ -5026,12 +5072,14 @@ interface HookFindFunc {
 /**
  * Defines the type of a hook function that can be invoked
  * by g_hook_list_invoke().
+ * @callback 
  */
 interface HookFunc {
     (data: object | null): void
 }
 /**
  * Defines the type of function used by g_hook_list_marshal().
+ * @callback 
  */
 interface HookMarshaller {
     (hook: Hook, marshal_data: object | null): void
@@ -5040,6 +5088,7 @@ interface HookMarshaller {
  * Specifies the type of function passed to g_io_add_watch() or
  * g_io_add_watch_full(), which is called when the requested condition
  * on a #GIOChannel is satisfied.
+ * @callback 
  */
 interface IOFunc {
     (source: IOChannel, condition: IOCondition, data: object | null): boolean
@@ -5055,6 +5104,7 @@ interface IOFunc {
  * 
  * This is not used if structured logging is enabled; see
  * [Using Structured Logging][using-structured-logging].
+ * @callback 
  */
 interface LogFunc {
     (log_domain: string, log_level: LogLevelFlags, message: string): void
@@ -5078,6 +5128,7 @@ interface LogFunc {
  * send messages to a remote logging server and there is a network error), it
  * should return %G_LOG_WRITER_UNHANDLED. This allows writer functions to be
  * chained and fall back to simpler handlers in case of failure.
+ * @callback 
  */
 interface LogWriterFunc {
     (log_level: LogLevelFlags, fields: LogField[]): LogWriterOutput
@@ -5086,6 +5137,7 @@ interface LogWriterFunc {
  * Specifies the type of function passed to g_node_children_foreach().
  * The function is called with each child node, together with the user
  * data passed to g_node_children_foreach().
+ * @callback 
  */
 interface NodeForeachFunc {
     (node: Node, data: object | null): void
@@ -5095,6 +5147,7 @@ interface NodeForeachFunc {
  * function is called with each of the nodes visited, together with the
  * user data passed to g_node_traverse(). If the function returns
  * %TRUE, then the traversal is stopped.
+ * @callback 
  */
 interface NodeTraverseFunc {
     (node: Node, data: object | null): boolean
@@ -5102,18 +5155,21 @@ interface NodeTraverseFunc {
 /**
  * The type of function to be passed as callback for %G_OPTION_ARG_CALLBACK
  * options.
+ * @callback 
  */
 interface OptionArgFunc {
     (option_name: string, value: string, data: object | null): boolean
 }
 /**
  * The type of function to be used as callback when a parse error occurs.
+ * @callback 
  */
 interface OptionErrorFunc {
     (context: OptionContext, group: OptionGroup, data: object | null): void
 }
 /**
  * The type of function that can be called before and after parsing.
+ * @callback 
  */
 interface OptionParseFunc {
     (context: OptionContext, group: OptionGroup, data: object | null): boolean
@@ -5121,6 +5177,7 @@ interface OptionParseFunc {
 /**
  * Specifies the type of function passed to g_main_context_set_poll_func().
  * The semantics of the function should match those of the poll() system call.
+ * @callback 
  */
 interface PollFunc {
     (ufds: PollFD, nfsd: number, timeout_: number): number
@@ -5128,6 +5185,7 @@ interface PollFunc {
 /**
  * Specifies the type of the print handler functions.
  * These are called with the complete formatted string to output.
+ * @callback 
  */
 interface PrintFunc {
     (string: string): void
@@ -5137,12 +5195,14 @@ interface PrintFunc {
  * It is called for each occurrence of the pattern in the string passed
  * to g_regex_replace_eval(), and it should append the replacement to
  * `result`.
+ * @callback 
  */
 interface RegexEvalCallback {
     (match_info: MatchInfo, result: String): boolean
 }
 /**
  * Specifies the type of the message handler function.
+ * @callback 
  */
 interface ScannerMsgFunc {
     (scanner: Scanner, message: string, error: boolean): void
@@ -5151,6 +5211,7 @@ interface ScannerMsgFunc {
  * A #GSequenceIterCompareFunc is a function used to compare iterators.
  * It must return zero if the iterators compare equal, a negative value
  * if `a` comes before `b,` and a positive value if `b` comes before `a`.
+ * @callback 
  */
 interface SequenceIterCompareFunc {
     (a: SequenceIter, b: SequenceIter, data: object | null): number
@@ -5158,6 +5219,7 @@ interface SequenceIterCompareFunc {
 /**
  * Dispose function for `source`. See g_source_set_dispose_function() for
  * details.
+ * @callback 
  */
 interface SourceDisposeFunc {
     (source: Source): void
@@ -5165,6 +5227,7 @@ interface SourceDisposeFunc {
 /**
  * This is just a placeholder for #GClosureMarshal,
  * which cannot be used here for dependency reasons.
+ * @callback 
  */
 interface SourceDummyMarshal {
     (): void
@@ -5176,6 +5239,7 @@ interface SourceDummyMarshal {
  * When calling g_source_set_callback(), you may need to cast a function of a
  * different type to this type. Use G_SOURCE_FUNC() to avoid warnings about
  * incompatible function types.
+ * @callback 
  */
 interface SourceFunc {
     (): boolean
@@ -5211,6 +5275,7 @@ interface SourceFunc {
  * the parent, you should use g_get_environ(), g_environ_setenv(),
  * and g_environ_unsetenv(), and then pass the complete environment
  * list to the `g_spawn...` function.
+ * @callback 
  */
 interface SpawnChildSetupFunc {
     (): void
@@ -5218,6 +5283,7 @@ interface SpawnChildSetupFunc {
 /**
  * The type used for test case functions that take an extra pointer
  * argument.
+ * @callback 
  */
 interface TestDataFunc {
     (): void
@@ -5233,18 +5299,21 @@ interface TestDataFunc {
  * `fixture` will be a pointer to the area of memory allocated by the
  * test framework, of the size requested.  If the requested size was
  * zero then `fixture` will be equal to `user_data`.
+ * @callback 
  */
 interface TestFixtureFunc {
     (fixture: object): void
 }
 /**
  * The type used for test case functions.
+ * @callback 
  */
 interface TestFunc {
     (): void
 }
 /**
  * Specifies the prototype of fatal log handler functions.
+ * @callback 
  */
 interface TestLogFatalFunc {
     (log_domain: string, log_level: LogLevelFlags, message: string): boolean
@@ -5252,6 +5321,7 @@ interface TestLogFatalFunc {
 /**
  * Specifies the type of the `func` functions passed to g_thread_new()
  * or g_thread_try_new().
+ * @callback 
  */
 interface ThreadFunc {
     (data: object | null): object | null
@@ -5259,6 +5329,7 @@ interface ThreadFunc {
 /**
  * The type of functions which are used to translate user-visible
  * strings, for <option>--help</option> output.
+ * @callback 
  */
 interface TranslateFunc {
     (str: string, data: object | null): string
@@ -5268,6 +5339,7 @@ interface TranslateFunc {
  * passed the key and value of each node, together with the `user_data`
  * parameter passed to g_tree_traverse(). If the function returns
  * %TRUE, the traversal is stopped.
+ * @callback 
  */
 interface TraverseFunc {
     (key: object | null, value: object | null, data: object | null): boolean
@@ -5277,6 +5349,7 @@ interface TraverseFunc {
  * passed each node, together with the `user_data` parameter passed to
  * g_tree_foreach_node(). If the function returns %TRUE, the traversal is
  * stopped.
+ * @callback 
  */
 interface TraverseNodeFunc {
     (node: TreeNode, data: object | null): boolean
@@ -5284,6 +5357,7 @@ interface TraverseNodeFunc {
 /**
  * The type of functions to be called when a UNIX fd watch source
  * triggers.
+ * @callback 
  */
 interface UnixFDSourceFunc {
     (fd: number, condition: IOCondition): boolean
@@ -5292,10 +5366,14 @@ interface UnixFDSourceFunc {
  * Declares a type of function which takes no arguments
  * and has no return value. It is used to specify the type
  * function passed to g_atexit().
+ * @callback 
  */
 interface VoidFunc {
     (): void
 }
+/**
+ * Contains the public fields of a GArray.
+ */
 class Array {
     /* Fields of GLib-2.0.GLib.Array */
     /**
@@ -5310,6 +5388,11 @@ class Array {
     len: number
     static name: string
 }
+/**
+ * An opaque data structure which represents an asynchronous queue.
+ * 
+ * It should only be accessed through the `g_async_queue_*` functions.
+ */
 class AsyncQueue {
     /* Methods of GLib-2.0.GLib.AsyncQueue */
     /**
@@ -5486,6 +5569,9 @@ class AsyncQueue {
     unref_and_unlock(): void
     static name: string
 }
+/**
+ * An opaque data structure representing a set of bookmarks.
+ */
 class BookmarkFile {
     /* Methods of GLib-2.0.GLib.BookmarkFile */
     /**
@@ -5990,6 +6076,9 @@ class BookmarkFile {
     /* Static methods and pseudo-constructors */
     static error_quark(): Quark
 }
+/**
+ * Contains the public fields of a GByteArray.
+ */
 class ByteArray {
     /* Fields of GLib-2.0.GLib.ByteArray */
     /**
@@ -6050,6 +6139,32 @@ class ByteArray {
      */
     static unref(array: Uint8Array): void
 }
+/**
+ * A simple refcounted data type representing an immutable sequence of zero or
+ * more bytes from an unspecified origin.
+ * 
+ * The purpose of a #GBytes is to keep the memory region that it holds
+ * alive for as long as anyone holds a reference to the bytes.  When
+ * the last reference count is dropped, the memory is released. Multiple
+ * unrelated callers can use byte data in the #GBytes without coordinating
+ * their activities, resting assured that the byte data will not change or
+ * move while they hold a reference.
+ * 
+ * A #GBytes can come from many different origins that may have
+ * different procedures for freeing the memory region.  Examples are
+ * memory from g_malloc(), from memory slices, from a #GMappedFile or
+ * memory from other allocators.
+ * 
+ * #GBytes work well as keys in #GHashTable. Use g_bytes_equal() and
+ * g_bytes_hash() as parameters to g_hash_table_new() or g_hash_table_new_full().
+ * #GBytes can also be used as keys in a #GTree by passing the g_bytes_compare()
+ * function to g_tree_new().
+ * 
+ * The data pointed to by this bytes must not be modified. For a mutable
+ * array of bytes see #GByteArray. Use g_bytes_unref_to_array() to create a
+ * mutable array for a #GBytes sequence. To create an immutable #GBytes from
+ * a mutable #GByteArray, use the g_byte_array_free_to_bytes() function.
+ */
 class Bytes {
     /* Methods of GLib-2.0.GLib.Bytes */
     /**
@@ -6179,6 +6294,12 @@ class Bytes {
     static new(data: Uint8Array | null): Bytes
     static new_take(data: Uint8Array | null): Bytes
 }
+/**
+ * An opaque structure representing a checksumming operation.
+ * 
+ * To create a new GChecksum, use g_checksum_new(). To free
+ * a GChecksum, use g_checksum_free().
+ */
 class Checksum {
     /* Methods of GLib-2.0.GLib.Checksum */
     /**
@@ -6222,6 +6343,75 @@ class Checksum {
      */
     static type_get_length(checksum_type: ChecksumType): number
 }
+/**
+ * The #GCond struct is an opaque data structure that represents a
+ * condition. Threads can block on a #GCond if they find a certain
+ * condition to be false. If other threads change the state of this
+ * condition they signal the #GCond, and that causes the waiting
+ * threads to be woken up.
+ * 
+ * Consider the following example of a shared variable.  One or more
+ * threads can wait for data to be published to the variable and when
+ * another thread publishes the data, it can signal one of the waiting
+ * threads to wake up to collect the data.
+ * 
+ * Here is an example for using GCond to block a thread until a condition
+ * is satisfied:
+ * 
+ * ```c
+ *   gpointer current_data = NULL;
+ *   GMutex data_mutex;
+ *   GCond data_cond;
+ * 
+ *   void
+ *   push_data (gpointer data)
+ *   {
+ *     g_mutex_lock (&data_mutex);
+ *     current_data = data;
+ *     g_cond_signal (&data_cond);
+ *     g_mutex_unlock (&data_mutex);
+ *   }
+ * 
+ *   gpointer
+ *   pop_data (void)
+ *   {
+ *     gpointer data;
+ * 
+ *     g_mutex_lock (&data_mutex);
+ *     while (!current_data)
+ *       g_cond_wait (&data_cond, &data_mutex);
+ *     data = current_data;
+ *     current_data = NULL;
+ *     g_mutex_unlock (&data_mutex);
+ * 
+ *     return data;
+ *   }
+ * ```
+ * 
+ * Whenever a thread calls pop_data() now, it will wait until
+ * current_data is non-%NULL, i.e. until some other thread
+ * has called push_data().
+ * 
+ * The example shows that use of a condition variable must always be
+ * paired with a mutex.  Without the use of a mutex, there would be a
+ * race between the check of `current_data` by the while loop in
+ * pop_data() and waiting. Specifically, another thread could set
+ * `current_data` after the check, and signal the cond (with nobody
+ * waiting on it) before the first thread goes to sleep. #GCond is
+ * specifically useful for its ability to release the mutex and go
+ * to sleep atomically.
+ * 
+ * It is also important to use the g_cond_wait() and g_cond_wait_until()
+ * functions only inside a loop which checks for the condition to be
+ * true.  See g_cond_wait() for an explanation of why the condition may
+ * not be true even after it returns.
+ * 
+ * If a #GCond is allocated in static storage then it can be used
+ * without initialisation.  Otherwise, you should call g_cond_init()
+ * on it and g_cond_clear() when done.
+ * 
+ * A #GCond should only be accessed via the g_cond_ functions.
+ */
 class Cond {
     /* Methods of GLib-2.0.GLib.Cond */
     /**
@@ -6337,9 +6527,27 @@ class Cond {
     wait_until(mutex: Mutex, end_time: number): boolean
     static name: string
 }
+/**
+ * An opaque data structure that represents a keyed data list.
+ * 
+ * See also: [Keyed data lists][glib-Keyed-Data-Lists].
+ */
 class Data {
     static name: string
 }
+/**
+ * Represents a day between January 1, Year 1 and a few thousand years in
+ * the future. None of its members should be accessed directly.
+ * 
+ * If the `GDate` is obtained from g_date_new(), it will be safe
+ * to mutate but invalid and thus not safe for calendrical computations.
+ * 
+ * If it's declared on the stack, it will contain garbage so must be
+ * initialized with g_date_clear(). g_date_clear() makes the date invalid
+ * but safe. An invalid date doesn't represent a day, it's "empty." A date
+ * becomes valid after you set it to a Julian day or you set a day, month,
+ * and year.
+ */
 class Date {
     /* Fields of GLib-2.0.GLib.Date */
     /**
@@ -6717,6 +6925,9 @@ class Date {
      */
     static valid_year(year: DateYear): boolean
 }
+/**
+ * An opaque structure that represents a date and time, including a time zone.
+ */
 class DateTime {
     /* Methods of GLib-2.0.GLib.DateTime */
     /**
@@ -7129,6 +7340,10 @@ class DateTime {
     static new_now_utc(): DateTime
     static new_utc(year: number, month: number, day: number, hour: number, minute: number, seconds: number): DateTime
 }
+/**
+ * Associates a string with a bit flag.
+ * Used in g_parse_debug_string().
+ */
 class DebugKey {
     /* Fields of GLib-2.0.GLib.DebugKey */
     /**
@@ -7141,6 +7356,9 @@ class DebugKey {
     value: number
     static name: string
 }
+/**
+ * An opaque structure representing an opened directory.
+ */
 class Dir {
     /* Methods of GLib-2.0.GLib.Dir */
     /**
@@ -7186,6 +7404,10 @@ class Dir {
      */
     static make_tmp(tmpl: string | null): string
 }
+/**
+ * The `GError` structure contains information about
+ * an error that has occurred.
+ */
 class Error {
     /* Fields of GLib-2.0.GLib.Error */
     /**
@@ -7228,7 +7450,12 @@ class Error {
     /* Static methods and pseudo-constructors */
     static new_literal(domain: Quark, code: number, message: string): Error
 }
-class HashTable {
+/**
+ * The #GHashTable struct is an opaque data structure to represent a
+ * [Hash Table][glib-Hash-Tables]. It should only be accessed via the
+ * following functions.
+ */
+class HashTable<A = symbol | string | number, B = string | number | boolean> {
     static name: string
     /* Static methods and pseudo-constructors */
     /**
@@ -7399,6 +7626,15 @@ class HashTable {
      */
     static unref(hash_table: HashTable): void
 }
+/**
+ * A GHashTableIter structure represents an iterator that can be used
+ * to iterate over the elements of a #GHashTable. GHashTableIter
+ * structures are typically allocated on the stack and then initialized
+ * with g_hash_table_iter_init().
+ * 
+ * The iteration order of a #GHashTableIter over the keys/values in a hash
+ * table is not defined.
+ */
 class HashTableIter {
     /* Methods of GLib-2.0.GLib.HashTableIter */
     /**
@@ -7473,6 +7709,11 @@ class HashTableIter {
     steal(): void
     static name: string
 }
+/**
+ * An opaque structure representing a HMAC operation.
+ * To create a new GHmac, use g_hmac_new(). To free
+ * a GHmac, use g_hmac_unref().
+ */
 class Hmac {
     /* Methods of GLib-2.0.GLib.Hmac */
     /**
@@ -7512,6 +7753,9 @@ class Hmac {
     update(data: Uint8Array): void
     static name: string
 }
+/**
+ * The #GHook struct represents a single hook function in a #GHookList.
+ */
 class Hook {
     /* Fields of GLib-2.0.GLib.Hook */
     /**
@@ -7600,6 +7844,9 @@ class Hook {
      */
     static unref(hook_list: HookList, hook: Hook): void
 }
+/**
+ * The #GHookList struct represents a list of hook functions.
+ */
 class HookList {
     /* Fields of GLib-2.0.GLib.HookList */
     /**
@@ -7655,9 +7902,18 @@ class HookList {
     invoke_check(may_recurse: boolean): void
     static name: string
 }
+/**
+ * The GIConv struct wraps an iconv() conversion descriptor. It contains
+ * private data and should only be accessed using the following functions.
+ */
 class IConv {
     static name: string
 }
+/**
+ * A data structure representing an IO Channel. The fields should be
+ * considered private and should only be accessed with the following
+ * functions.
+ */
 class IOChannel {
     /* Methods of GLib-2.0.GLib.IOChannel */
     /**
@@ -7915,6 +8171,10 @@ class IOChannel {
     static error_from_errno(en: number): IOChannelError
     static error_quark(): Quark
 }
+/**
+ * A table of functions used to handle different types of #GIOChannel
+ * in a generic way.
+ */
 class IOFuncs {
     /* Fields of GLib-2.0.GLib.IOFuncs */
     io_read: (channel: IOChannel, buf: string, count: number, bytes_read: number) => IOStatus
@@ -7927,6 +8187,10 @@ class IOFuncs {
     io_get_flags: (channel: IOChannel) => IOFlags
     static name: string
 }
+/**
+ * The GKeyFile struct contains only private data
+ * and should not be accessed directly.
+ */
 class KeyFile {
     /* Methods of GLib-2.0.GLib.KeyFile */
     /**
@@ -8386,6 +8650,9 @@ class KeyFile {
     static new(): KeyFile
     static error_quark(): Quark
 }
+/**
+ * The #GList struct is used for each element in a doubly-linked list.
+ */
 class List<A = any> {
     /* Fields of GLib-2.0.GLib.List */
     /**
@@ -8404,6 +8671,15 @@ class List<A = any> {
     prev: object[]
     static name: string
 }
+/**
+ * Structure representing a single field in a structured log entry. See
+ * g_log_structured() for details.
+ * 
+ * Log fields may contain arbitrary values, including binary with embedded nul
+ * bytes. If the field contains a string, the string must be UTF-8 encoded and
+ * have a trailing nul byte. Otherwise, `length` must be set to a non-negative
+ * value.
+ */
 class LogField {
     /* Fields of GLib-2.0.GLib.LogField */
     /**
@@ -8420,6 +8696,10 @@ class LogField {
     length: number
     static name: string
 }
+/**
+ * The `GMainContext` struct is an opaque data
+ * type representing a set of sources to be handled in a main loop.
+ */
 class MainContext {
     /* Methods of GLib-2.0.GLib.MainContext */
     /**
@@ -8703,6 +8983,10 @@ class MainContext {
      */
     static ref_thread_default(): MainContext
 }
+/**
+ * The `GMainLoop` struct is an opaque data type
+ * representing the main event loop of a GLib or GTK+ application.
+ */
 class MainLoop {
     /* Methods of GLib-2.0.GLib.MainLoop */
     /**
@@ -8743,6 +9027,11 @@ class MainLoop {
     /* Static methods and pseudo-constructors */
     static new(context: MainContext | null, is_running: boolean): MainLoop
 }
+/**
+ * The #GMappedFile represents a file mapping created with
+ * g_mapped_file_new(). It has only private members and should
+ * not be accessed directly.
+ */
 class MappedFile {
     /* Methods of GLib-2.0.GLib.MappedFile */
     /**
@@ -8790,6 +9079,13 @@ class MappedFile {
     static new(filename: string, writable: boolean): MappedFile
     static new_from_fd(fd: number, writable: boolean): MappedFile
 }
+/**
+ * A parse context is used to parse a stream of bytes that
+ * you expect to contain marked-up text.
+ * 
+ * See g_markup_parse_context_new(), #GMarkupParser, and so
+ * on for more details.
+ */
 class MarkupParseContext {
     /* Methods of GLib-2.0.GLib.MarkupParseContext */
     /**
@@ -9001,6 +9297,15 @@ class MarkupParseContext {
     /* Static methods and pseudo-constructors */
     static new(parser: MarkupParser, flags: MarkupParseFlags, user_data: object | null, user_data_dnotify: DestroyNotify): MarkupParseContext
 }
+/**
+ * Any of the fields in #GMarkupParser can be %NULL, in which case they
+ * will be ignored. Except for the `error` function, any of these callbacks
+ * can set an error; in particular the %G_MARKUP_ERROR_UNKNOWN_ELEMENT,
+ * %G_MARKUP_ERROR_UNKNOWN_ATTRIBUTE, and %G_MARKUP_ERROR_INVALID_CONTENT
+ * errors are intended to be set from these callbacks. If you set an error
+ * from a callback, g_markup_parse_context_parse() will report that error
+ * back to its caller.
+ */
 class MarkupParser {
     /* Fields of GLib-2.0.GLib.MarkupParser */
     start_element: (context: MarkupParseContext, element_name: string, attribute_names: string, attribute_values: string) => void
@@ -9010,6 +9315,10 @@ class MarkupParser {
     error: (context: MarkupParseContext, error: Error) => void
     static name: string
 }
+/**
+ * A GMatchInfo is an opaque struct used to return information about
+ * matches.
+ */
 class MatchInfo {
     /* Methods of GLib-2.0.GLib.MatchInfo */
     /**
@@ -9198,6 +9507,13 @@ class MatchInfo {
     unref(): void
     static name: string
 }
+/**
+ * A set of functions used to perform memory allocation. The same #GMemVTable must
+ * be used for all allocations in the same program; a call to g_mem_set_vtable(),
+ * if it exists, should be prior to any use of GLib.
+ * 
+ * This functions related to this has been deprecated in 2.46, and no longer work.
+ */
 class MemVTable {
     /* Fields of GLib-2.0.GLib.MemVTable */
     malloc: (n_bytes: number) => object
@@ -9208,6 +9524,9 @@ class MemVTable {
     try_realloc: (mem: object, n_bytes: number) => object
     static name: string
 }
+/**
+ * The #GNode struct represents one node in a [n-ary tree][glib-N-ary-Trees].
+ */
 class Node {
     /* Fields of GLib-2.0.GLib.Node */
     /**
@@ -9295,6 +9614,11 @@ class Node {
     unlink(): void
     static name: string
 }
+/**
+ * A #GOnce struct controls a one-time initialization function. Any
+ * one-time initialization function must have its own unique #GOnce
+ * struct.
+ */
 class Once {
     /* Fields of GLib-2.0.GLib.Once */
     /**
@@ -9353,6 +9677,11 @@ class Once {
      */
     static init_leave(location: object, result: number): void
 }
+/**
+ * A `GOptionContext` struct defines which options
+ * are accepted by the commandline option parser. The struct has only private
+ * fields and should not be directly accessed.
+ */
 class OptionContext {
     /* Methods of GLib-2.0.GLib.OptionContext */
     /**
@@ -9559,6 +9888,11 @@ class OptionContext {
     set_translation_domain(domain: string): void
     static name: string
 }
+/**
+ * A GOptionEntry struct defines a single option. To have an effect, they
+ * must be added to a #GOptionGroup with g_option_context_add_main_entries()
+ * or g_option_group_add_entries().
+ */
 class OptionEntry {
     /* Fields of GLib-2.0.GLib.OptionEntry */
     /**
@@ -9619,6 +9953,15 @@ class OptionEntry {
     arg_description: string
     static name: string
 }
+/**
+ * A `GOptionGroup` struct defines the options in a single
+ * group. The struct has only private fields and should not be directly accessed.
+ * 
+ * All options in a group share the same translation function. Libraries which
+ * need to parse commandline options are expected to provide a function for
+ * getting a `GOptionGroup` holding their options, which
+ * the application can then add to its #GOptionContext.
+ */
 class OptionGroup {
     /* Methods of GLib-2.0.GLib.OptionGroup */
     /**
@@ -9663,6 +10006,10 @@ class OptionGroup {
     /* Static methods and pseudo-constructors */
     static new(name: string, description: string, help_description: string, user_data: object | null, destroy: DestroyNotify | null): OptionGroup
 }
+/**
+ * A GPatternSpec struct is the 'compiled' form of a pattern. This
+ * structure is opaque and its fields cannot be accessed directly.
+ */
 class PatternSpec {
     /* Methods of GLib-2.0.GLib.PatternSpec */
     /**
@@ -9715,6 +10062,10 @@ class PatternSpec {
     /* Static methods and pseudo-constructors */
     static new(pattern: string): PatternSpec
 }
+/**
+ * Represents a file descriptor, which events to poll for, and which events
+ * occurred.
+ */
 class PollFD {
     /* Fields of GLib-2.0.GLib.PollFD */
     /**
@@ -9735,6 +10086,25 @@ class PollFD {
     revents: number
     static name: string
 }
+/**
+ * The #GPrivate struct is an opaque data structure to represent a
+ * thread-local data key. It is approximately equivalent to the
+ * pthread_setspecific()/pthread_getspecific() APIs on POSIX and to
+ * TlsSetValue()/TlsGetValue() on Windows.
+ * 
+ * If you don't already know why you might want this functionality,
+ * then you probably don't need it.
+ * 
+ * #GPrivate is a very limited resource (as far as 128 per program,
+ * shared between all libraries). It is also not possible to destroy a
+ * #GPrivate after it has been used. As such, it is only ever acceptable
+ * to use #GPrivate in static scope, and even then sparingly so.
+ * 
+ * See G_PRIVATE_INIT() for a couple of examples.
+ * 
+ * The #GPrivate structure should be considered opaque.  It should only
+ * be accessed via the g_private_ functions.
+ */
 class Private {
     /* Methods of GLib-2.0.GLib.Private */
     /**
@@ -9766,6 +10136,9 @@ class Private {
     set(value: object | null): void
     static name: string
 }
+/**
+ * Contains the public fields of a pointer array.
+ */
 class PtrArray {
     /* Fields of GLib-2.0.GLib.PtrArray */
     /**
@@ -9779,6 +10152,10 @@ class PtrArray {
     len: number
     static name: string
 }
+/**
+ * Contains the public fields of a
+ * [Queue][glib-Double-ended-Queues].
+ */
 class Queue {
     /* Fields of GLib-2.0.GLib.Queue */
     /**
@@ -9901,6 +10278,73 @@ class Queue {
     reverse(): void
     static name: string
 }
+/**
+ * The GRWLock struct is an opaque data structure to represent a
+ * reader-writer lock. It is similar to a #GMutex in that it allows
+ * multiple threads to coordinate access to a shared resource.
+ * 
+ * The difference to a mutex is that a reader-writer lock discriminates
+ * between read-only ('reader') and full ('writer') access. While only
+ * one thread at a time is allowed write access (by holding the 'writer'
+ * lock via g_rw_lock_writer_lock()), multiple threads can gain
+ * simultaneous read-only access (by holding the 'reader' lock via
+ * g_rw_lock_reader_lock()).
+ * 
+ * It is unspecified whether readers or writers have priority in acquiring the
+ * lock when a reader already holds the lock and a writer is queued to acquire
+ * it.
+ * 
+ * Here is an example for an array with access functions:
+ * 
+ * ```c
+ *   GRWLock lock;
+ *   GPtrArray *array;
+ * 
+ *   gpointer
+ *   my_array_get (guint index)
+ *   {
+ *     gpointer retval = NULL;
+ * 
+ *     if (!array)
+ *       return NULL;
+ * 
+ *     g_rw_lock_reader_lock (&lock);
+ *     if (index < array->len)
+ *       retval = g_ptr_array_index (array, index);
+ *     g_rw_lock_reader_unlock (&lock);
+ * 
+ *     return retval;
+ *   }
+ * 
+ *   void
+ *   my_array_set (guint index, gpointer data)
+ *   {
+ *     g_rw_lock_writer_lock (&lock);
+ * 
+ *     if (!array)
+ *       array = g_ptr_array_new ();
+ * 
+ *     if (index >= array->len)
+ *       g_ptr_array_set_size (array, index+1);
+ *     g_ptr_array_index (array, index) = data;
+ * 
+ *     g_rw_lock_writer_unlock (&lock);
+ *   }
+ *  ```
+ * 
+ * This example shows an array which can be accessed by many readers
+ * (the my_array_get() function) simultaneously, whereas the writers
+ * (the my_array_set() function) will only be allowed one at a time
+ * and only if no readers currently access the array. This is because
+ * of the potentially dangerous resizing of the array. Using these
+ * functions is fully multi-thread safe now.
+ * 
+ * If a #GRWLock is allocated in static storage then it can be used
+ * without initialisation.  Otherwise, you should call
+ * g_rw_lock_init() on it and g_rw_lock_clear() when done.
+ * 
+ * A GRWLock should only be accessed with the g_rw_lock_ functions.
+ */
 class RWLock {
     /* Methods of GLib-2.0.GLib.RWLock */
     /**
@@ -10000,6 +10444,10 @@ class RWLock {
     writer_unlock(): void
     static name: string
 }
+/**
+ * The GRand struct is an opaque data structure. It should only be
+ * accessed through the g_rand_* functions.
+ */
 class Rand {
     /* Methods of GLib-2.0.GLib.Rand */
     /**
@@ -10047,6 +10495,20 @@ class Rand {
     set_seed_array(seed: number, seed_length: number): void
     static name: string
 }
+/**
+ * The GRecMutex struct is an opaque data structure to represent a
+ * recursive mutex. It is similar to a #GMutex with the difference
+ * that it is possible to lock a GRecMutex multiple times in the same
+ * thread without deadlock. When doing so, care has to be taken to
+ * unlock the recursive mutex as often as it has been locked.
+ * 
+ * If a #GRecMutex is allocated in static storage then it can be used
+ * without initialisation.  Otherwise, you should call
+ * g_rec_mutex_init() on it and g_rec_mutex_clear() when done.
+ * 
+ * A GRecMutex should only be accessed with the
+ * g_rec_mutex_ functions.
+ */
 class RecMutex {
     /* Methods of GLib-2.0.GLib.RecMutex */
     /**
@@ -10119,6 +10581,73 @@ class RecMutex {
     unlock(): void
     static name: string
 }
+/**
+ * The g_regex_*() functions implement regular
+ * expression pattern matching using syntax and semantics similar to
+ * Perl regular expression.
+ * 
+ * Some functions accept a `start_position` argument, setting it differs
+ * from just passing over a shortened string and setting %G_REGEX_MATCH_NOTBOL
+ * in the case of a pattern that begins with any kind of lookbehind assertion.
+ * For example, consider the pattern "\Biss\B" which finds occurrences of "iss"
+ * in the middle of words. ("\B" matches only if the current position in the
+ * subject is not a word boundary.) When applied to the string "Mississipi"
+ * from the fourth byte, namely "issipi", it does not match, because "\B" is
+ * always false at the start of the subject, which is deemed to be a word
+ * boundary. However, if the entire string is passed , but with
+ * `start_position` set to 4, it finds the second occurrence of "iss" because
+ * it is able to look behind the starting point to discover that it is
+ * preceded by a letter.
+ * 
+ * Note that, unless you set the %G_REGEX_RAW flag, all the strings passed
+ * to these functions must be encoded in UTF-8. The lengths and the positions
+ * inside the strings are in bytes and not in characters, so, for instance,
+ * "\xc3\xa0" (i.e. "à") is two bytes long but it is treated as a
+ * single character. If you set %G_REGEX_RAW the strings can be non-valid
+ * UTF-8 strings and a byte is treated as a character, so "\xc3\xa0" is two
+ * bytes and two characters long.
+ * 
+ * When matching a pattern, "\n" matches only against a "\n" character in
+ * the string, and "\r" matches only a "\r" character. To match any newline
+ * sequence use "\R". This particular group matches either the two-character
+ * sequence CR + LF ("\r\n"), or one of the single characters LF (linefeed,
+ * U+000A, "\n"), VT vertical tab, U+000B, "\v"), FF (formfeed, U+000C, "\f"),
+ * CR (carriage return, U+000D, "\r"), NEL (next line, U+0085), LS (line
+ * separator, U+2028), or PS (paragraph separator, U+2029).
+ * 
+ * The behaviour of the dot, circumflex, and dollar metacharacters are
+ * affected by newline characters, the default is to recognize any newline
+ * character (the same characters recognized by "\R"). This can be changed
+ * with %G_REGEX_NEWLINE_CR, %G_REGEX_NEWLINE_LF and %G_REGEX_NEWLINE_CRLF
+ * compile options, and with %G_REGEX_MATCH_NEWLINE_ANY,
+ * %G_REGEX_MATCH_NEWLINE_CR, %G_REGEX_MATCH_NEWLINE_LF and
+ * %G_REGEX_MATCH_NEWLINE_CRLF match options. These settings are also
+ * relevant when compiling a pattern if %G_REGEX_EXTENDED is set, and an
+ * unescaped "#" outside a character class is encountered. This indicates
+ * a comment that lasts until after the next newline.
+ * 
+ * When setting the %G_REGEX_JAVASCRIPT_COMPAT flag, pattern syntax and pattern
+ * matching is changed to be compatible with the way that regular expressions
+ * work in JavaScript. More precisely, a lonely ']' character in the pattern
+ * is a syntax error; the '\x' escape only allows 0 to 2 hexadecimal digits, and
+ * you must use the '\u' escape sequence with 4 hex digits to specify a unicode
+ * codepoint instead of '\x' or 'x{....}'. If '\x' or '\u' are not followed by
+ * the specified number of hex digits, they match 'x' and 'u' literally; also
+ * '\U' always matches 'U' instead of being an error in the pattern. Finally,
+ * pattern matching is modified so that back references to an unset subpattern
+ * group produces a match with the empty string instead of an error. See
+ * pcreapi(3) for more information.
+ * 
+ * Creating and manipulating the same #GRegex structure from different
+ * threads is not a problem as #GRegex does not modify its internal
+ * state between creation and destruction, on the other hand #GMatchInfo
+ * is not threadsafe.
+ * 
+ * The regular expressions low-level functionalities are obtained through
+ * the excellent
+ * [PCRE](http://www.pcre.org/)
+ * library written by Philip Hazel.
+ */
 class Regex {
     /* Methods of GLib-2.0.GLib.Regex */
     /**
@@ -10531,6 +11060,10 @@ class Regex {
      */
     static split_simple(pattern: string, string: string, compile_options: RegexCompileFlags, match_options: RegexMatchFlags): string[]
 }
+/**
+ * The #GSList struct is used for each element in the singly-linked
+ * list.
+ */
 class SList {
     /* Fields of GLib-2.0.GLib.SList */
     /**
@@ -10545,6 +11078,22 @@ class SList {
     next: object[]
     static name: string
 }
+/**
+ * The data structure representing a lexical scanner.
+ * 
+ * You should set `input_name` after creating the scanner, since
+ * it is used by the default message handler when displaying
+ * warnings and errors. If you are scanning a file, the filename
+ * would be a good choice.
+ * 
+ * The `user_data` and `max_parse_errors` fields are not used.
+ * If you need to associate extra data with the scanner you
+ * can place them here.
+ * 
+ * If you want to use your own message handler you can set the
+ * `msg_handler` field. The type of the message handler function
+ * is declared by #GScannerMsgFunc.
+ */
 class Scanner {
     /* Fields of GLib-2.0.GLib.Scanner */
     /**
@@ -10723,6 +11272,11 @@ class Scanner {
     unexp_token(expected_token: TokenType, identifier_spec: string, symbol_spec: string, symbol_name: string, message: string, is_error: number): void
     static name: string
 }
+/**
+ * Specifies the #GScanner parser configuration. Most settings can
+ * be changed during the parsing phase and will affect the lexical
+ * parsing of the next unpeeked token.
+ */
 class ScannerConfig {
     /* Fields of GLib-2.0.GLib.ScannerConfig */
     /**
@@ -10861,6 +11415,10 @@ class ScannerConfig {
     store_int64: number
     static name: string
 }
+/**
+ * The #GSequence struct is an opaque data type representing a
+ * [sequence][glib-Sequences] data type.
+ */
 class Sequence {
     /* Methods of GLib-2.0.GLib.Sequence */
     /**
@@ -10988,6 +11546,10 @@ class Sequence {
      */
     static swap(a: SequenceIter, b: SequenceIter): void
 }
+/**
+ * The #GSequenceIter struct is an opaque data type representing an
+ * iterator pointing into a #GSequence.
+ */
 class SequenceIter {
     /* Methods of GLib-2.0.GLib.SequenceIter */
     /**
@@ -11034,6 +11596,10 @@ class SequenceIter {
     prev(): SequenceIter
     static name: string
 }
+/**
+ * The `GSource` struct is an opaque data type
+ * representing an event source.
+ */
 class Source {
     /* Methods of GLib-2.0.GLib.Source */
     /**
@@ -11519,12 +12085,38 @@ class Source {
      */
     static set_name_by_id(tag: number, name: string): void
 }
+/**
+ * The `GSourceCallbackFuncs` struct contains
+ * functions for managing callback objects.
+ */
 class SourceCallbackFuncs {
     /* Fields of GLib-2.0.GLib.SourceCallbackFuncs */
     ref: (cb_data: object) => void
     unref: (cb_data: object) => void
     static name: string
 }
+/**
+ * The `GSourceFuncs` struct contains a table of
+ * functions used to handle event sources in a generic manner.
+ * 
+ * For idle sources, the prepare and check functions always return %TRUE
+ * to indicate that the source is always ready to be processed. The prepare
+ * function also returns a timeout value of 0 to ensure that the poll() call
+ * doesn't block (since that would be time wasted which could have been spent
+ * running the idle function).
+ * 
+ * For timeout sources, the prepare and check functions both return %TRUE
+ * if the timeout interval has expired. The prepare function also returns
+ * a timeout value to ensure that the poll() call doesn't block too long
+ * and miss the next timeout.
+ * 
+ * For file descriptor sources, the prepare function typically returns %FALSE,
+ * since it must wait until poll() has been called before it knows whether
+ * any events need to be processed. It sets the returned timeout to -1 to
+ * indicate that it doesn't mind how long the poll() call blocks. In the
+ * check function, it tests the results of the poll() call to see if the
+ * required condition has been met, and returns %TRUE if so.
+ */
 class SourceFuncs {
     /* Fields of GLib-2.0.GLib.SourceFuncs */
     prepare: (source: Source, timeout_: number) => boolean
@@ -11535,9 +12127,18 @@ class SourceFuncs {
 class SourcePrivate {
     static name: string
 }
+/**
+ * A type corresponding to the appropriate struct type for the stat()
+ * system call, depending on the platform and/or compiler being used.
+ * 
+ * See g_stat() for more information.
+ */
 class StatBuf {
     static name: string
 }
+/**
+ * The GString struct contains the public fields of a GString.
+ */
 class String {
     /* Fields of GLib-2.0.GLib.String */
     /**
@@ -11776,6 +12377,10 @@ class String {
     static new_len(init: string, len: number): String
     static sized_new(dfl_size: number): String
 }
+/**
+ * An opaque data structure representing String Chunks.
+ * It should only be accessed by using the following functions.
+ */
 class StringChunk {
     /* Methods of GLib-2.0.GLib.StringChunk */
     /**
@@ -11838,6 +12443,21 @@ class StringChunk {
     insert_len(string: string, len: number): string
     static name: string
 }
+/**
+ * #GStrvBuilder is a method of easily building dynamically sized
+ * NULL-terminated string arrays.
+ * 
+ * The following example shows how to build a two element array:
+ * 
+ * 
+ * ```c
+ *   g_autoptr(GStrvBuilder) builder = g_strv_builder_new ();
+ *   g_strv_builder_add (builder, "hello");
+ *   g_strv_builder_add (builder, "world");
+ *   g_auto(GStrv) array = g_strv_builder_end (builder);
+ * ```
+ * 
+ */
 class StrvBuilder {
     /* Methods of GLib-2.0.GLib.StrvBuilder */
     /**
@@ -11869,6 +12489,9 @@ class StrvBuilder {
     unref(): void
     static name: string
 }
+/**
+ * An opaque structure representing a test case.
+ */
 class TestCase {
     /* Methods of GLib-2.0.GLib.TestCase */
     /**
@@ -11914,6 +12537,9 @@ class TestLogMsg {
     free(): void
     static name: string
 }
+/**
+ * An opaque structure representing a test suite.
+ */
 class TestSuite {
     /* Methods of GLib-2.0.GLib.TestSuite */
     /**
@@ -11932,6 +12558,21 @@ class TestSuite {
     free(): void
     static name: string
 }
+/**
+ * The #GThread struct represents a running thread. This struct
+ * is returned by g_thread_new() or g_thread_try_new(). You can
+ * obtain the #GThread struct representing the current thread by
+ * calling g_thread_self().
+ * 
+ * GThread is refcounted, see g_thread_ref() and g_thread_unref().
+ * The thread represented by it holds a reference while it is running,
+ * and g_thread_join() consumes the reference that it is given, so
+ * it is normally not necessary to manage GThread references
+ * explicitly.
+ * 
+ * The structure is opaque -- none of its fields may be directly
+ * accessed.
+ */
 class Thread {
     /* Methods of GLib-2.0.GLib.Thread */
     /**
@@ -12010,6 +12651,11 @@ class Thread {
      */
     static yield(): void
 }
+/**
+ * The #GThreadPool struct represents a thread pool. It has three
+ * public read-only members, but the underlying struct is bigger,
+ * so you must not copy this struct.
+ */
 class ThreadPool {
     /* Fields of GLib-2.0.GLib.ThreadPool */
     /**
@@ -12152,6 +12798,18 @@ class ThreadPool {
      */
     static stop_unused_threads(): void
 }
+/**
+ * Represents a precise time, with seconds and microseconds.
+ * 
+ * Similar to the struct timeval returned by the `gettimeofday()`
+ * UNIX system call.
+ * 
+ * GLib is attempting to unify around the use of 64-bit integers to
+ * represent microsecond-precision time. As such, this type will be
+ * removed from a future version of GLib. A consequence of using `glong` for
+ * `tv_sec` is that on 32-bit systems `GTimeVal` is subject to the year 2038
+ * problem.
+ */
 class TimeVal {
     /* Fields of GLib-2.0.GLib.TimeVal */
     /**
@@ -12232,6 +12890,10 @@ class TimeVal {
      */
     static from_iso8601(iso_date: string): [ /* returnType */ boolean, /* time_ */ TimeVal ]
 }
+/**
+ * #GTimeZone is an opaque structure whose members cannot be accessed
+ * directly.
+ */
 class TimeZone {
     /* Methods of GLib-2.0.GLib.TimeZone */
     /**
@@ -12333,6 +12995,9 @@ class TimeZone {
     static new_offset(seconds: number): TimeZone
     static new_utc(): TimeZone
 }
+/**
+ * Opaque datatype that records a start time.
+ */
 class Timer {
     /* Methods of GLib-2.0.GLib.Timer */
     /**
@@ -12379,6 +13044,10 @@ class Timer {
     stop(): void
     static name: string
 }
+/**
+ * Each piece of memory that is pushed onto the stack
+ * is cast to a GTrashStack*.
+ */
 class TrashStack {
     /* Fields of GLib-2.0.GLib.TrashStack */
     /**
@@ -12415,6 +13084,11 @@ class TrashStack {
      */
     static push(stack_p: TrashStack, data_p: object): void
 }
+/**
+ * The GTree struct is an opaque data structure representing a
+ * [balanced binary tree][glib-Balanced-Binary-Trees]. It should be
+ * accessed only by using the following functions.
+ */
 class Tree {
     /* Methods of GLib-2.0.GLib.Tree */
     /**
@@ -12584,6 +13258,9 @@ class Tree {
     /* Static methods and pseudo-constructors */
     static new_full(key_compare_func: CompareDataFunc, key_destroy_func: DestroyNotify): Tree
 }
+/**
+ * An opaque type which identifies a specific node in a #GTree.
+ */
 class TreeNode {
     /* Methods of GLib-2.0.GLib.TreeNode */
     /**
@@ -12606,6 +13283,116 @@ class TreeNode {
     value(): object | null
     static name: string
 }
+/**
+ * The #GUri type and related functions can be used to parse URIs into
+ * their components, and build valid URIs from individual components.
+ * 
+ * Note that #GUri scope is to help manipulate URIs in various applications,
+ * following [RFC 3986](https://tools.ietf.org/html/rfc3986). In particular,
+ * it doesn't intend to cover web browser needs, and doesn't implement the
+ * [WHATWG URL](https://url.spec.whatwg.org/) standard. No APIs are provided to
+ * help prevent
+ * [homograph attacks](https://en.wikipedia.org/wiki/IDN_homograph_attack), so
+ * #GUri is not suitable for formatting URIs for display to the user for making
+ * security-sensitive decisions.
+ * 
+ * ## Relative and absolute URIs # {#relative-absolute-uris}
+ * 
+ * As defined in [RFC 3986](https://tools.ietf.org/html/rfc3986#section-4), the
+ * hierarchical nature of URIs means that they can either be ‘relative
+ * references’ (sometimes referred to as ‘relative URIs’) or ‘URIs’ (for
+ * clarity, ‘URIs’ are referred to in this documentation as
+ * ‘absolute URIs’ — although
+ * [in constrast to RFC 3986](https://tools.ietf.org/html/rfc3986#section-4.3),
+ * fragment identifiers are always allowed).
+ * 
+ * Relative references have one or more components of the URI missing. In
+ * particular, they have no scheme. Any other component, such as hostname,
+ * query, etc. may be missing, apart from a path, which has to be specified (but
+ * may be empty). The path may be relative, starting with `./` rather than `/`.
+ * 
+ * For example, a valid relative reference is `./path?query`,
+ * `/?query#fragment` or `//example.com`.
+ * 
+ * Absolute URIs have a scheme specified. Any other components of the URI which
+ * are missing are specified as explicitly unset in the URI, rather than being
+ * resolved relative to a base URI using g_uri_parse_relative().
+ * 
+ * For example, a valid absolute URI is `file:///home/bob` or
+ * `https://search.com?query=string`.
+ * 
+ * A #GUri instance is always an absolute URI. A string may be an absolute URI
+ * or a relative reference; see the documentation for individual functions as to
+ * what forms they accept.
+ * 
+ * ## Parsing URIs
+ * 
+ * The most minimalist APIs for parsing URIs are g_uri_split() and
+ * g_uri_split_with_user(). These split a URI into its component
+ * parts, and return the parts; the difference between the two is that
+ * g_uri_split() treats the ‘userinfo’ component of the URI as a
+ * single element, while g_uri_split_with_user() can (depending on the
+ * #GUriFlags you pass) treat it as containing a username, password,
+ * and authentication parameters. Alternatively, g_uri_split_network()
+ * can be used when you are only interested in the components that are
+ * needed to initiate a network connection to the service (scheme,
+ * host, and port).
+ * 
+ * g_uri_parse() is similar to g_uri_split(), but instead of returning
+ * individual strings, it returns a #GUri structure (and it requires
+ * that the URI be an absolute URI).
+ * 
+ * g_uri_resolve_relative() and g_uri_parse_relative() allow you to
+ * resolve a relative URI relative to a base URI.
+ * g_uri_resolve_relative() takes two strings and returns a string,
+ * and g_uri_parse_relative() takes a #GUri and a string and returns a
+ * #GUri.
+ * 
+ * All of the parsing functions take a #GUriFlags argument describing
+ * exactly how to parse the URI; see the documentation for that type
+ * for more details on the specific flags that you can pass. If you
+ * need to choose different flags based on the type of URI, you can
+ * use g_uri_peek_scheme() on the URI string to check the scheme
+ * first, and use that to decide what flags to parse it with.
+ * 
+ * For example, you might want to use %G_URI_PARAMS_WWW_FORM when parsing the
+ * params for a web URI, so compare the result of g_uri_peek_scheme() against
+ * `http` and `https`.
+ * 
+ * ## Building URIs
+ * 
+ * g_uri_join() and g_uri_join_with_user() can be used to construct
+ * valid URI strings from a set of component strings. They are the
+ * inverse of g_uri_split() and g_uri_split_with_user().
+ * 
+ * Similarly, g_uri_build() and g_uri_build_with_user() can be used to
+ * construct a #GUri from a set of component strings.
+ * 
+ * As with the parsing functions, the building functions take a
+ * #GUriFlags argument. In particular, it is important to keep in mind
+ * whether the URI components you are using are already `%`-encoded. If so,
+ * you must pass the %G_URI_FLAGS_ENCODED flag.
+ * 
+ * ## `file://` URIs
+ * 
+ * Note that Windows and Unix both define special rules for parsing
+ * `file://` URIs (involving non-UTF-8 character sets on Unix, and the
+ * interpretation of path separators on Windows). #GUri does not
+ * implement these rules. Use g_filename_from_uri() and
+ * g_filename_to_uri() if you want to properly convert between
+ * `file://` URIs and local filenames.
+ * 
+ * ## URI Equality
+ * 
+ * Note that there is no `g_uri_equal ()` function, because comparing
+ * URIs usefully requires scheme-specific knowledge that #GUri does
+ * not have. #GUri can help with normalization if you use the various
+ * encoded #GUriFlags as well as %G_URI_FLAGS_SCHEME_NORMALIZE however
+ * it is not comprehensive.
+ * For example, `data:,foo` and `data:;base64,Zm9v` resolve to the same
+ * thing according to the `data:` URI specification which GLib does not
+ * handle.
+ */
 class Uri {
     /* Methods of GLib-2.0.GLib.Uri */
     /**
@@ -13017,6 +13804,17 @@ class Uri {
      */
     static unescape_string(escaped_string: string, illegal_characters: string | null): string | null
 }
+/**
+ * Many URI schemes include one or more attribute/value pairs as part of the URI
+ * value. For example `scheme://server/path?query=string&is=there` has two
+ * attributes – `query=string` and `is=there` – in its query part.
+ * 
+ * A #GUriParamsIter structure represents an iterator that can be used to
+ * iterate over the attribute/value pairs of a URI query string. #GUriParamsIter
+ * structures are typically allocated on the stack and then initialized with
+ * g_uri_params_iter_init(). See the documentation for g_uri_params_iter_init()
+ * for a usage example.
+ */
 class UriParamsIter {
     /* Methods of GLib-2.0.GLib.UriParamsIter */
     /**
@@ -13075,6 +13873,252 @@ class UriParamsIter {
     next(): [ /* returnType */ boolean, /* attribute */ string | null, /* value */ string | null ]
     static name: string
 }
+/**
+ * #GVariant is a variant datatype; it can contain one or more values
+ * along with information about the type of the values.
+ * 
+ * A #GVariant may contain simple types, like an integer, or a boolean value;
+ * or complex types, like an array of two strings, or a dictionary of key
+ * value pairs. A #GVariant is also immutable: once it's been created neither
+ * its type nor its content can be modified further.
+ * 
+ * GVariant is useful whenever data needs to be serialized, for example when
+ * sending method parameters in D-Bus, or when saving settings using GSettings.
+ * 
+ * When creating a new #GVariant, you pass the data you want to store in it
+ * along with a string representing the type of data you wish to pass to it.
+ * 
+ * For instance, if you want to create a #GVariant holding an integer value you
+ * can use:
+ * 
+ * 
+ * ```c
+ *   GVariant *v = g_variant_new ("u", 40);
+ * ```
+ * 
+ * 
+ * The string "u" in the first argument tells #GVariant that the data passed to
+ * the constructor (40) is going to be an unsigned integer.
+ * 
+ * More advanced examples of #GVariant in use can be found in documentation for
+ * [GVariant format strings][gvariant-format-strings-pointers].
+ * 
+ * The range of possible values is determined by the type.
+ * 
+ * The type system used by #GVariant is #GVariantType.
+ * 
+ * #GVariant instances always have a type and a value (which are given
+ * at construction time).  The type and value of a #GVariant instance
+ * can never change other than by the #GVariant itself being
+ * destroyed.  A #GVariant cannot contain a pointer.
+ * 
+ * #GVariant is reference counted using g_variant_ref() and
+ * g_variant_unref().  #GVariant also has floating reference counts --
+ * see g_variant_ref_sink().
+ * 
+ * #GVariant is completely threadsafe.  A #GVariant instance can be
+ * concurrently accessed in any way from any number of threads without
+ * problems.
+ * 
+ * #GVariant is heavily optimised for dealing with data in serialized
+ * form.  It works particularly well with data located in memory-mapped
+ * files.  It can perform nearly all deserialization operations in a
+ * small constant time, usually touching only a single memory page.
+ * Serialized #GVariant data can also be sent over the network.
+ * 
+ * #GVariant is largely compatible with D-Bus.  Almost all types of
+ * #GVariant instances can be sent over D-Bus.  See #GVariantType for
+ * exceptions.  (However, #GVariant's serialization format is not the same
+ * as the serialization format of a D-Bus message body: use #GDBusMessage,
+ * in the gio library, for those.)
+ * 
+ * For space-efficiency, the #GVariant serialization format does not
+ * automatically include the variant's length, type or endianness,
+ * which must either be implied from context (such as knowledge that a
+ * particular file format always contains a little-endian
+ * %G_VARIANT_TYPE_VARIANT which occupies the whole length of the file)
+ * or supplied out-of-band (for instance, a length, type and/or endianness
+ * indicator could be placed at the beginning of a file, network message
+ * or network stream).
+ * 
+ * A #GVariant's size is limited mainly by any lower level operating
+ * system constraints, such as the number of bits in #gsize.  For
+ * example, it is reasonable to have a 2GB file mapped into memory
+ * with #GMappedFile, and call g_variant_new_from_data() on it.
+ * 
+ * For convenience to C programmers, #GVariant features powerful
+ * varargs-based value construction and destruction.  This feature is
+ * designed to be embedded in other libraries.
+ * 
+ * There is a Python-inspired text language for describing #GVariant
+ * values.  #GVariant includes a printer for this language and a parser
+ * with type inferencing.
+ * 
+ * ## Memory Use
+ * 
+ * #GVariant tries to be quite efficient with respect to memory use.
+ * This section gives a rough idea of how much memory is used by the
+ * current implementation.  The information here is subject to change
+ * in the future.
+ * 
+ * The memory allocated by #GVariant can be grouped into 4 broad
+ * purposes: memory for serialized data, memory for the type
+ * information cache, buffer management memory and memory for the
+ * #GVariant structure itself.
+ * 
+ * ## Serialized Data Memory
+ * 
+ * This is the memory that is used for storing GVariant data in
+ * serialized form.  This is what would be sent over the network or
+ * what would end up on disk, not counting any indicator of the
+ * endianness, or of the length or type of the top-level variant.
+ * 
+ * The amount of memory required to store a boolean is 1 byte. 16,
+ * 32 and 64 bit integers and double precision floating point numbers
+ * use their "natural" size.  Strings (including object path and
+ * signature strings) are stored with a nul terminator, and as such
+ * use the length of the string plus 1 byte.
+ * 
+ * Maybe types use no space at all to represent the null value and
+ * use the same amount of space (sometimes plus one byte) as the
+ * equivalent non-maybe-typed value to represent the non-null case.
+ * 
+ * Arrays use the amount of space required to store each of their
+ * members, concatenated.  Additionally, if the items stored in an
+ * array are not of a fixed-size (ie: strings, other arrays, etc)
+ * then an additional framing offset is stored for each item.  The
+ * size of this offset is either 1, 2 or 4 bytes depending on the
+ * overall size of the container.  Additionally, extra padding bytes
+ * are added as required for alignment of child values.
+ * 
+ * Tuples (including dictionary entries) use the amount of space
+ * required to store each of their members, concatenated, plus one
+ * framing offset (as per arrays) for each non-fixed-sized item in
+ * the tuple, except for the last one.  Additionally, extra padding
+ * bytes are added as required for alignment of child values.
+ * 
+ * Variants use the same amount of space as the item inside of the
+ * variant, plus 1 byte, plus the length of the type string for the
+ * item inside the variant.
+ * 
+ * As an example, consider a dictionary mapping strings to variants.
+ * In the case that the dictionary is empty, 0 bytes are required for
+ * the serialization.
+ * 
+ * If we add an item "width" that maps to the int32 value of 500 then
+ * we will use 4 byte to store the int32 (so 6 for the variant
+ * containing it) and 6 bytes for the string.  The variant must be
+ * aligned to 8 after the 6 bytes of the string, so that's 2 extra
+ * bytes.  6 (string) + 2 (padding) + 6 (variant) is 14 bytes used
+ * for the dictionary entry.  An additional 1 byte is added to the
+ * array as a framing offset making a total of 15 bytes.
+ * 
+ * If we add another entry, "title" that maps to a nullable string
+ * that happens to have a value of null, then we use 0 bytes for the
+ * null value (and 3 bytes for the variant to contain it along with
+ * its type string) plus 6 bytes for the string.  Again, we need 2
+ * padding bytes.  That makes a total of 6 + 2 + 3 = 11 bytes.
+ * 
+ * We now require extra padding between the two items in the array.
+ * After the 14 bytes of the first item, that's 2 bytes required.
+ * We now require 2 framing offsets for an extra two
+ * bytes. 14 + 2 + 11 + 2 = 29 bytes to encode the entire two-item
+ * dictionary.
+ * 
+ * ## Type Information Cache
+ * 
+ * For each GVariant type that currently exists in the program a type
+ * information structure is kept in the type information cache.  The
+ * type information structure is required for rapid deserialization.
+ * 
+ * Continuing with the above example, if a #GVariant exists with the
+ * type "a{sv}" then a type information struct will exist for
+ * "a{sv}", "{sv}", "s", and "v".  Multiple uses of the same type
+ * will share the same type information.  Additionally, all
+ * single-digit types are stored in read-only static memory and do
+ * not contribute to the writable memory footprint of a program using
+ * #GVariant.
+ * 
+ * Aside from the type information structures stored in read-only
+ * memory, there are two forms of type information.  One is used for
+ * container types where there is a single element type: arrays and
+ * maybe types.  The other is used for container types where there
+ * are multiple element types: tuples and dictionary entries.
+ * 
+ * Array type info structures are 6 * sizeof (void *), plus the
+ * memory required to store the type string itself.  This means that
+ * on 32-bit systems, the cache entry for "a{sv}" would require 30
+ * bytes of memory (plus malloc overhead).
+ * 
+ * Tuple type info structures are 6 * sizeof (void *), plus 4 *
+ * sizeof (void *) for each item in the tuple, plus the memory
+ * required to store the type string itself.  A 2-item tuple, for
+ * example, would have a type information structure that consumed
+ * writable memory in the size of 14 * sizeof (void *) (plus type
+ * string)  This means that on 32-bit systems, the cache entry for
+ * "{sv}" would require 61 bytes of memory (plus malloc overhead).
+ * 
+ * This means that in total, for our "a{sv}" example, 91 bytes of
+ * type information would be allocated.
+ * 
+ * The type information cache, additionally, uses a #GHashTable to
+ * store and look up the cached items and stores a pointer to this
+ * hash table in static storage.  The hash table is freed when there
+ * are zero items in the type cache.
+ * 
+ * Although these sizes may seem large it is important to remember
+ * that a program will probably only have a very small number of
+ * different types of values in it and that only one type information
+ * structure is required for many different values of the same type.
+ * 
+ * ## Buffer Management Memory
+ * 
+ * #GVariant uses an internal buffer management structure to deal
+ * with the various different possible sources of serialized data
+ * that it uses.  The buffer is responsible for ensuring that the
+ * correct call is made when the data is no longer in use by
+ * #GVariant.  This may involve a g_free() or a g_slice_free() or
+ * even g_mapped_file_unref().
+ * 
+ * One buffer management structure is used for each chunk of
+ * serialized data.  The size of the buffer management structure
+ * is 4 * (void *).  On 32-bit systems, that's 16 bytes.
+ * 
+ * ## GVariant structure
+ * 
+ * The size of a #GVariant structure is 6 * (void *).  On 32-bit
+ * systems, that's 24 bytes.
+ * 
+ * #GVariant structures only exist if they are explicitly created
+ * with API calls.  For example, if a #GVariant is constructed out of
+ * serialized data for the example given above (with the dictionary)
+ * then although there are 9 individual values that comprise the
+ * entire dictionary (two keys, two values, two variants containing
+ * the values, two dictionary entries, plus the dictionary itself),
+ * only 1 #GVariant instance exists -- the one referring to the
+ * dictionary.
+ * 
+ * If calls are made to start accessing the other values then
+ * #GVariant instances will exist for those values only for as long
+ * as they are in use (ie: until you call g_variant_unref()).  The
+ * type information is shared.  The serialized data and the buffer
+ * management structure for that serialized data is shared by the
+ * child.
+ * 
+ * ## Summary
+ * 
+ * To put the entire example together, for our dictionary mapping
+ * strings to variants (with two entries, as given above), we are
+ * using 91 bytes of memory for type information, 29 bytes of memory
+ * for the serialized data, 16 bytes for buffer management and 24
+ * bytes for the #GVariant instance, or a total of 160 bytes, plus
+ * malloc overhead.  If we were to use g_variant_get_child_value() to
+ * access the two dictionary entries, we would use an additional 48
+ * bytes.  If we were to have other dictionaries of the same type, we
+ * would use more memory for the serialized data and buffer
+ * management for those dictionaries, but the type information would
+ * be shared.
+ */
 class Variant {
     /* Methods of GLib-2.0.GLib.Variant */
     /**
@@ -13797,6 +14841,15 @@ class Variant {
      */
     static parser_get_error_quark(): Quark
 }
+/**
+ * A utility type for constructing container-type #GVariant instances.
+ * 
+ * This is an opaque structure and may only be accessed using the
+ * following functions.
+ * 
+ * #GVariantBuilder is not threadsafe in any way.  Do not attempt to
+ * access it from more than one thread.
+ */
 class VariantBuilder {
     /* Methods of GLib-2.0.GLib.VariantBuilder */
     /**
@@ -13907,6 +14960,101 @@ class VariantBuilder {
     /* Static methods and pseudo-constructors */
     static new(type: VariantType): VariantBuilder
 }
+/**
+ * #GVariantDict is a mutable interface to #GVariant dictionaries.
+ * 
+ * It can be used for doing a sequence of dictionary lookups in an
+ * efficient way on an existing #GVariant dictionary or it can be used
+ * to construct new dictionaries with a hashtable-like interface.  It
+ * can also be used for taking existing dictionaries and modifying them
+ * in order to create new ones.
+ * 
+ * #GVariantDict can only be used with %G_VARIANT_TYPE_VARDICT
+ * dictionaries.
+ * 
+ * It is possible to use #GVariantDict allocated on the stack or on the
+ * heap.  When using a stack-allocated #GVariantDict, you begin with a
+ * call to g_variant_dict_init() and free the resources with a call to
+ * g_variant_dict_clear().
+ * 
+ * Heap-allocated #GVariantDict follows normal refcounting rules: you
+ * allocate it with g_variant_dict_new() and use g_variant_dict_ref()
+ * and g_variant_dict_unref().
+ * 
+ * g_variant_dict_end() is used to convert the #GVariantDict back into a
+ * dictionary-type #GVariant.  When used with stack-allocated instances,
+ * this also implicitly frees all associated memory, but for
+ * heap-allocated instances, you must still call g_variant_dict_unref()
+ * afterwards.
+ * 
+ * You will typically want to use a heap-allocated #GVariantDict when
+ * you expose it as part of an API.  For most other uses, the
+ * stack-allocated form will be more convenient.
+ * 
+ * Consider the following two examples that do the same thing in each
+ * style: take an existing dictionary and look up the "count" uint32
+ * key, adding 1 to it if it is found, or returning an error if the
+ * key is not found.  Each returns the new dictionary as a floating
+ * #GVariant.
+ * 
+ * ## Using a stack-allocated GVariantDict
+ * 
+ * 
+ * ```c
+ *   GVariant *
+ *   add_to_count (GVariant  *orig,
+ *                 GError   **error)
+ *   {
+ *     GVariantDict dict;
+ *     guint32 count;
+ * 
+ *     g_variant_dict_init (&dict, orig);
+ *     if (!g_variant_dict_lookup (&dict, "count", "u", &count))
+ *       {
+ *         g_set_error (...);
+ *         g_variant_dict_clear (&dict);
+ *         return NULL;
+ *       }
+ * 
+ *     g_variant_dict_insert (&dict, "count", "u", count + 1);
+ * 
+ *     return g_variant_dict_end (&dict);
+ *   }
+ * ```
+ * 
+ * 
+ * ## Using heap-allocated GVariantDict
+ * 
+ * 
+ * ```c
+ *   GVariant *
+ *   add_to_count (GVariant  *orig,
+ *                 GError   **error)
+ *   {
+ *     GVariantDict *dict;
+ *     GVariant *result;
+ *     guint32 count;
+ * 
+ *     dict = g_variant_dict_new (orig);
+ * 
+ *     if (g_variant_dict_lookup (dict, "count", "u", &count))
+ *       {
+ *         g_variant_dict_insert (dict, "count", "u", count + 1);
+ *         result = g_variant_dict_end (dict);
+ *       }
+ *     else
+ *       {
+ *         g_set_error (...);
+ *         result = NULL;
+ *       }
+ * 
+ *     g_variant_dict_unref (dict);
+ * 
+ *     return result;
+ *   }
+ * ```
+ * 
+ */
 class VariantDict {
     /* Methods of GLib-2.0.GLib.VariantDict */
     /**
@@ -13993,6 +15141,10 @@ class VariantDict {
     /* Static methods and pseudo-constructors */
     static new(from_asv: Variant | null): VariantDict
 }
+/**
+ * #GVariantIter is an opaque data structure and can only be accessed
+ * using the following functions.
+ */
 class VariantIter {
     /* Methods of GLib-2.0.GLib.VariantIter */
     /**
@@ -14043,6 +15195,155 @@ class VariantIter {
     next_value(): Variant | null
     static name: string
 }
+/**
+ * This section introduces the GVariant type system. It is based, in
+ * large part, on the D-Bus type system, with two major changes and
+ * some minor lifting of restrictions. The
+ * [D-Bus specification](http://dbus.freedesktop.org/doc/dbus-specification.html),
+ * therefore, provides a significant amount of
+ * information that is useful when working with GVariant.
+ * 
+ * The first major change with respect to the D-Bus type system is the
+ * introduction of maybe (or "nullable") types.  Any type in GVariant can be
+ * converted to a maybe type, in which case, "nothing" (or "null") becomes a
+ * valid value.  Maybe types have been added by introducing the
+ * character "m" to type strings.
+ * 
+ * The second major change is that the GVariant type system supports the
+ * concept of "indefinite types" -- types that are less specific than
+ * the normal types found in D-Bus.  For example, it is possible to speak
+ * of "an array of any type" in GVariant, where the D-Bus type system
+ * would require you to speak of "an array of integers" or "an array of
+ * strings".  Indefinite types have been added by introducing the
+ * characters "*", "?" and "r" to type strings.
+ * 
+ * Finally, all arbitrary restrictions relating to the complexity of
+ * types are lifted along with the restriction that dictionary entries
+ * may only appear nested inside of arrays.
+ * 
+ * Just as in D-Bus, GVariant types are described with strings ("type
+ * strings").  Subject to the differences mentioned above, these strings
+ * are of the same form as those found in D-Bus.  Note, however: D-Bus
+ * always works in terms of messages and therefore individual type
+ * strings appear nowhere in its interface.  Instead, "signatures"
+ * are a concatenation of the strings of the type of each argument in a
+ * message.  GVariant deals with single values directly so GVariant type
+ * strings always describe the type of exactly one value.  This means
+ * that a D-Bus signature string is generally not a valid GVariant type
+ * string -- except in the case that it is the signature of a message
+ * containing exactly one argument.
+ * 
+ * An indefinite type is similar in spirit to what may be called an
+ * abstract type in other type systems.  No value can exist that has an
+ * indefinite type as its type, but values can exist that have types
+ * that are subtypes of indefinite types.  That is to say,
+ * g_variant_get_type() will never return an indefinite type, but
+ * calling g_variant_is_of_type() with an indefinite type may return
+ * %TRUE.  For example, you cannot have a value that represents "an
+ * array of no particular type", but you can have an "array of integers"
+ * which certainly matches the type of "an array of no particular type",
+ * since "array of integers" is a subtype of "array of no particular
+ * type".
+ * 
+ * This is similar to how instances of abstract classes may not
+ * directly exist in other type systems, but instances of their
+ * non-abstract subtypes may.  For example, in GTK, no object that has
+ * the type of #GtkBin can exist (since #GtkBin is an abstract class),
+ * but a #GtkWindow can certainly be instantiated, and you would say
+ * that the #GtkWindow is a #GtkBin (since #GtkWindow is a subclass of
+ * #GtkBin).
+ * 
+ * ## GVariant Type Strings
+ * 
+ * A GVariant type string can be any of the following:
+ * 
+ * - any basic type string (listed below)
+ * 
+ * - "v", "r" or "*"
+ * 
+ * - one of the characters 'a' or 'm', followed by another type string
+ * 
+ * - the character '(', followed by a concatenation of zero or more other
+ *   type strings, followed by the character ')'
+ * 
+ * - the character '{', followed by a basic type string (see below),
+ *   followed by another type string, followed by the character '}'
+ * 
+ * A basic type string describes a basic type (as per
+ * g_variant_type_is_basic()) and is always a single character in length.
+ * The valid basic type strings are "b", "y", "n", "q", "i", "u", "x", "t",
+ * "h", "d", "s", "o", "g" and "?".
+ * 
+ * The above definition is recursive to arbitrary depth. "aaaaai" and
+ * "(ui(nq((y)))s)" are both valid type strings, as is
+ * "a(aa(ui)(qna{ya(yd)}))". In order to not hit memory limits, #GVariant
+ * imposes a limit on recursion depth of 65 nested containers. This is the
+ * limit in the D-Bus specification (64) plus one to allow a #GDBusMessage to
+ * be nested in a top-level tuple.
+ * 
+ * The meaning of each of the characters is as follows:
+ * - `b`: the type string of %G_VARIANT_TYPE_BOOLEAN; a boolean value.
+ * - `y`: the type string of %G_VARIANT_TYPE_BYTE; a byte.
+ * - `n`: the type string of %G_VARIANT_TYPE_INT16; a signed 16 bit integer.
+ * - `q`: the type string of %G_VARIANT_TYPE_UINT16; an unsigned 16 bit integer.
+ * - `i`: the type string of %G_VARIANT_TYPE_INT32; a signed 32 bit integer.
+ * - `u`: the type string of %G_VARIANT_TYPE_UINT32; an unsigned 32 bit integer.
+ * - `x`: the type string of %G_VARIANT_TYPE_INT64; a signed 64 bit integer.
+ * - `t`: the type string of %G_VARIANT_TYPE_UINT64; an unsigned 64 bit integer.
+ * - `h`: the type string of %G_VARIANT_TYPE_HANDLE; a signed 32 bit value
+ *   that, by convention, is used as an index into an array of file
+ *   descriptors that are sent alongside a D-Bus message.
+ * - `d`: the type string of %G_VARIANT_TYPE_DOUBLE; a double precision
+ *   floating point value.
+ * - `s`: the type string of %G_VARIANT_TYPE_STRING; a string.
+ * - `o`: the type string of %G_VARIANT_TYPE_OBJECT_PATH; a string in the form
+ *   of a D-Bus object path.
+ * - `g`: the type string of %G_VARIANT_TYPE_SIGNATURE; a string in the form of
+ *   a D-Bus type signature.
+ * - `?`: the type string of %G_VARIANT_TYPE_BASIC; an indefinite type that
+ *   is a supertype of any of the basic types.
+ * - `v`: the type string of %G_VARIANT_TYPE_VARIANT; a container type that
+ *   contain any other type of value.
+ * - `a`: used as a prefix on another type string to mean an array of that
+ *   type; the type string "ai", for example, is the type of an array of
+ *   signed 32-bit integers.
+ * - `m`: used as a prefix on another type string to mean a "maybe", or
+ *   "nullable", version of that type; the type string "ms", for example,
+ *   is the type of a value that maybe contains a string, or maybe contains
+ *   nothing.
+ * - `()`: used to enclose zero or more other concatenated type strings to
+ *   create a tuple type; the type string "(is)", for example, is the type of
+ *   a pair of an integer and a string.
+ * - `r`: the type string of %G_VARIANT_TYPE_TUPLE; an indefinite type that is
+ *   a supertype of any tuple type, regardless of the number of items.
+ * - `{}`: used to enclose a basic type string concatenated with another type
+ *   string to create a dictionary entry type, which usually appears inside of
+ *   an array to form a dictionary; the type string "a{sd}", for example, is
+ *   the type of a dictionary that maps strings to double precision floating
+ *   point values.
+ * 
+ *   The first type (the basic type) is the key type and the second type is
+ *   the value type. The reason that the first type is restricted to being a
+ *   basic type is so that it can easily be hashed.
+ * - `*`: the type string of %G_VARIANT_TYPE_ANY; the indefinite type that is
+ *   a supertype of all types.  Note that, as with all type strings, this
+ *   character represents exactly one type. It cannot be used inside of tuples
+ *   to mean "any number of items".
+ * 
+ * Any type string of a container that contains an indefinite type is,
+ * itself, an indefinite type. For example, the type string "a*"
+ * (corresponding to %G_VARIANT_TYPE_ARRAY) is an indefinite type
+ * that is a supertype of every array type. "(*s)" is a supertype
+ * of all tuples that contain exactly two items where the second
+ * item is a string.
+ * 
+ * "a{?*}" is an indefinite type that is a supertype of all arrays
+ * containing dictionary entries where the key is any basic type and
+ * the value is any type at all.  This is, by definition, a dictionary,
+ * so this type string corresponds to %G_VARIANT_TYPE_DICTIONARY. Note
+ * that, due to the restriction that the key of a dictionary entry must
+ * be a basic type, "{**}" is not a valid type string.
+ */
 class VariantType {
     /* Methods of GLib-2.0.GLib.VariantType */
     /**
@@ -14280,12 +15581,84 @@ class VariantType {
      */
     static string_scan(string: string, limit: string | null): [ /* returnType */ boolean, /* endptr */ string ]
 }
+/**
+ * The #GFloatIEEE754 and #GDoubleIEEE754 unions are used to access the sign,
+ * mantissa and exponent of IEEE floats and doubles. These unions are defined
+ * as appropriate for a given platform. IEEE floats and doubles are supported
+ * (used for storage) by at least Intel, PPC and Sparc.
+ */
 class DoubleIEEE754 {
+    /* Fields of GLib-2.0.GLib.DoubleIEEE754 */
+    /**
+     * the double value
+     */
+    v_double: number
     static name: string
 }
+/**
+ * The #GFloatIEEE754 and #GDoubleIEEE754 unions are used to access the sign,
+ * mantissa and exponent of IEEE floats and doubles. These unions are defined
+ * as appropriate for a given platform. IEEE floats and doubles are supported
+ * (used for storage) by at least Intel, PPC and Sparc.
+ */
 class FloatIEEE754 {
+    /* Fields of GLib-2.0.GLib.FloatIEEE754 */
+    /**
+     * the double value
+     */
+    v_float: number
     static name: string
 }
+/**
+ * The #GMutex struct is an opaque data structure to represent a mutex
+ * (mutual exclusion). It can be used to protect data against shared
+ * access.
+ * 
+ * Take for example the following function:
+ * 
+ * ```c
+ *   int
+ *   give_me_next_number (void)
+ *   {
+ *     static int current_number = 0;
+ * 
+ *     // now do a very complicated calculation to calculate the new
+ *     // number, this might for example be a random number generator
+ *     current_number = calc_next_number (current_number);
+ * 
+ *     return current_number;
+ *   }
+ * ```
+ * 
+ * It is easy to see that this won't work in a multi-threaded
+ * application. There current_number must be protected against shared
+ * access. A #GMutex can be used as a solution to this problem:
+ * 
+ * ```c
+ *   int
+ *   give_me_next_number (void)
+ *   {
+ *     static GMutex mutex;
+ *     static int current_number = 0;
+ *     int ret_val;
+ * 
+ *     g_mutex_lock (&mutex);
+ *     ret_val = current_number = calc_next_number (current_number);
+ *     g_mutex_unlock (&mutex);
+ * 
+ *     return ret_val;
+ *   }
+ * ```
+ * 
+ * Notice that the #GMutex is not initialised to any particular value.
+ * Its placement in static storage ensures that it will be initialised
+ * to all-zeros, which is appropriate.
+ * 
+ * If a #GMutex is placed in other contexts (eg: embedded in a struct)
+ * then it must be explicitly initialised using g_mutex_init().
+ * 
+ * A #GMutex should only be accessed via g_mutex_ functions.
+ */
 class Mutex {
     /* Methods of GLib-2.0.GLib.Mutex */
     /**
@@ -14361,7 +15734,59 @@ class Mutex {
     unlock(): void
     static name: string
 }
+/**
+ * A union holding the value of the token.
+ */
 class TokenValue {
+    /* Fields of GLib-2.0.GLib.TokenValue */
+    /**
+     * token symbol value
+     */
+    v_symbol: object
+    /**
+     * token identifier value
+     */
+    v_identifier: string
+    /**
+     * token binary integer value
+     */
+    v_binary: number
+    /**
+     * octal integer value
+     */
+    v_octal: number
+    /**
+     * integer value
+     */
+    v_int: number
+    /**
+     * 64-bit integer value
+     */
+    v_int64: number
+    /**
+     * floating point value
+     */
+    v_float: number
+    /**
+     * hex integer value
+     */
+    v_hex: number
+    /**
+     * string value
+     */
+    v_string: string
+    /**
+     * comment value
+     */
+    v_comment: string
+    /**
+     * character value
+     */
+    v_char: number
+    /**
+     * error value
+     */
+    v_error: number
     static name: string
 }
     type DateDay = number

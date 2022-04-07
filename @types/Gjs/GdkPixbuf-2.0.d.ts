@@ -165,6 +165,7 @@ enum PixbufRotation {
 /**
  * Flags which allow a module to specify further details about the supported
  * operations.
+ * @bitfield 
  */
 enum PixbufFormatFlags {
     /**
@@ -212,6 +213,7 @@ function pixbuf_error_quark(): GLib.Quark
  * pixel array so that a pixbuf can be created from it; in this case you
  * will need to pass in a function of type `GdkPixbufDestroyNotify` so that
  * the pixel data can be freed when the pixbuf is finalized.
+ * @callback 
  */
 interface PixbufDestroyNotify {
     (pixels: Uint8Array): void
@@ -219,6 +221,7 @@ interface PixbufDestroyNotify {
 /**
  * Defines the type of the function used to fill a
  * #GdkPixbufFormat structure with information about a module.
+ * @callback 
  */
 interface PixbufModuleFillInfoFunc {
     (info: PixbufFormat): void
@@ -226,12 +229,14 @@ interface PixbufModuleFillInfoFunc {
 /**
  * Defines the type of the function used to set the vtable of a
  * #GdkPixbufModule when it is loaded.
+ * @callback 
  */
 interface PixbufModuleFillVtableFunc {
     (module: PixbufModule): void
 }
 /**
  * Incrementally loads a buffer into the image data.
+ * @callback 
  */
 interface PixbufModuleIncrementLoadFunc {
     (context: object | null, buf: Uint8Array): boolean
@@ -240,6 +245,7 @@ interface PixbufModuleIncrementLoadFunc {
  * Loads a file from a standard C file stream into a new `GdkPixbufAnimation`.
  * 
  * In case of error, this function should return `NULL` and set the `error` argument.
+ * @callback 
  */
 interface PixbufModuleLoadAnimationFunc {
     (f: object | null): PixbufAnimation
@@ -248,12 +254,14 @@ interface PixbufModuleLoadAnimationFunc {
  * Loads a file from a standard C file stream into a new `GdkPixbuf`.
  * 
  * In case of error, this function should return `NULL` and set the `error` argument.
+ * @callback 
  */
 interface PixbufModuleLoadFunc {
     (f: object | null): Pixbuf
 }
 /**
  * Loads XPM data into a new `GdkPixbuf`.
+ * @callback 
  */
 interface PixbufModuleLoadXpmDataFunc {
     (data: string[]): Pixbuf
@@ -265,6 +273,7 @@ interface PixbufModuleLoadXpmDataFunc {
  * #GdkPixbufLoader uses a function of this type to emit the
  * "<link linkend="GdkPixbufLoader-area-prepared">area_prepared</link>"
  * signal.
+ * @callback 
  */
 interface PixbufModulePreparedFunc {
     (pixbuf: Pixbuf, anim: PixbufAnimation): void
@@ -275,12 +284,14 @@ interface PixbufModulePreparedFunc {
  * The optional `param_keys` and `param_values` arrays contain the keys and
  * values (in the same order) for attributes to be saved alongside the image
  * data.
+ * @callback 
  */
 interface PixbufModuleSaveFunc {
     (f: object | null, pixbuf: Pixbuf, param_keys: string[] | null, param_values: string[] | null): boolean
 }
 /**
  * Checks whether the given `option_key` is supported when saving.
+ * @callback 
  */
 interface PixbufModuleSaveOptionSupportedFunc {
     (option_key: string): boolean
@@ -299,6 +310,7 @@ interface PixbufModuleSaveOptionSupportedFunc {
  * this as a hint that it will be closed soon and shouldn't allocate further
  * resources. This convention is used to implement gdk_pixbuf_get_file_info()
  * efficiently.
+ * @callback 
  */
 interface PixbufModuleSizeFunc {
     (width: number, height: number): void
@@ -307,6 +319,7 @@ interface PixbufModuleSizeFunc {
  * Finalizes the image loading state.
  * 
  * This function is called on success and error states.
+ * @callback 
  */
 interface PixbufModuleStopLoadFunc {
     (context: object | null): boolean
@@ -318,6 +331,7 @@ interface PixbufModuleStopLoadFunc {
  * #GdkPixbufLoader uses a function of this type to emit the
  * "<link linkend="GdkPixbufLoader-area-updated">area_updated</link>"
  * signal.
+ * @callback 
  */
 interface PixbufModuleUpdatedFunc {
     (pixbuf: Pixbuf, x: number, y: number, width: number, height: number): void
@@ -331,6 +345,7 @@ interface PixbufModuleUpdatedFunc {
  * If successful it should return `TRUE`; if an error occurs it should set
  * `error` and return `FALSE`, in which case `gdk_pixbuf_save_to_callback()`
  * will fail with the same error.
+ * @callback 
  */
 interface PixbufSaveFunc {
     (buf: Uint8Array): boolean
@@ -381,6 +396,143 @@ interface Pixbuf_ConstructProps extends GObject.Object_ConstructProps {
      */
     width?: number | null
 }
+/**
+ * A pixel buffer.
+ * 
+ * `GdkPixbuf` contains information about an image's pixel data,
+ * its color space, bits per sample, width and height, and the
+ * rowstride (the number of bytes between the start of one row
+ * and the start of the next).
+ * 
+ * ## Creating new `GdkPixbuf`
+ * 
+ * The most basic way to create a pixbuf is to wrap an existing pixel
+ * buffer with a [class`GdkPixbuf`.Pixbuf] instance. You can use the
+ * [`ctor`GdkPixbuf`.Pixbuf.new_from_data`] function to do this.
+ * 
+ * Every time you create a new `GdkPixbuf` instance for some data, you
+ * will need to specify the destroy notification function that will be
+ * called when the data buffer needs to be freed; this will happen when
+ * a `GdkPixbuf` is finalized by the reference counting functions. If
+ * you have a chunk of static data compiled into your application, you
+ * can pass in `NULL` as the destroy notification function so that the
+ * data will not be freed.
+ * 
+ * The [`ctor`GdkPixbuf`.Pixbuf.new`] constructor function can be used
+ * as a convenience to create a pixbuf with an empty buffer; this is
+ * equivalent to allocating a data buffer using `malloc()` and then
+ * wrapping it with `gdk_pixbuf_new_from_data()`. The `gdk_pixbuf_new()`
+ * function will compute an optimal rowstride so that rendering can be
+ * performed with an efficient algorithm.
+ * 
+ * As a special case, you can use the [`ctor`GdkPixbuf`.Pixbuf.new_from_xpm_data`]
+ * function to create a pixbuf from inline XPM image data.
+ * 
+ * You can also copy an existing pixbuf with the [method`Pixbuf`.copy]
+ * function. This is not the same as just acquiring a reference to
+ * the old pixbuf instance: the copy function will actually duplicate
+ * the pixel data in memory and create a new [class`Pixbuf]` instance
+ * for it.
+ * 
+ * ## Reference counting
+ * 
+ * `GdkPixbuf` structures are reference counted. This means that an
+ * application can share a single pixbuf among many parts of the
+ * code. When a piece of the program needs to use a pixbuf, it should
+ * acquire a reference to it by calling `g_object_ref()`; when it no
+ * longer needs the pixbuf, it should release the reference it acquired
+ * by calling `g_object_unref()`. The resources associated with a
+ * `GdkPixbuf` will be freed when its reference count drops to zero.
+ * Newly-created `GdkPixbuf` instances start with a reference count
+ * of one.
+ * 
+ * ## Image Data
+ * 
+ * Image data in a pixbuf is stored in memory in an uncompressed,
+ * packed format. Rows in the image are stored top to bottom, and
+ * in each row pixels are stored from left to right.
+ * 
+ * There may be padding at the end of a row.
+ * 
+ * The "rowstride" value of a pixbuf, as returned by [`method`GdkPixbuf`.Pixbuf.get_rowstride`],
+ * indicates the number of bytes between rows.
+ * 
+ * **NOTE**: If you are copying raw pixbuf data with `memcpy()` note that the
+ * last row in the pixbuf may not be as wide as the full rowstride, but rather
+ * just as wide as the pixel data needs to be; that is: it is unsafe to do
+ * `memcpy (dest, pixels, rowstride * height)` to copy a whole pixbuf. Use
+ * [method`GdkPixbuf`.Pixbuf.copy] instead, or compute the width in bytes of the
+ * last row as:
+ * 
+ * ```c
+ * last_row = width * ((n_channels * bits_per_sample + 7) / 8);
+ * ```
+ * 
+ * The same rule applies when iterating over each row of a `GdkPixbuf` pixels
+ * array.
+ * 
+ * The following code illustrates a simple `put_pixel()`
+ * function for RGB pixbufs with 8 bits per channel with an alpha
+ * channel.
+ * 
+ * ```c
+ * static void
+ * put_pixel (GdkPixbuf *pixbuf,
+ *            int x,
+ * 	   int y,
+ * 	   guchar red,
+ * 	   guchar green,
+ * 	   guchar blue,
+ * 	   guchar alpha)
+ * {
+ *   int n_channels = gdk_pixbuf_get_n_channels (pixbuf);
+ * 
+ *   // Ensure that the pixbuf is valid
+ *   g_assert (gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB);
+ *   g_assert (gdk_pixbuf_get_bits_per_sample (pixbuf) == 8);
+ *   g_assert (gdk_pixbuf_get_has_alpha (pixbuf));
+ *   g_assert (n_channels == 4);
+ * 
+ *   int width = gdk_pixbuf_get_width (pixbuf);
+ *   int height = gdk_pixbuf_get_height (pixbuf);
+ * 
+ *   // Ensure that the coordinates are in a valid range
+ *   g_assert (x >= 0 && x < width);
+ *   g_assert (y >= 0 && y < height);
+ * 
+ *   int rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+ * 
+ *   // The pixel buffer in the GdkPixbuf instance
+ *   guchar *pixels = gdk_pixbuf_get_pixels (pixbuf);
+ * 
+ *   // The pixel we wish to modify
+ *   guchar *p = pixels + y * rowstride + x * n_channels;
+ *   p[0] = red;
+ *   p[1] = green;
+ *   p[2] = blue;
+ *   p[3] = alpha;
+ * }
+ * ```
+ * 
+ * ## Loading images
+ * 
+ * The `GdkPixBuf` class provides a simple mechanism for loading
+ * an image from a file in synchronous and asynchronous fashion.
+ * 
+ * For GUI applications, it is recommended to use the asynchronous
+ * stream API to avoid blocking the control flow of the application.
+ * 
+ * Additionally, `GdkPixbuf` provides the [class`GdkPixbuf`.PixbufLoader`]
+ * API for progressive image loading.
+ * 
+ * ## Saving images
+ * 
+ * The `GdkPixbuf` class provides methods for saving image data in
+ * a number of file formats. The formatted data can be written to a
+ * file or to a memory buffer. `GdkPixbuf` can also call a user-defined
+ * callback on the data, which allows to e.g. write the image
+ * to a socket or store it in a database.
+ */
 class Pixbuf {
     /* Properties of GdkPixbuf-2.0.GdkPixbuf.Pixbuf */
     /**
@@ -1219,11 +1371,13 @@ class Pixbuf {
     /* Virtual methods of GdkPixbuf-2.0.GdkPixbuf.Pixbuf */
     /**
      * Checks if two icons are equal.
+     * @virtual 
      * @param icon2 pointer to the second #GIcon.
      */
     vfunc_equal(icon2: Gio.Icon | null): boolean
     /**
      * Gets a hash for an icon.
+     * @virtual 
      */
     vfunc_hash(): number
     /**
@@ -1232,11 +1386,13 @@ class Pixbuf {
      * As serialization will avoid using raw icon data when possible, it only
      * makes sense to transfer the #GVariant between processes on the same machine,
      * (as opposed to over the network), and within the same file system namespace.
+     * @virtual 
      */
     vfunc_serialize(): GLib.Variant | null
     /**
      * Loads a loadable icon. For the asynchronous version of this function,
      * see g_loadable_icon_load_async().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
@@ -1245,6 +1401,7 @@ class Pixbuf {
      * Loads an icon asynchronously. To finish this function, see
      * g_loadable_icon_load_finish(). For the synchronous, blocking
      * version of this function, see g_loadable_icon_load().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
@@ -1252,6 +1409,7 @@ class Pixbuf {
     vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @virtual 
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
@@ -1272,6 +1430,7 @@ class Pixbuf {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -1305,6 +1464,7 @@ class Pixbuf {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Pixbuf, pspec: GObject.ParamSpec) => void)): number
@@ -1470,7 +1630,24 @@ class Pixbuf {
 }
 interface PixbufAnimation_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * An opaque object representing an animation.
+ * 
+ * The GdkPixBuf library provides a simple mechanism to load and
+ * represent animations. An animation is conceptually a series of
+ * frames to be displayed over time.
+ * 
+ * The animation may not be represented as a series of frames
+ * internally; for example, it may be stored as a sprite and
+ * instructions for moving the sprite around a background.
+ * 
+ * To display an animation you don't need to understand its
+ * representation, however; you just ask `GdkPixbuf` what should
+ * be displayed at a given point in time.
+ */
 class PixbufAnimation {
+    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
+    parent_instance: GObject.Object
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
@@ -1893,6 +2070,7 @@ class PixbufAnimation {
      * area_updated signal.
      * 
      * A delay time of -1 is possible, indicating "infinite".
+     * @virtual 
      * @param start_time time when the animation starts playing
      */
     vfunc_get_iter(start_time: GLib.TimeVal | null): PixbufAnimationIter
@@ -1909,6 +2087,7 @@ class PixbufAnimation {
      * 
      * If an animation hasn't loaded any frames yet, this function will
      * return `NULL`.
+     * @virtual 
      */
     vfunc_get_static_image(): Pixbuf
     /**
@@ -1918,6 +2097,7 @@ class PixbufAnimation {
      * turns out to be a plain, unanimated image, then this function will
      * return `TRUE`. Use gdk_pixbuf_animation_get_static_image() to retrieve
      * the image.
+     * @virtual 
      */
     vfunc_is_static_image(): boolean
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -1937,6 +2117,7 @@ class PixbufAnimation {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -1970,6 +2151,7 @@ class PixbufAnimation {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: PixbufAnimation, pspec: GObject.ParamSpec) => void)): number
@@ -2005,7 +2187,13 @@ class PixbufAnimation {
 }
 interface PixbufAnimationIter_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * An opaque object representing an iterator which points to a
+ * certain position in an animation.
+ */
 class PixbufAnimationIter {
+    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
+    parent_instance: GObject.Object
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
@@ -2410,6 +2598,7 @@ class PixbufAnimationIter {
      * display, assuming the display had been rendered prior to advancing;
      * if `TRUE`, you need to call gdk_pixbuf_animation_iter_get_pixbuf()
      * and update the display with the new pixbuf.
+     * @virtual 
      * @param current_time current time
      */
     vfunc_advance(current_time: GLib.TimeVal | null): boolean
@@ -2423,6 +2612,7 @@ class PixbufAnimationIter {
      * Note that some formats, like GIF, might clamp the timeout values in the
      * image file to avoid updates that are just too quick. The minimum timeout
      * for GIF images is currently 20 milliseconds.
+     * @virtual 
      */
     vfunc_get_delay_time(): number
     /**
@@ -2441,6 +2631,7 @@ class PixbufAnimationIter {
      * 
      * Copy the pixbuf to keep it (don't just add a reference), as it may get
      * recycled as you advance the iterator.
+     * @virtual 
      */
     vfunc_get_pixbuf(): Pixbuf
     /**
@@ -2450,6 +2641,7 @@ class PixbufAnimationIter {
      * The `::area_updated` signal is emitted for an area of the frame currently
      * streaming in to the loader. So if you're on the currently loading frame,
      * you will need to redraw the screen for the updated area.
+     * @virtual 
      */
     vfunc_on_currently_loading_frame(): boolean
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -2469,6 +2661,7 @@ class PixbufAnimationIter {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -2502,6 +2695,7 @@ class PixbufAnimationIter {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: PixbufAnimationIter, pspec: GObject.ParamSpec) => void)): number
@@ -2518,6 +2712,53 @@ class PixbufAnimationIter {
 }
 interface PixbufLoader_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * Incremental image loader.
+ * 
+ * `GdkPixbufLoader` provides a way for applications to drive the
+ * process of loading an image, by letting them send the image data
+ * directly to the loader instead of having the loader read the data
+ * from a file. Applications can use this functionality instead of
+ * `gdk_pixbuf_new_from_file()` or `gdk_pixbuf_animation_new_from_file()`
+ * when they need to parse image data in small chunks. For example,
+ * it should be used when reading an image from a (potentially) slow
+ * network connection, or when loading an extremely large file.
+ * 
+ * To use `GdkPixbufLoader` to load an image, create a new instance,
+ * and call [method`GdkPixbuf`.PixbufLoader.write] to send the data
+ * to it. When done, [method`GdkPixbuf`.PixbufLoader.close] should be
+ * called to end the stream and finalize everything.
+ * 
+ * The loader will emit three important signals throughout the process:
+ * 
+ *  - [signal`GdkPixbuf`.PixbufLoader::size-prepared] will be emitted as
+ *    soon as the image has enough information to determine the size of
+ *    the image to be used. If you want to scale the image while loading
+ *    it, you can call [method`GdkPixbuf`.PixbufLoader.set_size] in
+ *    response to this signal.
+ *  - [signal`GdkPixbuf`.PixbufLoader::area-prepared] will be emitted as
+ *    soon as the pixbuf of the desired has been allocated. You can obtain
+ *    the `GdkPixbuf` instance by calling [method`GdkPixbuf`.PixbufLoader.get_pixbuf].
+ *    If you want to use it, simply acquire a reference to it. You can
+ *    also call `gdk_pixbuf_loader_get_pixbuf()` later to get the same
+ *    pixbuf.
+ *  - [signal`GdkPixbuf`.PixbufLoader::area-updated] will be emitted every
+ *    time a region is updated. This way you can update a partially
+ *    completed image. Note that you do not know anything about the
+ *    completeness of an image from the updated area. For example, in an
+ *    interlaced image you will need to make several passes before the
+ *    image is done loading.
+ * 
+ * ## Loading an animation
+ * 
+ * Loading an animation is almost as easy as loading an image. Once the
+ * first [signal`GdkPixbuf`.PixbufLoader::area-prepared] signal has been
+ * emitted, you can call [method`GdkPixbuf`.PixbufLoader.get_animation] to
+ * get the [class`GdkPixbuf`.PixbufAnimation] instance, and then call
+ * and [method`GdkPixbuf`.PixbufAnimation.get_iter] to get a
+ * [class`GdkPixbuf`.PixbufAnimationIter] to retrieve the pixbuf for the
+ * desired time stamp.
+ */
 class PixbufLoader {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -2933,6 +3174,7 @@ class PixbufLoader {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -2945,6 +3187,7 @@ class PixbufLoader {
      * After this signal is emitted, applications can call
      * gdk_pixbuf_loader_get_pixbuf() to fetch the partially-loaded
      * pixbuf.
+     * @signal 
      */
     connect(sigName: "area-prepared", callback: (($obj: PixbufLoader) => void)): number
     connect_after(sigName: "area-prepared", callback: (($obj: PixbufLoader) => void)): number
@@ -2958,6 +3201,7 @@ class PixbufLoader {
      * 
      * Applications can use this signal to know when to repaint
      * areas of an image that is being loaded.
+     * @signal 
      * @param x X offset of upper-left corner of the updated area.
      * @param y Y offset of upper-left corner of the updated area.
      * @param width Width of updated area.
@@ -2972,6 +3216,7 @@ class PixbufLoader {
      * It can be used by different parts of an application to receive
      * notification when an image loader is closed by the code that
      * drives it.
+     * @signal 
      */
     connect(sigName: "closed", callback: (($obj: PixbufLoader) => void)): number
     connect_after(sigName: "closed", callback: (($obj: PixbufLoader) => void)): number
@@ -2984,6 +3229,7 @@ class PixbufLoader {
      * Applications can call gdk_pixbuf_loader_set_size() in response
      * to this signal to set the desired size to which the image
      * should be scaled.
+     * @signal 
      * @param width the original width of the image
      * @param height the original height of the image
      */
@@ -3019,6 +3265,7 @@ class PixbufLoader {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: PixbufLoader, pspec: GObject.ParamSpec) => void)): number
@@ -3464,6 +3711,7 @@ class PixbufNonAnim {
      * area_updated signal.
      * 
      * A delay time of -1 is possible, indicating "infinite".
+     * @virtual 
      * @param start_time time when the animation starts playing
      */
     vfunc_get_iter(start_time: GLib.TimeVal | null): PixbufAnimationIter
@@ -3480,6 +3728,7 @@ class PixbufNonAnim {
      * 
      * If an animation hasn't loaded any frames yet, this function will
      * return `NULL`.
+     * @virtual 
      */
     vfunc_get_static_image(): Pixbuf
     /**
@@ -3489,6 +3738,7 @@ class PixbufNonAnim {
      * turns out to be a plain, unanimated image, then this function will
      * return `TRUE`. Use gdk_pixbuf_animation_get_static_image() to retrieve
      * the image.
+     * @virtual 
      */
     vfunc_is_static_image(): boolean
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -3508,6 +3758,7 @@ class PixbufNonAnim {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -3541,6 +3792,7 @@ class PixbufNonAnim {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: PixbufNonAnim, pspec: GObject.ParamSpec) => void)): number
@@ -3564,6 +3816,9 @@ interface PixbufSimpleAnim_ConstructProps extends PixbufAnimation_ConstructProps
      */
     loop?: boolean | null
 }
+/**
+ * An opaque struct representing a simple animation.
+ */
 class PixbufSimpleAnim {
     /* Properties of GdkPixbuf-2.0.GdkPixbuf.PixbufSimpleAnim */
     /**
@@ -4011,6 +4266,7 @@ class PixbufSimpleAnim {
      * area_updated signal.
      * 
      * A delay time of -1 is possible, indicating "infinite".
+     * @virtual 
      * @param start_time time when the animation starts playing
      */
     vfunc_get_iter(start_time: GLib.TimeVal | null): PixbufAnimationIter
@@ -4027,6 +4283,7 @@ class PixbufSimpleAnim {
      * 
      * If an animation hasn't loaded any frames yet, this function will
      * return `NULL`.
+     * @virtual 
      */
     vfunc_get_static_image(): Pixbuf
     /**
@@ -4036,6 +4293,7 @@ class PixbufSimpleAnim {
      * turns out to be a plain, unanimated image, then this function will
      * return `TRUE`. Use gdk_pixbuf_animation_get_static_image() to retrieve
      * the image.
+     * @virtual 
      */
     vfunc_is_static_image(): boolean
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -4055,6 +4313,7 @@ class PixbufSimpleAnim {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -4088,6 +4347,7 @@ class PixbufSimpleAnim {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: PixbufSimpleAnim, pspec: GObject.ParamSpec) => void)): number
@@ -4515,6 +4775,7 @@ class PixbufSimpleAnimIter {
      * display, assuming the display had been rendered prior to advancing;
      * if `TRUE`, you need to call gdk_pixbuf_animation_iter_get_pixbuf()
      * and update the display with the new pixbuf.
+     * @virtual 
      * @param current_time current time
      */
     vfunc_advance(current_time: GLib.TimeVal | null): boolean
@@ -4528,6 +4789,7 @@ class PixbufSimpleAnimIter {
      * Note that some formats, like GIF, might clamp the timeout values in the
      * image file to avoid updates that are just too quick. The minimum timeout
      * for GIF images is currently 20 milliseconds.
+     * @virtual 
      */
     vfunc_get_delay_time(): number
     /**
@@ -4546,6 +4808,7 @@ class PixbufSimpleAnimIter {
      * 
      * Copy the pixbuf to keep it (don't just add a reference), as it may get
      * recycled as you advance the iterator.
+     * @virtual 
      */
     vfunc_get_pixbuf(): Pixbuf
     /**
@@ -4555,6 +4818,7 @@ class PixbufSimpleAnimIter {
      * The `::area_updated` signal is emitted for an area of the frame currently
      * streaming in to the loader. So if you're on the currently loading frame,
      * you will need to redraw the screen for the updated area.
+     * @virtual 
      */
     vfunc_on_currently_loading_frame(): boolean
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -4574,6 +4838,7 @@ class PixbufSimpleAnimIter {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -4607,6 +4872,7 @@ class PixbufSimpleAnimIter {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: PixbufSimpleAnimIter, pspec: GObject.ParamSpec) => void)): number
@@ -4621,6 +4887,11 @@ class PixbufSimpleAnimIter {
     _init (config?: PixbufSimpleAnimIter_ConstructProps): void
     static $gtype: GObject.GType<PixbufSimpleAnimIter>
 }
+/**
+ * Modules supporting animations must derive a type from
+ * #GdkPixbufAnimation, providing suitable implementations of the
+ * virtual functions.
+ */
 abstract class PixbufAnimationClass {
     /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationClass */
     /**
@@ -4633,6 +4904,11 @@ abstract class PixbufAnimationClass {
     get_iter: (animation: PixbufAnimation, start_time: GLib.TimeVal | null) => PixbufAnimationIter
     static name: string
 }
+/**
+ * Modules supporting animations must derive a type from
+ * #GdkPixbufAnimationIter, providing suitable implementations of the
+ * virtual functions.
+ */
 abstract class PixbufAnimationIterClass {
     /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIterClass */
     /**
@@ -4645,6 +4921,13 @@ abstract class PixbufAnimationIterClass {
     advance: (iter: PixbufAnimationIter, current_time: GLib.TimeVal | null) => boolean
     static name: string
 }
+/**
+ * A `GdkPixbufFormat` contains information about the image format accepted
+ * by a module.
+ * 
+ * Only modules should access the fields directly, applications should
+ * use the `gdk_pixbuf_format_*` family of functions.
+ */
 class PixbufFormat {
     /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufFormat */
     /**
@@ -4767,6 +5050,53 @@ abstract class PixbufLoaderClass {
     closed: (loader: PixbufLoader) => void
     static name: string
 }
+/**
+ * A `GdkPixbufModule` contains the necessary functions to load and save
+ * images in a certain file format.
+ * 
+ * If `GdkPixbuf` has been compiled with `GModule` support, it can be extended
+ * by modules which can load (and perhaps also save) new image and animation
+ * formats.
+ * 
+ * ## Implementing modules
+ * 
+ * The `GdkPixbuf` interfaces needed for implementing modules are contained in
+ * `gdk-pixbuf-io.h` (and `gdk-pixbuf-animation.h` if the module supports
+ * animations). They are not covered by the same stability guarantees as the
+ * regular GdkPixbuf API. To underline this fact, they are protected by the
+ * `GDK_PIXBUF_ENABLE_BACKEND` pre-processor symbol.
+ * 
+ * Each loadable module must contain a `GdkPixbufModuleFillVtableFunc` function
+ * named `fill_vtable`, which will get called when the module
+ * is loaded and must set the function pointers of the `GdkPixbufModule`.
+ * 
+ * In order to make format-checking work before actually loading the modules
+ * (which may require calling `dlopen` to load image libraries), modules export
+ * their signatures (and other information) via the `fill_info` function. An
+ * external utility, `gdk-pixbuf-query-loaders`, uses this to create a text
+ * file containing a list of all available loaders and  their signatures.
+ * This file is then read at runtime by `GdkPixbuf` to obtain the list of
+ * available loaders and their signatures.
+ * 
+ * Modules may only implement a subset of the functionality available via
+ * `GdkPixbufModule`. If a particular functionality is not implemented, the
+ * `fill_vtable` function will simply not set the corresponding
+ * function pointers of the `GdkPixbufModule` structure. If a module supports
+ * incremental loading (i.e. provides `begin_load`, `stop_load` and
+ * `load_increment`), it doesn't have to implement `load`, since `GdkPixbuf`
+ * can supply a generic `load` implementation wrapping the incremental loading.
+ * 
+ * ## Installing modules
+ * 
+ * Installing a module is a two-step process:
+ * 
+ *  - copy the module file(s) to the loader directory (normally
+ *    `$libdir/gdk-pixbuf-2.0/$version/loaders`, unless overridden by the
+ *    environment variable `GDK_PIXBUF_MODULEDIR`)
+ *  - call `gdk-pixbuf-query-loaders` to update the module file (normally
+ *    `$libdir/gdk-pixbuf-2.0/$version/loaders.cache`, unless overridden
+ *    by the environment variable `GDK_PIXBUF_MODULE_FILE`)
+ */
 class PixbufModule {
     /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufModule */
     /**
@@ -4816,6 +5146,38 @@ class PixbufModule {
     is_save_option_supported: PixbufModuleSaveOptionSupportedFunc
     static name: string
 }
+/**
+ * The signature prefix for a module.
+ * 
+ * The signature of a module is a set of prefixes. Prefixes are encoded as
+ * pairs of ordinary strings, where the second string, called the mask, if
+ * not `NULL`, must be of the same length as the first one and may contain
+ * ' ', '!', 'x', 'z', and 'n' to indicate bytes that must be matched,
+ * not matched, "don't-care"-bytes, zeros and non-zeros, respectively.
+ * 
+ * Each prefix has an associated integer that describes the relevance of
+ * the prefix, with 0 meaning a mismatch and 100 a "perfect match".
+ * 
+ * Starting with gdk-pixbuf 2.8, the first byte of the mask may be '*',
+ * indicating an unanchored pattern that matches not only at the beginning,
+ * but also in the middle. Versions prior to 2.8 will interpret the '*'
+ * like an 'x'.
+ * 
+ * The signature of a module is stored as an array of
+ * `GdkPixbufModulePatterns`. The array is terminated by a pattern
+ * where the `prefix` is `NULL`.
+ * 
+ * ```c
+ * GdkPixbufModulePattern *signature[] = {
+ *   { "abcdx", " !x z", 100 },
+ *   { "bla", NULL,  90 },
+ *   { NULL, NULL, 0 }
+ * };
+ * ```
+ * 
+ * In the example above, the signature matches e.g. "auud\0" with
+ * relevance 100, and "blau" with relevance 90.
+ */
 class PixbufModulePattern {
     /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufModulePattern */
     /**

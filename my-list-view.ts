@@ -30,7 +30,7 @@ export class IMyListView extends ListViewListStore {
      * Gtk.SignalListItemFactory::setup signal callback (overloaded from parent class)
      * Handles the creation widgets to put in the ListView
      */
-    factory_setup(widget: Gtk.ListView, item: Gtk.ListItem) {
+    factorySetup(widget: Gtk.ListView, item: Gtk.ListItem) {
         const box = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL})
         const label = new Gtk.Label()
         label.set_halign(Gtk.Align.START)
@@ -50,7 +50,7 @@ export class IMyListView extends ListViewListStore {
      * @param widget 
      * @param item 
      */
-    factory_bind(widget: Gtk.ListView, item: Gtk.ListItem) {
+    factoryBind(widget: Gtk.ListView, item: Gtk.ListItem) {
         // get the Gtk.Box stored in the ListItem
         const box = item.get_child()
         // get the model item, connected to current ListItem
@@ -74,7 +74,7 @@ export class IMyListView extends ListViewListStore {
      * @param widget 
      * @param item 
      */
-    factory_unbind(widget: Gtk.ListView, item: Gtk.ListItem) {
+    factoryUnbind(widget: Gtk.ListView, item: Gtk.ListItem) {
         throw NotImplemented;
     }
 
@@ -84,7 +84,7 @@ export class IMyListView extends ListViewListStore {
      * @param widget 
      * @param item 
      */
-    factory_teardown(widget: Gtk.ListView, item: Gtk.ListItem) {
+    factoryTeardown(widget: Gtk.ListView, item: Gtk.ListItem) {
         throw NotImplemented;
     }
 
@@ -93,7 +93,7 @@ export class IMyListView extends ListViewListStore {
      * @param widget 
      * @param ndx 
      */
-    selection_changed(widget: Gtk.SelectionModel, ndx: number) {
+    selectionChanged(widget: Gtk.SelectionModel, ndx: number) {
         const markup = this.win?.getTextMarkup(
             `Row ${ndx} was selected ( ${this.store?.[ndx]} )`) || ""
         this.win?.page4Label?.set_markup(markup)

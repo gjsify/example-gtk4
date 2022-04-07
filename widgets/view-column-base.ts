@@ -15,30 +15,28 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
 
     store?: Gio.ListStore
     model?: Gtk.SelectionModel
-    col_view?: any; // TODO:
+    colView?: Gtk.ColumnView;
 
-    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, model_cls?: any /* TODO */, col_view?) {
+    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, modelCls: typeof IColumnElem, colView: Gtk.ColumnView) {
         super(config)
-        if (col_view) {
-            this.col_view = col_view
-        }
+        this.colView = colView
     
         // Use the signal Factory, so we can connect our own methods to setup
         this.factory = new Gtk.SignalListItemFactory()
         // connect to Gtk.SignalListItemFactory signals
         // check https://docs.gtk.org/gtk4/class.SignalListItemFactory.html for details
-        this.factory.connect('setup', this.on_factory_setup.bind(this))
-        this.factory.connect('bind', this.on_factory_bind.bind(this))
-        this.factory.connect('unbind', this.on_factory_unbind.bind(this))
-        this.factory.connect('teardown', this.on_factory_teardown.bind(this))
+        this.factory.connect('setup', this.onFactorySetup.bind(this))
+        this.factory.connect('bind', this.onFactoryBind.bind(this))
+        this.factory.connect('unbind', this.onFactoryUnbind.bind(this))
+        this.factory.connect('teardown', this.onFactoryTeardown.bind(this))
         // Create data model, use our own class as elements
         this.set_factory(this.factory)
-        this.store = this.setup_store(model_cls)
+        this.store = this.setupStore(modelCls)
         // create a selection model containing our data model
-        if(this.store) this.model = this.setup_model(this.store)
-        this.model?.connect('selection-changed', this.on_selection_changed.bind(this))
+        if(this.store) this.model = this.setupModel(this.store)
+        this.model?.connect('selection-changed', this.onSelectionChanged.bind(this))
         // add model to the ColumnView
-        this.col_view.set_model(this.model)
+        this.colView.set_model(this.model || null)
     }
 
     /**
@@ -46,7 +44,7 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
      * Can be overloaded in subclass to use another Gtk.SelectModel model
      * @param store 
      */
-    setup_model(store: Gio.ListModel): Gtk.SelectionModel {
+    setupModel(store: Gio.ListModel): Gtk.SelectionModel {
         return Gtk.SingleSelection.new(store)
     }
 
@@ -54,9 +52,9 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
      * Setup the data model
      * must be overloaded in subclass to use another Gio.ListModel
      * @abstract
-     * @param model_cls 
+     * @param modelCls 
      */
-    setup_store(model_cls: typeof IColumnElem): Gio.ListStore {
+    setupStore(modelCls: typeof IColumnElem): Gio.ListStore {
         throw NotImplemented;
     }
 
@@ -73,8 +71,8 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
      * GtkSignalListItemFactory::setup signal callback
      * Setup the widgets to go into the ListView
      */
-    on_factory_setup(widget, item: Gtk.ListItem) {
-        this.factory_setup(widget, item)
+    onFactorySetup(widget: Gtk.Widget, item: Gtk.ListItem) {
+        this.factorySetup(widget, item)
     }
 
     /**
@@ -83,8 +81,8 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
      * @param widget 
      * @param item 
      */
-    on_factory_bind(widget: Gtk.ColumnViewColumn, item: Gtk.ListItem) {
-        this.factory_bind(widget, item)
+    onFactoryBind(widget: Gtk.ColumnViewColumn, item: Gtk.ListItem) {
+        this.factoryBind(widget, item)
     }
 
     /**
@@ -93,25 +91,25 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
      * @param widget 
      * @param item 
      */
-    on_factory_unbind(widget: Gtk.Widget, item: Gtk.ListItem) {
-        this.factory_unbind(widget, item)
+    onFactoryUnbind(widget: Gtk.Widget, item: Gtk.ListItem) {
+        this.factoryUnbind(widget, item)
     }
  
     /**
      * GtkSignalListItemFactory::setup signal callback
      * Undo the creation done in ::setup if needed
      */
-    on_factory_teardown(widget, item: Gtk.ListItem) {
-        this.factory_teardown(widget, item)
+    onFactoryTeardown(widget: Gtk.Widget, item: Gtk.ListItem) {
+        this.factoryTeardown(widget, item)
     }
 
-    on_selection_changed(widget: Gtk.SelectionModel, position: number, nItems: number) {
+    onSelectionChanged(widget: Gtk.SelectionModel, position: number, nItems: number) {
         // get the current selection (GtkBitset)
         const selection = widget.get_selection()
         // the the first value in the GtkBitset, that contain the index of the selection in the data model
         // as we use Gtk.SingleSelection, there can only be one ;-)
         const ndx = selection.get_nth(0)
-        this.selection_changed(widget, ndx)
+        this.selectionChanged(widget, ndx)
     }
 
     // --------------------> abstract callback methods <--------------------------------
@@ -123,7 +121,7 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
      * @param widget 
      * @param item 
      */
-    factory_setup(widget: Gtk.Widget, item: Gtk.ListItem): void {
+    factorySetup(widget: Gtk.Widget, item: Gtk.ListItem): void {
         throw NotImplemented;
     }
     
@@ -133,7 +131,7 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
      * @param widget 
      * @param item 
      */
-    factory_bind(widget: Gtk.ColumnViewColumn, item: Gtk.ListItem): void {
+    factoryBind(widget: Gtk.ColumnViewColumn, item: Gtk.ListItem): void {
         throw NotImplemented;
     }
 
@@ -142,7 +140,7 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
      * @param widget 
      * @param item 
      */
-    factory_unbind(widget: Gtk.Widget, item: Gtk.ListItem): void {
+    factoryUnbind(widget: Gtk.Widget, item: Gtk.ListItem): void {
         throw NotImplemented;
     }
 
@@ -151,7 +149,7 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
      * @param widget 
      * @param item 
      */
-    factory_teardown(widget: Gtk.Widget, item: Gtk.ListItem): void {
+    factoryTeardown(widget: Gtk.Widget, item: Gtk.ListItem): void {
         throw NotImplemented;
     }
 
@@ -162,7 +160,7 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
      * @param widget 
      * @param ndx 
      */
-    selection_changed(widget: Gtk.SelectionModel, ndx: number): void {
+    selectionChanged(widget: Gtk.SelectionModel, ndx: number): void {
         throw NotImplemented;
     }
 }
@@ -170,12 +168,4 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
 export const ViewColumnBase = GObject.registerClass({
     GTypeName: 'ViewColumnBase',
     Implements: [Gio.ListModel as any],
-    Properties: {
-        'store': GObject.ParamSpec.jsobject(
-            'store',
-            'store',
-            'store',
-            GObject.ParamFlags.CONSTRUCT | GObject.ParamFlags.READWRITE,
-        ),
-    }
 }, IViewColumnBase );

@@ -2878,6 +2878,7 @@ enum unicode_general_category_t {
  * 
  * If the buffers have the same length, we compare them glyph-by-glyph and
  * report which aspect(s) of the glyph info/position are different.
+ * @bitfield 
  */
 enum buffer_diff_flags_t {
     /**
@@ -2922,6 +2923,7 @@ enum buffer_diff_flags_t {
 }
 /**
  * Flags for #hb_buffer_t.
+ * @bitfield 
  */
 enum buffer_flags_t {
     /**
@@ -2984,6 +2986,7 @@ enum buffer_flags_t {
 }
 /**
  * Flags that control what glyph information are serialized in hb_buffer_serialize_glyphs().
+ * @bitfield 
  */
 enum buffer_serialize_flags_t {
     /**
@@ -3018,6 +3021,7 @@ enum buffer_serialize_flags_t {
 }
 /**
  * Flags for #hb_glyph_info_t.
+ * @bitfield 
  */
 enum glyph_flags_t {
     /**
@@ -3102,6 +3106,7 @@ enum glyph_flags_t {
 }
 /**
  * Flags that describe the properties of color palette.
+ * @bitfield 
  */
 enum ot_color_palette_flags_t {
     /**
@@ -3122,6 +3127,7 @@ enum ot_color_palette_flags_t {
 }
 /**
  * Flags for math glyph parts.
+ * @bitfield 
  */
 enum ot_math_glyph_part_flags_t {
     /**
@@ -3132,6 +3138,7 @@ enum ot_math_glyph_part_flags_t {
 }
 /**
  * Flags for #hb_ot_var_axis_info_t.
+ * @bitfield 
  */
 enum ot_var_axis_flags_t {
     /**
@@ -3602,12 +3609,14 @@ function version_string(): string
  * message describing what step of the shaping process will be performed.
  * Returning %false from this method will skip this shaping step and move to
  * the next one.
+ * @callback 
  */
 interface buffer_message_func_t {
     (buffer: buffer_t, font: font_t, message: string): bool_t
 }
 /**
  * A virtual method for destroy user-data callbacks.
+ * @callback 
  */
 interface destroy_func_t {
     (): void
@@ -3615,6 +3624,7 @@ interface destroy_func_t {
 /**
  * A virtual method for the #hb_draw_funcs_t to perform a "close-path" draw
  * operation.
+ * @callback 
  */
 interface draw_close_path_func_t {
     (dfuncs: draw_funcs_t, draw_data: object | null, st: draw_state_t): void
@@ -3622,6 +3632,7 @@ interface draw_close_path_func_t {
 /**
  * A virtual method for the #hb_draw_funcs_t to perform a "cubic-to" draw
  * operation.
+ * @callback 
  */
 interface draw_cubic_to_func_t {
     (dfuncs: draw_funcs_t, draw_data: object | null, st: draw_state_t, control1_x: number, control1_y: number, control2_x: number, control2_y: number, to_x: number, to_y: number): void
@@ -3629,6 +3640,7 @@ interface draw_cubic_to_func_t {
 /**
  * A virtual method for the #hb_draw_funcs_t to perform a "line-to" draw
  * operation.
+ * @callback 
  */
 interface draw_line_to_func_t {
     (dfuncs: draw_funcs_t, draw_data: object | null, st: draw_state_t, to_x: number, to_y: number): void
@@ -3636,6 +3648,7 @@ interface draw_line_to_func_t {
 /**
  * A virtual method for the #hb_draw_funcs_t to perform a "move-to" draw
  * operation.
+ * @callback 
  */
 interface draw_move_to_func_t {
     (dfuncs: draw_funcs_t, draw_data: object | null, st: draw_state_t, to_x: number, to_y: number): void
@@ -3643,12 +3656,14 @@ interface draw_move_to_func_t {
 /**
  * A virtual method for the #hb_draw_funcs_t to perform a "quadratic-to" draw
  * operation.
+ * @callback 
  */
 interface draw_quadratic_to_func_t {
     (dfuncs: draw_funcs_t, draw_data: object | null, st: draw_state_t, control_x: number, control_y: number, to_x: number, to_y: number): void
 }
 /**
  * This method should retrieve the extents for a font.
+ * @callback 
  */
 interface font_get_font_extents_func_t {
     (font: font_t, font_data: object | null): bool_t
@@ -3658,6 +3673,7 @@ interface font_get_font_extents_func_t {
  * 
  * This method should retrieve the advance for a specified glyph. The
  * method must return an #hb_position_t.
+ * @callback 
  */
 interface font_get_glyph_advance_func_t {
     (font: font_t, font_data: object | null, glyph: codepoint_t): position_t
@@ -3666,6 +3682,7 @@ interface font_get_glyph_advance_func_t {
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
  * 
  * This method should retrieve the advances for a sequence of glyphs.
+ * @callback 
  */
 interface font_get_glyph_advances_func_t {
     (font: font_t, font_data: object | null, count: number, first_glyph: codepoint_t, glyph_stride: number, advance_stride: number): void
@@ -3676,6 +3693,7 @@ interface font_get_glyph_advances_func_t {
  * This method should retrieve the (X,Y) coordinates (in font units) for a
  * specified contour point in a glyph. Each coordinate must be returned as
  * an #hb_position_t output parameter.
+ * @callback 
  */
 interface font_get_glyph_contour_point_func_t {
     (font: font_t, font_data: object | null, glyph: codepoint_t, point_index: number): bool_t
@@ -3685,6 +3703,7 @@ interface font_get_glyph_contour_point_func_t {
  * 
  * This method should retrieve the extents for a specified glyph. Extents must be
  * returned in an #hb_glyph_extents output parameter.
+ * @callback 
  */
 interface font_get_glyph_extents_func_t {
     (font: font_t, font_data: object | null, glyph: codepoint_t): bool_t
@@ -3694,6 +3713,7 @@ interface font_get_glyph_extents_func_t {
  * 
  * This method should retrieve the glyph ID that corresponds to a glyph-name
  * string.
+ * @callback 
  */
 interface font_get_glyph_from_name_func_t {
     (font: font_t, font_data: object | null, name: string[]): bool_t
@@ -3703,6 +3723,7 @@ interface font_get_glyph_from_name_func_t {
  * 
  * This method should retrieve the glyph ID for a specified Unicode code point
  * font, with an optional variation selector.
+ * @callback 
  */
 interface font_get_glyph_func_t {
     (font: font_t, font_data: object | null, unicode: codepoint_t, variation_selector: codepoint_t): bool_t
@@ -3710,6 +3731,7 @@ interface font_get_glyph_func_t {
 /**
  * This method should retrieve the kerning-adjustment value for a glyph-pair in
  * the specified font, for horizontal text segments.
+ * @callback 
  */
 interface font_get_glyph_kerning_func_t {
     (font: font_t, font_data: object | null, first_glyph: codepoint_t, second_glyph: codepoint_t): position_t
@@ -3719,6 +3741,7 @@ interface font_get_glyph_kerning_func_t {
  * 
  * This method should retrieve the glyph name that corresponds to a
  * glyph ID. The name should be returned in a string output parameter.
+ * @callback 
  */
 interface font_get_glyph_name_func_t {
     (font: font_t, font_data: object | null, glyph: codepoint_t): bool_t
@@ -3729,12 +3752,14 @@ interface font_get_glyph_name_func_t {
  * This method should retrieve the (X,Y) coordinates (in font units) of the
  * origin for a glyph. Each coordinate must be returned in an #hb_position_t
  * output parameter.
+ * @callback 
  */
 interface font_get_glyph_origin_func_t {
     (font: font_t, font_data: object | null, glyph: codepoint_t): bool_t
 }
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
+ * @callback 
  */
 interface font_get_glyph_shape_func_t {
     (font: font_t, font_data: object | null, glyph: codepoint_t, draw_funcs: draw_funcs_t, draw_data: object | null): void
@@ -3744,6 +3769,7 @@ interface font_get_glyph_shape_func_t {
  * 
  * This method should retrieve the nominal glyph ID for a specified Unicode code
  * point. Glyph IDs must be returned in a #hb_codepoint_t output parameter.
+ * @callback 
  */
 interface font_get_nominal_glyph_func_t {
     (font: font_t, font_data: object | null, unicode: codepoint_t): bool_t
@@ -3754,6 +3780,7 @@ interface font_get_nominal_glyph_func_t {
  * This method should retrieve the nominal glyph IDs for a sequence of
  * Unicode code points. Glyph IDs must be returned in a #hb_codepoint_t
  * output parameter.
+ * @callback 
  */
 interface font_get_nominal_glyphs_func_t {
     (font: font_t, font_data: object | null, count: number, first_unicode: codepoint_t, unicode_stride: number, glyph_stride: number): number
@@ -3764,12 +3791,14 @@ interface font_get_nominal_glyphs_func_t {
  * This method should retrieve the glyph ID for a specified Unicode code point
  * followed by a specified Variation Selector code point. Glyph IDs must be
  * returned in a #hb_codepoint_t output parameter.
+ * @callback 
  */
 interface font_get_variation_glyph_func_t {
     (font: font_t, font_data: object | null, unicode: codepoint_t, variation_selector: codepoint_t): bool_t
 }
 /**
  * Callback function for hb_face_create_for_tables().
+ * @callback 
  */
 interface reference_table_func_t {
     (face: face_t, tag: tag_t): blob_t
@@ -3779,6 +3808,7 @@ interface reference_table_func_t {
  * 
  * This method should retrieve the Canonical Combining Class (ccc)
  * property for a specified Unicode code point.
+ * @callback 
  */
 interface unicode_combining_class_func_t {
     (ufuncs: unicode_funcs_t, unicode: codepoint_t): unicode_combining_class_t
@@ -3791,6 +3821,7 @@ interface unicode_combining_class_func_t {
  * point in a #hb_codepoint_t output parameter (if successful).
  * The method must return an #hb_bool_t indicating the success
  * of the composition.
+ * @callback 
  */
 interface unicode_compose_func_t {
     (ufuncs: unicode_funcs_t, a: codepoint_t, b: codepoint_t): bool_t
@@ -3804,6 +3835,7 @@ interface unicode_compose_func_t {
  * The Unicode standard guarantees that a buffer of length #HB_UNICODE_MAX_DECOMPOSITION_LEN codepoints will always be sufficient for any
  * compatibility decomposition plus an terminating value of 0.  Consequently, `decompose` must be allocated by the caller to be at least this length.  Implementations
  * of this function type must ensure that they do not write past the provided array.
+ * @callback 
  */
 interface unicode_decompose_compatibility_func_t {
     (ufuncs: unicode_funcs_t, u: codepoint_t, decomposed: codepoint_t): number
@@ -3815,12 +3847,14 @@ interface unicode_decompose_compatibility_func_t {
  * returning the two decomposed code points in #hb_codepoint_t
  * output parameters (if successful). The method must return an
  * #hb_bool_t indicating the success of the composition.
+ * @callback 
  */
 interface unicode_decompose_func_t {
     (ufuncs: unicode_funcs_t, ab: codepoint_t): bool_t
 }
 /**
  * A virtual method for the #hb_unicode_funcs_t structure.
+ * @callback 
  */
 interface unicode_eastasian_width_func_t {
     (ufuncs: unicode_funcs_t, unicode: codepoint_t): number
@@ -3830,6 +3864,7 @@ interface unicode_eastasian_width_func_t {
  * 
  * This method should retrieve the General Category property for
  * a specified Unicode code point.
+ * @callback 
  */
 interface unicode_general_category_func_t {
     (ufuncs: unicode_funcs_t, unicode: codepoint_t): unicode_general_category_t
@@ -3843,6 +3878,7 @@ interface unicode_general_category_func_t {
  * <note>Note: If a code point does not have a specified
  * Bi-Directional Mirroring Glyph defined, the method should
  * return the original code point.</note>
+ * @callback 
  */
 interface unicode_mirroring_func_t {
     (ufuncs: unicode_funcs_t, unicode: codepoint_t): codepoint_t
@@ -3852,10 +3888,14 @@ interface unicode_mirroring_func_t {
  * 
  * This method should retrieve the Script property for a
  * specified Unicode code point.
+ * @callback 
  */
 interface unicode_script_func_t {
     (ufuncs: unicode_funcs_t, unicode: codepoint_t): script_t
 }
+/**
+ * Structure representing a setting for an #hb_aat_layout_feature_type_t.
+ */
 class aat_layout_feature_selector_info_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.aat_layout_feature_selector_info_t */
     /**
@@ -3872,15 +3912,35 @@ class aat_layout_feature_selector_info_t {
     disable: aat_layout_feature_selector_t
     static name: string
 }
+/**
+ * Data type for blobs. A blob wraps a chunk of binary
+ * data and facilitates its lifecycle management between
+ * a client program and HarfBuzz.
+ */
 class blob_t {
     static name: string
 }
+/**
+ * The main structure holding the input text and its properties before shaping,
+ * and output glyphs and their information after shaping.
+ */
 class buffer_t {
     static name: string
 }
+/**
+ * Glyph draw callbacks.
+ * 
+ * #hb_draw_move_to_func_t, #hb_draw_line_to_func_t and
+ * #hb_draw_cubic_to_func_t calls are necessary to be defined but we translate
+ * #hb_draw_quadratic_to_func_t calls to #hb_draw_cubic_to_func_t if the
+ * callback isn't defined.
+ */
 class draw_funcs_t {
     static name: string
 }
+/**
+ * Current drawing state.
+ */
 class draw_state_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.draw_state_t */
     /**
@@ -3905,9 +3965,19 @@ class draw_state_t {
     current_y: number
     static name: string
 }
+/**
+ * Data type for holding font faces.
+ */
 class face_t {
     static name: string
 }
+/**
+ * The #hb_feature_t is the structure that holds information about requested
+ * feature application. The feature will be applied with the given value to all
+ * glyphs which are in clusters between `start` (inclusive) and `end` (exclusive).
+ * Setting start to #HB_FEATURE_GLOBAL_START and end to #HB_FEATURE_GLOBAL_END
+ * specifies that the feature always applies to the entire buffer.
+ */
 class feature_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.feature_t */
     /**
@@ -3937,6 +4007,12 @@ class feature_t {
     _string(): /* buf */ string[]
     static name: string
 }
+/**
+ * Font-wide extent values, measured in font units.
+ * 
+ * Note that typically `ascender` is positive and `descender`
+ * negative, in coordinate systems that grow up.
+ */
 class font_extents_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.font_extents_t */
     /**
@@ -3953,12 +4029,30 @@ class font_extents_t {
     line_gap: position_t
     static name: string
 }
+/**
+ * Data type containing a set of virtual methods used for
+ * working on #hb_font_t font objects.
+ * 
+ * HarfBuzz provides a lightweight default function for each of
+ * the methods in #hb_font_funcs_t. Client programs can implement
+ * their own replacements for the individual font functions, as
+ * needed, and replace the default by calling the setter for a
+ * method.
+ */
 class font_funcs_t {
     static name: string
 }
+/**
+ * Data type for holding fonts.
+ */
 class font_t {
     static name: string
 }
+/**
+ * Glyph extent values, measured in font units.
+ * 
+ * Note that `height` is negative, in coordinate systems that grow up.
+ */
 class glyph_extents_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.glyph_extents_t */
     /**
@@ -3979,6 +4073,10 @@ class glyph_extents_t {
     height: position_t
     static name: string
 }
+/**
+ * The #hb_glyph_info_t is the structure that holds information about the
+ * glyphs and their relation to input text.
+ */
 class glyph_info_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.glyph_info_t */
     /**
@@ -4002,6 +4100,11 @@ class glyph_info_t {
     cluster: number
     static name: string
 }
+/**
+ * The #hb_glyph_position_t is the structure that holds the positions of the
+ * glyph in both horizontal and vertical directions. All positions in
+ * #hb_glyph_position_t are relative to the current point.
+ */
 class glyph_position_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.glyph_position_t */
     /**
@@ -4026,6 +4129,10 @@ class glyph_position_t {
     y_offset: position_t
     static name: string
 }
+/**
+ * Data type for languages. Each #hb_language_t corresponds to a BCP 47
+ * language tag.
+ */
 class language_t {
     /* Methods of HarfBuzz-0.0.HarfBuzz.language_t */
     /**
@@ -4034,9 +4141,15 @@ class language_t {
     _string(): string
     static name: string
 }
+/**
+ * Data type for holding integer-to-integer hash maps.
+ */
 class map_t {
     static name: string
 }
+/**
+ * Pairs of glyph and color index.
+ */
 class ot_color_layer_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.ot_color_layer_t */
     /**
@@ -4049,6 +4162,11 @@ class ot_color_layer_t {
     color_index: number
     static name: string
 }
+/**
+ * Data type to hold information for a "part" component of a math-variant glyph.
+ * Large variants for stretchable math glyphs (such as parentheses) can be constructed
+ * on the fly from parts.
+ */
 class ot_math_glyph_part_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.ot_math_glyph_part_t */
     /**
@@ -4073,6 +4191,9 @@ class ot_math_glyph_part_t {
     flags: ot_math_glyph_part_flags_t
     static name: string
 }
+/**
+ * Data type to hold math-variant information for a glyph.
+ */
 class ot_math_glyph_variant_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.ot_math_glyph_variant_t */
     /**
@@ -4085,6 +4206,9 @@ class ot_math_glyph_variant_t {
     advance: position_t
     static name: string
 }
+/**
+ * Data type to hold math kerning (cut-in) information for a glyph.
+ */
 class ot_math_kern_entry_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.ot_math_kern_entry_t */
     /**
@@ -4097,6 +4221,9 @@ class ot_math_kern_entry_t {
     kern_value: position_t
     static name: string
 }
+/**
+ * Structure representing a name ID in a particular language.
+ */
 class ot_name_entry_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.ot_name_entry_t */
     /**
@@ -4109,6 +4236,14 @@ class ot_name_entry_t {
     language: language_t
     static name: string
 }
+/**
+ * Data type for holding variation-axis values.
+ * 
+ * The minimum, default, and maximum values are in un-normalized, user scales.
+ * 
+ * <note>Note: at present, the only flag defined for `flags` is
+ * #HB_OT_VAR_AXIS_FLAG_HIDDEN.</note>
+ */
 class ot_var_axis_info_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.ot_var_axis_info_t */
     /**
@@ -4141,6 +4276,9 @@ class ot_var_axis_info_t {
     max_value: number
     static name: string
 }
+/**
+ * Use #hb_ot_var_axis_info_t instead.
+ */
 class ot_var_axis_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.ot_var_axis_t */
     /**
@@ -4165,6 +4303,11 @@ class ot_var_axis_t {
     max_value: number
     static name: string
 }
+/**
+ * The structure that holds various text properties of an #hb_buffer_t. Can be
+ * set and retrieved using hb_buffer_set_segment_properties() and
+ * hb_buffer_get_segment_properties(), respectively.
+ */
 class segment_properties_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.segment_properties_t */
     /**
@@ -4181,18 +4324,53 @@ class segment_properties_t {
     language: language_t
     static name: string
 }
+/**
+ * Data type for holding a set of integers. #hb_set_t's are
+ * used to gather and contain glyph IDs, Unicode code
+ * points, and various other collections of discrete
+ * values.
+ */
 class set_t {
     static name: string
 }
+/**
+ * Data type for holding a shaping plan.
+ * 
+ * Shape plans contain information about how HarfBuzz will shape a
+ * particular text segment, based on the segment's properties and the
+ * capabilities in the font face in use.
+ * 
+ * Shape plans can be queried about how shaping will perform, given a set
+ * of specific input parameters (script, language, direction, features,
+ * etc.).
+ */
 class shape_plan_t {
     static name: string
 }
+/**
+ * Data type containing a set of virtual methods used for
+ * accessing various Unicode character properties.
+ * 
+ * HarfBuzz provides a default function for each of the
+ * methods in #hb_unicode_funcs_t. Client programs can implement
+ * their own replacements for the individual Unicode functions, as
+ * needed, and replace the default by calling the setter for a
+ * method.
+ */
 class unicode_funcs_t {
     static name: string
 }
+/**
+ * Data structure for holding user-data keys.
+ */
 class user_data_key_t {
     static name: string
 }
+/**
+ * Data type for holding variation data. Registered OpenType
+ * variation-axis tags are listed in
+ * [OpenType Axis Tag Registry](https://docs.microsoft.com/en-us/typography/opentype/spec/dvaraxisreg).
+ */
 class variation_t {
     /* Fields of HarfBuzz-0.0.HarfBuzz.variation_t */
     /**
@@ -4213,9 +4391,24 @@ class variation_t {
     static name: string
 }
 class var_int_t {
+    /* Fields of HarfBuzz-0.0.HarfBuzz.var_int_t */
+    u32: number
+    i32: number
+    u16: number[]
+    i16: number[]
+    u8: Uint8Array
+    i8: Uint8Array
     static name: string
 }
 class var_num_t {
+    /* Fields of HarfBuzz-0.0.HarfBuzz.var_num_t */
+    f: number
+    u32: number
+    i32: number
+    u16: number[]
+    i16: number[]
+    u8: Uint8Array
+    i8: Uint8Array
     static name: string
 }
     type bool_t = number

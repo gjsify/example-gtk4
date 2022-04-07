@@ -805,6 +805,7 @@ enum VulkanError {
  * 
  * In general, when multiple flags are set, flipping should take precedence over
  * sliding, which should take precedence over resizing.
+ * @bitfield 
  */
 enum AnchorHints {
     /**
@@ -846,6 +847,7 @@ enum AnchorHints {
 }
 /**
  * Flags describing the current capabilities of a device/tool.
+ * @bitfield 
  */
 enum AxisFlags {
     /**
@@ -896,6 +898,7 @@ enum AxisFlags {
 /**
  * Used in `GdkDrop` and `GdkDrag` to indicate the actions that the
  * destination can and should do with the dropped data.
+ * @bitfield 
  */
 enum DragAction {
     /**
@@ -922,6 +925,7 @@ enum DragAction {
  * Used to represent the different paint clock phases that can be requested.
  * 
  * The elements of the enumeration correspond to the signals of `GdkFrameClock`.
+ * @bitfield 
  */
 enum FrameClockPhase {
     /**
@@ -959,6 +963,7 @@ enum FrameClockPhase {
 }
 /**
  * The list of the different APIs that GdkGLContext can potentially support.
+ * @bitfield 
  */
 enum GLAPI {
     /**
@@ -980,6 +985,7 @@ enum GLAPI {
  * Note that GDK may add internal values to events which include values outside
  * of this enumeration. Your code should preserve and ignore them.  You can use
  * %GDK_MODIFIER_MASK to remove all private values.
+ * @bitfield 
  */
 enum ModifierType {
     /**
@@ -1038,6 +1044,7 @@ enum ModifierType {
  * Flags about a paintable object.
  * 
  * Implementations use these for optimizations such as caching.
+ * @bitfield 
  */
 enum PaintableFlags {
     /**
@@ -1055,6 +1062,7 @@ enum PaintableFlags {
 }
 /**
  * Flags describing the seat capabilities.
+ * @bitfield 
  */
 enum SeatCapabilities {
     /**
@@ -1098,6 +1106,7 @@ enum SeatCapabilities {
  * tiled states is set. On platforms that lack that support, the tiled state
  * will give an indication of tiledness without any of the per-edge states
  * being set.
+ * @bitfield 
  */
 enum ToplevelState {
     /**
@@ -3528,6 +3537,7 @@ function vulkan_error_quark(): GLib.Quark
  * When the function gets called to operate on content, it can call functions on the
  * `deserializer` object to obtain the mime type, input stream, user data, etc. for its
  * operation.
+ * @callback 
  */
 interface ContentDeserializeFunc {
     (deserializer: ContentDeserializer): void
@@ -3538,12 +3548,33 @@ interface ContentDeserializeFunc {
  * When the function gets called to operate on content, it can call functions on the
  * `serializer` object to obtain the mime type, output stream, user data, etc. for its
  * operation.
+ * @callback 
  */
 interface ContentSerializeFunc {
     (serializer: ContentSerializer): void
 }
 interface DevicePad_ConstructProps extends Device_ConstructProps {
 }
+/**
+ * `GdkDevicePad` is an interface implemented by devices of type
+ * %GDK_SOURCE_TABLET_PAD
+ * 
+ * It allows querying the features provided by the pad device.
+ * 
+ * Tablet pads may contain one or more groups, each containing a subset
+ * of the buttons/rings/strips available. [method`Gdk`.DevicePad.get_n_groups]
+ * can be used to obtain the number of groups, [method`Gdk`.DevicePad.get_n_features]
+ * and [method`Gdk`.DevicePad.get_feature_group] can be combined to find out
+ * the number of buttons/rings/strips the device has, and how are they grouped.
+ * 
+ * Each of those groups have different modes, which may be used to map each
+ * individual pad feature to multiple actions. Only one mode is effective
+ * (current) for each given group, different groups may have different
+ * current modes. The number of available modes in a group can be found
+ * out through [method`Gdk`.DevicePad.get_group_n_modes], and the current mode
+ * for a given group will be notified through events of type `GDK_PAD_GROUP_MODE`.
+ * @interface 
+ */
 class DevicePad {
     /* Properties of Gdk-4.0.Gdk.Device */
     /**
@@ -4108,6 +4139,7 @@ class DevicePad {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -4121,12 +4153,14 @@ class DevicePad {
      * example, user switches from the USB mouse to a tablet); in
      * that case the logical device will change to reflect the axes
      * and keys on the new physical device.
+     * @signal 
      */
     connect(sigName: "changed", callback: (($obj: DevicePad) => void)): number
     connect_after(sigName: "changed", callback: (($obj: DevicePad) => void)): number
     emit(sigName: "changed"): void
     /**
      * Emitted on pen/eraser devices whenever tools enter or leave proximity.
+     * @signal 
      * @param tool The new current tool
      */
     connect(sigName: "tool-changed", callback: (($obj: DevicePad, tool: DeviceTool) => void)): number
@@ -4161,6 +4195,7 @@ class DevicePad {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
@@ -4209,6 +4244,10 @@ class DevicePad {
 }
 interface DragSurface_ConstructProps extends Surface_ConstructProps {
 }
+/**
+ * A `GdkDragSurface` is an interface for surfaces used during DND.
+ * @interface 
+ */
 class DragSurface {
     /* Properties of Gdk-4.0.Gdk.Surface */
     /**
@@ -4812,6 +4851,7 @@ class DragSurface {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -4819,6 +4859,7 @@ class DragSurface {
     /* Signals of Gdk-4.0.Gdk.Surface */
     /**
      * Emitted when `surface` starts being present on the monitor.
+     * @signal 
      * @param monitor the monitor
      */
     connect(sigName: "enter-monitor", callback: (($obj: DragSurface, monitor: Monitor) => void)): number
@@ -4826,6 +4867,7 @@ class DragSurface {
     emit(sigName: "enter-monitor", monitor: Monitor): void
     /**
      * Emitted when GDK receives an input event for `surface`.
+     * @signal 
      * @param event an input event
      */
     connect(sigName: "event", callback: (($obj: DragSurface, event: Event) => boolean)): number
@@ -4837,6 +4879,7 @@ class DragSurface {
      * 
      * Surface size is reported in ”application pixels”, not
      * ”device pixels” (see gdk_surface_get_scale_factor()).
+     * @signal 
      * @param width the current width
      * @param height the current height
      */
@@ -4845,6 +4888,7 @@ class DragSurface {
     emit(sigName: "layout", width: number, height: number): void
     /**
      * Emitted when `surface` stops being present on the monitor.
+     * @signal 
      * @param monitor the monitor
      */
     connect(sigName: "leave-monitor", callback: (($obj: DragSurface, monitor: Monitor) => void)): number
@@ -4852,6 +4896,7 @@ class DragSurface {
     emit(sigName: "leave-monitor", monitor: Monitor): void
     /**
      * Emitted when part of the surface needs to be redrawn.
+     * @signal 
      * @param region the region that needs to be redrawn
      */
     connect(sigName: "render", callback: (($obj: DragSurface, region: cairo.Region) => boolean)): number
@@ -4886,6 +4931,7 @@ class DragSurface {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: DragSurface, pspec: GObject.ParamSpec) => void)): number
@@ -4914,6 +4960,54 @@ class DragSurface {
     _init (config?: DragSurface_ConstructProps): void
     static $gtype: GObject.GType<DragSurface>
 }
+/**
+ * `GdkPaintable` is a simple interface used by GTK to represent content that
+ * can be painted.
+ * 
+ * The content of a `GdkPaintable` can be painted anywhere at any size
+ * without requiring any sort of layout. The interface is inspired by
+ * similar concepts elsewhere, such as
+ * [ClutterContent](https://developer.gnome.org/clutter/stable/ClutterContent.html),
+ * [HTML/CSS Paint Sources](https://www.w3.org/TR/css-images-4/#paint-source),
+ * or [SVG Paint Servers](https://www.w3.org/TR/SVG2/pservers.html).
+ * 
+ * A `GdkPaintable` can be snapshot at any time and size using
+ * [method`Gdk`.Paintable.snapshot]. How the paintable interprets that size and
+ * if it scales or centers itself into the given rectangle is implementation
+ * defined, though if you are implementing a `GdkPaintable` and don't know what
+ * to do, it is suggested that you scale your paintable ignoring any potential
+ * aspect ratio.
+ * 
+ * The contents that a `GdkPaintable` produces may depend on the [class`GdkSnapshot]`
+ * passed to it. For example, paintables may decide to use more detailed images
+ * on higher resolution screens or when OpenGL is available. A `GdkPaintable`
+ * will however always produce the same output for the same snapshot.
+ * 
+ * A `GdkPaintable` may change its contents, meaning that it will now produce
+ * a different output with the same snapshot. Once that happens, it will call
+ * [method`Gdk`.Paintable.invalidate_contents] which will emit the
+ * [signal`GdkPaintable:`:invalidate-contents] signal. If a paintable is known
+ * to never change its contents, it will set the %GDK_PAINTABLE_STATIC_CONTENTS
+ * flag. If a consumer cannot deal with changing contents, it may call
+ * [method`Gdk`.Paintable.get_current_image] which will return a static
+ * paintable and use that.
+ * 
+ * A paintable can report an intrinsic (or preferred) size or aspect ratio it
+ * wishes to be rendered at, though it doesn't have to. Consumers of the interface
+ * can use this information to layout thepaintable appropriately. Just like the
+ * contents, the size of a paintable can change. A paintable will indicate this
+ * by calling [method`Gdk`.Paintable.invalidate_size] which will emit the
+ * [signal`GdkPaintable:`:invalidate-size] signal. And just like for contents,
+ * if a paintable is known to never change its size, it will set the
+ * %GDK_PAINTABLE_STATIC_SIZE flag.
+ * 
+ * Besides API for applications, there are some functions that are only
+ * useful for implementing subclasses and should not be used by applications:
+ * [method`Gdk`.Paintable.invalidate_contents],
+ * [method`Gdk`.Paintable.invalidate_size],
+ * [func`Gdk`.Paintable.new_empty].
+ * @interface 
+ */
 class Paintable {
     /* Methods of Gdk-4.0.Gdk.Paintable */
     /**
@@ -5041,6 +5135,7 @@ class Paintable {
      * for example to take a screenshot of a running animation.
      * 
      * If the `paintable` is already immutable, it will return itself.
+     * @virtual 
      */
     vfunc_get_current_image(): Paintable
     /**
@@ -5049,6 +5144,7 @@ class Paintable {
      * This is oftentimes useful for optimizations.
      * 
      * See [flags`Gdk`.PaintableFlags] for the flags and what they mean.
+     * @virtual 
      */
     vfunc_get_flags(): PaintableFlags
     /**
@@ -5069,6 +5165,7 @@ class Paintable {
      * 
      * If the `paintable` does not have a preferred aspect ratio,
      * it returns 0. Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_aspect_ratio(): number
     /**
@@ -5082,6 +5179,7 @@ class Paintable {
      * 
      * If the `paintable` does not have a preferred height, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_height(): number
     /**
@@ -5095,6 +5193,7 @@ class Paintable {
      * 
      * If the `paintable` does not have a preferred width, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_width(): number
     /**
@@ -5103,6 +5202,7 @@ class Paintable {
      * The paintable is drawn at the current (0,0) offset of the `snapshot`.
      * If `width` and `height` are not larger than zero, this function will
      * do nothing.
+     * @virtual 
      * @param snapshot a `GdkSnapshot` to snapshot to
      * @param width width to snapshot in
      * @param height height to snapshot in
@@ -5114,6 +5214,7 @@ class Paintable {
      * 
      * Examples for such an event would be videos changing to the next frame or
      * the icon theme for an icon changing.
+     * @signal 
      */
     connect(sigName: "invalidate-contents", callback: (($obj: Paintable) => void)): number
     connect_after(sigName: "invalidate-contents", callback: (($obj: Paintable) => void)): number
@@ -5129,6 +5230,7 @@ class Paintable {
      * 
      * Examples for such an event would be a paintable displaying
      * the contents of a toplevel surface being resized.
+     * @signal 
      */
     connect(sigName: "invalidate-size", callback: (($obj: Paintable) => void)): number
     connect_after(sigName: "invalidate-size", callback: (($obj: Paintable) => void)): number
@@ -5158,6 +5260,16 @@ interface Popup_ConstructProps extends Surface_ConstructProps {
      */
     parent?: Surface | null
 }
+/**
+ * A `GdkPopup` is a surface that is attached to another surface.
+ * 
+ * The `GdkPopup` is positioned relative to its parent surface.
+ * 
+ * `GdkPopup`s are typically used to implement menus and similar popups.
+ * They can be modal, which is indicated by the [property`GdkPopup:`autohide]
+ * property.
+ * @interface 
+ */
 class Popup {
     /* Properties of Gdk-4.0.Gdk.Popup */
     /**
@@ -5815,6 +5927,7 @@ class Popup {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -5822,6 +5935,7 @@ class Popup {
     /* Signals of Gdk-4.0.Gdk.Surface */
     /**
      * Emitted when `surface` starts being present on the monitor.
+     * @signal 
      * @param monitor the monitor
      */
     connect(sigName: "enter-monitor", callback: (($obj: Popup, monitor: Monitor) => void)): number
@@ -5829,6 +5943,7 @@ class Popup {
     emit(sigName: "enter-monitor", monitor: Monitor): void
     /**
      * Emitted when GDK receives an input event for `surface`.
+     * @signal 
      * @param event an input event
      */
     connect(sigName: "event", callback: (($obj: Popup, event: Event) => boolean)): number
@@ -5840,6 +5955,7 @@ class Popup {
      * 
      * Surface size is reported in ”application pixels”, not
      * ”device pixels” (see gdk_surface_get_scale_factor()).
+     * @signal 
      * @param width the current width
      * @param height the current height
      */
@@ -5848,6 +5964,7 @@ class Popup {
     emit(sigName: "layout", width: number, height: number): void
     /**
      * Emitted when `surface` stops being present on the monitor.
+     * @signal 
      * @param monitor the monitor
      */
     connect(sigName: "leave-monitor", callback: (($obj: Popup, monitor: Monitor) => void)): number
@@ -5855,6 +5972,7 @@ class Popup {
     emit(sigName: "leave-monitor", monitor: Monitor): void
     /**
      * Emitted when part of the surface needs to be redrawn.
+     * @signal 
      * @param region the region that needs to be redrawn
      */
     connect(sigName: "render", callback: (($obj: Popup, region: cairo.Region) => boolean)): number
@@ -5889,6 +6007,7 @@ class Popup {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Popup, pspec: GObject.ParamSpec) => void)): number
@@ -5959,6 +6078,14 @@ interface Toplevel_ConstructProps extends Surface_ConstructProps {
      */
     transient_for?: Surface | null
 }
+/**
+ * A `GdkToplevel` is a freestanding toplevel surface.
+ * 
+ * The `GdkToplevel` interface provides useful APIs for interacting with
+ * the windowing system, such as controlling maximization and size of the
+ * surface, setting icons and transient parents for dialogs.
+ * @interface 
+ */
 class Toplevel {
     /* Properties of Gdk-4.0.Gdk.Toplevel */
     /**
@@ -6784,6 +6911,7 @@ class Toplevel {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -6802,6 +6930,7 @@ class Toplevel {
      * and compute the desired size of the toplevel, given the information
      * passed via the [struct`Gdk`.ToplevelSize] object. Failing to do so
      * will result in an arbitrary size being used as a result.
+     * @signal 
      */
     connect(sigName: "compute-size", callback: (($obj: Toplevel) => void)): number
     connect_after(sigName: "compute-size", callback: (($obj: Toplevel) => void)): number
@@ -6809,6 +6938,7 @@ class Toplevel {
     /* Signals of Gdk-4.0.Gdk.Surface */
     /**
      * Emitted when `surface` starts being present on the monitor.
+     * @signal 
      * @param monitor the monitor
      */
     connect(sigName: "enter-monitor", callback: (($obj: Toplevel, monitor: Monitor) => void)): number
@@ -6816,6 +6946,7 @@ class Toplevel {
     emit(sigName: "enter-monitor", monitor: Monitor): void
     /**
      * Emitted when GDK receives an input event for `surface`.
+     * @signal 
      * @param event an input event
      */
     connect(sigName: "event", callback: (($obj: Toplevel, event: Event) => boolean)): number
@@ -6827,6 +6958,7 @@ class Toplevel {
      * 
      * Surface size is reported in ”application pixels”, not
      * ”device pixels” (see gdk_surface_get_scale_factor()).
+     * @signal 
      * @param width the current width
      * @param height the current height
      */
@@ -6835,6 +6967,7 @@ class Toplevel {
     emit(sigName: "layout", width: number, height: number): void
     /**
      * Emitted when `surface` stops being present on the monitor.
+     * @signal 
      * @param monitor the monitor
      */
     connect(sigName: "leave-monitor", callback: (($obj: Toplevel, monitor: Monitor) => void)): number
@@ -6842,6 +6975,7 @@ class Toplevel {
     emit(sigName: "leave-monitor", monitor: Monitor): void
     /**
      * Emitted when part of the surface needs to be redrawn.
+     * @signal 
      * @param region the region that needs to be redrawn
      */
     connect(sigName: "render", callback: (($obj: Toplevel, region: cairo.Region) => boolean)): number
@@ -6876,6 +7010,7 @@ class Toplevel {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Toplevel, pspec: GObject.ParamSpec) => void)): number
@@ -6931,6 +7066,27 @@ interface AppLaunchContext_ConstructProps extends Gio.AppLaunchContext_Construct
      */
     display?: Display | null
 }
+/**
+ * `GdkAppLaunchContext` handles launching an application in a graphical context.
+ * 
+ * It is an implementation of `GAppLaunchContext` that provides startup
+ * notification and allows to launch applications on a specific workspace.
+ * 
+ * ## Launching an application
+ * 
+ * ```c
+ * GdkAppLaunchContext *context;
+ * 
+ * context = gdk_display_get_app_launch_context (display);
+ * 
+ * gdk_app_launch_context_set_timestamp (gdk_event_get_time (event));
+ * 
+ * if (!g_app_info_launch_default_for_uri ("http://www.gtk.org", context, &error))
+ *   g_warning ("Launching failed: %s\n", error->message);
+ * 
+ * g_object_unref (context);
+ * ```
+ */
 class AppLaunchContext {
     /* Properties of Gdk-4.0.Gdk.AppLaunchContext */
     /**
@@ -7364,6 +7520,7 @@ class AppLaunchContext {
      * Gets the display string for the `context`. This is used to ensure new
      * applications are started on the same display as the launching
      * application, by setting the `DISPLAY` environment variable.
+     * @virtual 
      * @param info a #GAppInfo
      * @param files a #GList of #GFile objects
      */
@@ -7374,6 +7531,7 @@ class AppLaunchContext {
      * 
      * Startup notification IDs are defined in the
      * [FreeDesktop.Org Startup Notifications standard](http://standards.freedesktop.org/startup-notification-spec/startup-notification-latest.txt).
+     * @virtual 
      * @param info a #GAppInfo
      * @param files a #GList of of #GFile objects
      */
@@ -7381,6 +7539,7 @@ class AppLaunchContext {
     /**
      * Called when an application has failed to launch, so that it can cancel
      * the application startup notification started in g_app_launch_context_get_startup_notify_id().
+     * @virtual 
      * @param startup_notify_id the startup notification id that was returned by g_app_launch_context_get_startup_notify_id().
      */
     vfunc_launch_failed(startup_notify_id: string): void
@@ -7403,6 +7562,7 @@ class AppLaunchContext {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -7412,6 +7572,7 @@ class AppLaunchContext {
      * The #GAppLaunchContext::launch-failed signal is emitted when a #GAppInfo launch
      * fails. The startup notification id is provided, so that the launcher
      * can cancel the startup notification.
+     * @signal 
      * @param startup_notify_id the startup notification id for the failed launch
      */
     connect(sigName: "launch-failed", callback: (($obj: AppLaunchContext, startup_notify_id: string) => void)): number
@@ -7432,6 +7593,7 @@ class AppLaunchContext {
      * 
      * It is guaranteed that this signal is followed by either a #GAppLaunchContext::launched or
      * #GAppLaunchContext::launch-failed signal.
+     * @signal 
      * @param info the #GAppInfo that is about to be launched
      * @param platform_data additional platform-specific data for this launch
      */
@@ -7448,6 +7610,7 @@ class AppLaunchContext {
      * Since 2.72 the `pid` may be 0 if the process id wasn't known (for
      * example if the process was launched via D-Bus). The `pid` may not be
      * set at all in subsequent releases.
+     * @signal 
      * @param info the #GAppInfo that was just launched
      * @param platform_data additional platform-specific data for this launch
      */
@@ -7483,6 +7646,7 @@ class AppLaunchContext {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: AppLaunchContext, pspec: GObject.ParamSpec) => void)): number
@@ -7499,6 +7663,9 @@ class AppLaunchContext {
     _init (config?: AppLaunchContext_ConstructProps): void
     static $gtype: GObject.GType<AppLaunchContext>
 }
+/**
+ * An event related to a button on a pointer device.
+ */
 class ButtonEvent {
     /* Methods of Gdk-4.0.Gdk.ButtonEvent */
     /**
@@ -7647,6 +7814,14 @@ class ButtonEvent {
 }
 interface CairoContext_ConstructProps extends DrawContext_ConstructProps {
 }
+/**
+ * `GdkCairoContext` is an object representing the platform-specific
+ * draw context.
+ * 
+ * `GdkCairoContext`s are created for a surface using
+ * [method`Gdk`.Surface.create_cairo_context], and the context
+ * can then be used to draw on that surface.
+ */
 class CairoContext {
     /* Properties of Gdk-4.0.Gdk.DrawContext */
     /**
@@ -8069,6 +8244,7 @@ class CairoContext {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -8102,6 +8278,7 @@ class CairoContext {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: CairoContext, pspec: GObject.ParamSpec) => void)): number
@@ -8127,6 +8304,25 @@ interface Clipboard_ConstructProps extends GObject.Object_ConstructProps {
      */
     display?: Display | null
 }
+/**
+ * The `GdkClipboard` object represents data shared between applications or
+ * inside an application.
+ * 
+ * To get a `GdkClipboard` object, use [method`Gdk`.Display.get_clipboard] or
+ * [method`Gdk`.Display.get_primary_clipboard]. You can find out about the data
+ * that is currently available in a clipboard using
+ * [method`Gdk`.Clipboard.get_formats].
+ * 
+ * To make text or image data available in a clipboard, use
+ * [method`Gdk`.Clipboard.set_text] or [method`Gdk`.Clipboard.set_texture].
+ * For other data, you can use [method`Gdk`.Clipboard.set_content], which
+ * takes a [class`Gdk`.ContentProvider] object.
+ * 
+ * To read textual or image data from a clipboard, use
+ * [method`Gdk`.Clipboard.read_text_async] or
+ * [method`Gdk`.Clipboard.read_texture_async]. For other data, use
+ * [method`Gdk`.Clipboard.read_async], which provides a `GInputStream` object.
+ */
 class Clipboard {
     /* Properties of Gdk-4.0.Gdk.Clipboard */
     /**
@@ -8637,6 +8833,7 @@ class Clipboard {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -8644,6 +8841,7 @@ class Clipboard {
     /* Signals of Gdk-4.0.Gdk.Clipboard */
     /**
      * Emitted when the clipboard changes ownership.
+     * @signal 
      */
     connect(sigName: "changed", callback: (($obj: Clipboard) => void)): number
     connect_after(sigName: "changed", callback: (($obj: Clipboard) => void)): number
@@ -8677,6 +8875,7 @@ class Clipboard {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Clipboard, pspec: GObject.ParamSpec) => void)): number
@@ -8701,6 +8900,19 @@ class Clipboard {
 }
 interface ContentDeserializer_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `GdkContentDeserializer` is used to deserialize content received via
+ * inter-application data transfers.
+ * 
+ * The `GdkContentDeserializer` transforms serialized content that is
+ * identified by a mime type into an object identified by a GType.
+ * 
+ * GTK provides serializers and deserializers for common data types
+ * such as text, colors, images or file lists. To register your own
+ * deserialization functions, use [func`content_register_deserializer]`.
+ * 
+ * Also see [class`Gdk`.ContentSerializer].
+ */
 class ContentDeserializer {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -9103,15 +9315,18 @@ class ContentDeserializer {
     /* Virtual methods of Gdk-4.0.Gdk.ContentDeserializer */
     /**
      * Gets the source object from a #GAsyncResult.
+     * @virtual 
      */
     vfunc_get_source_object(): GObject.Object | null
     /**
      * Gets the user data from a #GAsyncResult.
+     * @virtual 
      */
     vfunc_get_user_data(): object | null
     /**
      * Checks if `res` has the given `source_tag` (generally a function
      * pointer indicating the function `res` was created by).
+     * @virtual 
      * @param source_tag an application-defined tag
      */
     vfunc_is_tagged(source_tag: object | null): boolean
@@ -9132,6 +9347,7 @@ class ContentDeserializer {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -9165,6 +9381,7 @@ class ContentDeserializer {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: ContentDeserializer, pspec: GObject.ParamSpec) => void)): number
@@ -9181,6 +9398,17 @@ class ContentDeserializer {
 }
 interface ContentProvider_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `GdkContentProvider` is used to provide content for the clipboard or
+ * for drag-and-drop operations in a number of formats.
+ * 
+ * To create a `GdkContentProvider`, use [ctor`Gdk`.ContentProvider.new_for_value]
+ * or [ctor`Gdk`.ContentProvider.new_for_bytes].
+ * 
+ * GDK knows how to handle common text and image formats out-of-the-box. See
+ * [class`Gdk`.ContentSerializer] and [class`Gdk`.ContentDeserializer] if you want
+ * to add support for application-specific data formats.
+ */
 class ContentProvider {
     /* Properties of Gdk-4.0.Gdk.ContentProvider */
     /**
@@ -9191,6 +9419,8 @@ class ContentProvider {
      * The subset of formats that clipboard managers should store this provider's data in.
      */
     readonly storable_formats: ContentFormats
+    /* Fields of Gdk-4.0.Gdk.ContentProvider */
+    parent: GObject.Object
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of Gdk-4.0.Gdk.ContentProvider */
@@ -9566,6 +9796,7 @@ class ContentProvider {
     vfunc_attach_clipboard(clipboard: Clipboard): void
     /**
      * Emits the ::content-changed signal.
+     * @virtual 
      */
     vfunc_content_changed(): void
     vfunc_detach_clipboard(clipboard: Clipboard): void
@@ -9577,10 +9808,12 @@ class ContentProvider {
      * returned by [method`Gdk`.ContentProvider.ref_formats]. However, if the
      * given `GType` is not supported, this operation can fail and
      * `G_IO_ERROR_NOT_SUPPORTED` will be reported.
+     * @virtual 
      */
     vfunc_get_value(): [ /* returnType */ boolean, /* value */ any ]
     /**
      * Gets the formats that the provider can provide its current contents in.
+     * @virtual 
      */
     vfunc_ref_formats(): ContentFormats
     /**
@@ -9590,6 +9823,7 @@ class ContentProvider {
      * An example of such an application would be a clipboard manager.
      * 
      * This can be assumed to be a subset of [method`Gdk`.ContentProvider.ref_formats].
+     * @virtual 
      */
     vfunc_ref_storable_formats(): ContentFormats
     /**
@@ -9605,6 +9839,7 @@ class ContentProvider {
      * not supported, `G_IO_ERROR_NOT_SUPPORTED` will be reported.
      * 
      * The given `stream` will not be closed.
+     * @virtual 
      * @param mime_type the mime type to provide the data in
      * @param stream the `GOutputStream` to write to
      * @param io_priority I/O priority of the request.
@@ -9616,6 +9851,7 @@ class ContentProvider {
      * Finishes an asynchronous write operation.
      * 
      * See [method`Gdk`.ContentProvider.write_mime_type_async].
+     * @virtual 
      * @param result a `GAsyncResult`
      */
     vfunc_write_mime_type_finish(result: Gio.AsyncResult): boolean
@@ -9636,6 +9872,7 @@ class ContentProvider {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -9643,6 +9880,7 @@ class ContentProvider {
     /* Signals of Gdk-4.0.Gdk.ContentProvider */
     /**
      * Emitted whenever the content provided by this provider has changed.
+     * @signal 
      */
     connect(sigName: "content-changed", callback: (($obj: ContentProvider) => void)): number
     connect_after(sigName: "content-changed", callback: (($obj: ContentProvider) => void)): number
@@ -9676,6 +9914,7 @@ class ContentProvider {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: ContentProvider, pspec: GObject.ParamSpec) => void)): number
@@ -9700,6 +9939,20 @@ class ContentProvider {
 }
 interface ContentSerializer_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `GdkContentSerializer` is used to serialize content for
+ * inter-application data transfers.
+ * 
+ * The `GdkContentSerializer` transforms an object that is identified
+ * by a GType into a serialized form (i.e. a byte stream) that is
+ * identified by a mime type.
+ * 
+ * GTK provides serializers and deserializers for common data types
+ * such as text, colors, images or file lists. To register your own
+ * serialization functions, use [func`Gdk`.content_register_serializer].
+ * 
+ * Also see [class`Gdk`.ContentDeserializer].
+ */
 class ContentSerializer {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -10102,15 +10355,18 @@ class ContentSerializer {
     /* Virtual methods of Gdk-4.0.Gdk.ContentSerializer */
     /**
      * Gets the source object from a #GAsyncResult.
+     * @virtual 
      */
     vfunc_get_source_object(): GObject.Object | null
     /**
      * Gets the user data from a #GAsyncResult.
+     * @virtual 
      */
     vfunc_get_user_data(): object | null
     /**
      * Checks if `res` has the given `source_tag` (generally a function
      * pointer indicating the function `res` was created by).
+     * @virtual 
      * @param source_tag an application-defined tag
      */
     vfunc_is_tagged(source_tag: object | null): boolean
@@ -10131,6 +10387,7 @@ class ContentSerializer {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -10164,6 +10421,7 @@ class ContentSerializer {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: ContentSerializer, pspec: GObject.ParamSpec) => void)): number
@@ -10178,6 +10436,9 @@ class ContentSerializer {
     _init (config?: ContentSerializer_ConstructProps): void
     static $gtype: GObject.GType<ContentSerializer>
 }
+/**
+ * An event caused by a pointing device moving between surfaces.
+ */
 class CrossingEvent {
     /* Methods of Gdk-4.0.Gdk.CrossingEvent */
     /**
@@ -10359,6 +10620,41 @@ interface Cursor_ConstructProps extends GObject.Object_ConstructProps {
      */
     texture?: Texture | null
 }
+/**
+ * `GdkCursor` is used to create and destroy cursors.
+ * 
+ * Cursors are immutable objects, so once you created them, there is no way
+ * to modify them later. You should create a new cursor when you want to change
+ * something about it.
+ * 
+ * Cursors by themselves are not very interesting: they must be bound to a
+ * window for users to see them. This is done with [method`Gdk`.Surface.set_cursor]
+ * or [method`Gdk`.Surface.set_device_cursor]. Applications will typically
+ * use higher-level GTK functions such as [method`Gtk`.Widget.set_cursor] instead.
+ * 
+ * Cursors are not bound to a given [class`Gdk`.Display], so they can be shared.
+ * However, the appearance of cursors may vary when used on different
+ * platforms.
+ * 
+ * ## Named and texture cursors
+ * 
+ * There are multiple ways to create cursors. The platform's own cursors
+ * can be created with [ctor`Gdk`.Cursor.new_from_name]. That function lists
+ * the commonly available names that are shared with the CSS specification.
+ * Other names may be available, depending on the platform in use. On some
+ * platforms, what images are used for named cursors may be influenced by
+ * the cursor theme.
+ * 
+ * Another option to create a cursor is to use [ctor`Gdk`.Cursor.new_from_texture]
+ * and provide an image to use for the cursor.
+ * 
+ * To ease work with unsupported cursors, a fallback cursor can be provided.
+ * If a [class`Gdk`.Surface] cannot use a cursor because of the reasons mentioned
+ * above, it will try the fallback cursor. Fallback cursors can themselves have
+ * fallback cursors again, so it is possible to provide a chain of progressively
+ * easier to support cursors. If none of the provided cursors can be supported,
+ * the default cursor will be the ultimate fallback.
+ */
 class Cursor {
     /* Properties of Gdk-4.0.Gdk.Cursor */
     /**
@@ -10761,6 +11057,7 @@ class Cursor {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -10794,6 +11091,7 @@ class Cursor {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Cursor, pspec: GObject.ParamSpec) => void)): number
@@ -10821,6 +11119,9 @@ class Cursor {
     static new_from_texture(texture: Texture, hotspot_x: number, hotspot_y: number, fallback: Cursor | null): Cursor
     static $gtype: GObject.GType<Cursor>
 }
+/**
+ * An event related to drag and drop operations.
+ */
 class DNDEvent {
     /* Methods of Gdk-4.0.Gdk.DNDEvent */
     /**
@@ -10967,6 +11268,9 @@ class DNDEvent {
     unref(): void
     static name: string
 }
+/**
+ * An event related to closing a top-level surface.
+ */
 class DeleteEvent {
     /* Methods of Gdk-4.0.Gdk.Event */
     /**
@@ -11150,6 +11454,13 @@ interface Device_ConstructProps extends GObject.Object_ConstructProps {
      */
     vendor_id?: string | null
 }
+/**
+ * The `GdkDevice` object represents an input device, such
+ * as a keyboard, a mouse, or a touchpad.
+ * 
+ * See the [class`Gdk`.Seat] documentation for more information
+ * about the various kinds of devices, and their relationships.
+ */
 class Device {
     /* Properties of Gdk-4.0.Gdk.Device */
     /**
@@ -11687,6 +11998,7 @@ class Device {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -11700,12 +12012,14 @@ class Device {
      * example, user switches from the USB mouse to a tablet); in
      * that case the logical device will change to reflect the axes
      * and keys on the new physical device.
+     * @signal 
      */
     connect(sigName: "changed", callback: (($obj: Device) => void)): number
     connect_after(sigName: "changed", callback: (($obj: Device) => void)): number
     emit(sigName: "changed"): void
     /**
      * Emitted on pen/eraser devices whenever tools enter or leave proximity.
+     * @signal 
      * @param tool The new current tool
      */
     connect(sigName: "tool-changed", callback: (($obj: Device, tool: DeviceTool) => void)): number
@@ -11740,6 +12054,7 @@ class Device {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Device, pspec: GObject.ParamSpec) => void)): number
@@ -11805,6 +12120,9 @@ interface DeviceTool_ConstructProps extends GObject.Object_ConstructProps {
      */
     tool_type?: DeviceToolType | null
 }
+/**
+ * A physical tool associated to a `GdkDevice`.
+ */
 class DeviceTool {
     /* Properties of Gdk-4.0.Gdk.DeviceTool */
     /**
@@ -12186,6 +12504,7 @@ class DeviceTool {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -12219,6 +12538,7 @@ class DeviceTool {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: DeviceTool, pspec: GObject.ParamSpec) => void)): number
@@ -12243,6 +12563,22 @@ class DeviceTool {
 }
 interface Display_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * `GdkDisplay` objects are the GDK representation of a workstation.
+ * 
+ * Their purpose are two-fold:
+ * 
+ * - To manage and provide information about input devices (pointers, keyboards, etc)
+ * - To manage and provide information about output devices (monitors, projectors, etc)
+ * 
+ * Most of the input device handling has been factored out into separate
+ * [class`Gdk`.Seat] objects. Every display has a one or more seats, which
+ * can be accessed with [method`Gdk`.Display.get_default_seat] and
+ * [method`Gdk`.Display.list_seats].
+ * 
+ * Output devices are represented by [class`Gdk`.Monitor] objects, which can
+ * be accessed with [method`Gdk`.Display.get_monitor_at_surface] and similar APIs.
+ */
 class Display {
     /* Properties of Gdk-4.0.Gdk.Display */
     /**
@@ -12840,6 +13176,7 @@ class Display {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -12847,6 +13184,7 @@ class Display {
     /* Signals of Gdk-4.0.Gdk.Display */
     /**
      * Emitted when the connection to the windowing system for `display` is closed.
+     * @signal 
      * @param is_error %TRUE if the display was closed due to an error
      */
     connect(sigName: "closed", callback: (($obj: Display, is_error: boolean) => void)): number
@@ -12854,12 +13192,14 @@ class Display {
     emit(sigName: "closed", is_error: boolean): void
     /**
      * Emitted when the connection to the windowing system for `display` is opened.
+     * @signal 
      */
     connect(sigName: "opened", callback: (($obj: Display) => void)): number
     connect_after(sigName: "opened", callback: (($obj: Display) => void)): number
     emit(sigName: "opened"): void
     /**
      * Emitted whenever a new seat is made known to the windowing system.
+     * @signal 
      * @param seat the seat that was just added
      */
     connect(sigName: "seat-added", callback: (($obj: Display, seat: Seat) => void)): number
@@ -12867,6 +13207,7 @@ class Display {
     emit(sigName: "seat-added", seat: Seat): void
     /**
      * Emitted whenever a seat is removed by the windowing system.
+     * @signal 
      * @param seat the seat that was just removed
      */
     connect(sigName: "seat-removed", callback: (($obj: Display, seat: Seat) => void)): number
@@ -12874,6 +13215,7 @@ class Display {
     emit(sigName: "seat-removed", seat: Seat): void
     /**
      * Emitted whenever a setting changes its value.
+     * @signal 
      * @param setting the name of the setting that changed
      */
     connect(sigName: "setting-changed", callback: (($obj: Display, setting: string) => void)): number
@@ -12908,6 +13250,7 @@ class Display {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Display, pspec: GObject.ParamSpec) => void)): number
@@ -12951,6 +13294,50 @@ interface DisplayManager_ConstructProps extends GObject.Object_ConstructProps {
      */
     default_display?: Display | null
 }
+/**
+ * A singleton object that offers notification when displays appear or
+ * disappear.
+ * 
+ * You can use [func`Gdk`.DisplayManager.get] to obtain the `GdkDisplayManager`
+ * singleton, but that should be rarely necessary. Typically, initializing
+ * GTK opens a display that you can work with without ever accessing the
+ * `GdkDisplayManager`.
+ * 
+ * The GDK library can be built with support for multiple backends.
+ * The `GdkDisplayManager` object determines which backend is used
+ * at runtime.
+ * 
+ * In the rare case that you need to influence which of the backends
+ * is being used, you can use [func`Gdk`.set_allowed_backends]. Note
+ * that you need to call this function before initializing GTK.
+ * 
+ * ## Backend-specific code
+ * 
+ * When writing backend-specific code that is supposed to work with
+ * multiple GDK backends, you have to consider both compile time and
+ * runtime. At compile time, use the `GDK_WINDOWING_X11`, `GDK_WINDOWING_WIN32`
+ * macros, etc. to find out which backends are present in the GDK library
+ * you are building your application against. At runtime, use type-check
+ * macros like GDK_IS_X11_DISPLAY() to find out which backend is in use:
+ * 
+ * ```c
+ * #ifdef GDK_WINDOWING_X11
+ *   if (GDK_IS_X11_DISPLAY (display))
+ *     {
+ *       // make X11-specific calls here
+ *     }
+ *   else
+ * #endif
+ * #ifdef GDK_WINDOWING_MACOS
+ *   if (GDK_IS_MACOS_DISPLAY (display))
+ *     {
+ *       // make Quartz-specific calls here
+ *     }
+ *   else
+ * #endif
+ *   g_error ("Unsupported GDK backend");
+ * ```
+ */
 class DisplayManager {
     /* Properties of Gdk-4.0.Gdk.DisplayManager */
     /**
@@ -13309,6 +13696,7 @@ class DisplayManager {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -13316,6 +13704,7 @@ class DisplayManager {
     /* Signals of Gdk-4.0.Gdk.DisplayManager */
     /**
      * Emitted when a display is opened.
+     * @signal 
      * @param display the opened display
      */
     connect(sigName: "display-opened", callback: (($obj: DisplayManager, display: Display) => void)): number
@@ -13350,6 +13739,7 @@ class DisplayManager {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: DisplayManager, pspec: GObject.ParamSpec) => void)): number
@@ -13406,6 +13796,18 @@ interface Drag_ConstructProps extends GObject.Object_ConstructProps {
      */
     surface?: Surface | null
 }
+/**
+ * The `GdkDrag` object represents the source of an ongoing DND operation.
+ * 
+ * A `GdkDrag` is created when a drag is started, and stays alive for duration of
+ * the DND operation. After a drag has been started with [func`Gdk`.Drag.begin],
+ * the caller gets informed about the status of the ongoing drag operation
+ * with signals on the `GdkDrag` object.
+ * 
+ * GTK provides a higher level abstraction based on top of these functions,
+ * and so they are not normally needed in GTK applications. See the
+ * "Drag and Drop" section of the GTK documentation for more information.
+ */
 class Drag {
     /* Properties of Gdk-4.0.Gdk.Drag */
     /**
@@ -13832,6 +14234,7 @@ class Drag {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -13839,6 +14242,7 @@ class Drag {
     /* Signals of Gdk-4.0.Gdk.Drag */
     /**
      * Emitted when the drag operation is cancelled.
+     * @signal 
      * @param reason The reason the drag was cancelled
      */
     connect(sigName: "cancel", callback: (($obj: Drag, reason: DragCancelReason) => void)): number
@@ -13848,12 +14252,14 @@ class Drag {
      * Emitted when the destination side has finished reading all data.
      * 
      * The drag object can now free all miscellaneous data.
+     * @signal 
      */
     connect(sigName: "dnd-finished", callback: (($obj: Drag) => void)): number
     connect_after(sigName: "dnd-finished", callback: (($obj: Drag) => void)): number
     emit(sigName: "dnd-finished"): void
     /**
      * Emitted when the drop operation is performed on an accepting client.
+     * @signal 
      */
     connect(sigName: "drop-performed", callback: (($obj: Drag) => void)): number
     connect_after(sigName: "drop-performed", callback: (($obj: Drag) => void)): number
@@ -13887,6 +14293,7 @@ class Drag {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Drag, pspec: GObject.ParamSpec) => void)): number
@@ -13950,6 +14357,17 @@ interface DrawContext_ConstructProps extends GObject.Object_ConstructProps {
      */
     surface?: Surface | null
 }
+/**
+ * Base class for objects implementing different rendering methods.
+ * 
+ * `GdkDrawContext` is the base object used by contexts implementing different
+ * rendering methods, such as [class`Gdk`.CairoContext] or [class`Gdk`.GLContext].
+ * It provides shared functionality between those contexts.
+ * 
+ * You will always interact with one of those subclasses.
+ * 
+ * A `GdkDrawContext` is always associated with a single toplevel surface.
+ */
 class DrawContext {
     /* Properties of Gdk-4.0.Gdk.DrawContext */
     /**
@@ -14360,6 +14778,7 @@ class DrawContext {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -14393,6 +14812,7 @@ class DrawContext {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: DrawContext, pspec: GObject.ParamSpec) => void)): number
@@ -14434,6 +14854,22 @@ interface Drop_ConstructProps extends GObject.Object_ConstructProps {
      */
     surface?: Surface | null
 }
+/**
+ * The `GdkDrop` object represents the target of an ongoing DND operation.
+ * 
+ * Possible drop sites get informed about the status of the ongoing drag
+ * operation with events of type %GDK_DRAG_ENTER, %GDK_DRAG_LEAVE,
+ * %GDK_DRAG_MOTION and %GDK_DROP_START. The `GdkDrop` object can be obtained
+ * from these [class`Gdk`.Event] types using [method`Gdk`.DNDEvent.get_drop].
+ * 
+ * The actual data transfer is initiated from the target side via an async
+ * read, using one of the `GdkDrop` methods for this purpose:
+ * [method`Gdk`.Drop.read_async] or [method`Gdk`.Drop.read_value_async].
+ * 
+ * GTK provides a higher level abstraction based on top of these functions,
+ * and so they are not normally needed in GTK applications. See the
+ * "Drag and Drop" section of the GTK documentation for more information.
+ */
 class Drop {
     /* Properties of Gdk-4.0.Gdk.Drop */
     /**
@@ -14906,6 +15342,7 @@ class Drop {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -14939,6 +15376,7 @@ class Drop {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Drop, pspec: GObject.ParamSpec) => void)): number
@@ -14965,6 +15403,14 @@ class Drop {
     _init (config?: Drop_ConstructProps): void
     static $gtype: GObject.GType<Drop>
 }
+/**
+ * `GdkEvent`s are immutable data structures, created by GDK to
+ * represent windowing system events.
+ * 
+ * In GTK applications the events are handled automatically by toplevel
+ * widgets and passed on to the event controllers of appropriate widgets,
+ * so using `GdkEvent` and its related API is rarely needed.
+ */
 class Event {
     /* Methods of Gdk-4.0.Gdk.Event */
     /**
@@ -15106,6 +15552,9 @@ class Event {
     unref(): void
     static name: string
 }
+/**
+ * An event related to a keyboard focus change.
+ */
 class FocusEvent {
     /* Methods of Gdk-4.0.Gdk.FocusEvent */
     /**
@@ -15255,6 +15704,41 @@ class FocusEvent {
 }
 interface FrameClock_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `GdkFrameClock` tells the application when to update and repaint
+ * a surface.
+ * 
+ * This may be synced to the vertical refresh rate of the monitor, for example.
+ * Even when the frame clock uses a simple timer rather than a hardware-based
+ * vertical sync, the frame clock helps because it ensures everything paints at
+ * the same time (reducing the total number of frames).
+ * 
+ * The frame clock can also automatically stop painting when it knows the frames
+ * will not be visible, or scale back animation framerates.
+ * 
+ * `GdkFrameClock` is designed to be compatible with an OpenGL-based implementation
+ * or with mozRequestAnimationFrame in Firefox, for example.
+ * 
+ * A frame clock is idle until someone requests a frame with
+ * [method`Gdk`.FrameClock.request_phase]. At some later point that makes sense
+ * for the synchronization being implemented, the clock will process a frame and
+ * emit signals for each phase that has been requested. (See the signals of the
+ * `GdkFrameClock` class for documentation of the phases.
+ * %GDK_FRAME_CLOCK_PHASE_UPDATE and the [signal`GdkFrameClock:`:update] signal
+ * are most interesting for application writers, and are used to update the
+ * animations, using the frame time given by [method`Gdk`.FrameClock.get_frame_time].
+ * 
+ * The frame time is reported in microseconds and generally in the same
+ * timescale as g_get_monotonic_time(), however, it is not the same
+ * as g_get_monotonic_time(). The frame time does not advance during
+ * the time a frame is being painted, and outside of a frame, an attempt
+ * is made so that all calls to [method`Gdk`.FrameClock.get_frame_time] that
+ * are called at a “similar” time get the same value. This means that
+ * if different animations are timed by looking at the difference in
+ * time between an initial value from [method`Gdk`.FrameClock.get_frame_time]
+ * and the value inside the [signal`GdkFrameClock:`:update] signal of the clock,
+ * they will stay exactly synchronized.
+ */
 class FrameClock {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -15677,6 +16161,7 @@ class FrameClock {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -15686,6 +16171,7 @@ class FrameClock {
      * This signal ends processing of the frame.
      * 
      * Applications should generally not handle this signal.
+     * @signal 
      */
     connect(sigName: "after-paint", callback: (($obj: FrameClock) => void)): number
     connect_after(sigName: "after-paint", callback: (($obj: FrameClock) => void)): number
@@ -15694,6 +16180,7 @@ class FrameClock {
      * Begins processing of the frame.
      * 
      * Applications should generally not handle this signal.
+     * @signal 
      */
     connect(sigName: "before-paint", callback: (($obj: FrameClock) => void)): number
     connect_after(sigName: "before-paint", callback: (($obj: FrameClock) => void)): number
@@ -15703,6 +16190,7 @@ class FrameClock {
      * compressed together.
      * 
      * Applications should not handle this signal.
+     * @signal 
      */
     connect(sigName: "flush-events", callback: (($obj: FrameClock) => void)): number
     connect_after(sigName: "flush-events", callback: (($obj: FrameClock) => void)): number
@@ -15713,6 +16201,7 @@ class FrameClock {
      * 
      * Any work to update sizes and positions of application elements
      * should be performed. GTK normally handles this internally.
+     * @signal 
      */
     connect(sigName: "layout", callback: (($obj: FrameClock) => void)): number
     connect_after(sigName: "layout", callback: (($obj: FrameClock) => void)): number
@@ -15724,6 +16213,7 @@ class FrameClock {
      * The frame is repainted. GDK normally handles this internally and
      * emits [signal`Gdk`.Surface::render] signals which are turned into
      * [signal`Gtk`.Widget::snapshot] signals by GTK.
+     * @signal 
      */
     connect(sigName: "paint", callback: (($obj: FrameClock) => void)): number
     connect_after(sigName: "paint", callback: (($obj: FrameClock) => void)): number
@@ -15733,6 +16223,7 @@ class FrameClock {
      * 
      * This signal is handled internally by GTK to resume normal
      * event processing. Applications should not handle this signal.
+     * @signal 
      */
     connect(sigName: "resume-events", callback: (($obj: FrameClock) => void)): number
     connect_after(sigName: "resume-events", callback: (($obj: FrameClock) => void)): number
@@ -15744,6 +16235,7 @@ class FrameClock {
      * Animations should be updated using [method`Gdk`.FrameClock.get_frame_time].
      * Applications can connect directly to this signal, or use
      * [method`Gtk`.Widget.add_tick_callback] as a more convenient interface.
+     * @signal 
      */
     connect(sigName: "update", callback: (($obj: FrameClock) => void)): number
     connect_after(sigName: "update", callback: (($obj: FrameClock) => void)): number
@@ -15777,6 +16269,7 @@ class FrameClock {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: FrameClock, pspec: GObject.ParamSpec) => void)): number
@@ -15805,6 +16298,57 @@ interface GLContext_ConstructProps extends DrawContext_ConstructProps {
      */
     shared_context?: GLContext | null
 }
+/**
+ * `GdkGLContext` is an object representing a platform-specific
+ * OpenGL draw context.
+ * 
+ * `GdkGLContext`s are created for a surface using
+ * [method`Gdk`.Surface.create_gl_context], and the context will match
+ * the characteristics of the surface.
+ * 
+ * A `GdkGLContext` is not tied to any particular normal framebuffer.
+ * For instance, it cannot draw to the surface back buffer. The GDK
+ * repaint system is in full control of the painting to that. Instead,
+ * you can create render buffers or textures and use [func`cairo_draw_from_gl]`
+ * in the draw function of your widget to draw them. Then GDK will handle
+ * the integration of your rendering with that of other widgets.
+ * 
+ * Support for `GdkGLContext` is platform-specific and context creation
+ * can fail, returning %NULL context.
+ * 
+ * A `GdkGLContext` has to be made "current" in order to start using
+ * it, otherwise any OpenGL call will be ignored.
+ * 
+ * ## Creating a new OpenGL context
+ * 
+ * In order to create a new `GdkGLContext` instance you need a `GdkSurface`,
+ * which you typically get during the realize call of a widget.
+ * 
+ * A `GdkGLContext` is not realized until either [method`Gdk`.GLContext.make_current]
+ * or [method`Gdk`.GLContext.realize] is called. It is possible to specify
+ * details of the GL context like the OpenGL version to be used, or whether
+ * the GL context should have extra state validation enabled after calling
+ * [method`Gdk`.Surface.create_gl_context] by calling [method`Gdk`.GLContext.realize].
+ * If the realization fails you have the option to change the settings of
+ * the `GdkGLContext` and try again.
+ * 
+ * ## Using a GdkGLContext
+ * 
+ * You will need to make the `GdkGLContext` the current context before issuing
+ * OpenGL calls; the system sends OpenGL commands to whichever context is current.
+ * It is possible to have multiple contexts, so you always need to ensure that
+ * the one which you want to draw with is the current one before issuing commands:
+ * 
+ * ```c
+ * gdk_gl_context_make_current (context);
+ * ```
+ * 
+ * You can now perform your drawing using OpenGL commands.
+ * 
+ * You can check which `GdkGLContext` is the current one by using
+ * [func`Gdk`.GLContext.get_current]; you can also unset any `GdkGLContext`
+ * that is currently set by calling [func`Gdk`.GLContext.clear_current].
+ */
 class GLContext {
     /* Properties of Gdk-4.0.Gdk.GLContext */
     /**
@@ -16385,6 +16929,7 @@ class GLContext {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -16418,6 +16963,7 @@ class GLContext {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: GLContext, pspec: GObject.ParamSpec) => void)): number
@@ -16456,6 +17002,9 @@ class GLContext {
 }
 interface GLTexture_ConstructProps extends Texture_ConstructProps {
 }
+/**
+ * A GdkTexture representing a GL texture object.
+ */
 class GLTexture {
     /* Properties of Gdk-4.0.Gdk.Texture */
     /**
@@ -17055,6 +17604,7 @@ class GLTexture {
      * for example to take a screenshot of a running animation.
      * 
      * If the `paintable` is already immutable, it will return itself.
+     * @virtual 
      */
     vfunc_get_current_image(): Paintable
     /**
@@ -17063,6 +17613,7 @@ class GLTexture {
      * This is oftentimes useful for optimizations.
      * 
      * See [flags`Gdk`.PaintableFlags] for the flags and what they mean.
+     * @virtual 
      */
     vfunc_get_flags(): PaintableFlags
     /**
@@ -17083,6 +17634,7 @@ class GLTexture {
      * 
      * If the `paintable` does not have a preferred aspect ratio,
      * it returns 0. Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_aspect_ratio(): number
     /**
@@ -17096,6 +17648,7 @@ class GLTexture {
      * 
      * If the `paintable` does not have a preferred height, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_height(): number
     /**
@@ -17109,6 +17662,7 @@ class GLTexture {
      * 
      * If the `paintable` does not have a preferred width, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_width(): number
     /**
@@ -17117,6 +17671,7 @@ class GLTexture {
      * The paintable is drawn at the current (0,0) offset of the `snapshot`.
      * If `width` and `height` are not larger than zero, this function will
      * do nothing.
+     * @virtual 
      * @param snapshot a `GdkSnapshot` to snapshot to
      * @param width width to snapshot in
      * @param height height to snapshot in
@@ -17124,11 +17679,13 @@ class GLTexture {
     vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
     /**
      * Checks if two icons are equal.
+     * @virtual 
      * @param icon2 pointer to the second #GIcon.
      */
     vfunc_equal(icon2: Gio.Icon | null): boolean
     /**
      * Gets a hash for an icon.
+     * @virtual 
      */
     vfunc_hash(): number
     /**
@@ -17137,11 +17694,13 @@ class GLTexture {
      * As serialization will avoid using raw icon data when possible, it only
      * makes sense to transfer the #GVariant between processes on the same machine,
      * (as opposed to over the network), and within the same file system namespace.
+     * @virtual 
      */
     vfunc_serialize(): GLib.Variant | null
     /**
      * Loads a loadable icon. For the asynchronous version of this function,
      * see g_loadable_icon_load_async().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
@@ -17150,6 +17709,7 @@ class GLTexture {
      * Loads an icon asynchronously. To finish this function, see
      * g_loadable_icon_load_finish(). For the synchronous, blocking
      * version of this function, see g_loadable_icon_load().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
@@ -17157,6 +17717,7 @@ class GLTexture {
     vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @virtual 
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
@@ -17168,6 +17729,7 @@ class GLTexture {
      * for example to take a screenshot of a running animation.
      * 
      * If the `paintable` is already immutable, it will return itself.
+     * @virtual 
      */
     vfunc_get_current_image(): Paintable
     /**
@@ -17176,6 +17738,7 @@ class GLTexture {
      * This is oftentimes useful for optimizations.
      * 
      * See [flags`Gdk`.PaintableFlags] for the flags and what they mean.
+     * @virtual 
      */
     vfunc_get_flags(): PaintableFlags
     /**
@@ -17196,6 +17759,7 @@ class GLTexture {
      * 
      * If the `paintable` does not have a preferred aspect ratio,
      * it returns 0. Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_aspect_ratio(): number
     /**
@@ -17209,6 +17773,7 @@ class GLTexture {
      * 
      * If the `paintable` does not have a preferred height, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_height(): number
     /**
@@ -17222,6 +17787,7 @@ class GLTexture {
      * 
      * If the `paintable` does not have a preferred width, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_width(): number
     /**
@@ -17230,6 +17796,7 @@ class GLTexture {
      * The paintable is drawn at the current (0,0) offset of the `snapshot`.
      * If `width` and `height` are not larger than zero, this function will
      * do nothing.
+     * @virtual 
      * @param snapshot a `GdkSnapshot` to snapshot to
      * @param width width to snapshot in
      * @param height height to snapshot in
@@ -17237,11 +17804,13 @@ class GLTexture {
     vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
     /**
      * Checks if two icons are equal.
+     * @virtual 
      * @param icon2 pointer to the second #GIcon.
      */
     vfunc_equal(icon2: Gio.Icon | null): boolean
     /**
      * Gets a hash for an icon.
+     * @virtual 
      */
     vfunc_hash(): number
     /**
@@ -17250,11 +17819,13 @@ class GLTexture {
      * As serialization will avoid using raw icon data when possible, it only
      * makes sense to transfer the #GVariant between processes on the same machine,
      * (as opposed to over the network), and within the same file system namespace.
+     * @virtual 
      */
     vfunc_serialize(): GLib.Variant | null
     /**
      * Loads a loadable icon. For the asynchronous version of this function,
      * see g_loadable_icon_load_async().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
@@ -17263,6 +17834,7 @@ class GLTexture {
      * Loads an icon asynchronously. To finish this function, see
      * g_loadable_icon_load_finish(). For the synchronous, blocking
      * version of this function, see g_loadable_icon_load().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
@@ -17270,6 +17842,7 @@ class GLTexture {
     vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @virtual 
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
@@ -17290,6 +17863,7 @@ class GLTexture {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -17323,6 +17897,7 @@ class GLTexture {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: GLTexture, pspec: GObject.ParamSpec) => void)): number
@@ -17334,6 +17909,7 @@ class GLTexture {
      * 
      * Examples for such an event would be videos changing to the next frame or
      * the icon theme for an icon changing.
+     * @signal 
      */
     connect(sigName: "invalidate-contents", callback: (($obj: GLTexture) => void)): number
     connect_after(sigName: "invalidate-contents", callback: (($obj: GLTexture) => void)): number
@@ -17349,6 +17925,7 @@ class GLTexture {
      * 
      * Examples for such an event would be a paintable displaying
      * the contents of a toplevel surface being resized.
+     * @signal 
      */
     connect(sigName: "invalidate-size", callback: (($obj: GLTexture) => void)): number
     connect_after(sigName: "invalidate-size", callback: (($obj: GLTexture) => void)): number
@@ -17399,6 +17976,9 @@ class GLTexture {
     static new_for_string(str: string): Gio.Icon
     static $gtype: GObject.GType<GLTexture>
 }
+/**
+ * An event related to a broken windowing system grab.
+ */
 class GrabBrokenEvent {
     /* Methods of Gdk-4.0.Gdk.GrabBrokenEvent */
     /**
@@ -17549,6 +18129,9 @@ class GrabBrokenEvent {
     unref(): void
     static name: string
 }
+/**
+ * An event related to a key-based device.
+ */
 class KeyEvent {
     /* Methods of Gdk-4.0.Gdk.KeyEvent */
     /**
@@ -17737,6 +18320,9 @@ class KeyEvent {
 }
 interface MemoryTexture_ConstructProps extends Texture_ConstructProps {
 }
+/**
+ * A `GdkTexture` representing image data in memory.
+ */
 class MemoryTexture {
     /* Properties of Gdk-4.0.Gdk.Texture */
     /**
@@ -18327,6 +18913,7 @@ class MemoryTexture {
      * for example to take a screenshot of a running animation.
      * 
      * If the `paintable` is already immutable, it will return itself.
+     * @virtual 
      */
     vfunc_get_current_image(): Paintable
     /**
@@ -18335,6 +18922,7 @@ class MemoryTexture {
      * This is oftentimes useful for optimizations.
      * 
      * See [flags`Gdk`.PaintableFlags] for the flags and what they mean.
+     * @virtual 
      */
     vfunc_get_flags(): PaintableFlags
     /**
@@ -18355,6 +18943,7 @@ class MemoryTexture {
      * 
      * If the `paintable` does not have a preferred aspect ratio,
      * it returns 0. Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_aspect_ratio(): number
     /**
@@ -18368,6 +18957,7 @@ class MemoryTexture {
      * 
      * If the `paintable` does not have a preferred height, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_height(): number
     /**
@@ -18381,6 +18971,7 @@ class MemoryTexture {
      * 
      * If the `paintable` does not have a preferred width, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_width(): number
     /**
@@ -18389,6 +18980,7 @@ class MemoryTexture {
      * The paintable is drawn at the current (0,0) offset of the `snapshot`.
      * If `width` and `height` are not larger than zero, this function will
      * do nothing.
+     * @virtual 
      * @param snapshot a `GdkSnapshot` to snapshot to
      * @param width width to snapshot in
      * @param height height to snapshot in
@@ -18396,11 +18988,13 @@ class MemoryTexture {
     vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
     /**
      * Checks if two icons are equal.
+     * @virtual 
      * @param icon2 pointer to the second #GIcon.
      */
     vfunc_equal(icon2: Gio.Icon | null): boolean
     /**
      * Gets a hash for an icon.
+     * @virtual 
      */
     vfunc_hash(): number
     /**
@@ -18409,11 +19003,13 @@ class MemoryTexture {
      * As serialization will avoid using raw icon data when possible, it only
      * makes sense to transfer the #GVariant between processes on the same machine,
      * (as opposed to over the network), and within the same file system namespace.
+     * @virtual 
      */
     vfunc_serialize(): GLib.Variant | null
     /**
      * Loads a loadable icon. For the asynchronous version of this function,
      * see g_loadable_icon_load_async().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
@@ -18422,6 +19018,7 @@ class MemoryTexture {
      * Loads an icon asynchronously. To finish this function, see
      * g_loadable_icon_load_finish(). For the synchronous, blocking
      * version of this function, see g_loadable_icon_load().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
@@ -18429,6 +19026,7 @@ class MemoryTexture {
     vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @virtual 
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
@@ -18440,6 +19038,7 @@ class MemoryTexture {
      * for example to take a screenshot of a running animation.
      * 
      * If the `paintable` is already immutable, it will return itself.
+     * @virtual 
      */
     vfunc_get_current_image(): Paintable
     /**
@@ -18448,6 +19047,7 @@ class MemoryTexture {
      * This is oftentimes useful for optimizations.
      * 
      * See [flags`Gdk`.PaintableFlags] for the flags and what they mean.
+     * @virtual 
      */
     vfunc_get_flags(): PaintableFlags
     /**
@@ -18468,6 +19068,7 @@ class MemoryTexture {
      * 
      * If the `paintable` does not have a preferred aspect ratio,
      * it returns 0. Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_aspect_ratio(): number
     /**
@@ -18481,6 +19082,7 @@ class MemoryTexture {
      * 
      * If the `paintable` does not have a preferred height, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_height(): number
     /**
@@ -18494,6 +19096,7 @@ class MemoryTexture {
      * 
      * If the `paintable` does not have a preferred width, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_width(): number
     /**
@@ -18502,6 +19105,7 @@ class MemoryTexture {
      * The paintable is drawn at the current (0,0) offset of the `snapshot`.
      * If `width` and `height` are not larger than zero, this function will
      * do nothing.
+     * @virtual 
      * @param snapshot a `GdkSnapshot` to snapshot to
      * @param width width to snapshot in
      * @param height height to snapshot in
@@ -18509,11 +19113,13 @@ class MemoryTexture {
     vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
     /**
      * Checks if two icons are equal.
+     * @virtual 
      * @param icon2 pointer to the second #GIcon.
      */
     vfunc_equal(icon2: Gio.Icon | null): boolean
     /**
      * Gets a hash for an icon.
+     * @virtual 
      */
     vfunc_hash(): number
     /**
@@ -18522,11 +19128,13 @@ class MemoryTexture {
      * As serialization will avoid using raw icon data when possible, it only
      * makes sense to transfer the #GVariant between processes on the same machine,
      * (as opposed to over the network), and within the same file system namespace.
+     * @virtual 
      */
     vfunc_serialize(): GLib.Variant | null
     /**
      * Loads a loadable icon. For the asynchronous version of this function,
      * see g_loadable_icon_load_async().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
@@ -18535,6 +19143,7 @@ class MemoryTexture {
      * Loads an icon asynchronously. To finish this function, see
      * g_loadable_icon_load_finish(). For the synchronous, blocking
      * version of this function, see g_loadable_icon_load().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
@@ -18542,6 +19151,7 @@ class MemoryTexture {
     vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @virtual 
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
@@ -18562,6 +19172,7 @@ class MemoryTexture {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -18595,6 +19206,7 @@ class MemoryTexture {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: MemoryTexture, pspec: GObject.ParamSpec) => void)): number
@@ -18606,6 +19218,7 @@ class MemoryTexture {
      * 
      * Examples for such an event would be videos changing to the next frame or
      * the icon theme for an icon changing.
+     * @signal 
      */
     connect(sigName: "invalidate-contents", callback: (($obj: MemoryTexture) => void)): number
     connect_after(sigName: "invalidate-contents", callback: (($obj: MemoryTexture) => void)): number
@@ -18621,6 +19234,7 @@ class MemoryTexture {
      * 
      * Examples for such an event would be a paintable displaying
      * the contents of a toplevel surface being resized.
+     * @signal 
      */
     connect(sigName: "invalidate-size", callback: (($obj: MemoryTexture) => void)): number
     connect_after(sigName: "invalidate-size", callback: (($obj: MemoryTexture) => void)): number
@@ -18678,6 +19292,15 @@ interface Monitor_ConstructProps extends GObject.Object_ConstructProps {
      */
     display?: Display | null
 }
+/**
+ * `GdkMonitor` objects represent the individual outputs that are
+ * associated with a `GdkDisplay`.
+ * 
+ * `GdkDisplay` keeps a `GListModel` to enumerate and monitor
+ * monitors with [method`Gdk`.Display.get_monitors]. You can use
+ * [method`Gdk`.Display.get_monitor_at_surface] to find a particular
+ * monitor.
+ */
 class Monitor {
     /* Properties of Gdk-4.0.Gdk.Monitor */
     /**
@@ -19128,6 +19751,7 @@ class Monitor {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -19135,6 +19759,7 @@ class Monitor {
     /* Signals of Gdk-4.0.Gdk.Monitor */
     /**
      * Emitted when the output represented by `monitor` gets disconnected.
+     * @signal 
      */
     connect(sigName: "invalidate", callback: (($obj: Monitor) => void)): number
     connect_after(sigName: "invalidate", callback: (($obj: Monitor) => void)): number
@@ -19168,6 +19793,7 @@ class Monitor {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Monitor, pspec: GObject.ParamSpec) => void)): number
@@ -19204,6 +19830,9 @@ class Monitor {
     _init (config?: Monitor_ConstructProps): void
     static $gtype: GObject.GType<Monitor>
 }
+/**
+ * An event related to a pointer or touch device motion.
+ */
 class MotionEvent {
     /* Methods of Gdk-4.0.Gdk.Event */
     /**
@@ -19345,6 +19974,9 @@ class MotionEvent {
     unref(): void
     static name: string
 }
+/**
+ * An event related to a pad-based device.
+ */
 class PadEvent {
     /* Methods of Gdk-4.0.Gdk.PadEvent */
     /**
@@ -19500,6 +20132,9 @@ class PadEvent {
     unref(): void
     static name: string
 }
+/**
+ * An event related to the proximity of a tool to a device.
+ */
 class ProximityEvent {
     /* Methods of Gdk-4.0.Gdk.Event */
     /**
@@ -19641,6 +20276,9 @@ class ProximityEvent {
     unref(): void
     static name: string
 }
+/**
+ * An event related to a scrolling motion.
+ */
 class ScrollEvent {
     /* Methods of Gdk-4.0.Gdk.ScrollEvent */
     /**
@@ -19813,12 +20451,18 @@ interface Seat_ConstructProps extends GObject.Object_ConstructProps {
      */
     display?: Display | null
 }
+/**
+ * The `GdkSeat` object represents a collection of input devices
+ * that belong to a user.
+ */
 class Seat {
     /* Properties of Gdk-4.0.Gdk.Seat */
     /**
      * `GdkDisplay` of this seat.
      */
     readonly display: Display
+    /* Fields of Gdk-4.0.Gdk.Seat */
+    parent_instance: GObject.Object
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of Gdk-4.0.Gdk.Seat */
@@ -20178,6 +20822,7 @@ class Seat {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -20185,6 +20830,7 @@ class Seat {
     /* Signals of Gdk-4.0.Gdk.Seat */
     /**
      * Emitted when a new input device is related to this seat.
+     * @signal 
      * @param device the newly added `GdkDevice`.
      */
     connect(sigName: "device-added", callback: (($obj: Seat, device: Device) => void)): number
@@ -20192,6 +20838,7 @@ class Seat {
     emit(sigName: "device-added", device: Device): void
     /**
      * Emitted when an input device is removed (e.g. unplugged).
+     * @signal 
      * @param device the just removed `GdkDevice`.
      */
     connect(sigName: "device-removed", callback: (($obj: Seat, device: Device) => void)): number
@@ -20205,6 +20852,7 @@ class Seat {
      * [signal`Gdk`.Device::tool-changed] signal accordingly.
      * 
      * A same tool may be used by several devices.
+     * @signal 
      * @param tool the new `GdkDeviceTool` known to the seat
      */
     connect(sigName: "tool-added", callback: (($obj: Seat, tool: DeviceTool) => void)): number
@@ -20212,6 +20860,7 @@ class Seat {
     emit(sigName: "tool-added", tool: DeviceTool): void
     /**
      * Emitted whenever a tool is no longer known to this `seat`.
+     * @signal 
      * @param tool the just removed `GdkDeviceTool`
      */
     connect(sigName: "tool-removed", callback: (($obj: Seat, tool: DeviceTool) => void)): number
@@ -20246,6 +20895,7 @@ class Seat {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Seat, pspec: GObject.ParamSpec) => void)): number
@@ -20264,6 +20914,11 @@ class Seat {
 }
 interface Snapshot_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * Base type for snapshot operations.
+ * 
+ * The subclass of `GdkSnapshot` used by GTK is [class`Gtk`.Snapshot].
+ */
 class Snapshot {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -20598,6 +21253,7 @@ class Snapshot {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -20631,6 +21287,7 @@ class Snapshot {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Snapshot, pspec: GObject.ParamSpec) => void)): number
@@ -20660,6 +21317,17 @@ interface Surface_ConstructProps extends GObject.Object_ConstructProps {
      */
     frame_clock?: FrameClock | null
 }
+/**
+ * A `GdkSurface` is a rectangular region on the screen.
+ * 
+ * It’s a low-level object, used to implement high-level objects
+ * such as [class`Gtk`.Window] or [class`Gtk`.Dialog] in GTK.
+ * 
+ * The surfaces you see in practice are either [iface`Gdk`.Toplevel] or
+ * [iface`Gdk`.Popup], and those interfaces provide much of the required
+ * API to interact with these surfaces. Other, more specialized surface
+ * types exist, but you will rarely interact with them directly.
+ */
 class Surface {
     /* Properties of Gdk-4.0.Gdk.Surface */
     /**
@@ -21256,6 +21924,7 @@ class Surface {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -21263,6 +21932,7 @@ class Surface {
     /* Signals of Gdk-4.0.Gdk.Surface */
     /**
      * Emitted when `surface` starts being present on the monitor.
+     * @signal 
      * @param monitor the monitor
      */
     connect(sigName: "enter-monitor", callback: (($obj: Surface, monitor: Monitor) => void)): number
@@ -21270,6 +21940,7 @@ class Surface {
     emit(sigName: "enter-monitor", monitor: Monitor): void
     /**
      * Emitted when GDK receives an input event for `surface`.
+     * @signal 
      * @param event an input event
      */
     connect(sigName: "event", callback: (($obj: Surface, event: Event) => boolean)): number
@@ -21281,6 +21952,7 @@ class Surface {
      * 
      * Surface size is reported in ”application pixels”, not
      * ”device pixels” (see gdk_surface_get_scale_factor()).
+     * @signal 
      * @param width the current width
      * @param height the current height
      */
@@ -21289,6 +21961,7 @@ class Surface {
     emit(sigName: "layout", width: number, height: number): void
     /**
      * Emitted when `surface` stops being present on the monitor.
+     * @signal 
      * @param monitor the monitor
      */
     connect(sigName: "leave-monitor", callback: (($obj: Surface, monitor: Monitor) => void)): number
@@ -21296,6 +21969,7 @@ class Surface {
     emit(sigName: "leave-monitor", monitor: Monitor): void
     /**
      * Emitted when part of the surface needs to be redrawn.
+     * @signal 
      * @param region the region that needs to be redrawn
      */
     connect(sigName: "render", callback: (($obj: Surface, region: cairo.Region) => boolean)): number
@@ -21330,6 +22004,7 @@ class Surface {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Surface, pspec: GObject.ParamSpec) => void)): number
@@ -21372,6 +22047,22 @@ interface Texture_ConstructProps extends GObject.Object_ConstructProps {
      */
     width?: number | null
 }
+/**
+ * `GdkTexture` is the basic element used to refer to pixel data.
+ * 
+ * It is primarily meant for pixel data that will not change over
+ * multiple frames, and will be used for a long time.
+ * 
+ * There are various ways to create `GdkTexture` objects from a
+ * [class`GdkPixbuf`.Pixbuf], or a Cairo surface, or other pixel data.
+ * 
+ * The ownership of the pixel data is transferred to the `GdkTexture`
+ * instance; you can only make a copy of it, via [method`Gdk`.Texture.download].
+ * 
+ * `GdkTexture` is an immutable object: That means you cannot change
+ * anything about it other than increasing the reference count via
+ * [method`GObject`.Object.ref], and consequently, it is a thread-safe object.
+ */
 class Texture {
     /* Properties of Gdk-4.0.Gdk.Texture */
     /**
@@ -21962,6 +22653,7 @@ class Texture {
      * for example to take a screenshot of a running animation.
      * 
      * If the `paintable` is already immutable, it will return itself.
+     * @virtual 
      */
     vfunc_get_current_image(): Paintable
     /**
@@ -21970,6 +22662,7 @@ class Texture {
      * This is oftentimes useful for optimizations.
      * 
      * See [flags`Gdk`.PaintableFlags] for the flags and what they mean.
+     * @virtual 
      */
     vfunc_get_flags(): PaintableFlags
     /**
@@ -21990,6 +22683,7 @@ class Texture {
      * 
      * If the `paintable` does not have a preferred aspect ratio,
      * it returns 0. Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_aspect_ratio(): number
     /**
@@ -22003,6 +22697,7 @@ class Texture {
      * 
      * If the `paintable` does not have a preferred height, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_height(): number
     /**
@@ -22016,6 +22711,7 @@ class Texture {
      * 
      * If the `paintable` does not have a preferred width, it returns 0.
      * Negative values are never returned.
+     * @virtual 
      */
     vfunc_get_intrinsic_width(): number
     /**
@@ -22024,6 +22720,7 @@ class Texture {
      * The paintable is drawn at the current (0,0) offset of the `snapshot`.
      * If `width` and `height` are not larger than zero, this function will
      * do nothing.
+     * @virtual 
      * @param snapshot a `GdkSnapshot` to snapshot to
      * @param width width to snapshot in
      * @param height height to snapshot in
@@ -22031,11 +22728,13 @@ class Texture {
     vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
     /**
      * Checks if two icons are equal.
+     * @virtual 
      * @param icon2 pointer to the second #GIcon.
      */
     vfunc_equal(icon2: Gio.Icon | null): boolean
     /**
      * Gets a hash for an icon.
+     * @virtual 
      */
     vfunc_hash(): number
     /**
@@ -22044,11 +22743,13 @@ class Texture {
      * As serialization will avoid using raw icon data when possible, it only
      * makes sense to transfer the #GVariant between processes on the same machine,
      * (as opposed to over the network), and within the same file system namespace.
+     * @virtual 
      */
     vfunc_serialize(): GLib.Variant | null
     /**
      * Loads a loadable icon. For the asynchronous version of this function,
      * see g_loadable_icon_load_async().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
@@ -22057,6 +22758,7 @@ class Texture {
      * Loads an icon asynchronously. To finish this function, see
      * g_loadable_icon_load_finish(). For the synchronous, blocking
      * version of this function, see g_loadable_icon_load().
+     * @virtual 
      * @param size an integer.
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the            request is satisfied
@@ -22064,6 +22766,7 @@ class Texture {
     vfunc_load_async(size: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
+     * @virtual 
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
@@ -22084,6 +22787,7 @@ class Texture {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -22117,6 +22821,7 @@ class Texture {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Texture, pspec: GObject.ParamSpec) => void)): number
@@ -22128,6 +22833,7 @@ class Texture {
      * 
      * Examples for such an event would be videos changing to the next frame or
      * the icon theme for an icon changing.
+     * @signal 
      */
     connect(sigName: "invalidate-contents", callback: (($obj: Texture) => void)): number
     connect_after(sigName: "invalidate-contents", callback: (($obj: Texture) => void)): number
@@ -22143,6 +22849,7 @@ class Texture {
      * 
      * Examples for such an event would be a paintable displaying
      * the contents of a toplevel surface being resized.
+     * @signal 
      */
     connect(sigName: "invalidate-size", callback: (($obj: Texture) => void)): number
     connect_after(sigName: "invalidate-size", callback: (($obj: Texture) => void)): number
@@ -22197,6 +22904,9 @@ class Texture {
     static new_for_string(str: string): Gio.Icon
     static $gtype: GObject.GType<Texture>
 }
+/**
+ * An event related to a touch-based device.
+ */
 class TouchEvent {
     /* Methods of Gdk-4.0.Gdk.TouchEvent */
     /**
@@ -22343,6 +23053,14 @@ class TouchEvent {
     unref(): void
     static name: string
 }
+/**
+ * An event related to a gesture on a touchpad device.
+ * 
+ * Unlike touchscreens, where the windowing system sends basic
+ * sequences of begin, update, end events, and leaves gesture
+ * recognition to the clients, touchpad gestures are typically
+ * processed by the system, resulting in these events.
+ */
 class TouchpadEvent {
     /* Methods of Gdk-4.0.Gdk.TouchpadEvent */
     /**
@@ -22507,6 +23225,17 @@ class TouchpadEvent {
 }
 interface VulkanContext_ConstructProps extends DrawContext_ConstructProps {
 }
+/**
+ * `GdkVulkanContext` is an object representing the platform-specific
+ * Vulkan draw context.
+ * 
+ * `GdkVulkanContext`s are created for a surface using
+ * [method`Gdk`.Surface.create_vulkan_context], and the context will match
+ * the characteristics of the surface.
+ * 
+ * Support for `GdkVulkanContext` is platform-specific and context creation
+ * can fail, returning %NULL context.
+ */
 class VulkanContext {
     /* Properties of Gdk-4.0.Gdk.DrawContext */
     /**
@@ -22983,6 +23712,7 @@ class VulkanContext {
      * In this pattern, a caller would expect to be able to call g_initable_init()
      * on the result of g_object_new(), regardless of whether it is in fact a new
      * instance.
+     * @virtual 
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     vfunc_init(cancellable: Gio.Cancellable | null): boolean
@@ -23003,6 +23733,7 @@ class VulkanContext {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -23013,6 +23744,7 @@ class VulkanContext {
      * 
      * Usually this means that the swapchain had to be recreated,
      * for example in response to a change of the surface size.
+     * @signal 
      */
     connect(sigName: "images-updated", callback: (($obj: VulkanContext) => void)): number
     connect_after(sigName: "images-updated", callback: (($obj: VulkanContext) => void)): number
@@ -23046,6 +23778,7 @@ class VulkanContext {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: VulkanContext, pspec: GObject.ParamSpec) => void)): number
@@ -23074,6 +23807,40 @@ class VulkanContext {
     static newv(object_type: GObject.GType, parameters: GObject.Parameter[], cancellable: Gio.Cancellable | null): GObject.Object
     static $gtype: GObject.GType<VulkanContext>
 }
+/**
+ * The `GdkContentFormats` structure is used to advertise and negotiate the
+ * format of content.
+ * 
+ * You will encounter `GdkContentFormats` when interacting with objects
+ * controlling operations that pass data between different widgets, window
+ * or application, like [class`Gdk`.Drag], [class`Gdk`.Drop],
+ * [class`Gdk`.Clipboard] or [class`Gdk`.ContentProvider].
+ * 
+ * GDK supports content in 2 forms: `GType` and mime type.
+ * Using `GTypes` is meant only for in-process content transfers. Mime types
+ * are meant to be used for data passing both in-process and out-of-process.
+ * The details of how data is passed is described in the documentation of
+ * the actual implementations. To transform between the two forms,
+ * [class`Gdk`.ContentSerializer] and [class`Gdk`.ContentDeserializer] are used.
+ * 
+ * A `GdkContentFormats` describes a set of possible formats content can be
+ * exchanged in. It is assumed that this set is ordered. `GTypes` are more
+ * important than mime types. Order between different `GTypes` or mime types
+ * is the order they were added in, most important first. Functions that
+ * care about order, such as [method`Gdk`.ContentFormats.union], will describe
+ * in their documentation how they interpret that order, though in general the
+ * order of the first argument is considered the primary order of the result,
+ * followed by the order of further arguments.
+ * 
+ * For debugging purposes, the function [method`Gdk`.ContentFormats.to_string]
+ * exists. It will print a comma-separated list of formats from most important
+ * to least important.
+ * 
+ * `GdkContentFormats` is an immutable struct. After creation, you cannot change
+ * the types it represents. Instead, new `GdkContentFormats` have to be created.
+ * The [struct`Gdk`.ContentFormatsBuilder] structure is meant to help in this
+ * endeavor.
+ */
 class ContentFormats {
     /* Methods of Gdk-4.0.Gdk.ContentFormats */
     /**
@@ -23193,6 +23960,10 @@ class ContentFormats {
      */
     static parse(string: string): ContentFormats | null
 }
+/**
+ * A `GdkContentFormatsBuilder` is an auxiliary struct used to create
+ * new `GdkContentFormats`, and should not be kept around.
+ */
 class ContentFormatsBuilder {
     /* Methods of Gdk-4.0.Gdk.ContentFormatsBuilder */
     /**
@@ -23238,6 +24009,9 @@ class ContentFormatsBuilder {
     /* Static methods and pseudo-constructors */
     static new(): ContentFormatsBuilder
 }
+/**
+ * Class structure for `GdkContentProvider`.
+ */
 abstract class ContentProviderClass {
     /* Fields of Gdk-4.0.Gdk.ContentProviderClass */
     parent_class: GObject.ObjectClass
@@ -23254,12 +24028,22 @@ abstract class ContentProviderClass {
 abstract class DevicePadInterface {
     static name: string
 }
+/**
+ * The `GdkDragSurfaceInterface` implementation is private to GDK.
+ */
 abstract class DragSurfaceInterface {
     static name: string
 }
+/**
+ * `GdkEventSequence` is an opaque type representing a sequence
+ * of related touch events.
+ */
 class EventSequence {
     static name: string
 }
+/**
+ * An opaque type representing a list of files.
+ */
 class FileList {
     /* Methods of Gdk-4.0.Gdk.FileList */
     /**
@@ -23276,6 +24060,16 @@ abstract class FrameClockClass {
 class FrameClockPrivate {
     static name: string
 }
+/**
+ * A `GdkFrameTimings` object holds timing information for a single frame
+ * of the application’s displays.
+ * 
+ * To retrieve `GdkFrameTimings` objects, use [method`Gdk`.FrameClock.get_timings]
+ * or [method`Gdk`.FrameClock.get_current_timings]. The information in
+ * `GdkFrameTimings` is useful for precise synchronization of video with
+ * the event or audio streams, and for measuring quality metrics for the
+ * application’s display, such as latency and jitter.
+ */
 class FrameTimings {
     /* Methods of Gdk-4.0.Gdk.FrameTimings */
     /**
@@ -23350,6 +24144,9 @@ class FrameTimings {
 abstract class GLTextureClass {
     static name: string
 }
+/**
+ * A `GdkKeymapKey` is a hardware key that can be mapped to a keyval.
+ */
 class KeymapKey {
     /* Fields of Gdk-4.0.Gdk.KeymapKey */
     /**
@@ -23381,6 +24178,17 @@ abstract class MemoryTextureClass {
 abstract class MonitorClass {
     static name: string
 }
+/**
+ * The list of functions that can be implemented for the `GdkPaintable`
+ * interface.
+ * 
+ * Note that apart from the [vfunc`Gdk`.Paintable.snapshot] function,
+ * no virtual function of this interface is mandatory to implement, though it
+ * is a good idea to implement [vfunc`Gdk`.Paintable.get_current_image]
+ * for non-static paintables and [vfunc`Gdk`.Paintable.get_flags] if the
+ * image is not dynamic as the default implementation returns no flags and
+ * that will make the implementation likely quite slow.
+ */
 abstract class PaintableInterface {
     /* Fields of Gdk-4.0.Gdk.PaintableInterface */
     snapshot: (paintable: Paintable, snapshot: Snapshot, width: number, height: number) => void
@@ -23394,6 +24202,41 @@ abstract class PaintableInterface {
 abstract class PopupInterface {
     static name: string
 }
+/**
+ * The `GdkPopupLayout` struct contains information that is
+ * necessary position a [iface`Gdk`.Popup] relative to its parent.
+ * 
+ * The positioning requires a negotiation with the windowing system,
+ * since it depends on external constraints, such as the position of
+ * the parent surface, and the screen dimensions.
+ * 
+ * The basic ingredients are a rectangle on the parent surface,
+ * and the anchor on both that rectangle and the popup. The anchors
+ * specify a side or corner to place next to each other.
+ * 
+ * ![Popup anchors](popup-anchors.png)
+ * 
+ * For cases where placing the anchors next to each other would make
+ * the popup extend offscreen, the layout includes some hints for how
+ * to resolve this problem. The hints may suggest to flip the anchor
+ * position to the other side, or to 'slide' the popup along a side,
+ * or to resize it.
+ * 
+ * ![Flipping popups](popup-flip.png)
+ * 
+ * ![Sliding popups](popup-slide.png)
+ * 
+ * These hints may be combined.
+ * 
+ * Ultimatively, it is up to the windowing system to determine the position
+ * and size of the popup. You can learn about the result by calling
+ * [method`Gdk`.Popup.get_position_x], [method`Gdk`.Popup.get_position_y],
+ * [method`Gdk`.Popup.get_rect_anchor] and [method`Gdk`.Popup.get_surface_anchor]
+ * after the popup has been presented. This can be used to adjust the rendering.
+ * For example, [class`Gtk`.Popover] changes its arrow position accordingly.
+ * But you have to be careful avoid changing the size of the popover, or it
+ * has to be presented again.
+ */
 class PopupLayout {
     /* Methods of Gdk-4.0.Gdk.PopupLayout */
     /**
@@ -23487,6 +24330,17 @@ class PopupLayout {
     /* Static methods and pseudo-constructors */
     static new(anchor_rect: Rectangle, rect_anchor: Gravity, surface_anchor: Gravity): PopupLayout
 }
+/**
+ * A `GdkRGBA` is used to represent a color, in a way that is compatible
+ * with cairo’s notion of color.
+ * 
+ * `GdkRGBA` is a convenient way to pass colors around. It’s based on
+ * cairo’s way to deal with colors and mirrors its behavior. All values
+ * are in the range from 0.0 to 1.0 inclusive. So the color
+ * (0.0, 0.0, 0.0, 0.0) represents transparent black and
+ * (1.0, 1.0, 1.0, 1.0) is opaque white. Other values will
+ * be clamped to this range when drawing.
+ */
 class RGBA {
     /* Fields of Gdk-4.0.Gdk.RGBA */
     /**
@@ -23580,6 +24434,23 @@ class RGBA {
     to_string(): string
     static name: string
 }
+/**
+ * A `GdkRectangle` data type for representing rectangles.
+ * 
+ * `GdkRectangle` is identical to `cairo_rectangle_t`. Together with Cairo’s
+ * `cairo_region_t` data type, these are the central types for representing
+ * sets of pixels.
+ * 
+ * The intersection of two rectangles can be computed with
+ * [method`Gdk`.Rectangle.intersect]; to find the union of two rectangles use
+ * [method`Gdk`.Rectangle.union].
+ * 
+ * The `cairo_region_t` type provided by Cairo is usually used for managing
+ * non-rectangular clipping of graphical operations.
+ * 
+ * The Graphene library has a number of other data types for regions and
+ * volumes in 2D and 3D.
+ */
 class Rectangle {
     /* Fields of Gdk-4.0.Gdk.Rectangle */
     /**
@@ -23644,6 +24515,9 @@ abstract class SurfaceClass {
 abstract class TextureClass {
     static name: string
 }
+/**
+ * A `GdkTimeCoord` stores a single event in a motion history.
+ */
 class TimeCoord {
     /* Fields of Gdk-4.0.Gdk.TimeCoord */
     /**
@@ -23663,6 +24537,17 @@ class TimeCoord {
 abstract class ToplevelInterface {
     static name: string
 }
+/**
+ * The `GdkToplevelLayout` struct contains information that
+ * is necessary to present a sovereign window on screen.
+ * 
+ * The `GdkToplevelLayout` struct is necessary for using
+ * [method`Gdk`.Toplevel.present].
+ * 
+ * Toplevel surfaces are sovereign windows that can be presented
+ * to the user in various states (maximized, on all workspaces,
+ * etc).
+ */
 class ToplevelLayout {
     /* Methods of Gdk-4.0.Gdk.ToplevelLayout */
     /**
@@ -23729,6 +24614,10 @@ class ToplevelLayout {
     /* Static methods and pseudo-constructors */
     static new(): ToplevelLayout
 }
+/**
+ * The `GdkToplevelSize` struct contains information that is useful
+ * to compute the size of a toplevel.
+ */
 class ToplevelSize {
     /* Methods of Gdk-4.0.Gdk.ToplevelSize */
     /**

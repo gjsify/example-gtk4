@@ -7,6 +7,7 @@ import { get_font_markup, getPermission, range } from "./utils.js";
 import { LOREM_IPSUM } from "./constants.js";
 import { MyColumnViewColumn } from "./my-column-view-column.js";
 import { MyListView, IMyListView } from "./my-list-view.js" 
+import { ColumnElem } from "./column-elem.js";
 
 export class IMyWindow extends Window {
 
@@ -313,36 +314,36 @@ export class IMyWindow extends Window {
             orientation: Gtk.Orientation.HORIZONTAL})
     
         // Left Side
-        const left_box = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
-        left_box.set_vexpand(true)
-        left_box.set_spacing(5)
-        const left_label = Gtk.Label.new("LEFT")
-        left_label.set_valign(Gtk.Align.START)
-        left_label.set_halign(Gtk.Align.START)
-        left_box.append(left_label)
+        const leftBox = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
+        leftBox.set_vexpand(true)
+        leftBox.set_spacing(5)
+        const leftLabel = Gtk.Label.new("LEFT")
+        leftLabel.set_valign(Gtk.Align.START)
+        leftLabel.set_halign(Gtk.Align.START)
+        leftBox.append(leftLabel)
 
         // Add Progress Bar
         const progress = new Gtk.ProgressBar()
         progress.set_fraction(.75)
-        left_box.append(progress)
+        leftBox.append(progress)
 
         // Add Scale
         const scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0, 100, 5)
         scale.set_value(25)
-        left_box.append(scale)
+        leftBox.append(scale)
 
         // separator
         const separator = new Gtk.Separator({orientation:Gtk.Orientation.HORIZONTAL})
-        left_box.append(separator)
-        this.leftRightPaned.set_start_child(left_box)
+        leftBox.append(separator)
+        this.leftRightPaned.set_start_child(leftBox)
         this.leftRightPaned.set_shrink_start_child(false)  // Can't shrink
 
         // Right Side
-        const right_box = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
-        const right_label = Gtk.Label.new("RIGHT")
-        right_label.set_valign(Gtk.Align.START)
-        right_label.set_halign(Gtk.Align.START)
-        right_box.append(right_label)
+        const rightBox = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL})
+        const rightLabel = Gtk.Label.new("RIGHT")
+        rightLabel.set_valign(Gtk.Align.START)
+        rightLabel.set_halign(Gtk.Align.START)
+        rightBox.append(rightLabel)
 
         // TextView
         const text = Gtk.TextView.new()
@@ -356,7 +357,7 @@ export class IMyWindow extends Window {
         // Add some text
         const txt = LOREM_IPSUM
         text.get_buffer().set_text(txt, txt.length)
-        right_box.append(text)
+        rightBox.append(text)
 
         // Add Switches
         for (const txt of ['Reveal', 'Yet Another Option']) {
@@ -378,15 +379,15 @@ export class IMyWindow extends Window {
             }
             grid.attach(label, 0, 1, 2, 1)
             grid.attach(_switch, 2, 1, 1, 1)
-            right_box.append(grid)
+            rightBox.append(grid)
         }
 
         // Some buttons
         const lockBtn = Gtk.LockButton.new(null)
-        right_box.append(lockBtn)
+        rightBox.append(lockBtn)
 
         // Add the box to paned
-        this.leftRightPaned.set_end_child(right_box)
+        this.leftRightPaned.set_end_child(rightBox)
         this.leftRightPaned.set_shrink_end_child(false)  // Can't shrink
 
         // Top/Down Paned
@@ -457,52 +458,52 @@ export class IMyWindow extends Window {
             data.push(`Data Row: ${row}`)
         }
         for (const i of range(4)) {
-            const column = new MyColumnViewColumn({}, null, this.columnView, data, this)
+            const column = new MyColumnViewColumn({}, ColumnElem, this.columnView, data, this)
             column.set_title(`Column ${i}`)
             this.columnView.append_column(column)
         }
-        let lw_frame = new Gtk.Frame()
-        lw_frame.set_valign(Gtk.Align.FILL)
-        lw_frame.set_vexpand(true)
-        lw_frame.set_margin_start(20)
-        lw_frame.set_margin_end(20)
-        lw_frame.set_margin_top(10)
-        lw_frame.set_margin_bottom(10)
+        let lwFrame = new Gtk.Frame()
+        lwFrame.set_valign(Gtk.Align.FILL)
+        lwFrame.set_vexpand(true)
+        lwFrame.set_margin_start(20)
+        lwFrame.set_margin_end(20)
+        lwFrame.set_margin_top(10)
+        lwFrame.set_margin_bottom(10)
         let sw = new Gtk.ScrolledWindow()
         sw.set_child(this.columnView)
-        lw_frame.set_child(sw)
-        content.append(lw_frame)
+        lwFrame.set_child(sw)
+        content.append(lwFrame)
 
         // Listview with switches
         this.listview = new MyListView({}, this)
-        lw_frame = new Gtk.Frame()
-        lw_frame.set_valign(Gtk.Align.FILL)
-        lw_frame.set_vexpand(true)
-        lw_frame.set_margin_start(20)
-        lw_frame.set_margin_end(20)
-        // lw_frame.set_margin_top(10)
-        lw_frame.set_margin_bottom(10)
+        lwFrame = new Gtk.Frame()
+        lwFrame.set_valign(Gtk.Align.FILL)
+        lwFrame.set_vexpand(true)
+        lwFrame.set_margin_start(20)
+        lwFrame.set_margin_end(20)
+        // lwFrame.set_margin_top(10)
+        lwFrame.set_margin_bottom(10)
         sw = new Gtk.ScrolledWindow()
         sw.set_child(this.listview)
-        lw_frame.set_child(sw)
-        content.append(lw_frame)
+        lwFrame.set_child(sw)
+        content.append(lwFrame)
 
         // // Simple Listview with strings
         // this.listview_str = new MyListViewStrings({}, this)
-        // lw_frame = new Gtk.Frame()
-        // lw_frame.set_valign(Gtk.Align.FILL)
-        // lw_frame.set_vexpand(true)
-        // lw_frame.set_margin_start(20)
-        // lw_frame.set_margin_end(20)
-        // // lw_frame.set_margin_top(10)
-        // lw_frame.set_margin_bottom(10)
+        // lwFrame = new Gtk.Frame()
+        // lwFrame.set_valign(Gtk.Align.FILL)
+        // lwFrame.set_vexpand(true)
+        // lwFrame.set_margin_start(20)
+        // lwFrame.set_margin_end(20)
+        // // lwFrame.set_margin_top(10)
+        // lwFrame.set_margin_bottom(10)
         // sw = new Gtk.ScrolledWindow()
 
         // // Create Gtk.Listview
         // const lw = this.listview_str
         // sw.set_child(lw)
-        // lw_frame.set_child(sw)
-        // content.append(lw_frame)
+        // lwFrame.set_child(sw)
+        // content.append(lwFrame)
         // frame.set_child(content)
 
         // Add the content box as a new page in the stack

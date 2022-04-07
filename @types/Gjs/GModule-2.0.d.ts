@@ -30,6 +30,7 @@ enum ModuleError {
 /**
  * Flags passed to g_module_open().
  * Note that these flags are not supported on all platforms.
+ * @bitfield 
  */
 enum ModuleFlags {
     /**
@@ -60,6 +61,7 @@ function module_supported(): boolean
  * automatically when the module is loaded. It is passed the #GModule structure
  * and should return %NULL on success or a string describing the initialization
  * error.
+ * @callback 
  */
 interface ModuleCheckInit {
     (module: Module): string
@@ -69,10 +71,16 @@ interface ModuleCheckInit {
  * If a module contains a function named g_module_unload() it is called
  * automatically when the module is unloaded.
  * It is passed the #GModule structure.
+ * @callback 
  */
 interface ModuleUnload {
     (module: Module): void
 }
+/**
+ * The #GModule struct is an opaque data structure to represent a
+ * [dynamically-loaded module][glib-Dynamic-Loading-of-Modules].
+ * It should only be accessed via the following functions.
+ */
 class Module {
     /* Methods of GModule-2.0.GModule.Module */
     /**

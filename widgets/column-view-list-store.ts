@@ -13,17 +13,24 @@ import { ColumnElem } from "../column-elem.js"
  **/
 export class IColumnViewListStore extends ViewColumnBase {
 
-    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, model_cls: typeof ColumnElem, col_view) {
-        super(config, model_cls, col_view)
+    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, modelCls: typeof ColumnElem, colView: Gtk.ColumnView) {
+        super(config, modelCls, colView)
     }
 
     /** Setup the data model */
-    setup_store(model_cls: any /* TODO */): Gio.ListStore {
-        // print("setup_store model_cls: ", model_cls)
-        return new Gio.ListStore({item_type: model_cls})
+    setupStore(modelCls: typeof ColumnElem): Gio.ListStore {
+        return new Gio.ListStore({item_type: modelCls.$gtype})
     }
 }
 
 export const ColumnViewListStore = GObject.registerClass({
     GTypeName: 'ColumnViewListStore',
+    Properties: {
+        'store': GObject.ParamSpec.jsobject(
+            'store',
+            'store',
+            'store',
+            GObject.ParamFlags.CONSTRUCT | GObject.ParamFlags.READWRITE,
+        ),
+    }
 }, IColumnViewListStore );

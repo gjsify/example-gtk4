@@ -71,6 +71,7 @@ enum ImplicitAuthorization {
 }
 /**
  * Flags describing features supported by the Authority implementation.
+ * @bitfield 
  */
 enum AuthorityFeatures {
     /**
@@ -85,6 +86,7 @@ enum AuthorityFeatures {
 }
 /**
  * Possible flags when checking authorizations.
+ * @bitfield 
  */
 enum CheckAuthorizationFlags {
     /**
@@ -103,6 +105,11 @@ function identity_from_string(str: string): Identity | null
 function implicit_authorization_from_string(string: string, out_implicit_authorization: ImplicitAuthorization): boolean
 function implicit_authorization_to_string(implicit_authorization: ImplicitAuthorization): string
 function subject_from_string(str: string): Subject
+/**
+ * #PolkitIdentity is an abstract type for representing one or more
+ * identities.
+ * @interface 
+ */
 class Identity {
     /* Methods of Polkit-1.0.Polkit.Identity */
     /**
@@ -126,16 +133,19 @@ class Identity {
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
      * This function can be used in e.g. g_hash_table_new().
+     * @virtual 
      * @param b A #PolkitIdentity.
      */
     vfunc_equal(b: Identity): boolean
     /**
      * Gets a hash code for `identity` that can be used with e.g. g_hash_table_new().
+     * @virtual 
      */
     vfunc_hash(): number
     /**
      * Serializes `identity` to a string that can be used in
      * polkit_identity_from_string().
+     * @virtual 
      */
     vfunc_to_string(): string
     static name: string
@@ -147,6 +157,11 @@ class Identity {
      */
     static from_string(str: string): Identity | null
 }
+/**
+ * #PolkitSubject is an abstract type for representing one or more
+ * processes.
+ * @interface 
+ */
 class Subject {
     /* Methods of Polkit-1.0.Polkit.Subject */
     /**
@@ -200,6 +215,7 @@ class Subject {
      * for more information see the `PolkitUnixProcess` documentation.
      * 
      * This function can be used in e.g. g_hash_table_new().
+     * @virtual 
      * @param b A #PolkitSubject.
      */
     vfunc_equal(b: Subject): boolean
@@ -211,12 +227,14 @@ class Subject {
      * main loop</link> of the thread you are calling this method
      * from. You can then call polkit_subject_exists_finish() to get the
      * result of the operation.
+     * @virtual 
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
     vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
+     * @virtual 
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
      */
     vfunc_exists_finish(res: Gio.AsyncResult): boolean
@@ -226,16 +244,19 @@ class Subject {
      * This is a synchronous blocking call - the calling thread is blocked
      * until a reply is received. See polkit_subject_exists() for the
      * asynchronous version.
+     * @virtual 
      * @param cancellable A #GCancellable or %NULL.
      */
     vfunc_exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
+     * @virtual 
      */
     vfunc_hash(): number
     /**
      * Serializes `subject` to a string that can be used in
      * polkit_subject_from_string().
+     * @virtual 
      */
     vfunc_to_string(): string
     static name: string
@@ -249,6 +270,9 @@ class Subject {
 }
 interface ActionDescription_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * Object used to encapsulate a registered action.
+ */
 class ActionDescription {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -632,6 +656,7 @@ class ActionDescription {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -665,6 +690,7 @@ class ActionDescription {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: ActionDescription, pspec: GObject.ParamSpec) => void)): number
@@ -681,6 +707,18 @@ class ActionDescription {
 }
 interface Authority_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * #PolkitAuthority is used for checking whether a given subject is
+ * authorized to perform a given action. Typically privileged system
+ * daemons or suid helpers will use this when handling requests from
+ * untrusted clients.
+ * 
+ * User sessions can register an authentication agent with the
+ * authority. This is used for requests from untrusted clients where
+ * system policy requires that the user needs to acknowledge (through
+ * proving he is the user or the administrator) a given action. See
+ * #PolkitAgentListener and #PolkitAgentSession for details.
+ */
 class Authority {
     /* Properties of Polkit-1.0.Polkit.Authority */
     /**
@@ -1501,6 +1539,7 @@ class Authority {
      * in a thread, so if you want to support asynchronous initialization via
      * threads, just implement the #GAsyncInitable interface without overriding
      * any interface methods.
+     * @virtual 
      * @param io_priority the [I/O priority][io-priority] of the operation
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the request is satisfied
@@ -1509,6 +1548,7 @@ class Authority {
     /**
      * Finishes asynchronous initialization and returns the result.
      * See g_async_initable_init_async().
+     * @virtual 
      * @param res a #GAsyncResult.
      */
     vfunc_init_finish(res: Gio.AsyncResult): boolean
@@ -1551,6 +1591,7 @@ class Authority {
      * In this pattern, a caller would expect to be able to call g_initable_init()
      * on the result of g_object_new(), regardless of whether it is in fact a new
      * instance.
+     * @virtual 
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     vfunc_init(cancellable: Gio.Cancellable | null): boolean
@@ -1571,6 +1612,7 @@ class Authority {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -1578,6 +1620,7 @@ class Authority {
     /* Signals of Polkit-1.0.Polkit.Authority */
     /**
      * Emitted when actions and/or authorizations change
+     * @signal 
      */
     connect(sigName: "changed", callback: (($obj: Authority) => void)): number
     connect_after(sigName: "changed", callback: (($obj: Authority) => void)): number
@@ -1611,6 +1654,7 @@ class Authority {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Authority, pspec: GObject.ParamSpec) => void)): number
@@ -1691,6 +1735,9 @@ class Authority {
 }
 interface AuthorizationResult_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * This class represents the result you get when checking for an authorization.
+ */
 class AuthorizationResult {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -2078,6 +2125,7 @@ class AuthorizationResult {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -2111,6 +2159,7 @@ class AuthorizationResult {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: AuthorizationResult, pspec: GObject.ParamSpec) => void)): number
@@ -2129,6 +2178,9 @@ class AuthorizationResult {
 }
 interface Details_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * An object used for passing details around.
+ */
 class Details {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -2481,6 +2533,7 @@ class Details {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -2514,6 +2567,7 @@ class Details {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Details, pspec: GObject.ParamSpec) => void)): number
@@ -2542,6 +2596,11 @@ interface Permission_ConstructProps extends Gio.Permission_ConstructProps {
      */
     subject?: Subject | null
 }
+/**
+ * #PolkitPermission is a #GPermission implementation. It can be used
+ * with e.g. #GtkLockButton. See the #GPermission documentation for
+ * more information.
+ */
 class Permission {
     /* Properties of Polkit-1.0.Polkit.Permission */
     /**
@@ -3136,6 +3195,7 @@ class Permission {
      * in a thread, so if you want to support asynchronous initialization via
      * threads, just implement the #GAsyncInitable interface without overriding
      * any interface methods.
+     * @virtual 
      * @param io_priority the [I/O priority][io-priority] of the operation
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the request is satisfied
@@ -3144,6 +3204,7 @@ class Permission {
     /**
      * Finishes asynchronous initialization and returns the result.
      * See g_async_initable_init_async().
+     * @virtual 
      * @param res a #GAsyncResult.
      */
     vfunc_init_finish(res: Gio.AsyncResult): boolean
@@ -3186,6 +3247,7 @@ class Permission {
      * In this pattern, a caller would expect to be able to call g_initable_init()
      * on the result of g_object_new(), regardless of whether it is in fact a new
      * instance.
+     * @virtual 
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     vfunc_init(cancellable: Gio.Cancellable | null): boolean
@@ -3206,6 +3268,7 @@ class Permission {
      * This call is blocking, likely for a very long time (in the case that
      * user interaction is required).  See g_permission_acquire_async() for
      * the non-blocking version.
+     * @virtual 
      * @param cancellable a #GCancellable, or %NULL
      */
     vfunc_acquire(cancellable: Gio.Cancellable | null): boolean
@@ -3214,6 +3277,7 @@ class Permission {
      * 
      * This is the first half of the asynchronous version of
      * g_permission_acquire().
+     * @virtual 
      * @param cancellable a #GCancellable, or %NULL
      * @param callback the #GAsyncReadyCallback to call when done
      */
@@ -3224,6 +3288,7 @@ class Permission {
      * 
      * This is the second half of the asynchronous version of
      * g_permission_acquire().
+     * @virtual 
      * @param result the #GAsyncResult given to the #GAsyncReadyCallback
      */
     vfunc_acquire_finish(result: Gio.AsyncResult): boolean
@@ -3243,6 +3308,7 @@ class Permission {
      * This call is blocking, likely for a very long time (in the case that
      * user interaction is required).  See g_permission_release_async() for
      * the non-blocking version.
+     * @virtual 
      * @param cancellable a #GCancellable, or %NULL
      */
     vfunc_release(cancellable: Gio.Cancellable | null): boolean
@@ -3251,6 +3317,7 @@ class Permission {
      * 
      * This is the first half of the asynchronous version of
      * g_permission_release().
+     * @virtual 
      * @param cancellable a #GCancellable, or %NULL
      * @param callback the #GAsyncReadyCallback to call when done
      */
@@ -3261,6 +3328,7 @@ class Permission {
      * 
      * This is the second half of the asynchronous version of
      * g_permission_release().
+     * @virtual 
      * @param result the #GAsyncResult given to the #GAsyncReadyCallback
      */
     vfunc_release_finish(result: Gio.AsyncResult): boolean
@@ -3281,6 +3349,7 @@ class Permission {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -3314,6 +3383,7 @@ class Permission {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Permission, pspec: GObject.ParamSpec) => void)): number
@@ -3372,6 +3442,9 @@ interface SystemBusName_ConstructProps extends GObject.Object_ConstructProps {
      */
     name?: string | null
 }
+/**
+ * An object that represents a process owning a unique name on the system bus.
+ */
 class SystemBusName {
     /* Properties of Polkit-1.0.Polkit.SystemBusName */
     /**
@@ -3768,6 +3841,7 @@ class SystemBusName {
      * for more information see the `PolkitUnixProcess` documentation.
      * 
      * This function can be used in e.g. g_hash_table_new().
+     * @virtual 
      * @param b A #PolkitSubject.
      */
     vfunc_equal(b: Subject): boolean
@@ -3779,12 +3853,14 @@ class SystemBusName {
      * main loop</link> of the thread you are calling this method
      * from. You can then call polkit_subject_exists_finish() to get the
      * result of the operation.
+     * @virtual 
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
     vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
+     * @virtual 
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
      */
     vfunc_exists_finish(res: Gio.AsyncResult): boolean
@@ -3794,16 +3870,19 @@ class SystemBusName {
      * This is a synchronous blocking call - the calling thread is blocked
      * until a reply is received. See polkit_subject_exists() for the
      * asynchronous version.
+     * @virtual 
      * @param cancellable A #GCancellable or %NULL.
      */
     vfunc_exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
+     * @virtual 
      */
     vfunc_hash(): number
     /**
      * Serializes `subject` to a string that can be used in
      * polkit_subject_from_string().
+     * @virtual 
      */
     vfunc_to_string(): string
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -3823,6 +3902,7 @@ class SystemBusName {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -3856,6 +3936,7 @@ class SystemBusName {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: SystemBusName, pspec: GObject.ParamSpec) => void)): number
@@ -3881,6 +3962,9 @@ class SystemBusName {
 }
 interface TemporaryAuthorization_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * Object used to describe a temporary authorization.
+ */
 class TemporaryAuthorization {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -4242,6 +4326,7 @@ class TemporaryAuthorization {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -4275,6 +4360,7 @@ class TemporaryAuthorization {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: TemporaryAuthorization, pspec: GObject.ParamSpec) => void)): number
@@ -4296,6 +4382,9 @@ interface UnixGroup_ConstructProps extends GObject.Object_ConstructProps {
      */
     gid?: number | null
 }
+/**
+ * An object representing a group identity on a UNIX system.
+ */
 class UnixGroup {
     /* Properties of Polkit-1.0.Polkit.UnixGroup */
     /**
@@ -4650,16 +4739,19 @@ class UnixGroup {
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
      * This function can be used in e.g. g_hash_table_new().
+     * @virtual 
      * @param b A #PolkitIdentity.
      */
     vfunc_equal(b: Identity): boolean
     /**
      * Gets a hash code for `identity` that can be used with e.g. g_hash_table_new().
+     * @virtual 
      */
     vfunc_hash(): number
     /**
      * Serializes `identity` to a string that can be used in
      * polkit_identity_from_string().
+     * @virtual 
      */
     vfunc_to_string(): string
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -4679,6 +4771,7 @@ class UnixGroup {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -4712,6 +4805,7 @@ class UnixGroup {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: UnixGroup, pspec: GObject.ParamSpec) => void)): number
@@ -4748,6 +4842,9 @@ interface UnixNetgroup_ConstructProps extends GObject.Object_ConstructProps {
      */
     name?: string | null
 }
+/**
+ * An object representing a netgroup identity on a UNIX system.
+ */
 class UnixNetgroup {
     /* Properties of Polkit-1.0.Polkit.UnixNetgroup */
     /**
@@ -5102,16 +5199,19 @@ class UnixNetgroup {
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
      * This function can be used in e.g. g_hash_table_new().
+     * @virtual 
      * @param b A #PolkitIdentity.
      */
     vfunc_equal(b: Identity): boolean
     /**
      * Gets a hash code for `identity` that can be used with e.g. g_hash_table_new().
+     * @virtual 
      */
     vfunc_hash(): number
     /**
      * Serializes `identity` to a string that can be used in
      * polkit_identity_from_string().
+     * @virtual 
      */
     vfunc_to_string(): string
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -5131,6 +5231,7 @@ class UnixNetgroup {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -5164,6 +5265,7 @@ class UnixNetgroup {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: UnixNetgroup, pspec: GObject.ParamSpec) => void)): number
@@ -5204,6 +5306,24 @@ interface UnixProcess_ConstructProps extends GObject.Object_ConstructProps {
      */
     uid?: number | null
 }
+/**
+ * An object for representing a UNIX process.  NOTE: This object as
+ * designed is now known broken; a mechanism to exploit a delay in
+ * start time in the Linux kernel was identified.  Avoid
+ * calling polkit_subject_equal() to compare two processes.
+ * 
+ * To uniquely identify processes, both the process id and the start
+ * time of the process (a monotonic increasing value representing the
+ * time since the kernel was started) is used.
+ * 
+ * NOTE: This object stores, and provides access to, the real UID of the
+ * process.  That value can change over time (with set*uid*(2) and exec*(2)).
+ * Checks whether an operation is allowed need to take care to use the UID
+ * value as of the time when the operation was made (or, following the open()
+ * privilege check model, when the connection making the operation possible
+ * was initiated).  That is usually done by initializing this with
+ * polkit_unix_process_new_for_owner() with trusted data.
+ */
 class UnixProcess {
     /* Properties of Polkit-1.0.Polkit.UnixProcess */
     /**
@@ -5627,6 +5747,7 @@ class UnixProcess {
      * for more information see the `PolkitUnixProcess` documentation.
      * 
      * This function can be used in e.g. g_hash_table_new().
+     * @virtual 
      * @param b A #PolkitSubject.
      */
     vfunc_equal(b: Subject): boolean
@@ -5638,12 +5759,14 @@ class UnixProcess {
      * main loop</link> of the thread you are calling this method
      * from. You can then call polkit_subject_exists_finish() to get the
      * result of the operation.
+     * @virtual 
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
     vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
+     * @virtual 
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
      */
     vfunc_exists_finish(res: Gio.AsyncResult): boolean
@@ -5653,16 +5776,19 @@ class UnixProcess {
      * This is a synchronous blocking call - the calling thread is blocked
      * until a reply is received. See polkit_subject_exists() for the
      * asynchronous version.
+     * @virtual 
      * @param cancellable A #GCancellable or %NULL.
      */
     vfunc_exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
+     * @virtual 
      */
     vfunc_hash(): number
     /**
      * Serializes `subject` to a string that can be used in
      * polkit_subject_from_string().
+     * @virtual 
      */
     vfunc_to_string(): string
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -5682,6 +5808,7 @@ class UnixProcess {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -5715,6 +5842,7 @@ class UnixProcess {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: UnixProcess, pspec: GObject.ParamSpec) => void)): number
@@ -5770,6 +5898,11 @@ interface UnixSession_ConstructProps extends GObject.Object_ConstructProps {
      */
     session_id?: string | null
 }
+/**
+ * An object that represents an user session.
+ * 
+ * The session id is an opaque string obtained from ConsoleKit.
+ */
 class UnixSession {
     /* Properties of Polkit-1.0.Polkit.UnixSession */
     /**
@@ -6287,6 +6420,7 @@ class UnixSession {
      * in a thread, so if you want to support asynchronous initialization via
      * threads, just implement the #GAsyncInitable interface without overriding
      * any interface methods.
+     * @virtual 
      * @param io_priority the [I/O priority][io-priority] of the operation
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      * @param callback a #GAsyncReadyCallback to call when the request is satisfied
@@ -6295,6 +6429,7 @@ class UnixSession {
     /**
      * Finishes asynchronous initialization and returns the result.
      * See g_async_initable_init_async().
+     * @virtual 
      * @param res a #GAsyncResult.
      */
     vfunc_init_finish(res: Gio.AsyncResult): boolean
@@ -6337,6 +6472,7 @@ class UnixSession {
      * In this pattern, a caller would expect to be able to call g_initable_init()
      * on the result of g_object_new(), regardless of whether it is in fact a new
      * instance.
+     * @virtual 
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     vfunc_init(cancellable: Gio.Cancellable | null): boolean
@@ -6346,6 +6482,7 @@ class UnixSession {
      * for more information see the `PolkitUnixProcess` documentation.
      * 
      * This function can be used in e.g. g_hash_table_new().
+     * @virtual 
      * @param b A #PolkitSubject.
      */
     vfunc_equal(b: Subject): boolean
@@ -6357,12 +6494,14 @@ class UnixSession {
      * main loop</link> of the thread you are calling this method
      * from. You can then call polkit_subject_exists_finish() to get the
      * result of the operation.
+     * @virtual 
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
     vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
     /**
      * Finishes checking whether a subject exists.
+     * @virtual 
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
      */
     vfunc_exists_finish(res: Gio.AsyncResult): boolean
@@ -6372,16 +6511,19 @@ class UnixSession {
      * This is a synchronous blocking call - the calling thread is blocked
      * until a reply is received. See polkit_subject_exists() for the
      * asynchronous version.
+     * @virtual 
      * @param cancellable A #GCancellable or %NULL.
      */
     vfunc_exists_sync(cancellable: Gio.Cancellable | null): boolean
     /**
      * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
+     * @virtual 
      */
     vfunc_hash(): number
     /**
      * Serializes `subject` to a string that can be used in
      * polkit_subject_from_string().
+     * @virtual 
      */
     vfunc_to_string(): string
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -6401,6 +6543,7 @@ class UnixSession {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -6434,6 +6577,7 @@ class UnixSession {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: UnixSession, pspec: GObject.ParamSpec) => void)): number
@@ -6523,6 +6667,9 @@ interface UnixUser_ConstructProps extends GObject.Object_ConstructProps {
      */
     uid?: number | null
 }
+/**
+ * An object representing a user identity on a UNIX system.
+ */
 class UnixUser {
     /* Properties of Polkit-1.0.Polkit.UnixUser */
     /**
@@ -6881,16 +7028,19 @@ class UnixUser {
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
      * This function can be used in e.g. g_hash_table_new().
+     * @virtual 
      * @param b A #PolkitIdentity.
      */
     vfunc_equal(b: Identity): boolean
     /**
      * Gets a hash code for `identity` that can be used with e.g. g_hash_table_new().
+     * @virtual 
      */
     vfunc_hash(): number
     /**
      * Serializes `identity` to a string that can be used in
      * polkit_identity_from_string().
+     * @virtual 
      */
     vfunc_to_string(): string
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -6910,6 +7060,7 @@ class UnixUser {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -6943,6 +7094,7 @@ class UnixUser {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: UnixUser, pspec: GObject.ParamSpec) => void)): number
@@ -6984,6 +7136,9 @@ abstract class AuthorizationResultClass {
 abstract class DetailsClass {
     static name: string
 }
+/**
+ * An interface for identities.
+ */
 abstract class IdentityIface {
     /* Fields of Polkit-1.0.Polkit.IdentityIface */
     /**
@@ -6995,6 +7150,9 @@ abstract class IdentityIface {
     to_string: (identity: Identity) => string
     static name: string
 }
+/**
+ * An interface for subjects.
+ */
 abstract class SubjectIface {
     /* Fields of Polkit-1.0.Polkit.SubjectIface */
     /**

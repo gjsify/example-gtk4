@@ -41,12 +41,21 @@ function update_layout(cr: cairo.Context, layout: Pango.Layout): void
 /**
  * Function type for rendering attributes of type %PANGO_ATTR_SHAPE
  * with Pango's Cairo renderer.
+ * @callback 
  */
 interface ShapeRendererFunc {
     (cr: cairo.Context, attr: Pango.AttrShape, do_path: boolean): void
 }
 interface Font_ConstructProps extends Pango.Font_ConstructProps {
 }
+/**
+ * `PangoCairoFont` is an interface exported by fonts for
+ * use with Cairo.
+ * 
+ * The actual type of the font will depend on the particular
+ * font technology Cairo was compiled to use.
+ * @interface 
+ */
 class Font {
     /* Fields of Pango-1.0.Pango.Font */
     parent_instance: GObject.Object
@@ -484,11 +493,13 @@ class Font {
      * 
      * Use [method`Pango`.Font.describe_with_absolute_size] if you want
      * the font size in device units.
+     * @virtual 
      */
     vfunc_describe(): Pango.FontDescription
     vfunc_describe_absolute(): Pango.FontDescription
     /**
      * Computes the coverage map for a given font and language tag.
+     * @virtual 
      * @param language the language tag
      */
     vfunc_get_coverage(language: Pango.Language): Pango.Coverage
@@ -500,6 +511,7 @@ class Font {
      * 
      * Note that this does not include OpenType features which the
      * rendering system enables by default.
+     * @virtual 
      * @param num_features the number of used items in `features`
      */
     vfunc_get_features(num_features: number): [ /* features */ HarfBuzz.feature_t[], /* num_features */ number ]
@@ -515,6 +527,7 @@ class Font {
      * It is the responsibility of the user to ensure that the
      * font map is kept alive. In most uses this is not an issue
      * as a `PangoContext` holds a reference to the font map.
+     * @virtual 
      */
     vfunc_get_font_map(): Pango.FontMap | null
     /**
@@ -529,6 +542,7 @@ class Font {
      * 
      * If `font` is %NULL, this function gracefully sets some sane values in the
      * output variables and returns.
+     * @virtual 
      * @param glyph the glyph index
      */
     vfunc_get_glyph_extents(glyph: Pango.Glyph): [ /* ink_rect */ Pango.Rectangle, /* logical_rect */ Pango.Rectangle ]
@@ -541,6 +555,7 @@ class Font {
      * 
      * If `font` is %NULL, this function gracefully sets some sane values in the
      * output variables and returns.
+     * @virtual 
      * @param language language tag used to determine which script   to get the metrics for, or %NULL to indicate to get the metrics for   the entire font.
      */
     vfunc_get_metrics(language: Pango.Language | null): Pango.FontMetrics
@@ -561,6 +576,7 @@ class Font {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -594,6 +610,7 @@ class Font {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Font, pspec: GObject.ParamSpec) => void)): number
@@ -610,6 +627,14 @@ class Font {
 }
 interface FontMap_ConstructProps extends Pango.FontMap_ConstructProps {
 }
+/**
+ * `PangoCairoFontMap` is an interface exported by font maps for
+ * use with Cairo.
+ * 
+ * The actual type of the font map will depend on the particular
+ * font technology Cairo was compiled to use.
+ * @interface 
+ */
 class FontMap {
     /* Fields of Pango-1.0.Pango.FontMap */
     parent_instance: GObject.Object
@@ -1043,10 +1068,12 @@ class FontMap {
      * for Pango, something applications won't do. Backends should
      * call this function if they have attached extra data to the
      * context and such data is changed.
+     * @virtual 
      */
     vfunc_changed(): void
     /**
      * Gets a font family by name.
+     * @virtual 
      * @param name a family name
      */
     vfunc_get_family(name: string): Pango.FontFamily
@@ -1063,6 +1090,7 @@ class FontMap {
      * 
      * This can be used to automatically detect changes to a `PangoFontMap`,
      * like in `PangoContext`.
+     * @virtual 
      */
     vfunc_get_serial(): number
     /**
@@ -1072,10 +1100,12 @@ class FontMap {
      * 
      * `PangoFontMap` also implemented the [iface`Gio`.ListModel] interface
      * for enumerating families.
+     * @virtual 
      */
     vfunc_list_families(): /* families */ Pango.FontFamily[]
     /**
      * Load the font in the fontmap that is the closest match for `desc`.
+     * @virtual 
      * @param context the `PangoContext` the font will be used with
      * @param desc a `PangoFontDescription` describing the font to load
      */
@@ -1083,6 +1113,7 @@ class FontMap {
     /**
      * Load a set of fonts in the fontmap that can be used to render
      * a font matching `desc`.
+     * @virtual 
      * @param context the `PangoContext` the font will be used with
      * @param desc a `PangoFontDescription` describing the font to load
      * @param language a `PangoLanguage` the fonts will be used for
@@ -1105,6 +1136,7 @@ class FontMap {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -1138,6 +1170,7 @@ class FontMap {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: FontMap, pspec: GObject.ParamSpec) => void)): number

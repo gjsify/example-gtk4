@@ -15,26 +15,26 @@ class IListViewBase extends Gtk.ListView {
 
     store?: Gio.ListStore;
 
-    constructor({}, model_cls?: any /* TODO */) {
-        super({})
+    constructor(config: Gtk.ListView_ConstructProps = {}, modelCls: typeof ListElem) {
+        super(config)
     
         // Use the signal Factory, so we can connect our own methods to setup
         this.factory = new Gtk.SignalListItemFactory()
 
         // connect to Gtk.SignalListItemFactory signals
         // check https://docs.gtk.org/gtk4/class.SignalListItemFactory.html for details
-        this.factory.connect('setup', this.on_factory_setup.bind(this))
-        this.factory.connect('bind', this.on_factory_bind.bind(this))
-        this.factory.connect('unbind', this.on_factory_unbind.bind(this))
-        this.factory.connect('teardown', this.on_factory_teardown.bind(this))
+        this.factory.connect('setup', this.onFactorySetup.bind(this))
+        this.factory.connect('bind', this.onFactoryBind.bind(this))
+        this.factory.connect('unbind', this.onFactoryUnbind.bind(this))
+        this.factory.connect('teardown', this.onFactoryTeardown.bind(this))
 
         // Create data model, use our own class as elements
         this.set_factory(this.factory)
-        this.store = this.setup_store(model_cls)
+        this.store = this.setupStore(modelCls)
 
         // create a selection model containing our data model
-        this.model = this.setup_model(this.store)
-        this.model.connect('selection-changed', this.on_selection_changed.bind(this))
+        this.model = this.setupModel(this.store)
+        this.model.connect('selection-changed', this.onSelectionChanged.bind(this))
 
         // set the selection model to the view
         this.set_model(this.model)
@@ -46,7 +46,7 @@ class IListViewBase extends Gtk.ListView {
      * @param store 
      * @returns 
      */
-    setup_model(store: Gio.ListModel): Gtk.SelectionModel {
+    setupModel(store: Gio.ListModel): Gtk.SelectionModel {
         return Gtk.SingleSelection.new(store)
     }
 
@@ -54,9 +54,9 @@ class IListViewBase extends Gtk.ListView {
      * Setup the data model
      * must be overloaded in subclass to use another Gio.ListModel
      * @abstract
-     * @param model_cls 
+     * @param modelCls 
      */
-    setup_store(model_cls: typeof ListElem): Gio.ListStore {
+    setupStore(modelCls: typeof ListElem): Gio.ListStore {
         throw NotImplemented;
     }
 
@@ -78,8 +78,8 @@ class IListViewBase extends Gtk.ListView {
      * @param widget 
      * @param item 
      */
-    on_factory_setup(widget, item: Gtk.ListItem) {
-        this.factory_setup(widget, item)
+    onFactorySetup(widget, item: Gtk.ListItem) {
+        this.factorySetup(widget, item)
     }
 
     /**
@@ -88,8 +88,8 @@ class IListViewBase extends Gtk.ListView {
      * @param widget 
      * @param item 
      */
-    on_factory_bind(widget: Gtk.ListView, item: Gtk.ListItem) {
-        this.factory_bind(widget, item)
+    onFactoryBind(widget: Gtk.ListView, item: Gtk.ListItem) {
+        this.factoryBind(widget, item)
     }
 
     /**
@@ -98,8 +98,8 @@ class IListViewBase extends Gtk.ListView {
      * @param widget 
      * @param item 
      */
-    on_factory_unbind(widget, item: Gtk.ListItem) {
-        this.factory_unbind(widget, item)
+    onFactoryUnbind(widget, item: Gtk.ListItem) {
+        this.factoryUnbind(widget, item)
     }
 
     /**
@@ -108,17 +108,17 @@ class IListViewBase extends Gtk.ListView {
      * @param widget 
      * @param item 
      */
-    on_factory_teardown(widget, item: Gtk.ListItem) {
-        this.factory_teardown(widget, item)
+    onFactoryTeardown(widget, item: Gtk.ListItem) {
+        this.factoryTeardown(widget, item)
     }
 
-    on_selection_changed(widget, position: number, nItems: number) {
+    onSelectionChanged(widget, position: number, nItems: number) {
         // get the current selection (GtkBitset)
         const selection = widget.get_selection()
         // the the first value in the GtkBitset, that contain the index of the selection in the data model
         // as we use Gtk.SingleSelection, there can only be one ;-)
         const ndx = selection.get_nth(0)
-        this.selection_changed(widget, ndx)
+        this.selectionChanged(widget, ndx)
     }
 
     // --------------------> abstract callback methods <--------------------------------
@@ -128,7 +128,7 @@ class IListViewBase extends Gtk.ListView {
      * @abstract
      * Setup the widgets to go into the ListView (Overload in subclass)
      */
-    factory_setup(widget: Gtk.ListView, item: Gtk.ListItem) {
+    factorySetup(widget: Gtk.ListView, item: Gtk.ListItem) {
         throw NotImplemented;
     }
 
@@ -138,7 +138,7 @@ class IListViewBase extends Gtk.ListView {
      * @param widget 
      * @param item 
      */
-    factory_bind(widget: Gtk.ListView, item: Gtk.ListItem) {
+    factoryBind(widget: Gtk.ListView, item: Gtk.ListItem) {
         throw NotImplemented;
     }
 
@@ -147,7 +147,7 @@ class IListViewBase extends Gtk.ListView {
      * @param widget 
      * @param item 
      */
-    factory_unbind(widget: Gtk.ListView, item: Gtk.ListItem) {
+    factoryUnbind(widget: Gtk.ListView, item: Gtk.ListItem) {
         throw NotImplemented;
     }
 
@@ -156,7 +156,7 @@ class IListViewBase extends Gtk.ListView {
      * @param widget 
      * @param item 
      */
-    factory_teardown(widget: Gtk.ListView, item: Gtk.ListItem) {
+    factoryTeardown(widget: Gtk.ListView, item: Gtk.ListItem) {
         throw NotImplemented;
     }
 
@@ -167,7 +167,7 @@ class IListViewBase extends Gtk.ListView {
      * @param widget 
      * @param item 
      */
-    selection_changed(widget: Gtk.SelectionModel, ndx: number) {
+    selectionChanged(widget: Gtk.SelectionModel, ndx: number) {
         throw NotImplemented;
     }
 }

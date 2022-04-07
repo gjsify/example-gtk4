@@ -2,7 +2,7 @@ import Gio from '../@types/Gjs/Gio-2.0.js'
 import GObject from '../@types/Gjs/GObject-2.0.js'
 
 import { ListViewBase } from "./list-view-base.js"
-import { ListElem } from "../list-elem.js"
+import { IListElem } from "../list-elem.js"
 
 // TODO: see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/examples/glistmodel.js
 
@@ -11,14 +11,13 @@ import { ListElem } from "../list-elem.js"
  * It can contain misc objects derived from GObject
  */
 export class IListViewListStore extends ListViewBase {
-    constructor({}, model_cls: any /* TODO */) {
-        super({}, model_cls)
+    constructor({}, modelCls: typeof IListElem) {
+        super({}, modelCls)
     }
 
     /** Setup the data model */
-    setup_store(model_cls: any /* TODO */): Gio.ListStore {
-        print("setup_store model_cls: ", model_cls)
-        return new Gio.ListStore({item_type: model_cls})
+    setupStore(modelCls: typeof IListElem): Gio.ListStore {
+        return new Gio.ListStore({item_type: modelCls.$gtype})
     }
 }
 

@@ -1350,6 +1350,7 @@ enum WrapMode {
 /**
  * The bits in a `PangoFontMask` correspond to the set fields in a
  * `PangoFontDescription`.
+ * @bitfield 
  */
 enum FontMask {
     /**
@@ -1389,6 +1390,7 @@ enum FontMask {
  * Flags that influence the behavior of [func`Pango`.Layout.deserialize].
  * 
  * New members may be added to this enumeration over time.
+ * @bitfield 
  */
 enum LayoutDeserializeFlags {
     /**
@@ -1405,6 +1407,7 @@ enum LayoutDeserializeFlags {
  * Flags that influence the behavior of [method`Pango`.Layout.serialize].
  * 
  * New members may be added to this enumeration over time.
+ * @bitfield 
  */
 enum LayoutSerializeFlags {
     /**
@@ -1424,6 +1427,7 @@ enum LayoutSerializeFlags {
  * Flags influencing the shaping process.
  * 
  * `PangoShapeFlags` can be passed to [func`Pango`.shape_with_flags].
+ * @bitfield 
  */
 enum ShapeFlags {
     /**
@@ -1439,6 +1443,7 @@ enum ShapeFlags {
 /**
  * These flags affect how Pango treats characters that are normally
  * not visible in the output.
+ * @bitfield 
  */
 enum ShowFlags {
     /**
@@ -1630,12 +1635,14 @@ function version_check(required_major: number, required_minor: number, required_
 function version_string(): string
 /**
  * Type of a function that can duplicate user data for an attribute.
+ * @callback 
  */
 interface AttrDataCopyFunc {
     (): object | null
 }
 /**
  * Type of a function filtering a list of attributes.
+ * @callback 
  */
 interface AttrFilterFunc {
     (attribute: Attribute): boolean
@@ -1644,12 +1651,23 @@ interface AttrFilterFunc {
  * Callback used when enumerating fonts in a fontset.
  * 
  * See [method`Pango`.Fontset.foreach].
+ * @callback 
  */
 interface FontsetForeachFunc {
     (fontset: Fontset, font: Font): boolean
 }
 interface Context_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `PangoContext` stores global information used to control the
+ * itemization process.
+ * 
+ * The information stored by `PangoContext` includes the fontmap used
+ * to look up fonts, and default values such as the default language,
+ * default gravity, or default font.
+ * 
+ * To obtain a `PangoContext`, use [method`Pango`.FontMap.create_context].
+ */
 class Context {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -2171,6 +2189,7 @@ class Context {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -2204,6 +2223,7 @@ class Context {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Context, pspec: GObject.ParamSpec) => void)): number
@@ -2222,6 +2242,16 @@ class Context {
 }
 interface Coverage_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `PangoCoverage` structure is a map from Unicode characters
+ * to [enum`Pango`.CoverageLevel] values.
+ * 
+ * It is often necessary in Pango to determine if a particular
+ * font can represent a particular character, and also how well
+ * it can represent that character. The `PangoCoverage` is a data
+ * structure that is used to represent that information. It is an
+ * opaque structure with no public fields.
+ */
 class Coverage {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -2583,6 +2613,7 @@ class Coverage {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -2616,6 +2647,7 @@ class Coverage {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Coverage, pspec: GObject.ParamSpec) => void)): number
@@ -2640,7 +2672,13 @@ class Coverage {
 }
 interface Font_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `PangoFont` is used to represent a font in a
+ * rendering-system-independent manner.
+ */
 class Font {
+    /* Fields of Pango-1.0.Pango.Font */
+    parent_instance: GObject.Object
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of Pango-1.0.Pango.Font */
@@ -3068,11 +3106,13 @@ class Font {
      * 
      * Use [method`Pango`.Font.describe_with_absolute_size] if you want
      * the font size in device units.
+     * @virtual 
      */
     vfunc_describe(): FontDescription
     vfunc_describe_absolute(): FontDescription
     /**
      * Computes the coverage map for a given font and language tag.
+     * @virtual 
      * @param language the language tag
      */
     vfunc_get_coverage(language: Language): Coverage
@@ -3084,6 +3124,7 @@ class Font {
      * 
      * Note that this does not include OpenType features which the
      * rendering system enables by default.
+     * @virtual 
      * @param num_features the number of used items in `features`
      */
     vfunc_get_features(num_features: number): [ /* features */ HarfBuzz.feature_t[], /* num_features */ number ]
@@ -3099,6 +3140,7 @@ class Font {
      * It is the responsibility of the user to ensure that the
      * font map is kept alive. In most uses this is not an issue
      * as a `PangoContext` holds a reference to the font map.
+     * @virtual 
      */
     vfunc_get_font_map(): FontMap | null
     /**
@@ -3113,6 +3155,7 @@ class Font {
      * 
      * If `font` is %NULL, this function gracefully sets some sane values in the
      * output variables and returns.
+     * @virtual 
      * @param glyph the glyph index
      */
     vfunc_get_glyph_extents(glyph: Glyph): [ /* ink_rect */ Rectangle, /* logical_rect */ Rectangle ]
@@ -3125,6 +3168,7 @@ class Font {
      * 
      * If `font` is %NULL, this function gracefully sets some sane values in the
      * output variables and returns.
+     * @virtual 
      * @param language language tag used to determine which script   to get the metrics for, or %NULL to indicate to get the metrics for   the entire font.
      */
     vfunc_get_metrics(language: Language | null): FontMetrics
@@ -3145,6 +3189,7 @@ class Font {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -3178,6 +3223,7 @@ class Font {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Font, pspec: GObject.ParamSpec) => void)): number
@@ -3212,7 +3258,13 @@ class Font {
 }
 interface FontFace_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `PangoFontFace` is used to represent a group of fonts with
+ * the same family, slant, weight, and width, but varying sizes.
+ */
 class FontFace {
+    /* Fields of Pango-1.0.Pango.FontFace */
+    parent_instance: GObject.Object
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of Pango-1.0.Pango.FontFace */
@@ -3574,6 +3626,7 @@ class FontFace {
      * The resulting font description will have the family, style,
      * variant, weight and stretch of the face, but its size field
      * will be unset.
+     * @virtual 
      */
     vfunc_describe(): FontDescription
     /**
@@ -3582,10 +3635,12 @@ class FontFace {
      * Note that a font family may contain multiple faces
      * with the same name (e.g. a variable and a non-variable
      * face for the same style).
+     * @virtual 
      */
     vfunc_get_face_name(): string
     /**
      * Gets the `PangoFontFamily` that `face` belongs to.
+     * @virtual 
      */
     vfunc_get_family(): FontFamily
     /**
@@ -3594,6 +3649,7 @@ class FontFace {
      * This will be the case if the underlying font rendering engine
      * creates this face from another face, by shearing, emboldening,
      * lightening or modifying it in some other way.
+     * @virtual 
      */
     vfunc_is_synthesized(): boolean
     /**
@@ -3603,6 +3659,7 @@ class FontFace {
      * %NULL at the location pointed to by `sizes` and 0 at the location pointed
      * to by `n_sizes`. The sizes returned are in Pango units and are sorted
      * in ascending order.
+     * @virtual 
      */
     vfunc_list_sizes(): /* sizes */ number[] | null
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -3622,6 +3679,7 @@ class FontFace {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -3655,6 +3713,7 @@ class FontFace {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: FontFace, pspec: GObject.ParamSpec) => void)): number
@@ -3671,7 +3730,16 @@ class FontFace {
 }
 interface FontFamily_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `PangoFontFamily` is used to represent a family of related
+ * font faces.
+ * 
+ * The font faces in a family share a common design, but differ in
+ * slant, weight, width or other aspects.
+ */
 class FontFamily {
+    /* Fields of Pango-1.0.Pango.FontFamily */
+    parent_instance: GObject.Object
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of Pango-1.0.Pango.FontFamily */
@@ -4043,6 +4111,7 @@ class FontFamily {
     /* Virtual methods of Pango-1.0.Pango.FontFamily */
     /**
      * Gets the `PangoFontFace` of `family` with the given name.
+     * @virtual 
      * @param name the name of a face. If the name is %NULL,   the family's default face (fontconfig calls it "Regular")   will be returned.
      */
     vfunc_get_face(name: string | null): FontFace | null
@@ -4052,6 +4121,7 @@ class FontFamily {
      * The name is unique among all fonts for the font backend and can
      * be used in a `PangoFontDescription` to specify that a face from
      * this family is desired.
+     * @virtual 
      */
     vfunc_get_name(): string
     /**
@@ -4069,6 +4139,7 @@ class FontFamily {
      * [method`Pango`.FontMetrics.get_approximate_digit_width], since the
      * results of [method`Pango`.FontMetrics.get_approximate_char_width] may
      * be affected by double-width characters.
+     * @virtual 
      */
     vfunc_is_monospace(): boolean
     /**
@@ -4077,6 +4148,7 @@ class FontFamily {
      * 
      * Such axes are also known as _variations_; see
      * [method`Pango`.FontDescription.set_variations] for more information.
+     * @virtual 
      */
     vfunc_is_variable(): boolean
     /**
@@ -4090,6 +4162,7 @@ class FontFamily {
      * 
      * `PangoFontFamily` also implemented the [iface`Gio`.ListModel] interface
      * for enumerating faces.
+     * @virtual 
      */
     vfunc_list_faces(): /* faces */ FontFace[]
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -4109,6 +4182,7 @@ class FontFamily {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -4142,6 +4216,7 @@ class FontFamily {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: FontFamily, pspec: GObject.ParamSpec) => void)): number
@@ -4158,7 +4233,16 @@ class FontFamily {
 }
 interface FontMap_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `PangoFontMap` represents the set of fonts available for a
+ * particular rendering system.
+ * 
+ * This is a virtual object with implementations being specific to
+ * particular rendering systems.
+ */
 class FontMap {
+    /* Fields of Pango-1.0.Pango.FontMap */
+    parent_instance: GObject.Object
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of Pango-1.0.Pango.FontMap */
@@ -4550,10 +4634,12 @@ class FontMap {
      * for Pango, something applications won't do. Backends should
      * call this function if they have attached extra data to the
      * context and such data is changed.
+     * @virtual 
      */
     vfunc_changed(): void
     /**
      * Gets a font family by name.
+     * @virtual 
      * @param name a family name
      */
     vfunc_get_family(name: string): FontFamily
@@ -4570,6 +4656,7 @@ class FontMap {
      * 
      * This can be used to automatically detect changes to a `PangoFontMap`,
      * like in `PangoContext`.
+     * @virtual 
      */
     vfunc_get_serial(): number
     /**
@@ -4579,10 +4666,12 @@ class FontMap {
      * 
      * `PangoFontMap` also implemented the [iface`Gio`.ListModel] interface
      * for enumerating families.
+     * @virtual 
      */
     vfunc_list_families(): /* families */ FontFamily[]
     /**
      * Load the font in the fontmap that is the closest match for `desc`.
+     * @virtual 
      * @param context the `PangoContext` the font will be used with
      * @param desc a `PangoFontDescription` describing the font to load
      */
@@ -4590,6 +4679,7 @@ class FontMap {
     /**
      * Load a set of fonts in the fontmap that can be used to render
      * a font matching `desc`.
+     * @virtual 
      * @param context the `PangoContext` the font will be used with
      * @param desc a `PangoFontDescription` describing the font to load
      * @param language a `PangoLanguage` the fonts will be used for
@@ -4612,6 +4702,7 @@ class FontMap {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -4645,6 +4736,7 @@ class FontMap {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: FontMap, pspec: GObject.ParamSpec) => void)): number
@@ -4661,7 +4753,17 @@ class FontMap {
 }
 interface Fontset_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `PangoFontset` represents a set of `PangoFont` to use when rendering text.
+ * 
+ * A `PangoFontset` is the result of resolving a `PangoFontDescription`
+ * against a particular `PangoContext`. It has operations for finding the
+ * component font for a particular Unicode character, and for finding a
+ * composite set of metrics for the entire fontset.
+ */
 class Fontset {
+    /* Fields of Pango-1.0.Pango.Fontset */
+    parent_instance: GObject.Object
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of Pango-1.0.Pango.Fontset */
@@ -5003,18 +5105,21 @@ class Fontset {
      * each one.
      * 
      * If `func` returns %TRUE, that stops the iteration.
+     * @virtual 
      * @param func Callback function
      */
     vfunc_foreach(func: FontsetForeachFunc): void
     /**
      * Returns the font in the fontset that contains the best
      * glyph for a Unicode character.
+     * @virtual 
      * @param wc a Unicode character
      */
     vfunc_get_font(wc: number): Font
     vfunc_get_language(): Language
     /**
      * Get overall metric information for the fonts in the fontset.
+     * @virtual 
      */
     vfunc_get_metrics(): FontMetrics
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -5034,6 +5139,7 @@ class Fontset {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -5067,6 +5173,7 @@ class Fontset {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Fontset, pspec: GObject.ParamSpec) => void)): number
@@ -5083,6 +5190,13 @@ class Fontset {
 }
 interface FontsetSimple_ConstructProps extends Fontset_ConstructProps {
 }
+/**
+ * `PangoFontsetSimple` is a implementation of the abstract
+ * `PangoFontset` base class as an array of fonts.
+ * 
+ * When creating a `PangoFontsetSimple`, you have to provide
+ * the array of fonts that make up the fontset.
+ */
 class FontsetSimple {
     /* Fields of Pango-1.0.Pango.Fontset */
     parent_instance: GObject.Object
@@ -5439,18 +5553,21 @@ class FontsetSimple {
      * each one.
      * 
      * If `func` returns %TRUE, that stops the iteration.
+     * @virtual 
      * @param func Callback function
      */
     vfunc_foreach(func: FontsetForeachFunc): void
     /**
      * Returns the font in the fontset that contains the best
      * glyph for a Unicode character.
+     * @virtual 
      * @param wc a Unicode character
      */
     vfunc_get_font(wc: number): Font
     vfunc_get_language(): Language
     /**
      * Get overall metric information for the fonts in the fontset.
+     * @virtual 
      */
     vfunc_get_metrics(): FontMetrics
     /* Virtual methods of GObject-2.0.GObject.Object */
@@ -5470,6 +5587,7 @@ class FontsetSimple {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -5503,6 +5621,7 @@ class FontsetSimple {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: FontsetSimple, pspec: GObject.ParamSpec) => void)): number
@@ -5521,6 +5640,46 @@ class FontsetSimple {
 }
 interface Layout_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * A `PangoLayout` structure represents an entire paragraph of text.
+ * 
+ * While complete access to the layout capabilities of Pango is provided
+ * using the detailed interfaces for itemization and shaping, using
+ * that functionality directly involves writing a fairly large amount
+ * of code. `PangoLayout` provides a high-level driver for formatting
+ * entire paragraphs of text at once. This includes paragraph-level
+ * functionality such as line breaking, justification, alignment and
+ * ellipsization.
+ * 
+ * A `PangoLayout` is initialized with a `PangoContext`, UTF-8 string
+ * and set of attributes for that string. Once that is done, the set of
+ * formatted lines can be extracted from the object, the layout can be
+ * rendered, and conversion between logical character positions within
+ * the layout's text, and the physical position of the resulting glyphs
+ * can be made.
+ * 
+ * There are a number of parameters to adjust the formatting of a
+ * `PangoLayout`. The following image shows adjustable parameters
+ * (on the left) and font metrics (on the right):
+ * 
+ * <picture>
+ *   <source srcset="layout-dark.png" media="(prefers-color-scheme: dark)">
+ *   <img alt="Pango Layout Parameters" src="layout-light.png">
+ * </picture>
+ * 
+ * The following images demonstrate the effect of alignment and
+ * justification on the layout of text:
+ * 
+ * | | |
+ * | --- | --- |
+ * | ![align=left](align-left.png) | ![align=left, justify](align-left-justify.png) |
+ * | ![align=center](align-center.png) | ![align=center, justify](align-center-justify.png) |
+ * | ![align=right](align-right.png) | ![align=right, justify](align-right-justify.png) |
+ * 
+ * 
+ * It is possible, as well, to ignore the 2-D setup,
+ * and simply treat the results of a `PangoLayout` as a list of lines.
+ */
 class Layout {
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
@@ -6520,6 +6679,7 @@ class Layout {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -6553,6 +6713,7 @@ class Layout {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Layout, pspec: GObject.ParamSpec) => void)): number
@@ -6584,7 +6745,22 @@ class Layout {
 }
 interface Renderer_ConstructProps extends GObject.Object_ConstructProps {
 }
+/**
+ * `PangoRenderer` is a base class for objects that can render text
+ * provided as `PangoGlyphString` or `PangoLayout`.
+ * 
+ * By subclassing `PangoRenderer` and overriding operations such as
+ * `draw_glyphs` and `draw_rectangle,` renderers for particular font
+ * backends and destinations can be created.
+ */
 class Renderer {
+    /* Fields of Pango-1.0.Pango.Renderer */
+    /**
+     * the current transformation matrix for
+     *   the Renderer; may be %NULL, which should be treated the
+     *   same as the identity matrix.
+     */
+    matrix: Matrix
     /* Fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
     /* Methods of Pango-1.0.Pango.Renderer */
@@ -7113,6 +7289,7 @@ class Renderer {
      * 
      * This should be called while `renderer` is already active.
      * Use [method`Pango`.Renderer.activate] to activate a renderer.
+     * @virtual 
      * @param x X coordinate of underline, in Pango units in user coordinate system
      * @param y Y coordinate of underline, in Pango units in user coordinate system
      * @param width width of underline, in Pango units in user coordinate system
@@ -7121,6 +7298,7 @@ class Renderer {
     vfunc_draw_error_underline(x: number, y: number, width: number, height: number): void
     /**
      * Draws a single glyph with coordinates in device space.
+     * @virtual 
      * @param font a `PangoFont`
      * @param glyph the glyph index of a single glyph
      * @param x X coordinate of left edge of baseline of glyph
@@ -7146,6 +7324,7 @@ class Renderer {
      * 
      * The default implementation of this method simply falls back to
      * [method`Pango`.Renderer.draw_glyphs].
+     * @virtual 
      * @param text the UTF-8 text that `glyph_item` refers to
      * @param glyph_item a `PangoGlyphItem`
      * @param x X position of left edge of baseline, in user space coordinates   in Pango units
@@ -7154,6 +7333,7 @@ class Renderer {
     vfunc_draw_glyph_item(text: string | null, glyph_item: GlyphItem, x: number, y: number): void
     /**
      * Draws the glyphs in `glyphs` with the specified `PangoRenderer`.
+     * @virtual 
      * @param font a `PangoFont`
      * @param glyphs a `PangoGlyphString`
      * @param x X position of left edge of baseline, in user space coordinates   in Pango units.
@@ -7166,6 +7346,7 @@ class Renderer {
      * 
      * This should be called while `renderer` is already active.
      * Use [method`Pango`.Renderer.activate] to activate a renderer.
+     * @virtual 
      * @param part type of object this rectangle is part of
      * @param x X position at which to draw rectangle, in user space coordinates   in Pango units
      * @param y Y position at which to draw rectangle, in user space coordinates   in Pango units
@@ -7177,6 +7358,7 @@ class Renderer {
     /**
      * Draws a trapezoid with the parallel sides aligned with the X axis
      * using the given `PangoRenderer`; coordinates are in device space.
+     * @virtual 
      * @param part type of object this trapezoid is part of
      * @param y1_ Y coordinate of top of trapezoid
      * @param x11 X coordinate of left end of top of trapezoid
@@ -7203,6 +7385,7 @@ class Renderer {
      * When the stipple changes or underlines with different stipples
      * might be joined together. Pango automatically calls this for
      * changes to colors. (See [method`Pango`.Renderer.set_color])
+     * @virtual 
      * @param part the part for which rendering has changed.
      */
     vfunc_part_changed(part: RenderPart): void
@@ -7224,6 +7407,7 @@ class Renderer {
      * g_object_freeze_notify(). In this case, the signal emissions are queued
      * and will be emitted (in reverse order) when g_object_thaw_notify() is
      * called.
+     * @virtual 
      * @param pspec 
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
@@ -7257,6 +7441,7 @@ class Renderer {
      * It is important to note that you must use
      * [canonical parameter names][canonical-parameter-names] as
      * detail strings for the notify signal.
+     * @signal 
      * @param pspec the #GParamSpec of the property which changed.
      */
     connect(sigName: "notify", callback: (($obj: Renderer, pspec: GObject.ParamSpec) => void)): number
@@ -7271,6 +7456,10 @@ class Renderer {
     _init (config?: Renderer_ConstructProps): void
     static $gtype: GObject.GType<Renderer>
 }
+/**
+ * The `PangoAnalysis` structure stores information about
+ * the properties of a segment of text.
+ */
 class Analysis {
     /* Fields of Pango-1.0.Pango.Analysis */
     /**
@@ -7311,6 +7500,13 @@ class Analysis {
     extra_attrs: object[]
     static name: string
 }
+/**
+ * The `PangoAttrClass` structure stores the type and operations for
+ * a particular type of attribute.
+ * 
+ * The functions in this structure should not be called directly. Instead,
+ * one should use the wrapper functions provided for `PangoAttribute`.
+ */
 class AttrClass {
     /* Fields of Pango-1.0.Pango.AttrClass */
     /**
@@ -7322,6 +7518,10 @@ class AttrClass {
     equal: (attr1: Attribute, attr2: Attribute) => boolean
     static name: string
 }
+/**
+ * The `PangoAttrColor` structure is used to represent attributes that
+ * are colors.
+ */
 class AttrColor {
     /* Fields of Pango-1.0.Pango.AttrColor */
     /**
@@ -7334,6 +7534,10 @@ class AttrColor {
     color: Color
     static name: string
 }
+/**
+ * The `PangoAttrFloat` structure is used to represent attributes with
+ * a float or double value.
+ */
 class AttrFloat {
     /* Fields of Pango-1.0.Pango.AttrFloat */
     /**
@@ -7346,6 +7550,10 @@ class AttrFloat {
     value: number
     static name: string
 }
+/**
+ * The `PangoAttrFontDesc` structure is used to store an attribute that
+ * sets all aspects of the font description at once.
+ */
 class AttrFontDesc {
     /* Fields of Pango-1.0.Pango.AttrFontDesc */
     /**
@@ -7358,6 +7566,10 @@ class AttrFontDesc {
     desc: FontDescription
     static name: string
 }
+/**
+ * The `PangoAttrFontFeatures` structure is used to represent OpenType
+ * font features as an attribute.
+ */
 class AttrFontFeatures {
     /* Fields of Pango-1.0.Pango.AttrFontFeatures */
     /**
@@ -7370,6 +7582,10 @@ class AttrFontFeatures {
     features: string
     static name: string
 }
+/**
+ * The `PangoAttrInt` structure is used to represent attributes with
+ * an integer or enumeration value.
+ */
 class AttrInt {
     /* Fields of Pango-1.0.Pango.AttrInt */
     /**
@@ -7382,6 +7598,15 @@ class AttrInt {
     value: number
     static name: string
 }
+/**
+ * A `PangoAttrIterator` is used to iterate through a `PangoAttrList`.
+ * 
+ * A new iterator is created with [method`Pango`.AttrList.get_iterator].
+ * Once the iterator is created, it can be advanced through the style
+ * changes in the text using [method`Pango`.AttrIterator.next]. At each
+ * style change, the range of the current style segment and the attributes
+ * currently in effect can be queried.
+ */
 class AttrIterator {
     /* Methods of Pango-1.0.Pango.AttrIterator */
     /**
@@ -7428,6 +7653,10 @@ class AttrIterator {
     range(): [ /* start */ number, /* end */ number ]
     static name: string
 }
+/**
+ * The `PangoAttrLanguage` structure is used to represent attributes that
+ * are languages.
+ */
 class AttrLanguage {
     /* Fields of Pango-1.0.Pango.AttrLanguage */
     /**
@@ -7440,6 +7669,19 @@ class AttrLanguage {
     value: Language
     static name: string
 }
+/**
+ * A `PangoAttrList` represents a list of attributes that apply to a section
+ * of text.
+ * 
+ * The attributes in a `PangoAttrList` are, in general, allowed to overlap in
+ * an arbitrary fashion. However, if the attributes are manipulated only through
+ * [method`Pango`.AttrList.change], the overlap between properties will meet
+ * stricter criteria.
+ * 
+ * Since the `PangoAttrList` structure is stored as a linear list, it is not
+ * suitable for storing attributes for large amounts of text. In general, you
+ * should not use a single `PangoAttrList` for more than one paragraph of text.
+ */
 class AttrList {
     /* Methods of Pango-1.0.Pango.AttrList */
     /**
@@ -7587,6 +7829,10 @@ class AttrList {
      */
     static from_string(text: string): AttrList | null
 }
+/**
+ * The `PangoAttrShape` structure is used to represent attributes which
+ * impose shape restrictions.
+ */
 class AttrShape {
     /* Fields of Pango-1.0.Pango.AttrShape */
     /**
@@ -7628,6 +7874,10 @@ class AttrShape {
      */
     static new_with_data(ink_rect: Rectangle, logical_rect: Rectangle, data: object | null, copy_func: AttrDataCopyFunc | null): Attribute
 }
+/**
+ * The `PangoAttrSize` structure is used to represent attributes which
+ * set font size.
+ */
 class AttrSize {
     /* Fields of Pango-1.0.Pango.AttrSize */
     /**
@@ -7654,6 +7904,10 @@ class AttrSize {
      */
     static new_absolute(size: number): Attribute
 }
+/**
+ * The `PangoAttrString` structure is used to represent attributes with
+ * a string value.
+ */
 class AttrString {
     /* Fields of Pango-1.0.Pango.AttrString */
     /**
@@ -7666,6 +7920,16 @@ class AttrString {
     value: string
     static name: string
 }
+/**
+ * The `PangoAttribute` structure represents the common portions of all
+ * attributes.
+ * 
+ * Particular types of attributes include this structure as their initial
+ * portion. The common portion of the attribute holds the range to which
+ * the value in the type-specific part of the attribute applies and should
+ * be initialized using [method`Pango`.Attribute.init]. By default, an attribute
+ * will have an all-inclusive range of [0,%G_MAXUINT].
+ */
 class Attribute {
     /* Fields of Pango-1.0.Pango.Attribute */
     /**
@@ -7763,6 +8027,10 @@ class Attribute {
     init(klass: AttrClass): void
     static name: string
 }
+/**
+ * The `PangoColor` structure is used to
+ * represent a color in an uncalibrated RGB color-space.
+ */
 class Color {
     /* Fields of Pango-1.0.Pango.Color */
     /**
@@ -7849,6 +8117,14 @@ abstract class FontClass {
     create_hb_font: (font: Font) => HarfBuzz.font_t
     static name: string
 }
+/**
+ * A `PangoFontDescription` describes a font in an implementation-independent
+ * manner.
+ * 
+ * `PangoFontDescription` structures are used both to list what fonts are
+ * available on the system and also for specifying the characteristics of
+ * a font to load.
+ */
 class FontDescription {
     /* Methods of Pango-1.0.Pango.FontDescription */
     /**
@@ -8209,6 +8485,10 @@ abstract class FontFamilyClass {
     get_face: (family: FontFamily, name: string | null) => FontFace | null
     static name: string
 }
+/**
+ * The `PangoFontMapClass` structure holds the virtual functions for
+ * a particular `PangoFontMap` implementation.
+ */
 abstract class FontMapClass {
     /* Fields of Pango-1.0.Pango.FontMapClass */
     /**
@@ -8228,6 +8508,22 @@ abstract class FontMapClass {
     get_family: (fontmap: FontMap, name: string) => FontFamily
     static name: string
 }
+/**
+ * A `PangoFontMetrics` structure holds the overall metric information
+ * for a font.
+ * 
+ * The information in a `PangoFontMetrics` structure may be restricted
+ * to a script. The fields of this structure are private to implementations
+ * of a font backend. See the documentation of the corresponding getters
+ * for documentation of their meaning.
+ * 
+ * For an overview of the most important metrics, see:
+ * 
+ * <picture>
+ *   <source srcset="fontmetrics-dark.png" media="(prefers-color-scheme: dark)">
+ *   <img alt="Font metrics" src="fontmetrics-light.png">
+ * </picture>
+ */
 class FontMetrics {
     /* Methods of Pango-1.0.Pango.FontMetrics */
     /**
@@ -8310,6 +8606,10 @@ class FontMetrics {
     unref(): void
     static name: string
 }
+/**
+ * The `PangoFontsetClass` structure holds the virtual functions for
+ * a particular `PangoFontset` implementation.
+ */
 abstract class FontsetClass {
     /* Fields of Pango-1.0.Pango.FontsetClass */
     /**
@@ -8325,6 +8625,23 @@ abstract class FontsetClass {
 abstract class FontsetSimpleClass {
     static name: string
 }
+/**
+ * The `PangoGlyphGeometry` structure contains width and positioning
+ * information for a single glyph.
+ * 
+ * Note that `width` is not guaranteed to be the same as the glyph
+ * extents. Kerning and other positioning applied during shaping will
+ * affect both the `width` and the `x_offset` for the glyphs in the
+ * glyph string that results from shaping.
+ * 
+ * The information in this struct is intended for rendering the glyphs,
+ * as follows:
+ * 
+ * 1. Assume the current point is (x, y)
+ * 2. Render the current glyph at (x + x_offset, y + y_offset),
+ * 3. Advance the current point to (x + width, y)
+ * 4. Render the next glyph
+ */
 class GlyphGeometry {
     /* Fields of Pango-1.0.Pango.GlyphGeometry */
     /**
@@ -8341,6 +8658,10 @@ class GlyphGeometry {
     y_offset: GlyphUnit
     static name: string
 }
+/**
+ * A `PangoGlyphInfo` structure represents a single glyph with
+ * positioning information and visual attributes.
+ */
 class GlyphInfo {
     /* Fields of Pango-1.0.Pango.GlyphInfo */
     /**
@@ -8357,6 +8678,14 @@ class GlyphInfo {
     attr: GlyphVisAttr
     static name: string
 }
+/**
+ * A `PangoGlyphItem` is a pair of a `PangoItem` and the glyphs
+ * resulting from shaping the items text.
+ * 
+ * As an example of the usage of `PangoGlyphItem`, the results
+ * of shaping text with `PangoLayout` is a list of `PangoLayoutLine`,
+ * each of which contains a list of `PangoGlyphItem`.
+ */
 class GlyphItem {
     /* Fields of Pango-1.0.Pango.GlyphItem */
     /**
@@ -8451,6 +8780,48 @@ class GlyphItem {
     split(text: string, split_index: number): GlyphItem
     static name: string
 }
+/**
+ * A `PangoGlyphItemIter` is an iterator over the clusters in a
+ * `PangoGlyphItem`.
+ * 
+ * The *forward direction* of the iterator is the logical direction of text.
+ * That is, with increasing `start_index` and `start_char` values. If `glyph_item`
+ * is right-to-left (that is, if `glyph_item->item->analysis.level` is odd),
+ * then `start_glyph` decreases as the iterator moves forward.  Moreover,
+ * in right-to-left cases, `start_glyph` is greater than `end_glyph`.
+ * 
+ * An iterator should be initialized using either
+ * pango_glyph_item_iter_init_start() or
+ * pango_glyph_item_iter_init_end(), for forward and backward iteration
+ * respectively, and walked over using any desired mixture of
+ * pango_glyph_item_iter_next_cluster() and
+ * pango_glyph_item_iter_prev_cluster().
+ * 
+ * A common idiom for doing a forward iteration over the clusters is:
+ * 
+ * ```
+ * PangoGlyphItemIter cluster_iter;
+ * gboolean have_cluster;
+ * 
+ * for (have_cluster = pango_glyph_item_iter_init_start (&cluster_iter,
+ *                                                       glyph_item, text);
+ *      have_cluster;
+ *      have_cluster = pango_glyph_item_iter_next_cluster (&cluster_iter))
+ * {
+ *   ...
+ * }
+ * ```
+ * 
+ * Note that `text` is the start of the text for layout, which is then
+ * indexed by `glyph_item->item->offset` to get to the text of `glyph_item`.
+ * The `start_index` and `end_index` values can directly index into `text`. The
+ * `start_glyph,` `end_glyph,` `start_char,` and `end_char` values however are
+ * zero-based for the `glyph_item`.  For each cluster, the item pointed at by
+ * the start variables is included in the cluster while the one pointed at by
+ * end variables is not.
+ * 
+ * None of the members of a `PangoGlyphItemIter` should be modified manually.
+ */
 class GlyphItemIter {
     /* Fields of Pango-1.0.Pango.GlyphItemIter */
     glyph_item: GlyphItem
@@ -8501,6 +8872,13 @@ class GlyphItemIter {
     prev_cluster(): boolean
     static name: string
 }
+/**
+ * A `PangoGlyphString` is used to store strings of glyphs with geometry
+ * and visual attribute information.
+ * 
+ * The storage for the glyph information is owned by the structure
+ * which simplifies memory management.
+ */
 class GlyphString {
     /* Fields of Pango-1.0.Pango.GlyphString */
     /**
@@ -8630,6 +9008,18 @@ class GlyphString {
     /* Static methods and pseudo-constructors */
     static new(): GlyphString
 }
+/**
+ * A `PangoGlyphVisAttr` structure communicates information between
+ * the shaping and rendering phases.
+ * 
+ * Currently, it contains cluster start and color information.
+ * More attributes may be added in the future.
+ * 
+ * Clusters are stored in visual order, within the cluster, glyphs
+ * are always ordered in logical order, since visual order is meaningless;
+ * that is, in Arabic text, accent glyphs follow the glyphs for the
+ * base character.
+ */
 class GlyphVisAttr {
     /* Fields of Pango-1.0.Pango.GlyphVisAttr */
     /**
@@ -8642,6 +9032,12 @@ class GlyphVisAttr {
     is_color: number
     static name: string
 }
+/**
+ * The `PangoItem` structure stores information about a segment of text.
+ * 
+ * You typically obtain `PangoItems` by itemizing a piece of text
+ * with [func`itemize]`.
+ */
 class Item {
     /* Fields of Pango-1.0.Pango.Item */
     /**
@@ -8707,6 +9103,13 @@ class Item {
     /* Static methods and pseudo-constructors */
     static new(): Item
 }
+/**
+ * The `PangoLanguage` structure is used to
+ * represent a language.
+ * 
+ * `PangoLanguage` pointers can be efficiently
+ * copied and compared with each other.
+ */
 class Language {
     /* Methods of Pango-1.0.Pango.Language */
     /**
@@ -8860,6 +9263,14 @@ class Language {
 abstract class LayoutClass {
     static name: string
 }
+/**
+ * A `PangoLayoutIter` can be used to iterate over the visual
+ * extents of a `PangoLayout`.
+ * 
+ * To obtain a `PangoLayoutIter`, use [method`Pango`.Layout.get_iter].
+ * 
+ * The `PangoLayoutIter` structure is opaque, and has no user-visible fields.
+ */
 class LayoutIter {
     /* Methods of Pango-1.0.Pango.LayoutIter */
     /**
@@ -9019,6 +9430,14 @@ class LayoutIter {
     next_run(): boolean
     static name: string
 }
+/**
+ * A `PangoLayoutLine` represents one of the lines resulting from laying
+ * out a paragraph via `PangoLayout`.
+ * 
+ * `PangoLayoutLine` structures are obtained by calling
+ * [method`Pango`.Layout.get_line] and are only valid until the text,
+ * attributes, or settings of the parent `PangoLayout` are modified.
+ */
 class LayoutLine {
     /* Fields of Pango-1.0.Pango.LayoutLine */
     /**
@@ -9131,6 +9550,10 @@ class LayoutLine {
     x_to_index(x_pos: number): [ /* returnType */ boolean, /* index_ */ number, /* trailing */ number ]
     static name: string
 }
+/**
+ * The `PangoLogAttr` structure stores information about the attributes of a
+ * single character.
+ */
 class LogAttr {
     /* Fields of Pango-1.0.Pango.LogAttr */
     /**
@@ -9225,6 +9648,17 @@ class LogAttr {
     reserved: number
     static name: string
 }
+/**
+ * A `PangoMatrix` specifies a transformation between user-space
+ * and device coordinates.
+ * 
+ * The transformation is given by
+ * 
+ * ```
+ * x_device = x_user * matrix->xx + y_user * matrix->xy + matrix->x0;
+ * y_device = x_user * matrix->yx + y_user * matrix->yy + matrix->y0;
+ * ```
+ */
 class Matrix {
     /* Fields of Pango-1.0.Pango.Matrix */
     /**
@@ -9384,6 +9818,13 @@ class Matrix {
     translate(tx: number, ty: number): void
     static name: string
 }
+/**
+ * The `PangoRectangle` structure represents a rectangle.
+ * 
+ * `PangoRectangle` is frequently used to represent the logical or ink
+ * extents of a single glyph or section of text. (See, for instance,
+ * [method`Pango`.Font.get_glyph_extents].)
+ */
 class Rectangle {
     /* Fields of Pango-1.0.Pango.Rectangle */
     /**
@@ -9404,6 +9845,24 @@ class Rectangle {
     height: number
     static name: string
 }
+/**
+ * Class structure for `PangoRenderer`.
+ * 
+ * The following vfuncs take user space coordinates in Pango units
+ * and have default implementations:
+ * - draw_glyphs
+ * - draw_rectangle
+ * - draw_error_underline
+ * - draw_shape
+ * - draw_glyph_item
+ * 
+ * The default draw_shape implementation draws nothing.
+ * 
+ * The following vfuncs take device space coordinates as doubles
+ * and must be implemented:
+ * - draw_trapezoid
+ * - draw_glyph
+ */
 abstract class RendererClass {
     /* Fields of Pango-1.0.Pango.RendererClass */
     draw_glyphs: (renderer: Renderer, font: Font, glyphs: GlyphString, x: number, y: number) => void
@@ -9422,6 +9881,10 @@ abstract class RendererClass {
 class RendererPrivate {
     static name: string
 }
+/**
+ * A `PangoScriptIter` is used to iterate through a string
+ * and identify ranges in different scripts.
+ */
 class ScriptIter {
     /* Methods of Pango-1.0.Pango.ScriptIter */
     /**
@@ -9453,6 +9916,13 @@ class ScriptIter {
     /* Static methods and pseudo-constructors */
     static new(text: string, length: number): ScriptIter
 }
+/**
+ * A `PangoTabArray` contains an array of tab stops.
+ * 
+ * `PangoTabArray` can be used to set tab stops in a `PangoLayout`.
+ * Each tab stop has an alignment, a position, and optionally
+ * a character to use as decimal point.
+ */
 class TabArray {
     /* Methods of Pango-1.0.Pango.TabArray */
     /**
