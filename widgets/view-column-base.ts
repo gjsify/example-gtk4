@@ -167,5 +167,5 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
 
 export const ViewColumnBase = GObject.registerClass({
     GTypeName: 'ViewColumnBase',
-    Implements: [Gio.ListModel as any],
+    Implements: [Gio.ListModel],
 }, IViewColumnBase );

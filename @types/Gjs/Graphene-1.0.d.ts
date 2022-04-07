@@ -262,7 +262,7 @@ function vec4_zero(): Vec4
  * a maximum vertices.
  */
 class Box {
-    /* Methods of Graphene-1.0.Graphene.Box */
+    /* Owm methods of Graphene-1.0.Graphene.Box */
     /**
      * Checks whether the #graphene_box_t `a` contains the given
      * #graphene_box_t `b`.
@@ -442,7 +442,7 @@ class Box {
  * and should never be accessed directly.
  */
 class Euler {
-    /* Methods of Graphene-1.0.Graphene.Euler */
+    /* Owm methods of Graphene-1.0.Graphene.Euler */
     /**
      * Checks if two #graphene_euler_t are equal.
      * @param b a #graphene_euler_t
@@ -606,7 +606,7 @@ class Euler {
  * modified directly.
  */
 class Frustum {
-    /* Methods of Graphene-1.0.Graphene.Frustum */
+    /* Owm methods of Graphene-1.0.Graphene.Frustum */
     /**
      * Checks whether a point is inside the volume defined by the given
      * #graphene_frustum_t.
@@ -671,7 +671,7 @@ class Frustum {
  * should never be accessed directly.
  */
 class Matrix {
-    /* Methods of Graphene-1.0.Graphene.Matrix */
+    /* Owm methods of Graphene-1.0.Graphene.Matrix */
     /**
      * Decomposes a transformation matrix into its component transformations.
      * 
@@ -1190,7 +1190,7 @@ class Matrix {
  * modified directly.
  */
 class Plane {
-    /* Methods of Graphene-1.0.Graphene.Plane */
+    /* Owm methods of Graphene-1.0.Graphene.Plane */
     /**
      * Computes the distance of `point` from a #graphene_plane_t.
      * @param point a #graphene_point3d_t
@@ -1283,7 +1283,7 @@ class Plane {
  * A point with two coordinates.
  */
 class Point {
-    /* Fields of Graphene-1.0.Graphene.Point */
+    /* Own fields of Graphene-1.0.Graphene.Point */
     /**
      * the X coordinate of the point
      */
@@ -1292,7 +1292,7 @@ class Point {
      * the Y coordinate of the point
      */
     y: number
-    /* Methods of Graphene-1.0.Graphene.Point */
+    /* Owm methods of Graphene-1.0.Graphene.Point */
     /**
      * Computes the distance between `a` and `b`.
      * @param b a #graphene_point_t
@@ -1361,7 +1361,7 @@ class Point {
  * A point with three components: X, Y, and Z.
  */
 class Point3D {
-    /* Fields of Graphene-1.0.Graphene.Point3D */
+    /* Own fields of Graphene-1.0.Graphene.Point3D */
     /**
      * the X coordinate
      */
@@ -1374,7 +1374,7 @@ class Point3D {
      * the Z coordinate
      */
     z: number
-    /* Methods of Graphene-1.0.Graphene.Point3D */
+    /* Owm methods of Graphene-1.0.Graphene.Point3D */
     /**
      * Computes the cross product of the two given #graphene_point3d_t.
      * @param b a #graphene_point3d_t
@@ -1479,7 +1479,7 @@ class Point3D {
  * accessed directly.
  */
 class Quad {
-    /* Methods of Graphene-1.0.Graphene.Quad */
+    /* Owm methods of Graphene-1.0.Graphene.Quad */
     /**
      * Computes the bounding rectangle of `q` and places it into `r`.
      */
@@ -1528,7 +1528,7 @@ class Quad {
  * and should never be accessed directly.
  */
 class Quaternion {
-    /* Methods of Graphene-1.0.Graphene.Quaternion */
+    /* Owm methods of Graphene-1.0.Graphene.Quaternion */
     /**
      * Adds two #graphene_quaternion_t `a` and `b`.
      * @param b a #graphene_quaternion_t
@@ -1676,7 +1676,7 @@ class Quaternion {
  * be modified directly.
  */
 class Ray {
-    /* Methods of Graphene-1.0.Graphene.Ray */
+    /* Owm methods of Graphene-1.0.Graphene.Ray */
     /**
      * Checks whether the two given #graphene_ray_t are equal.
      * @param b a #graphene_ray_t
@@ -1804,7 +1804,7 @@ class Ray {
  * #graphene_rect_t will always return a normalized rectangle.
  */
 class Rect {
-    /* Fields of Graphene-1.0.Graphene.Rect */
+    /* Own fields of Graphene-1.0.Graphene.Rect */
     /**
      * the coordinates of the origin of the rectangle
      */
@@ -1813,7 +1813,7 @@ class Rect {
      * the size of the rectangle
      */
     size: Size
-    /* Methods of Graphene-1.0.Graphene.Rect */
+    /* Owm methods of Graphene-1.0.Graphene.Rect */
     /**
      * Checks whether a #graphene_rect_t contains the given coordinates.
      * @param p a #graphene_point_t
@@ -2075,7 +2075,7 @@ class Simd4X4F {
  * A size.
  */
 class Size {
-    /* Fields of Graphene-1.0.Graphene.Size */
+    /* Own fields of Graphene-1.0.Graphene.Size */
     /**
      * the width
      */
@@ -2084,7 +2084,7 @@ class Size {
      * the height
      */
     height: number
-    /* Methods of Graphene-1.0.Graphene.Size */
+    /* Owm methods of Graphene-1.0.Graphene.Size */
     /**
      * Checks whether the two give #graphene_size_t are equal.
      * @param b a #graphene_size_t
@@ -2131,7 +2131,7 @@ class Size {
  * A sphere, represented by its center and radius.
  */
 class Sphere {
-    /* Methods of Graphene-1.0.Graphene.Sphere */
+    /* Owm methods of Graphene-1.0.Graphene.Sphere */
     /**
      * Checks whether the given `point` is contained in the volume
      * of a #graphene_sphere_t.
@@ -2210,7 +2210,7 @@ class Sphere {
  * A triangle.
  */
 class Triangle {
-    /* Methods of Graphene-1.0.Graphene.Triangle */
+    /* Owm methods of Graphene-1.0.Graphene.Triangle */
     /**
      * Checks whether the given triangle `t` contains the point `p`.
      * @param p a #graphene_point3d_t
@@ -2330,7 +2330,7 @@ class Triangle {
  * never be accessed directly.
  */
 class Vec2 {
-    /* Methods of Graphene-1.0.Graphene.Vec2 */
+    /* Owm methods of Graphene-1.0.Graphene.Vec2 */
     /**
      * Adds each component of the two passed vectors and places
      * each result into the components of `res`.
@@ -2470,7 +2470,7 @@ class Vec2 {
  * never be accessed directly.
  */
 class Vec3 {
-    /* Methods of Graphene-1.0.Graphene.Vec3 */
+    /* Owm methods of Graphene-1.0.Graphene.Vec3 */
     /**
      * Adds each component of the two given vectors.
      * @param b a #graphene_vec3_t
@@ -2654,7 +2654,7 @@ class Vec3 {
  * never be accessed directly.
  */
 class Vec4 {
-    /* Methods of Graphene-1.0.Graphene.Vec4 */
+    /* Owm methods of Graphene-1.0.Graphene.Vec4 */
     /**
      * Adds each component of the two given vectors.
      * @param b a #graphene_vec4_t

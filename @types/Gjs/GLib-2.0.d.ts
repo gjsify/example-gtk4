@@ -5375,7 +5375,7 @@ interface VoidFunc {
  * Contains the public fields of a GArray.
  */
 class Array {
-    /* Fields of GLib-2.0.GLib.Array */
+    /* Own fields of GLib-2.0.GLib.Array */
     /**
      * a pointer to the element data. The data may be moved as
      *     elements are added to the #GArray.
@@ -5394,7 +5394,7 @@ class Array {
  * It should only be accessed through the `g_async_queue_*` functions.
  */
 class AsyncQueue {
-    /* Methods of GLib-2.0.GLib.AsyncQueue */
+    /* Owm methods of GLib-2.0.GLib.AsyncQueue */
     /**
      * Returns the length of the queue.
      * 
@@ -5573,7 +5573,7 @@ class AsyncQueue {
  * An opaque data structure representing a set of bookmarks.
  */
 class BookmarkFile {
-    /* Methods of GLib-2.0.GLib.BookmarkFile */
+    /* Owm methods of GLib-2.0.GLib.BookmarkFile */
     /**
      * Adds the application with `name` and `exec` to the list of
      * applications that have registered a bookmark for `uri` into
@@ -6080,7 +6080,7 @@ class BookmarkFile {
  * Contains the public fields of a GByteArray.
  */
 class ByteArray {
-    /* Fields of GLib-2.0.GLib.ByteArray */
+    /* Own fields of GLib-2.0.GLib.ByteArray */
     /**
      * a pointer to the element data. The data may be moved as
      *     elements are added to the #GByteArray
@@ -6166,7 +6166,7 @@ class ByteArray {
  * a mutable #GByteArray, use the g_byte_array_free_to_bytes() function.
  */
 class Bytes {
-    /* Methods of GLib-2.0.GLib.Bytes */
+    /* Owm methods of GLib-2.0.GLib.Bytes */
     /**
      * Compares the two #GBytes values.
      * 
@@ -6301,7 +6301,7 @@ class Bytes {
  * a GChecksum, use g_checksum_free().
  */
 class Checksum {
-    /* Methods of GLib-2.0.GLib.Checksum */
+    /* Owm methods of GLib-2.0.GLib.Checksum */
     /**
      * Copies a #GChecksum. If `checksum` has been closed, by calling
      * g_checksum_get_string() or g_checksum_get_digest(), the copied
@@ -6413,7 +6413,7 @@ class Checksum {
  * A #GCond should only be accessed via the g_cond_ functions.
  */
 class Cond {
-    /* Methods of GLib-2.0.GLib.Cond */
+    /* Owm methods of GLib-2.0.GLib.Cond */
     /**
      * If threads are waiting for `cond,` all of them are unblocked.
      * If no threads are waiting for `cond,` this function has no effect.
@@ -6549,7 +6549,7 @@ class Data {
  * and year.
  */
 class Date {
-    /* Fields of GLib-2.0.GLib.Date */
+    /* Own fields of GLib-2.0.GLib.Date */
     /**
      * the Julian representation of the date
      */
@@ -6576,7 +6576,7 @@ class Date {
      * the day of the day-month-year representation of the date
      */
     year: number
-    /* Methods of GLib-2.0.GLib.Date */
+    /* Owm methods of GLib-2.0.GLib.Date */
     /**
      * Increments a date some number of days.
      * To move forward by weeks, add weeks*7 days.
@@ -6929,7 +6929,7 @@ class Date {
  * An opaque structure that represents a date and time, including a time zone.
  */
 class DateTime {
-    /* Methods of GLib-2.0.GLib.DateTime */
+    /* Owm methods of GLib-2.0.GLib.DateTime */
     /**
      * Creates a copy of `datetime` and adds the specified timespan to the copy.
      * @param timespan a #GTimeSpan
@@ -7345,7 +7345,7 @@ class DateTime {
  * Used in g_parse_debug_string().
  */
 class DebugKey {
-    /* Fields of GLib-2.0.GLib.DebugKey */
+    /* Own fields of GLib-2.0.GLib.DebugKey */
     /**
      * the string
      */
@@ -7360,7 +7360,7 @@ class DebugKey {
  * An opaque structure representing an opened directory.
  */
 class Dir {
-    /* Methods of GLib-2.0.GLib.Dir */
+    /* Owm methods of GLib-2.0.GLib.Dir */
     /**
      * Closes the directory and deallocates all related resources.
      */
@@ -7409,7 +7409,7 @@ class Dir {
  * an error that has occurred.
  */
 class Error {
-    /* Fields of GLib-2.0.GLib.Error */
+    /* Own fields of GLib-2.0.GLib.Error */
     /**
      * error domain, e.g. %G_FILE_ERROR
      */
@@ -7422,7 +7422,7 @@ class Error {
      * human-readable informative error message
      */
     message: string
-    /* Methods of GLib-2.0.GLib.Error */
+    /* Owm methods of GLib-2.0.GLib.Error */
     /**
      * Makes a copy of `error`.
      */
@@ -7636,7 +7636,7 @@ class HashTable<A = symbol | string | number, B = string | number | boolean> {
  * table is not defined.
  */
 class HashTableIter {
-    /* Methods of GLib-2.0.GLib.HashTableIter */
+    /* Owm methods of GLib-2.0.GLib.HashTableIter */
     /**
      * Initializes a key/value pair iterator and associates it with
      * `hash_table`. Modifying the hash table after calling this function
@@ -7715,7 +7715,7 @@ class HashTableIter {
  * a GHmac, use g_hmac_unref().
  */
 class Hmac {
-    /* Methods of GLib-2.0.GLib.Hmac */
+    /* Owm methods of GLib-2.0.GLib.Hmac */
     /**
      * Gets the digest from `checksum` as a raw binary array and places it
      * into `buffer`. The size of the digest depends on the type of checksum.
@@ -7757,7 +7757,7 @@ class Hmac {
  * The #GHook struct represents a single hook function in a #GHookList.
  */
 class Hook {
-    /* Fields of GLib-2.0.GLib.Hook */
+    /* Own fields of GLib-2.0.GLib.Hook */
     /**
      * data which is passed to func when this hook is invoked
      */
@@ -7793,7 +7793,7 @@ class Hook {
      *     this member of the hook that is being finalized
      */
     destroy: DestroyNotify
-    /* Methods of GLib-2.0.GLib.Hook */
+    /* Owm methods of GLib-2.0.GLib.Hook */
     /**
      * Compares the ids of two #GHook elements, returning a negative value
      * if the second id is greater than the first.
@@ -7848,7 +7848,7 @@ class Hook {
  * The #GHookList struct represents a list of hook functions.
  */
 class HookList {
-    /* Fields of GLib-2.0.GLib.HookList */
+    /* Own fields of GLib-2.0.GLib.HookList */
     /**
      * the next free #GHook id
      */
@@ -7878,7 +7878,7 @@ class HookList {
      * unused
      */
     dummy: object[]
-    /* Methods of GLib-2.0.GLib.HookList */
+    /* Owm methods of GLib-2.0.GLib.HookList */
     /**
      * Removes all the #GHook elements from a #GHookList.
      */
@@ -7915,7 +7915,7 @@ class IConv {
  * functions.
  */
 class IOChannel {
-    /* Methods of GLib-2.0.GLib.IOChannel */
+    /* Owm methods of GLib-2.0.GLib.IOChannel */
     /**
      * Close an IO channel. Any pending data to be written will be
      * flushed, ignoring errors. The channel will not be freed until the
@@ -8176,7 +8176,7 @@ class IOChannel {
  * in a generic way.
  */
 class IOFuncs {
-    /* Fields of GLib-2.0.GLib.IOFuncs */
+    /* Own fields of GLib-2.0.GLib.IOFuncs */
     io_read: (channel: IOChannel, buf: string, count: number, bytes_read: number) => IOStatus
     io_write: (channel: IOChannel, buf: string, count: number, bytes_written: number) => IOStatus
     io_seek: (channel: IOChannel, offset: number, type: SeekType) => IOStatus
@@ -8192,7 +8192,7 @@ class IOFuncs {
  * and should not be accessed directly.
  */
 class KeyFile {
-    /* Methods of GLib-2.0.GLib.KeyFile */
+    /* Owm methods of GLib-2.0.GLib.KeyFile */
     /**
      * Returns the value associated with `key` under `group_name` as a
      * boolean.
@@ -8654,7 +8654,7 @@ class KeyFile {
  * The #GList struct is used for each element in a doubly-linked list.
  */
 class List<A = any> {
-    /* Fields of GLib-2.0.GLib.List */
+    /* Own fields of GLib-2.0.GLib.List */
     /**
      * holds the element's data, which can be a pointer to any kind
      *        of data, or any integer value using the
@@ -8681,7 +8681,7 @@ class List<A = any> {
  * value.
  */
 class LogField {
-    /* Fields of GLib-2.0.GLib.LogField */
+    /* Own fields of GLib-2.0.GLib.LogField */
     /**
      * field name (UTF-8 string)
      */
@@ -8701,7 +8701,7 @@ class LogField {
  * type representing a set of sources to be handled in a main loop.
  */
 class MainContext {
-    /* Methods of GLib-2.0.GLib.MainContext */
+    /* Owm methods of GLib-2.0.GLib.MainContext */
     /**
      * Tries to become the owner of the specified context.
      * If some other thread is the owner of the context,
@@ -8988,7 +8988,7 @@ class MainContext {
  * representing the main event loop of a GLib or GTK+ application.
  */
 class MainLoop {
-    /* Methods of GLib-2.0.GLib.MainLoop */
+    /* Owm methods of GLib-2.0.GLib.MainLoop */
     /**
      * Returns the #GMainContext of `loop`.
      */
@@ -9033,7 +9033,7 @@ class MainLoop {
  * not be accessed directly.
  */
 class MappedFile {
-    /* Methods of GLib-2.0.GLib.MappedFile */
+    /* Owm methods of GLib-2.0.GLib.MappedFile */
     /**
      * This call existed before #GMappedFile had refcounting and is currently
      * exactly the same as g_mapped_file_unref().
@@ -9087,7 +9087,7 @@ class MappedFile {
  * on for more details.
  */
 class MarkupParseContext {
-    /* Methods of GLib-2.0.GLib.MarkupParseContext */
+    /* Owm methods of GLib-2.0.GLib.MarkupParseContext */
     /**
      * Signals to the #GMarkupParseContext that all data has been
      * fed into the parse context with g_markup_parse_context_parse().
@@ -9307,7 +9307,7 @@ class MarkupParseContext {
  * back to its caller.
  */
 class MarkupParser {
-    /* Fields of GLib-2.0.GLib.MarkupParser */
+    /* Own fields of GLib-2.0.GLib.MarkupParser */
     start_element: (context: MarkupParseContext, element_name: string, attribute_names: string, attribute_values: string) => void
     end_element: (context: MarkupParseContext, element_name: string) => void
     text: (context: MarkupParseContext, text: string, text_len: number) => void
@@ -9320,7 +9320,7 @@ class MarkupParser {
  * matches.
  */
 class MatchInfo {
-    /* Methods of GLib-2.0.GLib.MatchInfo */
+    /* Owm methods of GLib-2.0.GLib.MatchInfo */
     /**
      * Returns a new string containing the text in `string_to_expand` with
      * references and escape sequences expanded. References refer to the last
@@ -9515,7 +9515,7 @@ class MatchInfo {
  * This functions related to this has been deprecated in 2.46, and no longer work.
  */
 class MemVTable {
-    /* Fields of GLib-2.0.GLib.MemVTable */
+    /* Own fields of GLib-2.0.GLib.MemVTable */
     malloc: (n_bytes: number) => object
     realloc: (mem: object, n_bytes: number) => object
     free: (mem: object) => void
@@ -9528,7 +9528,7 @@ class MemVTable {
  * The #GNode struct represents one node in a [n-ary tree][glib-N-ary-Trees].
  */
 class Node {
-    /* Fields of GLib-2.0.GLib.Node */
+    /* Own fields of GLib-2.0.GLib.Node */
     /**
      * contains the actual data of the node.
      */
@@ -9553,7 +9553,7 @@ class Node {
      *            child.
      */
     children: Node
-    /* Methods of GLib-2.0.GLib.Node */
+    /* Owm methods of GLib-2.0.GLib.Node */
     /**
      * Gets the position of the first child of a #GNode
      * which contains the given data.
@@ -9620,7 +9620,7 @@ class Node {
  * struct.
  */
 class Once {
-    /* Fields of GLib-2.0.GLib.Once */
+    /* Own fields of GLib-2.0.GLib.Once */
     /**
      * the status of the #GOnce
      */
@@ -9683,7 +9683,7 @@ class Once {
  * fields and should not be directly accessed.
  */
 class OptionContext {
-    /* Methods of GLib-2.0.GLib.OptionContext */
+    /* Owm methods of GLib-2.0.GLib.OptionContext */
     /**
      * Adds a #GOptionGroup to the `context,` so that parsing with `context`
      * will recognize the options in the group. Note that this will take
@@ -9894,7 +9894,7 @@ class OptionContext {
  * or g_option_group_add_entries().
  */
 class OptionEntry {
-    /* Fields of GLib-2.0.GLib.OptionEntry */
+    /* Own fields of GLib-2.0.GLib.OptionEntry */
     /**
      * The long name of an option can be used to specify it
      *     in a commandline as `--long_name`. Every option must have a
@@ -9963,7 +9963,7 @@ class OptionEntry {
  * the application can then add to its #GOptionContext.
  */
 class OptionGroup {
-    /* Methods of GLib-2.0.GLib.OptionGroup */
+    /* Owm methods of GLib-2.0.GLib.OptionGroup */
     /**
      * Adds the options specified in `entries` to `group`.
      * @param entries a %NULL-terminated array of #GOptionEntrys
@@ -10011,7 +10011,7 @@ class OptionGroup {
  * structure is opaque and its fields cannot be accessed directly.
  */
 class PatternSpec {
-    /* Methods of GLib-2.0.GLib.PatternSpec */
+    /* Owm methods of GLib-2.0.GLib.PatternSpec */
     /**
      * Copies `pspec` in a new #GPatternSpec.
      */
@@ -10067,7 +10067,7 @@ class PatternSpec {
  * occurred.
  */
 class PollFD {
-    /* Fields of GLib-2.0.GLib.PollFD */
+    /* Own fields of GLib-2.0.GLib.PollFD */
     /**
      * the file descriptor to poll (or a HANDLE on Win32)
      */
@@ -10106,7 +10106,7 @@ class PollFD {
  * be accessed via the g_private_ functions.
  */
 class Private {
-    /* Methods of GLib-2.0.GLib.Private */
+    /* Owm methods of GLib-2.0.GLib.Private */
     /**
      * Returns the current value of the thread local variable `key`.
      * 
@@ -10140,7 +10140,7 @@ class Private {
  * Contains the public fields of a pointer array.
  */
 class PtrArray {
-    /* Fields of GLib-2.0.GLib.PtrArray */
+    /* Own fields of GLib-2.0.GLib.PtrArray */
     /**
      * points to the array of pointers, which may be moved when the
      *     array grows
@@ -10157,7 +10157,7 @@ class PtrArray {
  * [Queue][glib-Double-ended-Queues].
  */
 class Queue {
-    /* Fields of GLib-2.0.GLib.Queue */
+    /* Own fields of GLib-2.0.GLib.Queue */
     /**
      * a pointer to the first element of the queue
      */
@@ -10170,7 +10170,7 @@ class Queue {
      * the number of elements in the queue
      */
     length: number
-    /* Methods of GLib-2.0.GLib.Queue */
+    /* Owm methods of GLib-2.0.GLib.Queue */
     /**
      * Removes all the elements in `queue`. If queue elements contain
      * dynamically-allocated memory, they should be freed first.
@@ -10346,7 +10346,7 @@ class Queue {
  * A GRWLock should only be accessed with the g_rw_lock_ functions.
  */
 class RWLock {
-    /* Methods of GLib-2.0.GLib.RWLock */
+    /* Owm methods of GLib-2.0.GLib.RWLock */
     /**
      * Frees the resources allocated to a lock with g_rw_lock_init().
      * 
@@ -10449,7 +10449,7 @@ class RWLock {
  * accessed through the g_rand_* functions.
  */
 class Rand {
-    /* Methods of GLib-2.0.GLib.Rand */
+    /* Owm methods of GLib-2.0.GLib.Rand */
     /**
      * Returns the next random #gdouble from `rand_` equally distributed over
      * the range [0..1).
@@ -10510,7 +10510,7 @@ class Rand {
  * g_rec_mutex_ functions.
  */
 class RecMutex {
-    /* Methods of GLib-2.0.GLib.RecMutex */
+    /* Owm methods of GLib-2.0.GLib.RecMutex */
     /**
      * Frees the resources allocated to a recursive mutex with
      * g_rec_mutex_init().
@@ -10649,7 +10649,7 @@ class RecMutex {
  * library written by Philip Hazel.
  */
 class Regex {
-    /* Methods of GLib-2.0.GLib.Regex */
+    /* Owm methods of GLib-2.0.GLib.Regex */
     /**
      * Returns the number of capturing subpatterns in the pattern.
      */
@@ -11065,7 +11065,7 @@ class Regex {
  * list.
  */
 class SList {
-    /* Fields of GLib-2.0.GLib.SList */
+    /* Own fields of GLib-2.0.GLib.SList */
     /**
      * holds the element's data, which can be a pointer to any kind
      *        of data, or any integer value using the
@@ -11095,7 +11095,7 @@ class SList {
  * is declared by #GScannerMsgFunc.
  */
 class Scanner {
-    /* Fields of GLib-2.0.GLib.Scanner */
+    /* Own fields of GLib-2.0.GLib.Scanner */
     /**
      * unused
      */
@@ -11156,7 +11156,7 @@ class Scanner {
      * handler function for _warn and _error
      */
     msg_handler: ScannerMsgFunc
-    /* Methods of GLib-2.0.GLib.Scanner */
+    /* Owm methods of GLib-2.0.GLib.Scanner */
     /**
      * Returns the current line in the input stream (counting
      * from 1). This is the line of the last token parsed via
@@ -11278,7 +11278,7 @@ class Scanner {
  * parsing of the next unpeeked token.
  */
 class ScannerConfig {
-    /* Fields of GLib-2.0.GLib.ScannerConfig */
+    /* Own fields of GLib-2.0.GLib.ScannerConfig */
     /**
      * specifies which characters should be skipped
      *     by the scanner (the default is the whitespace characters: space,
@@ -11420,7 +11420,7 @@ class ScannerConfig {
  * [sequence][glib-Sequences] data type.
  */
 class Sequence {
-    /* Methods of GLib-2.0.GLib.Sequence */
+    /* Owm methods of GLib-2.0.GLib.Sequence */
     /**
      * Adds a new item to the end of `seq`.
      * @param data the data for the new item
@@ -11551,7 +11551,7 @@ class Sequence {
  * iterator pointing into a #GSequence.
  */
 class SequenceIter {
-    /* Methods of GLib-2.0.GLib.SequenceIter */
+    /* Owm methods of GLib-2.0.GLib.SequenceIter */
     /**
      * Returns a negative number if `a` comes before `b,` 0 if they are equal,
      * and a positive number if `a` comes after `b`.
@@ -11601,7 +11601,7 @@ class SequenceIter {
  * representing an event source.
  */
 class Source {
-    /* Methods of GLib-2.0.GLib.Source */
+    /* Owm methods of GLib-2.0.GLib.Source */
     /**
      * Adds `child_source` to `source` as a "polled" source; when `source` is
      * added to a #GMainContext, `child_source` will be automatically added
@@ -12090,7 +12090,7 @@ class Source {
  * functions for managing callback objects.
  */
 class SourceCallbackFuncs {
-    /* Fields of GLib-2.0.GLib.SourceCallbackFuncs */
+    /* Own fields of GLib-2.0.GLib.SourceCallbackFuncs */
     ref: (cb_data: object) => void
     unref: (cb_data: object) => void
     static name: string
@@ -12118,7 +12118,7 @@ class SourceCallbackFuncs {
  * required condition has been met, and returns %TRUE if so.
  */
 class SourceFuncs {
-    /* Fields of GLib-2.0.GLib.SourceFuncs */
+    /* Own fields of GLib-2.0.GLib.SourceFuncs */
     prepare: (source: Source, timeout_: number) => boolean
     check: (source: Source) => boolean
     finalize: (source: Source) => void
@@ -12140,7 +12140,7 @@ class StatBuf {
  * The GString struct contains the public fields of a GString.
  */
 class String {
-    /* Fields of GLib-2.0.GLib.String */
+    /* Own fields of GLib-2.0.GLib.String */
     /**
      * points to the character data. It may move as text is added.
      *   The `str` field is null-terminated and so
@@ -12157,7 +12157,7 @@ class String {
      *   string before it needs to be reallocated. May be larger than `len`.
      */
     allocated_len: number
-    /* Methods of GLib-2.0.GLib.String */
+    /* Owm methods of GLib-2.0.GLib.String */
     /**
      * Adds a string onto the end of a #GString, expanding
      * it if necessary.
@@ -12382,7 +12382,7 @@ class String {
  * It should only be accessed by using the following functions.
  */
 class StringChunk {
-    /* Methods of GLib-2.0.GLib.StringChunk */
+    /* Owm methods of GLib-2.0.GLib.StringChunk */
     /**
      * Frees all strings contained within the #GStringChunk.
      * After calling g_string_chunk_clear() it is not safe to
@@ -12459,7 +12459,7 @@ class StringChunk {
  * 
  */
 class StrvBuilder {
-    /* Methods of GLib-2.0.GLib.StrvBuilder */
+    /* Owm methods of GLib-2.0.GLib.StrvBuilder */
     /**
      * Add a string to the end of the array.
      * 
@@ -12493,7 +12493,7 @@ class StrvBuilder {
  * An opaque structure representing a test case.
  */
 class TestCase {
-    /* Methods of GLib-2.0.GLib.TestCase */
+    /* Owm methods of GLib-2.0.GLib.TestCase */
     /**
      * Free the `test_case`.
      */
@@ -12501,7 +12501,7 @@ class TestCase {
     static name: string
 }
 class TestConfig {
-    /* Fields of GLib-2.0.GLib.TestConfig */
+    /* Own fields of GLib-2.0.GLib.TestConfig */
     test_initialized: boolean
     test_quick: boolean
     test_perf: boolean
@@ -12511,7 +12511,7 @@ class TestConfig {
     static name: string
 }
 class TestLogBuffer {
-    /* Methods of GLib-2.0.GLib.TestLogBuffer */
+    /* Owm methods of GLib-2.0.GLib.TestLogBuffer */
     /**
      * Internal function for gtester to free test log messages, no ABI guarantees provided.
      */
@@ -12525,12 +12525,12 @@ class TestLogBuffer {
     static name: string
 }
 class TestLogMsg {
-    /* Fields of GLib-2.0.GLib.TestLogMsg */
+    /* Own fields of GLib-2.0.GLib.TestLogMsg */
     log_type: TestLogType
     n_strings: number
     strings: string
     n_nums: number
-    /* Methods of GLib-2.0.GLib.TestLogMsg */
+    /* Owm methods of GLib-2.0.GLib.TestLogMsg */
     /**
      * Internal function for gtester to free test log messages, no ABI guarantees provided.
      */
@@ -12541,7 +12541,7 @@ class TestLogMsg {
  * An opaque structure representing a test suite.
  */
 class TestSuite {
-    /* Methods of GLib-2.0.GLib.TestSuite */
+    /* Owm methods of GLib-2.0.GLib.TestSuite */
     /**
      * Adds `test_case` to `suite`.
      * @param test_case a #GTestCase
@@ -12574,7 +12574,7 @@ class TestSuite {
  * accessed.
  */
 class Thread {
-    /* Methods of GLib-2.0.GLib.Thread */
+    /* Owm methods of GLib-2.0.GLib.Thread */
     /**
      * Waits until `thread` finishes, i.e. the function `func,` as
      * given to g_thread_new(), returns or g_thread_exit() is called.
@@ -12657,7 +12657,7 @@ class Thread {
  * so you must not copy this struct.
  */
 class ThreadPool {
-    /* Fields of GLib-2.0.GLib.ThreadPool */
+    /* Own fields of GLib-2.0.GLib.ThreadPool */
     /**
      * the function to execute in the threads of this pool
      */
@@ -12670,7 +12670,7 @@ class ThreadPool {
      * are all threads exclusive to this pool
      */
     exclusive: boolean
-    /* Methods of GLib-2.0.GLib.ThreadPool */
+    /* Owm methods of GLib-2.0.GLib.ThreadPool */
     /**
      * Frees all resources allocated for `pool`.
      * 
@@ -12811,7 +12811,7 @@ class ThreadPool {
  * problem.
  */
 class TimeVal {
-    /* Fields of GLib-2.0.GLib.TimeVal */
+    /* Own fields of GLib-2.0.GLib.TimeVal */
     /**
      * seconds
      */
@@ -12820,7 +12820,7 @@ class TimeVal {
      * microseconds
      */
     tv_usec: number
-    /* Methods of GLib-2.0.GLib.TimeVal */
+    /* Owm methods of GLib-2.0.GLib.TimeVal */
     /**
      * Adds the given number of microseconds to `time_`. `microseconds` can
      * also be negative to decrease the value of `time_`.
@@ -12895,7 +12895,7 @@ class TimeVal {
  * directly.
  */
 class TimeZone {
-    /* Methods of GLib-2.0.GLib.TimeZone */
+    /* Owm methods of GLib-2.0.GLib.TimeZone */
     /**
      * Finds an interval within `tz` that corresponds to the given `time_,`
      * possibly adjusting `time_` if required to fit into an interval.
@@ -12999,7 +12999,7 @@ class TimeZone {
  * Opaque datatype that records a start time.
  */
 class Timer {
-    /* Methods of GLib-2.0.GLib.Timer */
+    /* Owm methods of GLib-2.0.GLib.Timer */
     /**
      * Resumes a timer that has previously been stopped with
      * g_timer_stop(). g_timer_stop() must be called before using this
@@ -13049,7 +13049,7 @@ class Timer {
  * is cast to a GTrashStack*.
  */
 class TrashStack {
-    /* Fields of GLib-2.0.GLib.TrashStack */
+    /* Own fields of GLib-2.0.GLib.TrashStack */
     /**
      * pointer to the previous element of the stack,
      *     gets stored in the first `sizeof (gpointer)`
@@ -13090,7 +13090,7 @@ class TrashStack {
  * accessed only by using the following functions.
  */
 class Tree {
-    /* Methods of GLib-2.0.GLib.Tree */
+    /* Owm methods of GLib-2.0.GLib.Tree */
     /**
      * Removes all keys and values from the #GTree and decreases its
      * reference count by one. If keys and/or values are dynamically
@@ -13262,7 +13262,7 @@ class Tree {
  * An opaque type which identifies a specific node in a #GTree.
  */
 class TreeNode {
-    /* Methods of GLib-2.0.GLib.TreeNode */
+    /* Owm methods of GLib-2.0.GLib.TreeNode */
     /**
      * Gets the key stored at a particular tree node.
      */
@@ -13394,7 +13394,7 @@ class TreeNode {
  * handle.
  */
 class Uri {
-    /* Methods of GLib-2.0.GLib.Uri */
+    /* Owm methods of GLib-2.0.GLib.Uri */
     /**
      * Gets `uri'`s authentication parameters, which may contain
      * `%`-encoding, depending on the flags with which `uri` was created.
@@ -13816,7 +13816,7 @@ class Uri {
  * for a usage example.
  */
 class UriParamsIter {
-    /* Methods of GLib-2.0.GLib.UriParamsIter */
+    /* Owm methods of GLib-2.0.GLib.UriParamsIter */
     /**
      * Initializes an attribute/value pair iterator.
      * 
@@ -14120,7 +14120,7 @@ class UriParamsIter {
  * be shared.
  */
 class Variant {
-    /* Methods of GLib-2.0.GLib.Variant */
+    /* Owm methods of GLib-2.0.GLib.Variant */
     /**
      * Performs a byteswapping operation on the contents of `value`.  The
      * result is that all multi-byte numeric data contained in `value` is
@@ -14851,7 +14851,7 @@ class Variant {
  * access it from more than one thread.
  */
 class VariantBuilder {
-    /* Methods of GLib-2.0.GLib.VariantBuilder */
+    /* Owm methods of GLib-2.0.GLib.VariantBuilder */
     /**
      * Adds `value` to `builder`.
      * 
@@ -15056,7 +15056,7 @@ class VariantBuilder {
  * 
  */
 class VariantDict {
-    /* Methods of GLib-2.0.GLib.VariantDict */
+    /* Owm methods of GLib-2.0.GLib.VariantDict */
     /**
      * Releases all memory associated with a #GVariantDict without freeing
      * the #GVariantDict structure itself.
@@ -15146,7 +15146,7 @@ class VariantDict {
  * using the following functions.
  */
 class VariantIter {
-    /* Methods of GLib-2.0.GLib.VariantIter */
+    /* Owm methods of GLib-2.0.GLib.VariantIter */
     /**
      * Frees a heap-allocated #GVariantIter.  Only call this function on
      * iterators that were returned by g_variant_iter_new() or
@@ -15345,7 +15345,7 @@ class VariantIter {
  * be a basic type, "{**}" is not a valid type string.
  */
 class VariantType {
-    /* Methods of GLib-2.0.GLib.VariantType */
+    /* Owm methods of GLib-2.0.GLib.VariantType */
     /**
      * Makes a copy of a #GVariantType.  It is appropriate to call
      * g_variant_type_free() on the return value.  `type` may not be %NULL.
@@ -15588,7 +15588,7 @@ class VariantType {
  * (used for storage) by at least Intel, PPC and Sparc.
  */
 class DoubleIEEE754 {
-    /* Fields of GLib-2.0.GLib.DoubleIEEE754 */
+    /* Own fields of GLib-2.0.GLib.DoubleIEEE754 */
     /**
      * the double value
      */
@@ -15602,7 +15602,7 @@ class DoubleIEEE754 {
  * (used for storage) by at least Intel, PPC and Sparc.
  */
 class FloatIEEE754 {
-    /* Fields of GLib-2.0.GLib.FloatIEEE754 */
+    /* Own fields of GLib-2.0.GLib.FloatIEEE754 */
     /**
      * the double value
      */
@@ -15660,7 +15660,7 @@ class FloatIEEE754 {
  * A #GMutex should only be accessed via g_mutex_ functions.
  */
 class Mutex {
-    /* Methods of GLib-2.0.GLib.Mutex */
+    /* Owm methods of GLib-2.0.GLib.Mutex */
     /**
      * Frees the resources allocated to a mutex with g_mutex_init().
      * 
@@ -15738,7 +15738,7 @@ class Mutex {
  * A union holding the value of the token.
  */
 class TokenValue {
-    /* Fields of GLib-2.0.GLib.TokenValue */
+    /* Own fields of GLib-2.0.GLib.TokenValue */
     /**
      * token symbol value
      */

@@ -47,7 +47,9 @@ class IListViewBase extends Gtk.ListView {
      * @returns 
      */
     setupModel(store: Gio.ListModel): Gtk.SelectionModel {
-        return Gtk.SingleSelection.new(store)
+        return new Gtk.SingleSelection({
+            model: store 
+        })
     }
 
     /**
@@ -174,13 +176,5 @@ class IListViewBase extends Gtk.ListView {
 
 export const ListViewBase = GObject.registerClass({
     GTypeName: 'ListViewBase',
-    Implements: [Gio.ListModel as any],
-    Properties: {
-        'store': GObject.ParamSpec.jsobject(
-            'store',
-            'store',
-            'store',
-            GObject.ParamFlags.CONSTRUCT | GObject.ParamFlags.READWRITE,
-        ),
-    }
+    Implements: [Gio.ListModel],
 }, IListViewBase );

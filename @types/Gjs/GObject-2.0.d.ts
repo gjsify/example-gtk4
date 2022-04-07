@@ -916,6 +916,8 @@ interface ValueTransform {
 interface WeakNotify {
     (data: object | null, where_the_object_was: Object): void
 }
+interface TypePlugin_ConstructProps extends Object_ConstructProps {
+}
 /**
  * An interface that handles the lifecycle of dynamically loaded types.
  * 
@@ -970,7 +972,9 @@ interface WeakNotify {
  * @interface 
  */
 class TypePlugin {
-    /* Methods of GObject-2.0.GObject.TypePlugin */
+    /* Extended fields of GObject-2.0.GObject.Object */
+    g_type_instance: TypeInstance
+    /* Owm methods of GObject-2.0.GObject.TypePlugin */
     /**
      * Calls the `complete_interface_info` function from the
      * #GTypePluginClass of `plugin`. There should be no need to use this
@@ -1001,7 +1005,385 @@ class TypePlugin {
      * the GObject type system itself.
      */
     use(): void
+    /* Extended methods of GObject-2.0.GObject.Object */
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target`.
+     * 
+     * Whenever the `source_property` is changed the `target_property` is
+     * updated using the same value. For instance:
+     * 
+     * 
+     * ```c
+     *   g_object_bind_property (action, "active", widget, "sensitive", 0);
+     * ```
+     * 
+     * 
+     * Will result in the "sensitive" property of the widget #GObject instance to be
+     * updated with the same value of the "active" property of the action #GObject
+     * instance.
+     * 
+     * If `flags` contains %G_BINDING_BIDIRECTIONAL then the binding will be mutual:
+     * if `target_property` on `target` changes then the `source_property` on `source`
+     * will be updated as well.
+     * 
+     * The binding will automatically be removed when either the `source` or the
+     * `target` instances are finalized. To remove the binding without affecting the
+     * `source` and the `target` you can just call g_object_unref() on the returned
+     * #GBinding instance.
+     * 
+     * Removing the binding by calling g_object_unref() on it must only be done if
+     * the binding, `source` and `target` are only used from a single thread and it
+     * is clear that both `source` and `target` outlive the binding. Especially it
+     * is not safe to rely on this if the binding, `source` or `target` can be
+     * finalized from different threads. Keep another reference to the binding and
+     * use g_binding_unbind() instead to be on the safe side.
+     * 
+     * A #GObject can have multiple bindings.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     */
+    bind_property(source_property: string, target: Object, target_property: string, flags: BindingFlags): Binding
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target,` allowing you to set the transformation functions to be used by
+     * the binding.
+     * 
+     * This function is the language bindings friendly version of
+     * g_object_bind_property_full(), using #GClosures instead of
+     * function pointers.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     * @param transform_to a #GClosure wrapping the transformation function     from the `source` to the `target,` or %NULL to use the default
+     * @param transform_from a #GClosure wrapping the transformation function     from the `target` to the `source,` or %NULL to use the default
+     */
+    bind_property_full(source_property: string, target: Object, target_property: string, flags: BindingFlags, transform_to: TClosure, transform_from: TClosure): Binding
+    /**
+     * This function is intended for #GObject implementations to re-enforce
+     * a [floating][floating-ref] object reference. Doing this is seldom
+     * required: all #GInitiallyUnowneds are created with a floating reference
+     * which usually just needs to be sunken by calling g_object_ref_sink().
+     */
+    force_floating(): void
+    /**
+     * Increases the freeze count on `object`. If the freeze count is
+     * non-zero, the emission of "notify" signals on `object` is
+     * stopped. The signals are queued until the freeze count is decreased
+     * to zero. Duplicate notifications are squashed so that at most one
+     * #GObject::notify signal is emitted for each property modified while the
+     * object is frozen.
+     * 
+     * This is necessary for accessors that modify multiple properties to prevent
+     * premature notification while the object is still being modified.
+     */
+    freeze_notify(): void
+    /**
+     * Gets a named field from the objects table of associations (see g_object_set_data()).
+     * @param key name of the key for that association
+     */
+    get_data(key: string): object | null
+    /**
+     * Gets a property of an object.
+     * 
+     * The `value` can be:
+     * 
+     *  - an empty #GValue initialized by %G_VALUE_INIT, which will be
+     *    automatically initialized with the expected type of the property
+     *    (since GLib 2.60)
+     *  - a #GValue initialized with the expected type of the property
+     *  - a #GValue initialized with a type to which the expected type
+     *    of the property can be transformed
+     * 
+     * In general, a copy is made of the property contents and the caller is
+     * responsible for freeing the memory by calling g_value_unset().
+     * 
+     * Note that g_object_get_property() is really intended for language
+     * bindings, g_object_get() is much more convenient for C programming.
+     * @param property_name the name of the property to get
+     * @param value return location for the property value
+     */
+    get_property(property_name: string, value: any): void
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    get_qdata(quark: GLib.Quark): object | null
+    /**
+     * Gets `n_properties` properties for an `object`.
+     * Obtained properties will be set to `values`. All properties must be valid.
+     * Warnings will be emitted and undefined behaviour may result if invalid
+     * properties are passed in.
+     * @param names the names of each property to get
+     * @param values the values of each property to get
+     */
+    getv(names: string[], values: any[]): void
+    /**
+     * Checks whether `object` has a [floating][floating-ref] reference.
+     */
+    is_floating(): boolean
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @param property_name the name of a property installed on the class of `object`.
+     */
+    notify(property_name: string): void
+    /**
+     * Emits a "notify" signal for the property specified by `pspec` on `object`.
+     * 
+     * This function omits the property name lookup, hence it is faster than
+     * g_object_notify().
+     * 
+     * One way to avoid using g_object_notify() from within the
+     * class that registered the properties, and using g_object_notify_by_pspec()
+     * instead, is to store the GParamSpec used with
+     * g_object_class_install_property() inside a static array, e.g.:
+     * 
+     * 
+     * ```c
+     *   enum
+     *   {
+     *     PROP_0,
+     *     PROP_FOO,
+     *     PROP_LAST
+     *   };
+     * 
+     *   static GParamSpec *properties[PROP_LAST];
+     * 
+     *   static void
+     *   my_object_class_init (MyObjectClass *klass)
+     *   {
+     *     properties[PROP_FOO] = g_param_spec_int ("foo", "Foo", "The foo",
+     *                                              0, 100,
+     *                                              50,
+     *                                              G_PARAM_READWRITE);
+     *     g_object_class_install_property (gobject_class,
+     *                                      PROP_FOO,
+     *                                      properties[PROP_FOO]);
+     *   }
+     * ```
+     * 
+     * 
+     * and then notify a change on the "foo" property with:
+     * 
+     * 
+     * ```c
+     *   g_object_notify_by_pspec (self, properties[PROP_FOO]);
+     * ```
+     * 
+     * @param pspec the #GParamSpec of a property installed on the class of `object`.
+     */
+    notify_by_pspec(pspec: ParamSpec): void
+    /**
+     * Increases the reference count of `object`.
+     * 
+     * Since GLib 2.56, if `GLIB_VERSION_MAX_ALLOWED` is 2.56 or greater, the type
+     * of `object` will be propagated to the return type (using the GCC typeof()
+     * extension), so any casting the caller needs to do on the return type must be
+     * explicit.
+     */
+    ref(): Object
+    /**
+     * Increase the reference count of `object,` and possibly remove the
+     * [floating][floating-ref] reference, if `object` has a floating reference.
+     * 
+     * In other words, if the object is floating, then this call "assumes
+     * ownership" of the floating reference, converting it to a normal
+     * reference by clearing the floating flag while leaving the reference
+     * count unchanged.  If the object is not floating, then this call
+     * adds a new normal reference increasing the reference count by one.
+     * 
+     * Since GLib 2.56, the type of `object` will be propagated to the return type
+     * under the same conditions as for g_object_ref().
+     */
+    ref_sink(): Object
+    /**
+     * Releases all references to other objects. This can be used to break
+     * reference cycles.
+     * 
+     * This function should only be called from object system implementations.
+     */
+    run_dispose(): void
+    /**
+     * Each object carries around a table of associations from
+     * strings to pointers.  This function lets you set an association.
+     * 
+     * If the object already had an association with that name,
+     * the old association will be destroyed.
+     * 
+     * Internally, the `key` is converted to a #GQuark using g_quark_from_string().
+     * This means a copy of `key` is kept permanently (even after `object` has been
+     * finalized) — so it is recommended to only use a small, bounded set of values
+     * for `key` in your program, to avoid the #GQuark storage growing unbounded.
+     * @param key name of the key
+     * @param data data to associate with that key
+     */
+    set_data(key: string, data: object | null): void
+    /**
+     * Sets a property on an object.
+     * @param property_name the name of the property to set
+     * @param value the value
+     */
+    set_property(property_name: string, value: any): void
+    /**
+     * Remove a specified datum from the object's data associations,
+     * without invoking the association's destroy handler.
+     * @param key name of the key
+     */
+    steal_data(key: string): object | null
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata() and removes the `data` from object
+     * without invoking its destroy() function (if any was
+     * set).
+     * Usually, calling this function is only required to update
+     * user data pointers with a destroy notifier, for example:
+     * 
+     * ```c
+     * void
+     * object_add_to_user_list (GObject     *object,
+     *                          const gchar *new_string)
+     * {
+     *   // the quark, naming the object data
+     *   GQuark quark_string_list = g_quark_from_static_string ("my-string-list");
+     *   // retrieve the old string list
+     *   GList *list = g_object_steal_qdata (object, quark_string_list);
+     * 
+     *   // prepend new string
+     *   list = g_list_prepend (list, g_strdup (new_string));
+     *   // this changed 'list', so we need to set it again
+     *   g_object_set_qdata_full (object, quark_string_list, list, free_string_list);
+     * }
+     * static void
+     * free_string_list (gpointer data)
+     * {
+     *   GList *node, *list = data;
+     * 
+     *   for (node = list; node; node = node->next)
+     *     g_free (node->data);
+     *   g_list_free (list);
+     * }
+     * ```
+     * 
+     * Using g_object_get_qdata() in the above example, instead of
+     * g_object_steal_qdata() would have left the destroy function set,
+     * and thus the partial string list would have been freed upon
+     * g_object_set_qdata_full().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    steal_qdata(quark: GLib.Quark): object | null
+    /**
+     * Reverts the effect of a previous call to
+     * g_object_freeze_notify(). The freeze count is decreased on `object`
+     * and when it reaches zero, queued "notify" signals are emitted.
+     * 
+     * Duplicate notifications for each property are squashed so that at most one
+     * #GObject::notify signal is emitted for each property, in the reverse order
+     * in which they have been queued.
+     * 
+     * It is an error to call this function when the freeze count is zero.
+     */
+    thaw_notify(): void
+    /**
+     * Decreases the reference count of `object`. When its reference count
+     * drops to 0, the object is finalized (i.e. its memory is freed).
+     * 
+     * If the pointer to the #GObject may be reused in future (for example, if it is
+     * an instance variable of another object), it is recommended to clear the
+     * pointer to %NULL rather than retain a dangling pointer to a potentially
+     * invalid #GObject instance. Use g_clear_object() for this.
+     */
+    unref(): void
+    /**
+     * This function essentially limits the life time of the `closure` to
+     * the life time of the object. That is, when the object is finalized,
+     * the `closure` is invalidated by calling g_closure_invalidate() on
+     * it, in order to prevent invocations of the closure with a finalized
+     * (nonexisting) object. Also, g_object_ref() and g_object_unref() are
+     * added as marshal guards to the `closure,` to ensure that an extra
+     * reference count is held on `object` during invocation of the
+     * `closure`.  Usually, this function will be called on closures that
+     * use this `object` as closure data.
+     * @param closure #GClosure to watch
+     */
+    watch_closure(closure: TClosure): void
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
+    vfunc_constructed(): void
+    vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: ParamSpec): void
+    vfunc_dispose(): void
+    vfunc_finalize(): void
+    vfunc_get_property(property_id: number, value: any, pspec: ParamSpec): void
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @virtual 
+     * @param pspec 
+     */
+    vfunc_notify(pspec: ParamSpec): void
+    vfunc_set_property(property_id: number, value: any, pspec: ParamSpec): void
+    /* Extended signals of GObject-2.0.GObject.Object */
+    /**
+     * The notify signal is emitted on an object when one of its properties has
+     * its value set through g_object_set_property(), g_object_set(), et al.
+     * 
+     * Note that getting this signal doesn’t itself guarantee that the value of
+     * the property has actually changed. When it is emitted is determined by the
+     * derived GObject class. If the implementor did not create the property with
+     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
+     * in ::notify being emitted, even if the new value is the same as the old.
+     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
+     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
+     * and common practice is to do that only when the value has actually changed.
+     * 
+     * This signal is typically used to obtain change notification for a
+     * single property, by specifying the property name as a detail in the
+     * g_signal_connect() call, like this:
+     * 
+     * 
+     * ```c
+     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
+     *                   G_CALLBACK (gtk_text_view_target_list_notify),
+     *                   text_view)
+     * ```
+     * 
+     * 
+     * It is important to note that you must use
+     * [canonical parameter names][canonical-parameter-names] as
+     * detail strings for the notify signal.
+     * @signal 
+     * @param pspec the #GParamSpec of the property which changed.
+     */
+    connect(sigName: "notify", callback: (($obj: TypePlugin, pspec: ParamSpec) => void)): number
+    connect_after(sigName: "notify", callback: (($obj: TypePlugin, pspec: ParamSpec) => void)): number
+    emit(sigName: "notify", pspec: ParamSpec): void
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
+    emit(sigName: string, ...args: any[]): void
+    disconnect(id: number): void
     static name: string
+    constructor (config?: TypePlugin_ConstructProps)
+    _init (config?: TypePlugin_ConstructProps): void
+    static $gtype: GType<TypePlugin>
 }
 // A few things here are inspired by gi.ts 
 // See https://gitlab.gnome.org/ewlsh/gi.ts/-/blob/master/packages/lib/src/generators/dts/gobject.ts
@@ -1361,7 +1743,7 @@ interface Binding_ConstructProps extends Object_ConstructProps {
  * #GBinding is available since GObject 2.26
  */
 class Binding {
-    /* Properties of GObject-2.0.GObject.Binding */
+    /* Own properties of GObject-2.0.GObject.Binding */
     /**
      * Flags to be used to control the #GBinding
      */
@@ -1390,9 +1772,9 @@ class Binding {
      * best performance.
      */
     readonly target_property: string
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: TypeInstance
-    /* Methods of GObject-2.0.GObject.Binding */
+    /* Owm methods of GObject-2.0.GObject.Binding */
     /**
      * Retrieves the #GObject instance used as the source of the binding.
      * 
@@ -1461,7 +1843,7 @@ class Binding {
      * g_object_bind_property() and is owned by the binding.
      */
     unbind(): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -1775,7 +2157,7 @@ class Binding {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: ParamSpec): void
     vfunc_dispose(): void
@@ -1797,7 +2179,7 @@ class Binding {
      */
     vfunc_notify(pspec: ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -1868,14 +2250,14 @@ interface BindingGroup_ConstructProps extends Object_ConstructProps {
  * with g_binding_group_set_source().
  */
 class BindingGroup {
-    /* Properties of GObject-2.0.GObject.BindingGroup */
+    /* Own properties of GObject-2.0.GObject.BindingGroup */
     /**
      * The source object used for binding properties.
      */
     source: Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: TypeInstance
-    /* Methods of GObject-2.0.GObject.BindingGroup */
+    /* Owm methods of GObject-2.0.GObject.BindingGroup */
     /**
      * Creates a binding between `source_property` on the source object
      * and `target_property` on `target`. Whenever the `source_property`
@@ -1921,7 +2303,7 @@ class BindingGroup {
      * @param source the source #GObject,   or %NULL to clear it
      */
     set_source(source: Object | null): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -2235,7 +2617,7 @@ class BindingGroup {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: ParamSpec): void
     vfunc_dispose(): void
@@ -2257,7 +2639,7 @@ class BindingGroup {
      */
     vfunc_notify(pspec: ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -2314,9 +2696,9 @@ interface InitiallyUnowned_ConstructProps extends Object_ConstructProps {
  * implementation and should never be accessed directly.
  */
 class InitiallyUnowned {
-    /* Fields of GObject-2.0.GObject.InitiallyUnowned */
+    /* Own fields of GObject-2.0.GObject.InitiallyUnowned */
     g_type_instance: TypeInstance
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -2630,7 +3012,7 @@ class InitiallyUnowned {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: ParamSpec): void
     vfunc_dispose(): void
@@ -2652,7 +3034,7 @@ class InitiallyUnowned {
      */
     vfunc_notify(pspec: ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -2713,9 +3095,9 @@ interface Object_ConstructProps  {
  * by G_ADD_PRIVATE().
  */
 class Object {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Own fields of GObject-2.0.GObject.Object */
     g_type_instance: TypeInstance
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Owm methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -3029,7 +3411,7 @@ class Object {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Own virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: ParamSpec): void
     vfunc_dispose(): void
@@ -3051,7 +3433,7 @@ class Object {
      */
     vfunc_notify(pspec: ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Own signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -3153,7 +3535,7 @@ class Object {
  * efficient, and is the ‘canonical form’. Using `_` is discouraged.
  */
 class ParamSpec {
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Own fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -3174,7 +3556,7 @@ class ParamSpec {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Owm methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -3244,7 +3626,7 @@ class ParamSpec {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Own virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -3285,7 +3667,7 @@ class ParamSpec {
  * A #GParamSpec derived structure that contains the meta data for boolean properties.
  */
 class ParamSpecBoolean {
-    /* Fields of GObject-2.0.GObject.ParamSpecBoolean */
+    /* Own fields of GObject-2.0.GObject.ParamSpecBoolean */
     /**
      * private #GParamSpec portion
      */
@@ -3294,7 +3676,7 @@ class ParamSpecBoolean {
      * default value for the property specified
      */
     default_value: boolean
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -3315,7 +3697,7 @@ class ParamSpecBoolean {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -3385,7 +3767,7 @@ class ParamSpecBoolean {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -3396,12 +3778,12 @@ class ParamSpecBoolean {
  * A #GParamSpec derived structure that contains the meta data for boxed properties.
  */
 class ParamSpecBoxed {
-    /* Fields of GObject-2.0.GObject.ParamSpecBoxed */
+    /* Own fields of GObject-2.0.GObject.ParamSpecBoxed */
     /**
      * private #GParamSpec portion
      */
     parent_instance: ParamSpec
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -3422,7 +3804,7 @@ class ParamSpecBoxed {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -3492,7 +3874,7 @@ class ParamSpecBoxed {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -3503,7 +3885,7 @@ class ParamSpecBoxed {
  * A #GParamSpec derived structure that contains the meta data for character properties.
  */
 class ParamSpecChar {
-    /* Fields of GObject-2.0.GObject.ParamSpecChar */
+    /* Own fields of GObject-2.0.GObject.ParamSpecChar */
     /**
      * private #GParamSpec portion
      */
@@ -3520,7 +3902,7 @@ class ParamSpecChar {
      * default value for the property specified
      */
     default_value: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -3541,7 +3923,7 @@ class ParamSpecChar {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -3611,7 +3993,7 @@ class ParamSpecChar {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -3622,7 +4004,7 @@ class ParamSpecChar {
  * A #GParamSpec derived structure that contains the meta data for double properties.
  */
 class ParamSpecDouble {
-    /* Fields of GObject-2.0.GObject.ParamSpecDouble */
+    /* Own fields of GObject-2.0.GObject.ParamSpecDouble */
     /**
      * private #GParamSpec portion
      */
@@ -3644,7 +4026,7 @@ class ParamSpecDouble {
      *  by g_param_values_cmp(); the default value is 1e-90.
      */
     epsilon: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -3665,7 +4047,7 @@ class ParamSpecDouble {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -3735,7 +4117,7 @@ class ParamSpecDouble {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -3747,7 +4129,7 @@ class ParamSpecDouble {
  * properties.
  */
 class ParamSpecEnum {
-    /* Fields of GObject-2.0.GObject.ParamSpecEnum */
+    /* Own fields of GObject-2.0.GObject.ParamSpecEnum */
     /**
      * private #GParamSpec portion
      */
@@ -3760,7 +4142,7 @@ class ParamSpecEnum {
      * default value for the property specified
      */
     default_value: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -3781,7 +4163,7 @@ class ParamSpecEnum {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -3851,7 +4233,7 @@ class ParamSpecEnum {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -3863,7 +4245,7 @@ class ParamSpecEnum {
  * properties.
  */
 class ParamSpecFlags {
-    /* Fields of GObject-2.0.GObject.ParamSpecFlags */
+    /* Own fields of GObject-2.0.GObject.ParamSpecFlags */
     /**
      * private #GParamSpec portion
      */
@@ -3876,7 +4258,7 @@ class ParamSpecFlags {
      * default value for the property specified
      */
     default_value: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -3897,7 +4279,7 @@ class ParamSpecFlags {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -3967,7 +4349,7 @@ class ParamSpecFlags {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -3978,7 +4360,7 @@ class ParamSpecFlags {
  * A #GParamSpec derived structure that contains the meta data for float properties.
  */
 class ParamSpecFloat {
-    /* Fields of GObject-2.0.GObject.ParamSpecFloat */
+    /* Own fields of GObject-2.0.GObject.ParamSpecFloat */
     /**
      * private #GParamSpec portion
      */
@@ -4000,7 +4382,7 @@ class ParamSpecFloat {
      *  by g_param_values_cmp(); the default value is 1e-30.
      */
     epsilon: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -4021,7 +4403,7 @@ class ParamSpecFloat {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -4091,7 +4473,7 @@ class ParamSpecFloat {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -4102,7 +4484,7 @@ class ParamSpecFloat {
  * A #GParamSpec derived structure that contains the meta data for #GType properties.
  */
 class ParamSpecGType {
-    /* Fields of GObject-2.0.GObject.ParamSpecGType */
+    /* Own fields of GObject-2.0.GObject.ParamSpecGType */
     /**
      * private #GParamSpec portion
      */
@@ -4111,7 +4493,7 @@ class ParamSpecGType {
      * a #GType whose subtypes can occur as values
      */
     is_a_type: GType
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -4132,7 +4514,7 @@ class ParamSpecGType {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -4202,7 +4584,7 @@ class ParamSpecGType {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -4213,7 +4595,7 @@ class ParamSpecGType {
  * A #GParamSpec derived structure that contains the meta data for integer properties.
  */
 class ParamSpecInt {
-    /* Fields of GObject-2.0.GObject.ParamSpecInt */
+    /* Own fields of GObject-2.0.GObject.ParamSpecInt */
     /**
      * private #GParamSpec portion
      */
@@ -4230,7 +4612,7 @@ class ParamSpecInt {
      * default value for the property specified
      */
     default_value: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -4251,7 +4633,7 @@ class ParamSpecInt {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -4321,7 +4703,7 @@ class ParamSpecInt {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -4332,7 +4714,7 @@ class ParamSpecInt {
  * A #GParamSpec derived structure that contains the meta data for 64bit integer properties.
  */
 class ParamSpecInt64 {
-    /* Fields of GObject-2.0.GObject.ParamSpecInt64 */
+    /* Own fields of GObject-2.0.GObject.ParamSpecInt64 */
     /**
      * private #GParamSpec portion
      */
@@ -4349,7 +4731,7 @@ class ParamSpecInt64 {
      * default value for the property specified
      */
     default_value: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -4370,7 +4752,7 @@ class ParamSpecInt64 {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -4440,7 +4822,7 @@ class ParamSpecInt64 {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -4451,7 +4833,7 @@ class ParamSpecInt64 {
  * A #GParamSpec derived structure that contains the meta data for long integer properties.
  */
 class ParamSpecLong {
-    /* Fields of GObject-2.0.GObject.ParamSpecLong */
+    /* Own fields of GObject-2.0.GObject.ParamSpecLong */
     /**
      * private #GParamSpec portion
      */
@@ -4468,7 +4850,7 @@ class ParamSpecLong {
      * default value for the property specified
      */
     default_value: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -4489,7 +4871,7 @@ class ParamSpecLong {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -4559,7 +4941,7 @@ class ParamSpecLong {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -4570,12 +4952,12 @@ class ParamSpecLong {
  * A #GParamSpec derived structure that contains the meta data for object properties.
  */
 class ParamSpecObject {
-    /* Fields of GObject-2.0.GObject.ParamSpecObject */
+    /* Own fields of GObject-2.0.GObject.ParamSpecObject */
     /**
      * private #GParamSpec portion
      */
     parent_instance: ParamSpec
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -4596,7 +4978,7 @@ class ParamSpecObject {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -4666,7 +5048,7 @@ class ParamSpecObject {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -4687,7 +5069,7 @@ class ParamSpecObject {
  * unless you are implementing a new base type similar to GObject.
  */
 class ParamSpecOverride {
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -4708,7 +5090,7 @@ class ParamSpecOverride {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -4778,7 +5160,7 @@ class ParamSpecOverride {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -4790,12 +5172,12 @@ class ParamSpecOverride {
  * properties.
  */
 class ParamSpecParam {
-    /* Fields of GObject-2.0.GObject.ParamSpecParam */
+    /* Own fields of GObject-2.0.GObject.ParamSpecParam */
     /**
      * private #GParamSpec portion
      */
     parent_instance: ParamSpec
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -4816,7 +5198,7 @@ class ParamSpecParam {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -4886,7 +5268,7 @@ class ParamSpecParam {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -4897,12 +5279,12 @@ class ParamSpecParam {
  * A #GParamSpec derived structure that contains the meta data for pointer properties.
  */
 class ParamSpecPointer {
-    /* Fields of GObject-2.0.GObject.ParamSpecPointer */
+    /* Own fields of GObject-2.0.GObject.ParamSpecPointer */
     /**
      * private #GParamSpec portion
      */
     parent_instance: ParamSpec
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -4923,7 +5305,7 @@ class ParamSpecPointer {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -4993,7 +5375,7 @@ class ParamSpecPointer {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -5005,7 +5387,7 @@ class ParamSpecPointer {
  * properties.
  */
 class ParamSpecString {
-    /* Fields of GObject-2.0.GObject.ParamSpecString */
+    /* Own fields of GObject-2.0.GObject.ParamSpecString */
     /**
      * private #GParamSpec portion
      */
@@ -5034,7 +5416,7 @@ class ParamSpecString {
      * replace %NULL strings by an empty string
      */
     ensure_non_null: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -5055,7 +5437,7 @@ class ParamSpecString {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -5125,7 +5507,7 @@ class ParamSpecString {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -5136,7 +5518,7 @@ class ParamSpecString {
  * A #GParamSpec derived structure that contains the meta data for unsigned character properties.
  */
 class ParamSpecUChar {
-    /* Fields of GObject-2.0.GObject.ParamSpecUChar */
+    /* Own fields of GObject-2.0.GObject.ParamSpecUChar */
     /**
      * private #GParamSpec portion
      */
@@ -5153,7 +5535,7 @@ class ParamSpecUChar {
      * default value for the property specified
      */
     default_value: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -5174,7 +5556,7 @@ class ParamSpecUChar {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -5244,7 +5626,7 @@ class ParamSpecUChar {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -5255,7 +5637,7 @@ class ParamSpecUChar {
  * A #GParamSpec derived structure that contains the meta data for unsigned integer properties.
  */
 class ParamSpecUInt {
-    /* Fields of GObject-2.0.GObject.ParamSpecUInt */
+    /* Own fields of GObject-2.0.GObject.ParamSpecUInt */
     /**
      * private #GParamSpec portion
      */
@@ -5272,7 +5654,7 @@ class ParamSpecUInt {
      * default value for the property specified
      */
     default_value: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -5293,7 +5675,7 @@ class ParamSpecUInt {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -5363,7 +5745,7 @@ class ParamSpecUInt {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -5374,7 +5756,7 @@ class ParamSpecUInt {
  * A #GParamSpec derived structure that contains the meta data for unsigned 64bit integer properties.
  */
 class ParamSpecUInt64 {
-    /* Fields of GObject-2.0.GObject.ParamSpecUInt64 */
+    /* Own fields of GObject-2.0.GObject.ParamSpecUInt64 */
     /**
      * private #GParamSpec portion
      */
@@ -5391,7 +5773,7 @@ class ParamSpecUInt64 {
      * default value for the property specified
      */
     default_value: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -5412,7 +5794,7 @@ class ParamSpecUInt64 {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -5482,7 +5864,7 @@ class ParamSpecUInt64 {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -5493,7 +5875,7 @@ class ParamSpecUInt64 {
  * A #GParamSpec derived structure that contains the meta data for unsigned long integer properties.
  */
 class ParamSpecULong {
-    /* Fields of GObject-2.0.GObject.ParamSpecULong */
+    /* Own fields of GObject-2.0.GObject.ParamSpecULong */
     /**
      * private #GParamSpec portion
      */
@@ -5510,7 +5892,7 @@ class ParamSpecULong {
      * default value for the property specified
      */
     default_value: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -5531,7 +5913,7 @@ class ParamSpecULong {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -5601,7 +5983,7 @@ class ParamSpecULong {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -5612,7 +5994,7 @@ class ParamSpecULong {
  * A #GParamSpec derived structure that contains the meta data for unichar (unsigned integer) properties.
  */
 class ParamSpecUnichar {
-    /* Fields of GObject-2.0.GObject.ParamSpecUnichar */
+    /* Own fields of GObject-2.0.GObject.ParamSpecUnichar */
     /**
      * private #GParamSpec portion
      */
@@ -5621,7 +6003,7 @@ class ParamSpecUnichar {
      * default value for the property specified
      */
     default_value: string
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -5642,7 +6024,7 @@ class ParamSpecUnichar {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -5712,7 +6094,7 @@ class ParamSpecUnichar {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -5723,7 +6105,7 @@ class ParamSpecUnichar {
  * A #GParamSpec derived structure that contains the meta data for #GValueArray properties.
  */
 class ParamSpecValueArray {
-    /* Fields of GObject-2.0.GObject.ParamSpecValueArray */
+    /* Own fields of GObject-2.0.GObject.ParamSpecValueArray */
     /**
      * private #GParamSpec portion
      */
@@ -5736,7 +6118,7 @@ class ParamSpecValueArray {
      * if greater than 0, arrays of this property will always have this many elements
      */
     fixed_n_elements: number
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -5757,7 +6139,7 @@ class ParamSpecValueArray {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -5827,7 +6209,7 @@ class ParamSpecValueArray {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -5844,7 +6226,7 @@ class ParamSpecValueArray {
  * values compare equal.
  */
 class ParamSpecVariant {
-    /* Fields of GObject-2.0.GObject.ParamSpecVariant */
+    /* Own fields of GObject-2.0.GObject.ParamSpecVariant */
     /**
      * private #GParamSpec portion
      */
@@ -5857,7 +6239,7 @@ class ParamSpecVariant {
      * a #GVariant, or %NULL
      */
     default_value: GLib.Variant
-    /* Fields of GObject-2.0.GObject.ParamSpec */
+    /* Extended fields of GObject-2.0.GObject.ParamSpec */
     /**
      * private #GTypeInstance portion
      */
@@ -5878,7 +6260,7 @@ class ParamSpecVariant {
      * #GType type that uses (introduces) this parameter
      */
     owner_type: GType
-    /* Methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended methods of GObject-2.0.GObject.ParamSpec */
     /**
      * Get the short description of a #GParamSpec.
      */
@@ -5948,7 +6330,7 @@ class ParamSpecVariant {
      * @param quark a #GQuark, naming the user data pointer
      */
     steal_qdata(quark: GLib.Quark): object | null
-    /* Virtual methods of GObject-2.0.GObject.ParamSpec */
+    /* Extended virtual methods of GObject-2.0.GObject.ParamSpec */
     vfunc_finalize(): void
     vfunc_value_set_default(value: any): void
     vfunc_value_validate(value: any): boolean
@@ -5987,7 +6369,7 @@ interface SignalGroup_ConstructProps extends Object_ConstructProps {
  * all of the signals will be transitioned correctly.
  */
 class SignalGroup {
-    /* Properties of GObject-2.0.GObject.SignalGroup */
+    /* Own properties of GObject-2.0.GObject.SignalGroup */
     /**
      * The target instance used when connecting signals.
      */
@@ -5996,9 +6378,9 @@ class SignalGroup {
      * The #GType of the target property.
      */
     readonly target_type: GType
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: TypeInstance
-    /* Methods of GObject-2.0.GObject.SignalGroup */
+    /* Owm methods of GObject-2.0.GObject.SignalGroup */
     /**
      * Blocks all signal handlers managed by `self` so they will not
      * be called during any signal emissions. Must be unblocked exactly
@@ -6050,7 +6432,7 @@ class SignalGroup {
      * has been blocked to become active again.
      */
     unblock(): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -6364,7 +6746,7 @@ class SignalGroup {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: ParamSpec): void
     vfunc_dispose(): void
@@ -6386,7 +6768,7 @@ class SignalGroup {
      */
     vfunc_notify(pspec: ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: ParamSpec): void
-    /* Signals of GObject-2.0.GObject.SignalGroup */
+    /* Own signals of GObject-2.0.GObject.SignalGroup */
     /**
      * This signal is emitted when #GSignalGroup:target is set to a new value
      * other than %NULL. It is similar to #GObject::notify on `target` except it
@@ -6409,7 +6791,7 @@ class SignalGroup {
     connect(sigName: "unbind", callback: (($obj: SignalGroup) => void)): number
     connect_after(sigName: "unbind", callback: (($obj: SignalGroup) => void)): number
     emit(sigName: "unbind"): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -6494,7 +6876,7 @@ interface TypeModule_ConstructProps extends Object_ConstructProps {
  * in #GTypeModuleClass.
  */
 class TypeModule {
-    /* Fields of GObject-2.0.GObject.TypeModule */
+    /* Own fields of GObject-2.0.GObject.TypeModule */
     parent_instance: Object
     use_count: number
     type_infos: object[]
@@ -6503,9 +6885,9 @@ class TypeModule {
      * the name of the module
      */
     name: string
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: TypeInstance
-    /* Methods of GObject-2.0.GObject.TypeModule */
+    /* Owm methods of GObject-2.0.GObject.TypeModule */
     /**
      * Registers an additional interface for a type, whose interface lives
      * in the given type plugin. If the interface was already registered
@@ -6592,7 +6974,7 @@ class TypeModule {
      * its prior value.
      */
     use(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -6906,7 +7288,7 @@ class TypeModule {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: TClosure): void
-    /* Methods of GObject-2.0.GObject.TypePlugin */
+    /* Implemented methods of GObject-2.0.GObject.TypePlugin */
     /**
      * Calls the `complete_interface_info` function from the
      * #GTypePluginClass of `plugin`. There should be no need to use this
@@ -6931,10 +7313,10 @@ class TypeModule {
      * the GObject type system itself.
      */
     use(): void
-    /* Virtual methods of GObject-2.0.GObject.TypeModule */
+    /* Own virtual methods of GObject-2.0.GObject.TypeModule */
     vfunc_load(): boolean
     vfunc_unload(): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: ParamSpec): void
     vfunc_dispose(): void
@@ -6956,7 +7338,7 @@ class TypeModule {
      */
     vfunc_notify(pspec: ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -7004,7 +7386,7 @@ class TypeModule {
  * A #GCClosure is a specialization of #GClosure for C function callbacks.
  */
 class CClosure {
-    /* Fields of GObject-2.0.GObject.CClosure */
+    /* Own fields of GObject-2.0.GObject.CClosure */
     /**
      * the #GClosure
      */
@@ -7322,7 +7704,7 @@ class CClosure {
  *   automatically removed when the objects they point to go away.
  */
 class Closure {
-    /* Fields of GObject-2.0.GObject.Closure */
+    /* Own fields of GObject-2.0.GObject.Closure */
     /**
      * Indicates whether the closure is currently being invoked with
      *  g_closure_invoke()
@@ -7334,7 +7716,7 @@ class Closure {
      */
     is_invalid: number
     marshal: (closure: TClosure, return_value: any, n_param_values: number, param_values: any, invocation_hint: object, marshal_data: object) => void
-    /* Methods of GObject-2.0.GObject.Closure */
+    /* Owm methods of GObject-2.0.GObject.Closure */
     /**
      * Sets a flag on the closure to indicate that its calling
      * environment has become invalid, and thus causes any future
@@ -7434,7 +7816,7 @@ class Closure {
     static new_simple(sizeof_closure: number, data: object | null): Closure
 }
 class ClosureNotifyData {
-    /* Fields of GObject-2.0.GObject.ClosureNotifyData */
+    /* Own fields of GObject-2.0.GObject.ClosureNotifyData */
     data: object
     notify: ClosureNotify
     static name: string
@@ -7444,7 +7826,7 @@ class ClosureNotifyData {
  * possible values.
  */
 class EnumClass {
-    /* Fields of GObject-2.0.GObject.EnumClass */
+    /* Own fields of GObject-2.0.GObject.EnumClass */
     /**
      * the parent class
      */
@@ -7473,7 +7855,7 @@ class EnumClass {
  * nickname.
  */
 class EnumValue {
-    /* Fields of GObject-2.0.GObject.EnumValue */
+    /* Own fields of GObject-2.0.GObject.EnumValue */
     /**
      * the enum value
      */
@@ -7493,7 +7875,7 @@ class EnumValue {
  * possible values.
  */
 class FlagsClass {
-    /* Fields of GObject-2.0.GObject.FlagsClass */
+    /* Own fields of GObject-2.0.GObject.FlagsClass */
     /**
      * the parent class
      */
@@ -7518,7 +7900,7 @@ class FlagsClass {
  * nickname.
  */
 class FlagsValue {
-    /* Fields of GObject-2.0.GObject.FlagsValue */
+    /* Own fields of GObject-2.0.GObject.FlagsValue */
     /**
      * the flags value
      */
@@ -7537,7 +7919,7 @@ class FlagsValue {
  * The class structure for the GInitiallyUnowned type.
  */
 abstract class InitiallyUnownedClass {
-    /* Fields of GObject-2.0.GObject.InitiallyUnownedClass */
+    /* Own fields of GObject-2.0.GObject.InitiallyUnownedClass */
     /**
      * the parent class
      */
@@ -7556,7 +7938,7 @@ abstract class InitiallyUnownedClass {
  * used specifically for managing interface types.
  */
 class InterfaceInfo {
-    /* Fields of GObject-2.0.GObject.InterfaceInfo */
+    /* Own fields of GObject-2.0.GObject.InterfaceInfo */
     /**
      * location of the interface initialization function
      */
@@ -7602,7 +7984,7 @@ class InterfaceInfo {
  * 
  */
 abstract class ObjectClass {
-    /* Fields of GObject-2.0.GObject.ObjectClass */
+    /* Own fields of GObject-2.0.GObject.ObjectClass */
     /**
      * the parent class
      */
@@ -7614,7 +7996,7 @@ abstract class ObjectClass {
     dispatch_properties_changed: (object: Object, n_pspecs: number, pspecs: ParamSpec) => void
     notify: (object: Object, pspec: ParamSpec) => void
     constructed: (object: Object) => void
-    /* Methods of GObject-2.0.GObject.ObjectClass */
+    /* Owm methods of GObject-2.0.GObject.ObjectClass */
     /**
      * Looks up the #GParamSpec for a property of a class.
      * @param property_name the name of the property to look up
@@ -7736,7 +8118,7 @@ abstract class ObjectClass {
  * #GParamSpec/#GValue pairs to the `constructor` of a #GObjectClass.
  */
 class ObjectConstructParam {
-    /* Fields of GObject-2.0.GObject.ObjectConstructParam */
+    /* Own fields of GObject-2.0.GObject.ObjectConstructParam */
     /**
      * the #GParamSpec of the construct parameter
      */
@@ -7753,7 +8135,7 @@ class ObjectConstructParam {
  * g_param_type_register_static().
  */
 abstract class ParamSpecClass {
-    /* Fields of GObject-2.0.GObject.ParamSpecClass */
+    /* Own fields of GObject-2.0.GObject.ParamSpecClass */
     /**
      * the parent class
      */
@@ -7776,7 +8158,7 @@ abstract class ParamSpecClass {
  * store the #GParamSpecs of the properties all object types.
  */
 class ParamSpecPool {
-    /* Methods of GObject-2.0.GObject.ParamSpecPool */
+    /* Owm methods of GObject-2.0.GObject.ParamSpecPool */
     /**
      * Inserts a #GParamSpec in the pool.
      * @param pspec the #GParamSpec to insert
@@ -7820,7 +8202,7 @@ class ParamSpecPool {
  * g_param_type_register_static().
  */
 class ParamSpecTypeInfo {
-    /* Fields of GObject-2.0.GObject.ParamSpecTypeInfo */
+    /* Own fields of GObject-2.0.GObject.ParamSpecTypeInfo */
     /**
      * Size of the instance (object) structure.
      */
@@ -7845,7 +8227,7 @@ class ParamSpecTypeInfo {
  * to hand parameter name/value pairs to g_object_newv().
  */
 class Parameter {
-    /* Fields of GObject-2.0.GObject.Parameter */
+    /* Own fields of GObject-2.0.GObject.Parameter */
     /**
      * the parameter name
      */
@@ -7861,7 +8243,7 @@ class Parameter {
  * to callbacks during a signal emission.
  */
 class SignalInvocationHint {
-    /* Fields of GObject-2.0.GObject.SignalInvocationHint */
+    /* Own fields of GObject-2.0.GObject.SignalInvocationHint */
     /**
      * The signal id of the signal invoking the callback
      */
@@ -7886,7 +8268,7 @@ class SignalInvocationHint {
  * See also: g_signal_query()
  */
 class SignalQuery {
-    /* Fields of GObject-2.0.GObject.SignalQuery */
+    /* Own fields of GObject-2.0.GObject.SignalQuery */
     /**
      * The signal id of the signal being queried, or 0 if the
      *  signal to be queried was unknown.
@@ -7930,7 +8312,7 @@ class SignalQuery {
  * An opaque structure used as the base of all classes.
  */
 class TypeClass {
-    /* Methods of GObject-2.0.GObject.TypeClass */
+    /* Owm methods of GObject-2.0.GObject.TypeClass */
     /**
      * Registers a private structure for an instantiatable type.
      * 
@@ -8049,7 +8431,7 @@ class TypeClass {
  * used specifically for managing fundamental types.
  */
 class TypeFundamentalInfo {
-    /* Fields of GObject-2.0.GObject.TypeFundamentalInfo */
+    /* Own fields of GObject-2.0.GObject.TypeFundamentalInfo */
     /**
      * #GTypeFundamentalFlags describing the characteristics of the fundamental type
      */
@@ -8068,7 +8450,7 @@ class TypeFundamentalInfo {
  * across invocation of g_type_register_static().
  */
 class TypeInfo {
-    /* Fields of GObject-2.0.GObject.TypeInfo */
+    /* Own fields of GObject-2.0.GObject.TypeInfo */
     /**
      * Size of the class structure (required for interface, classed and instantiatable types)
      */
@@ -8123,7 +8505,7 @@ class TypeInfo {
  * An opaque structure used as the base of all type instances.
  */
 class TypeInstance {
-    /* Methods of GObject-2.0.GObject.TypeInstance */
+    /* Owm methods of GObject-2.0.GObject.TypeInstance */
     get_private(private_type: GType): object | null
     static name: string
 }
@@ -8131,7 +8513,7 @@ class TypeInstance {
  * An opaque structure used as the base of all interface types.
  */
 class TypeInterface {
-    /* Methods of GObject-2.0.GObject.TypeInterface */
+    /* Owm methods of GObject-2.0.GObject.TypeInterface */
     /**
      * Returns the corresponding #GTypeInterface structure of the parent type
      * of the instance type to which `g_iface` belongs. This is useful when
@@ -8188,7 +8570,7 @@ class TypeInterface {
  * the `load` and `unload` functions in #GTypeModuleClass must be implemented.
  */
 abstract class TypeModuleClass {
-    /* Fields of GObject-2.0.GObject.TypeModuleClass */
+    /* Own fields of GObject-2.0.GObject.TypeModuleClass */
     /**
      * the parent class
      */
@@ -8206,7 +8588,7 @@ abstract class TypeModuleClass {
  * the lifecycle of dynamically loaded types.
  */
 class TypePluginClass {
-    /* Fields of GObject-2.0.GObject.TypePluginClass */
+    /* Own fields of GObject-2.0.GObject.TypePluginClass */
     /**
      * Increases the use count of the plugin.
      */
@@ -8235,7 +8617,7 @@ class TypePluginClass {
  * See also: g_type_query()
  */
 class TypeQuery {
-    /* Fields of GObject-2.0.GObject.TypeQuery */
+    /* Own fields of GObject-2.0.GObject.TypeQuery */
     /**
      * the #GType value of the type
      */
@@ -8259,7 +8641,7 @@ class TypeQuery {
  * implementation, to serve as a container for values of a type.
  */
 class TypeValueTable {
-    /* Fields of GObject-2.0.GObject.TypeValueTable */
+    /* Own fields of GObject-2.0.GObject.TypeValueTable */
     value_init: (value: any) => void
     value_free: (value: any) => void
     value_copy: (src_value: any, dest_value: any) => void
@@ -8302,9 +8684,9 @@ class TypeValueTable {
  * only be accessed through the G_VALUE_TYPE() macro.
  */
 class Value {
-    /* Fields of GObject-2.0.GObject.Value */
+    /* Own fields of GObject-2.0.GObject.Value */
     data: _Value__data__union[]
-    /* Methods of GObject-2.0.GObject.Value */
+    /* Owm methods of GObject-2.0.GObject.Value */
     /**
      * Copies the value of `src_value` into `dest_value`.
      * @param dest_value An initialized #GValue structure of the same type as `src_value`.
@@ -8670,7 +9052,7 @@ class Value {
  * A #GValueArray contains an array of #GValue elements.
  */
 class ValueArray {
-    /* Fields of GObject-2.0.GObject.ValueArray */
+    /* Own fields of GObject-2.0.GObject.ValueArray */
     /**
      * number of values contained in the array
      */
@@ -8679,7 +9061,7 @@ class ValueArray {
      * array of values
      */
     values: any
-    /* Methods of GObject-2.0.GObject.ValueArray */
+    /* Owm methods of GObject-2.0.GObject.ValueArray */
     /**
      * Insert a copy of `value` as last element of `value_array`. If `value` is
      * %NULL, an uninitialized value is appended.
@@ -8762,7 +9144,7 @@ class TypeCValue {
     static name: string
 }
 class _Value__data__union {
-    /* Fields of GObject-2.0.GObject._Value__data__union */
+    /* Own fields of GObject-2.0.GObject._Value__data__union */
     v_int: number
     v_uint: number
     v_long: number

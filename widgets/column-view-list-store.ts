@@ -25,12 +25,4 @@ export class IColumnViewListStore extends ViewColumnBase {
 
 export const ColumnViewListStore = GObject.registerClass({
     GTypeName: 'ColumnViewListStore',
-    Properties: {
-        'store': GObject.ParamSpec.jsobject(
-            'store',
-            'store',
-            'store',
-            GObject.ParamFlags.CONSTRUCT | GObject.ParamFlags.READWRITE,
-        ),
-    }
 }, IColumnViewListStore );

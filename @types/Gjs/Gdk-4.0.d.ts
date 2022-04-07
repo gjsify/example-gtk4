@@ -3553,7 +3553,47 @@ interface ContentDeserializeFunc {
 interface ContentSerializeFunc {
     (serializer: ContentSerializer): void
 }
-interface DevicePad_ConstructProps extends Device_ConstructProps {
+interface DevicePad_ConstructProps extends GObject.Object_ConstructProps {
+    /* Implemented constructor properties of Gdk-4.0.Gdk.Device */
+    /**
+     * The `GdkDisplay` the `GdkDevice` pertains to.
+     */
+    display?: Display | null
+    /**
+     * Whether the device is represented by a cursor on the screen.
+     */
+    has_cursor?: boolean | null
+    /**
+     * The device name.
+     */
+    name?: string | null
+    /**
+     * The maximal number of concurrent touches on a touch device.
+     * 
+     * Will be 0 if the device is not a touch device or if the number
+     * of touches is unknown.
+     */
+    num_touches?: number | null
+    /**
+     * Product ID of this device.
+     * 
+     * See [method`Gdk`.Device.get_product_id].
+     */
+    product_id?: string | null
+    /**
+     * `GdkSeat` of this device.
+     */
+    seat?: Seat | null
+    /**
+     * Source type for the device.
+     */
+    source?: InputSource | null
+    /**
+     * Vendor ID of this device.
+     * 
+     * See [method`Gdk`.Device.get_vendor_id].
+     */
+    vendor_id?: string | null
 }
 /**
  * `GdkDevicePad` is an interface implemented by devices of type
@@ -3576,7 +3616,7 @@ interface DevicePad_ConstructProps extends Device_ConstructProps {
  * @interface 
  */
 class DevicePad {
-    /* Properties of Gdk-4.0.Gdk.Device */
+    /* Implemented properties of Gdk-4.0.Gdk.Device */
     /**
      * Whether Caps Lock is on.
      * 
@@ -3660,9 +3700,9 @@ class DevicePad {
      * See [method`Gdk`.Device.get_vendor_id].
      */
     readonly vendor_id: string
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.DevicePad */
+    /* Owm methods of Gdk-4.0.Gdk.DevicePad */
     /**
      * Returns the group the given `feature` and `idx` belong to.
      * 
@@ -3689,7 +3729,321 @@ class DevicePad {
      * current mode.
      */
     get_n_groups(): number
-    /* Methods of Gdk-4.0.Gdk.Device */
+    /* Extended methods of GObject-2.0.GObject.Object */
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target`.
+     * 
+     * Whenever the `source_property` is changed the `target_property` is
+     * updated using the same value. For instance:
+     * 
+     * 
+     * ```c
+     *   g_object_bind_property (action, "active", widget, "sensitive", 0);
+     * ```
+     * 
+     * 
+     * Will result in the "sensitive" property of the widget #GObject instance to be
+     * updated with the same value of the "active" property of the action #GObject
+     * instance.
+     * 
+     * If `flags` contains %G_BINDING_BIDIRECTIONAL then the binding will be mutual:
+     * if `target_property` on `target` changes then the `source_property` on `source`
+     * will be updated as well.
+     * 
+     * The binding will automatically be removed when either the `source` or the
+     * `target` instances are finalized. To remove the binding without affecting the
+     * `source` and the `target` you can just call g_object_unref() on the returned
+     * #GBinding instance.
+     * 
+     * Removing the binding by calling g_object_unref() on it must only be done if
+     * the binding, `source` and `target` are only used from a single thread and it
+     * is clear that both `source` and `target` outlive the binding. Especially it
+     * is not safe to rely on this if the binding, `source` or `target` can be
+     * finalized from different threads. Keep another reference to the binding and
+     * use g_binding_unbind() instead to be on the safe side.
+     * 
+     * A #GObject can have multiple bindings.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     */
+    bind_property(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags): GObject.Binding
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target,` allowing you to set the transformation functions to be used by
+     * the binding.
+     * 
+     * This function is the language bindings friendly version of
+     * g_object_bind_property_full(), using #GClosures instead of
+     * function pointers.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     * @param transform_to a #GClosure wrapping the transformation function     from the `source` to the `target,` or %NULL to use the default
+     * @param transform_from a #GClosure wrapping the transformation function     from the `target` to the `source,` or %NULL to use the default
+     */
+    bind_property_full(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags, transform_to: GObject.TClosure, transform_from: GObject.TClosure): GObject.Binding
+    /**
+     * This function is intended for #GObject implementations to re-enforce
+     * a [floating][floating-ref] object reference. Doing this is seldom
+     * required: all #GInitiallyUnowneds are created with a floating reference
+     * which usually just needs to be sunken by calling g_object_ref_sink().
+     */
+    force_floating(): void
+    /**
+     * Increases the freeze count on `object`. If the freeze count is
+     * non-zero, the emission of "notify" signals on `object` is
+     * stopped. The signals are queued until the freeze count is decreased
+     * to zero. Duplicate notifications are squashed so that at most one
+     * #GObject::notify signal is emitted for each property modified while the
+     * object is frozen.
+     * 
+     * This is necessary for accessors that modify multiple properties to prevent
+     * premature notification while the object is still being modified.
+     */
+    freeze_notify(): void
+    /**
+     * Gets a named field from the objects table of associations (see g_object_set_data()).
+     * @param key name of the key for that association
+     */
+    get_data(key: string): object | null
+    /**
+     * Gets a property of an object.
+     * 
+     * The `value` can be:
+     * 
+     *  - an empty #GValue initialized by %G_VALUE_INIT, which will be
+     *    automatically initialized with the expected type of the property
+     *    (since GLib 2.60)
+     *  - a #GValue initialized with the expected type of the property
+     *  - a #GValue initialized with a type to which the expected type
+     *    of the property can be transformed
+     * 
+     * In general, a copy is made of the property contents and the caller is
+     * responsible for freeing the memory by calling g_value_unset().
+     * 
+     * Note that g_object_get_property() is really intended for language
+     * bindings, g_object_get() is much more convenient for C programming.
+     * @param property_name the name of the property to get
+     * @param value return location for the property value
+     */
+    get_property(property_name: string, value: any): void
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    get_qdata(quark: GLib.Quark): object | null
+    /**
+     * Gets `n_properties` properties for an `object`.
+     * Obtained properties will be set to `values`. All properties must be valid.
+     * Warnings will be emitted and undefined behaviour may result if invalid
+     * properties are passed in.
+     * @param names the names of each property to get
+     * @param values the values of each property to get
+     */
+    getv(names: string[], values: any[]): void
+    /**
+     * Checks whether `object` has a [floating][floating-ref] reference.
+     */
+    is_floating(): boolean
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @param property_name the name of a property installed on the class of `object`.
+     */
+    notify(property_name: string): void
+    /**
+     * Emits a "notify" signal for the property specified by `pspec` on `object`.
+     * 
+     * This function omits the property name lookup, hence it is faster than
+     * g_object_notify().
+     * 
+     * One way to avoid using g_object_notify() from within the
+     * class that registered the properties, and using g_object_notify_by_pspec()
+     * instead, is to store the GParamSpec used with
+     * g_object_class_install_property() inside a static array, e.g.:
+     * 
+     * 
+     * ```c
+     *   enum
+     *   {
+     *     PROP_0,
+     *     PROP_FOO,
+     *     PROP_LAST
+     *   };
+     * 
+     *   static GParamSpec *properties[PROP_LAST];
+     * 
+     *   static void
+     *   my_object_class_init (MyObjectClass *klass)
+     *   {
+     *     properties[PROP_FOO] = g_param_spec_int ("foo", "Foo", "The foo",
+     *                                              0, 100,
+     *                                              50,
+     *                                              G_PARAM_READWRITE);
+     *     g_object_class_install_property (gobject_class,
+     *                                      PROP_FOO,
+     *                                      properties[PROP_FOO]);
+     *   }
+     * ```
+     * 
+     * 
+     * and then notify a change on the "foo" property with:
+     * 
+     * 
+     * ```c
+     *   g_object_notify_by_pspec (self, properties[PROP_FOO]);
+     * ```
+     * 
+     * @param pspec the #GParamSpec of a property installed on the class of `object`.
+     */
+    notify_by_pspec(pspec: GObject.ParamSpec): void
+    /**
+     * Increases the reference count of `object`.
+     * 
+     * Since GLib 2.56, if `GLIB_VERSION_MAX_ALLOWED` is 2.56 or greater, the type
+     * of `object` will be propagated to the return type (using the GCC typeof()
+     * extension), so any casting the caller needs to do on the return type must be
+     * explicit.
+     */
+    ref(): GObject.Object
+    /**
+     * Increase the reference count of `object,` and possibly remove the
+     * [floating][floating-ref] reference, if `object` has a floating reference.
+     * 
+     * In other words, if the object is floating, then this call "assumes
+     * ownership" of the floating reference, converting it to a normal
+     * reference by clearing the floating flag while leaving the reference
+     * count unchanged.  If the object is not floating, then this call
+     * adds a new normal reference increasing the reference count by one.
+     * 
+     * Since GLib 2.56, the type of `object` will be propagated to the return type
+     * under the same conditions as for g_object_ref().
+     */
+    ref_sink(): GObject.Object
+    /**
+     * Releases all references to other objects. This can be used to break
+     * reference cycles.
+     * 
+     * This function should only be called from object system implementations.
+     */
+    run_dispose(): void
+    /**
+     * Each object carries around a table of associations from
+     * strings to pointers.  This function lets you set an association.
+     * 
+     * If the object already had an association with that name,
+     * the old association will be destroyed.
+     * 
+     * Internally, the `key` is converted to a #GQuark using g_quark_from_string().
+     * This means a copy of `key` is kept permanently (even after `object` has been
+     * finalized) — so it is recommended to only use a small, bounded set of values
+     * for `key` in your program, to avoid the #GQuark storage growing unbounded.
+     * @param key name of the key
+     * @param data data to associate with that key
+     */
+    set_data(key: string, data: object | null): void
+    /**
+     * Sets a property on an object.
+     * @param property_name the name of the property to set
+     * @param value the value
+     */
+    set_property(property_name: string, value: any): void
+    /**
+     * Remove a specified datum from the object's data associations,
+     * without invoking the association's destroy handler.
+     * @param key name of the key
+     */
+    steal_data(key: string): object | null
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata() and removes the `data` from object
+     * without invoking its destroy() function (if any was
+     * set).
+     * Usually, calling this function is only required to update
+     * user data pointers with a destroy notifier, for example:
+     * 
+     * ```c
+     * void
+     * object_add_to_user_list (GObject     *object,
+     *                          const gchar *new_string)
+     * {
+     *   // the quark, naming the object data
+     *   GQuark quark_string_list = g_quark_from_static_string ("my-string-list");
+     *   // retrieve the old string list
+     *   GList *list = g_object_steal_qdata (object, quark_string_list);
+     * 
+     *   // prepend new string
+     *   list = g_list_prepend (list, g_strdup (new_string));
+     *   // this changed 'list', so we need to set it again
+     *   g_object_set_qdata_full (object, quark_string_list, list, free_string_list);
+     * }
+     * static void
+     * free_string_list (gpointer data)
+     * {
+     *   GList *node, *list = data;
+     * 
+     *   for (node = list; node; node = node->next)
+     *     g_free (node->data);
+     *   g_list_free (list);
+     * }
+     * ```
+     * 
+     * Using g_object_get_qdata() in the above example, instead of
+     * g_object_steal_qdata() would have left the destroy function set,
+     * and thus the partial string list would have been freed upon
+     * g_object_set_qdata_full().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    steal_qdata(quark: GLib.Quark): object | null
+    /**
+     * Reverts the effect of a previous call to
+     * g_object_freeze_notify(). The freeze count is decreased on `object`
+     * and when it reaches zero, queued "notify" signals are emitted.
+     * 
+     * Duplicate notifications for each property are squashed so that at most one
+     * #GObject::notify signal is emitted for each property, in the reverse order
+     * in which they have been queued.
+     * 
+     * It is an error to call this function when the freeze count is zero.
+     */
+    thaw_notify(): void
+    /**
+     * Decreases the reference count of `object`. When its reference count
+     * drops to 0, the object is finalized (i.e. its memory is freed).
+     * 
+     * If the pointer to the #GObject may be reused in future (for example, if it is
+     * an instance variable of another object), it is recommended to clear the
+     * pointer to %NULL rather than retain a dangling pointer to a potentially
+     * invalid #GObject instance. Use g_clear_object() for this.
+     */
+    unref(): void
+    /**
+     * This function essentially limits the life time of the `closure` to
+     * the life time of the object. That is, when the object is finalized,
+     * the `closure` is invalidated by calling g_closure_invalidate() on
+     * it, in order to prevent invocations of the closure with a finalized
+     * (nonexisting) object. Also, g_object_ref() and g_object_unref() are
+     * added as marshal guards to the `closure,` to ensure that an extra
+     * reference count is held on `object` during invocation of the
+     * `closure`.  Usually, this function will be called on closures that
+     * use this `object` as closure data.
+     * @param closure #GClosure to watch
+     */
+    watch_closure(closure: GObject.TClosure): void
+    /* Implemented methods of Gdk-4.0.Gdk.Device */
     /**
      * Retrieves whether the Caps Lock modifier of the keyboard is locked.
      * 
@@ -3808,7 +4162,185 @@ class DevicePad {
      * ```
      */
     get_vendor_id(): string | null
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
+    vfunc_constructed(): void
+    vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
+    vfunc_dispose(): void
+    vfunc_finalize(): void
+    vfunc_get_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @virtual 
+     * @param pspec 
+     */
+    vfunc_notify(pspec: GObject.ParamSpec): void
+    vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
+    /* Extended signals of GObject-2.0.GObject.Object */
+    /**
+     * The notify signal is emitted on an object when one of its properties has
+     * its value set through g_object_set_property(), g_object_set(), et al.
+     * 
+     * Note that getting this signal doesn’t itself guarantee that the value of
+     * the property has actually changed. When it is emitted is determined by the
+     * derived GObject class. If the implementor did not create the property with
+     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
+     * in ::notify being emitted, even if the new value is the same as the old.
+     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
+     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
+     * and common practice is to do that only when the value has actually changed.
+     * 
+     * This signal is typically used to obtain change notification for a
+     * single property, by specifying the property name as a detail in the
+     * g_signal_connect() call, like this:
+     * 
+     * 
+     * ```c
+     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
+     *                   G_CALLBACK (gtk_text_view_target_list_notify),
+     *                   text_view)
+     * ```
+     * 
+     * 
+     * It is important to note that you must use
+     * [canonical parameter names][canonical-parameter-names] as
+     * detail strings for the notify signal.
+     * @signal 
+     * @param pspec the #GParamSpec of the property which changed.
+     */
+    connect(sigName: "notify", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify", pspec: GObject.ParamSpec): void
+    /* Implemented signals of Gdk-4.0.Gdk.Device */
+    /**
+     * Emitted either when the number of either axes or keys changes.
+     * 
+     * On X11 this will normally happen when the physical device
+     * routing events through the logical device changes (for
+     * example, user switches from the USB mouse to a tablet); in
+     * that case the logical device will change to reflect the axes
+     * and keys on the new physical device.
+     * @signal 
+     */
+    connect(sigName: "changed", callback: (($obj: DevicePad) => void)): number
+    connect_after(sigName: "changed", callback: (($obj: DevicePad) => void)): number
+    emit(sigName: "changed"): void
+    /**
+     * Emitted on pen/eraser devices whenever tools enter or leave proximity.
+     * @signal 
+     * @param tool The new current tool
+     */
+    connect(sigName: "tool-changed", callback: (($obj: DevicePad, tool: DeviceTool) => void)): number
+    connect_after(sigName: "tool-changed", callback: (($obj: DevicePad, tool: DeviceTool) => void)): number
+    emit(sigName: "tool-changed", tool: DeviceTool): void
+    connect(sigName: "notify::caps-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::caps-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::direction", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::direction", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::display", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::display", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::has-bidi-layouts", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-bidi-layouts", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::has-cursor", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-cursor", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::modifier-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::modifier-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::n-axes", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::n-axes", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::name", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::name", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::num-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::num-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::num-touches", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::num-touches", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::product-id", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::product-id", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::scroll-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::scroll-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::seat", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::seat", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::source", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::source", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::tool", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::tool", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: "notify::vendor-id", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::vendor-id", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
+    emit(sigName: string, ...args: any[]): void
+    disconnect(id: number): void
+    static name: string
+    constructor (config?: DevicePad_ConstructProps)
+    _init (config?: DevicePad_ConstructProps): void
+    static $gtype: GObject.GType<DevicePad>
+}
+interface DragSurface_ConstructProps extends GObject.Object_ConstructProps {
+    /* Implemented constructor properties of Gdk-4.0.Gdk.Surface */
+    /**
+     * The mouse pointer for the `GdkSurface`.
+     */
+    cursor?: Cursor | null
+    /**
+     * The `GdkDisplay` connection of the surface.
+     */
+    display?: Display | null
+    /**
+     * The `GdkFrameClock` of the surface.
+     */
+    frame_clock?: FrameClock | null
+}
+/**
+ * A `GdkDragSurface` is an interface for surfaces used during DND.
+ * @interface 
+ */
+class DragSurface {
+    /* Implemented properties of Gdk-4.0.Gdk.Surface */
+    /**
+     * The mouse pointer for the `GdkSurface`.
+     */
+    cursor: Cursor
+    /**
+     * The `GdkDisplay` connection of the surface.
+     */
+    readonly display: Display
+    /**
+     * The `GdkFrameClock` of the surface.
+     */
+    readonly frame_clock: FrameClock
+    /**
+     * The height of the surface, in pixels.
+     */
+    readonly height: number
+    /**
+     * Whether the surface is mapped.
+     */
+    readonly mapped: boolean
+    /**
+     * The scale factor of the surface.
+     */
+    readonly scale_factor: number
+    /**
+     * The width of the surface in pixels.
+     */
+    readonly width: number
+    /* Extended fields of GObject-2.0.GObject.Object */
+    g_type_instance: GObject.TypeInstance
+    /* Owm methods of Gdk-4.0.Gdk.DragSurface */
+    /**
+     * Present `drag_surface`.
+     * @param width the unconstrained drag_surface width to layout
+     * @param height the unconstrained drag_surface height to layout
+     */
+    present(width: number, height: number): boolean
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -4122,172 +4654,7 @@ class DevicePad {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
-    vfunc_constructed(): void
-    vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
-    vfunc_dispose(): void
-    vfunc_finalize(): void
-    vfunc_get_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /**
-     * Emits a "notify" signal for the property `property_name` on `object`.
-     * 
-     * When possible, eg. when signaling a property change from within the class
-     * that registered the property, you should use g_object_notify_by_pspec()
-     * instead.
-     * 
-     * Note that emission of the notify signal may be blocked with
-     * g_object_freeze_notify(). In this case, the signal emissions are queued
-     * and will be emitted (in reverse order) when g_object_thaw_notify() is
-     * called.
-     * @virtual 
-     * @param pspec 
-     */
-    vfunc_notify(pspec: GObject.ParamSpec): void
-    vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Device */
-    /**
-     * Emitted either when the number of either axes or keys changes.
-     * 
-     * On X11 this will normally happen when the physical device
-     * routing events through the logical device changes (for
-     * example, user switches from the USB mouse to a tablet); in
-     * that case the logical device will change to reflect the axes
-     * and keys on the new physical device.
-     * @signal 
-     */
-    connect(sigName: "changed", callback: (($obj: DevicePad) => void)): number
-    connect_after(sigName: "changed", callback: (($obj: DevicePad) => void)): number
-    emit(sigName: "changed"): void
-    /**
-     * Emitted on pen/eraser devices whenever tools enter or leave proximity.
-     * @signal 
-     * @param tool The new current tool
-     */
-    connect(sigName: "tool-changed", callback: (($obj: DevicePad, tool: DeviceTool) => void)): number
-    connect_after(sigName: "tool-changed", callback: (($obj: DevicePad, tool: DeviceTool) => void)): number
-    emit(sigName: "tool-changed", tool: DeviceTool): void
-    /* Signals of GObject-2.0.GObject.Object */
-    /**
-     * The notify signal is emitted on an object when one of its properties has
-     * its value set through g_object_set_property(), g_object_set(), et al.
-     * 
-     * Note that getting this signal doesn’t itself guarantee that the value of
-     * the property has actually changed. When it is emitted is determined by the
-     * derived GObject class. If the implementor did not create the property with
-     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
-     * in ::notify being emitted, even if the new value is the same as the old.
-     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
-     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
-     * and common practice is to do that only when the value has actually changed.
-     * 
-     * This signal is typically used to obtain change notification for a
-     * single property, by specifying the property name as a detail in the
-     * g_signal_connect() call, like this:
-     * 
-     * 
-     * ```c
-     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
-     *                   G_CALLBACK (gtk_text_view_target_list_notify),
-     *                   text_view)
-     * ```
-     * 
-     * 
-     * It is important to note that you must use
-     * [canonical parameter names][canonical-parameter-names] as
-     * detail strings for the notify signal.
-     * @signal 
-     * @param pspec the #GParamSpec of the property which changed.
-     */
-    connect(sigName: "notify", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    emit(sigName: "notify", pspec: GObject.ParamSpec): void
-    connect(sigName: "notify::caps-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::caps-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::direction", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::direction", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::display", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::display", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::has-bidi-layouts", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::has-bidi-layouts", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::has-cursor", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::has-cursor", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::modifier-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::modifier-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::n-axes", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::n-axes", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::name", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::name", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::num-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::num-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::num-touches", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::num-touches", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::product-id", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::product-id", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::scroll-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::scroll-lock-state", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::seat", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::seat", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::source", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::source", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::tool", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::tool", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: "notify::vendor-id", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify::vendor-id", callback: (($obj: DevicePad, pspec: GObject.ParamSpec) => void)): number
-    connect(sigName: string, callback: (...args: any[]) => void): number
-    connect_after(sigName: string, callback: (...args: any[]) => void): number
-    emit(sigName: string, ...args: any[]): void
-    disconnect(id: number): void
-    static name: string
-    constructor (config?: DevicePad_ConstructProps)
-    _init (config?: DevicePad_ConstructProps): void
-    static $gtype: GObject.GType<DevicePad>
-}
-interface DragSurface_ConstructProps extends Surface_ConstructProps {
-}
-/**
- * A `GdkDragSurface` is an interface for surfaces used during DND.
- * @interface 
- */
-class DragSurface {
-    /* Properties of Gdk-4.0.Gdk.Surface */
-    /**
-     * The mouse pointer for the `GdkSurface`.
-     */
-    cursor: Cursor
-    /**
-     * The `GdkDisplay` connection of the surface.
-     */
-    readonly display: Display
-    /**
-     * The `GdkFrameClock` of the surface.
-     */
-    readonly frame_clock: FrameClock
-    /**
-     * The height of the surface, in pixels.
-     */
-    readonly height: number
-    /**
-     * Whether the surface is mapped.
-     */
-    readonly mapped: boolean
-    /**
-     * The scale factor of the surface.
-     */
-    readonly scale_factor: number
-    /**
-     * The width of the surface in pixels.
-     */
-    readonly width: number
-    /* Fields of GObject-2.0.GObject.Object */
-    g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.DragSurface */
-    /**
-     * Present `drag_surface`.
-     * @param width the unconstrained drag_surface width to layout
-     * @param height the unconstrained drag_surface height to layout
-     */
-    present(width: number, height: number): boolean
-    /* Methods of Gdk-4.0.Gdk.Surface */
+    /* Implemented methods of Gdk-4.0.Gdk.Surface */
     /**
      * Emits a short beep associated to `surface`.
      * 
@@ -4520,321 +4887,7 @@ class DragSurface {
      * @param y coordinates to translate
      */
     translate_coordinates(to: Surface, x: number, y: number): [ /* returnType */ boolean, /* x */ number, /* y */ number ]
-    /* Methods of GObject-2.0.GObject.Object */
-    /**
-     * Creates a binding between `source_property` on `source` and `target_property`
-     * on `target`.
-     * 
-     * Whenever the `source_property` is changed the `target_property` is
-     * updated using the same value. For instance:
-     * 
-     * 
-     * ```c
-     *   g_object_bind_property (action, "active", widget, "sensitive", 0);
-     * ```
-     * 
-     * 
-     * Will result in the "sensitive" property of the widget #GObject instance to be
-     * updated with the same value of the "active" property of the action #GObject
-     * instance.
-     * 
-     * If `flags` contains %G_BINDING_BIDIRECTIONAL then the binding will be mutual:
-     * if `target_property` on `target` changes then the `source_property` on `source`
-     * will be updated as well.
-     * 
-     * The binding will automatically be removed when either the `source` or the
-     * `target` instances are finalized. To remove the binding without affecting the
-     * `source` and the `target` you can just call g_object_unref() on the returned
-     * #GBinding instance.
-     * 
-     * Removing the binding by calling g_object_unref() on it must only be done if
-     * the binding, `source` and `target` are only used from a single thread and it
-     * is clear that both `source` and `target` outlive the binding. Especially it
-     * is not safe to rely on this if the binding, `source` or `target` can be
-     * finalized from different threads. Keep another reference to the binding and
-     * use g_binding_unbind() instead to be on the safe side.
-     * 
-     * A #GObject can have multiple bindings.
-     * @param source_property the property on `source` to bind
-     * @param target the target #GObject
-     * @param target_property the property on `target` to bind
-     * @param flags flags to pass to #GBinding
-     */
-    bind_property(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags): GObject.Binding
-    /**
-     * Creates a binding between `source_property` on `source` and `target_property`
-     * on `target,` allowing you to set the transformation functions to be used by
-     * the binding.
-     * 
-     * This function is the language bindings friendly version of
-     * g_object_bind_property_full(), using #GClosures instead of
-     * function pointers.
-     * @param source_property the property on `source` to bind
-     * @param target the target #GObject
-     * @param target_property the property on `target` to bind
-     * @param flags flags to pass to #GBinding
-     * @param transform_to a #GClosure wrapping the transformation function     from the `source` to the `target,` or %NULL to use the default
-     * @param transform_from a #GClosure wrapping the transformation function     from the `target` to the `source,` or %NULL to use the default
-     */
-    bind_property_full(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags, transform_to: GObject.TClosure, transform_from: GObject.TClosure): GObject.Binding
-    /**
-     * This function is intended for #GObject implementations to re-enforce
-     * a [floating][floating-ref] object reference. Doing this is seldom
-     * required: all #GInitiallyUnowneds are created with a floating reference
-     * which usually just needs to be sunken by calling g_object_ref_sink().
-     */
-    force_floating(): void
-    /**
-     * Increases the freeze count on `object`. If the freeze count is
-     * non-zero, the emission of "notify" signals on `object` is
-     * stopped. The signals are queued until the freeze count is decreased
-     * to zero. Duplicate notifications are squashed so that at most one
-     * #GObject::notify signal is emitted for each property modified while the
-     * object is frozen.
-     * 
-     * This is necessary for accessors that modify multiple properties to prevent
-     * premature notification while the object is still being modified.
-     */
-    freeze_notify(): void
-    /**
-     * Gets a named field from the objects table of associations (see g_object_set_data()).
-     * @param key name of the key for that association
-     */
-    get_data(key: string): object | null
-    /**
-     * Gets a property of an object.
-     * 
-     * The `value` can be:
-     * 
-     *  - an empty #GValue initialized by %G_VALUE_INIT, which will be
-     *    automatically initialized with the expected type of the property
-     *    (since GLib 2.60)
-     *  - a #GValue initialized with the expected type of the property
-     *  - a #GValue initialized with a type to which the expected type
-     *    of the property can be transformed
-     * 
-     * In general, a copy is made of the property contents and the caller is
-     * responsible for freeing the memory by calling g_value_unset().
-     * 
-     * Note that g_object_get_property() is really intended for language
-     * bindings, g_object_get() is much more convenient for C programming.
-     * @param property_name the name of the property to get
-     * @param value return location for the property value
-     */
-    get_property(property_name: string, value: any): void
-    /**
-     * This function gets back user data pointers stored via
-     * g_object_set_qdata().
-     * @param quark A #GQuark, naming the user data pointer
-     */
-    get_qdata(quark: GLib.Quark): object | null
-    /**
-     * Gets `n_properties` properties for an `object`.
-     * Obtained properties will be set to `values`. All properties must be valid.
-     * Warnings will be emitted and undefined behaviour may result if invalid
-     * properties are passed in.
-     * @param names the names of each property to get
-     * @param values the values of each property to get
-     */
-    getv(names: string[], values: any[]): void
-    /**
-     * Checks whether `object` has a [floating][floating-ref] reference.
-     */
-    is_floating(): boolean
-    /**
-     * Emits a "notify" signal for the property `property_name` on `object`.
-     * 
-     * When possible, eg. when signaling a property change from within the class
-     * that registered the property, you should use g_object_notify_by_pspec()
-     * instead.
-     * 
-     * Note that emission of the notify signal may be blocked with
-     * g_object_freeze_notify(). In this case, the signal emissions are queued
-     * and will be emitted (in reverse order) when g_object_thaw_notify() is
-     * called.
-     * @param property_name the name of a property installed on the class of `object`.
-     */
-    notify(property_name: string): void
-    /**
-     * Emits a "notify" signal for the property specified by `pspec` on `object`.
-     * 
-     * This function omits the property name lookup, hence it is faster than
-     * g_object_notify().
-     * 
-     * One way to avoid using g_object_notify() from within the
-     * class that registered the properties, and using g_object_notify_by_pspec()
-     * instead, is to store the GParamSpec used with
-     * g_object_class_install_property() inside a static array, e.g.:
-     * 
-     * 
-     * ```c
-     *   enum
-     *   {
-     *     PROP_0,
-     *     PROP_FOO,
-     *     PROP_LAST
-     *   };
-     * 
-     *   static GParamSpec *properties[PROP_LAST];
-     * 
-     *   static void
-     *   my_object_class_init (MyObjectClass *klass)
-     *   {
-     *     properties[PROP_FOO] = g_param_spec_int ("foo", "Foo", "The foo",
-     *                                              0, 100,
-     *                                              50,
-     *                                              G_PARAM_READWRITE);
-     *     g_object_class_install_property (gobject_class,
-     *                                      PROP_FOO,
-     *                                      properties[PROP_FOO]);
-     *   }
-     * ```
-     * 
-     * 
-     * and then notify a change on the "foo" property with:
-     * 
-     * 
-     * ```c
-     *   g_object_notify_by_pspec (self, properties[PROP_FOO]);
-     * ```
-     * 
-     * @param pspec the #GParamSpec of a property installed on the class of `object`.
-     */
-    notify_by_pspec(pspec: GObject.ParamSpec): void
-    /**
-     * Increases the reference count of `object`.
-     * 
-     * Since GLib 2.56, if `GLIB_VERSION_MAX_ALLOWED` is 2.56 or greater, the type
-     * of `object` will be propagated to the return type (using the GCC typeof()
-     * extension), so any casting the caller needs to do on the return type must be
-     * explicit.
-     */
-    ref(): GObject.Object
-    /**
-     * Increase the reference count of `object,` and possibly remove the
-     * [floating][floating-ref] reference, if `object` has a floating reference.
-     * 
-     * In other words, if the object is floating, then this call "assumes
-     * ownership" of the floating reference, converting it to a normal
-     * reference by clearing the floating flag while leaving the reference
-     * count unchanged.  If the object is not floating, then this call
-     * adds a new normal reference increasing the reference count by one.
-     * 
-     * Since GLib 2.56, the type of `object` will be propagated to the return type
-     * under the same conditions as for g_object_ref().
-     */
-    ref_sink(): GObject.Object
-    /**
-     * Releases all references to other objects. This can be used to break
-     * reference cycles.
-     * 
-     * This function should only be called from object system implementations.
-     */
-    run_dispose(): void
-    /**
-     * Each object carries around a table of associations from
-     * strings to pointers.  This function lets you set an association.
-     * 
-     * If the object already had an association with that name,
-     * the old association will be destroyed.
-     * 
-     * Internally, the `key` is converted to a #GQuark using g_quark_from_string().
-     * This means a copy of `key` is kept permanently (even after `object` has been
-     * finalized) — so it is recommended to only use a small, bounded set of values
-     * for `key` in your program, to avoid the #GQuark storage growing unbounded.
-     * @param key name of the key
-     * @param data data to associate with that key
-     */
-    set_data(key: string, data: object | null): void
-    /**
-     * Sets a property on an object.
-     * @param property_name the name of the property to set
-     * @param value the value
-     */
-    set_property(property_name: string, value: any): void
-    /**
-     * Remove a specified datum from the object's data associations,
-     * without invoking the association's destroy handler.
-     * @param key name of the key
-     */
-    steal_data(key: string): object | null
-    /**
-     * This function gets back user data pointers stored via
-     * g_object_set_qdata() and removes the `data` from object
-     * without invoking its destroy() function (if any was
-     * set).
-     * Usually, calling this function is only required to update
-     * user data pointers with a destroy notifier, for example:
-     * 
-     * ```c
-     * void
-     * object_add_to_user_list (GObject     *object,
-     *                          const gchar *new_string)
-     * {
-     *   // the quark, naming the object data
-     *   GQuark quark_string_list = g_quark_from_static_string ("my-string-list");
-     *   // retrieve the old string list
-     *   GList *list = g_object_steal_qdata (object, quark_string_list);
-     * 
-     *   // prepend new string
-     *   list = g_list_prepend (list, g_strdup (new_string));
-     *   // this changed 'list', so we need to set it again
-     *   g_object_set_qdata_full (object, quark_string_list, list, free_string_list);
-     * }
-     * static void
-     * free_string_list (gpointer data)
-     * {
-     *   GList *node, *list = data;
-     * 
-     *   for (node = list; node; node = node->next)
-     *     g_free (node->data);
-     *   g_list_free (list);
-     * }
-     * ```
-     * 
-     * Using g_object_get_qdata() in the above example, instead of
-     * g_object_steal_qdata() would have left the destroy function set,
-     * and thus the partial string list would have been freed upon
-     * g_object_set_qdata_full().
-     * @param quark A #GQuark, naming the user data pointer
-     */
-    steal_qdata(quark: GLib.Quark): object | null
-    /**
-     * Reverts the effect of a previous call to
-     * g_object_freeze_notify(). The freeze count is decreased on `object`
-     * and when it reaches zero, queued "notify" signals are emitted.
-     * 
-     * Duplicate notifications for each property are squashed so that at most one
-     * #GObject::notify signal is emitted for each property, in the reverse order
-     * in which they have been queued.
-     * 
-     * It is an error to call this function when the freeze count is zero.
-     */
-    thaw_notify(): void
-    /**
-     * Decreases the reference count of `object`. When its reference count
-     * drops to 0, the object is finalized (i.e. its memory is freed).
-     * 
-     * If the pointer to the #GObject may be reused in future (for example, if it is
-     * an instance variable of another object), it is recommended to clear the
-     * pointer to %NULL rather than retain a dangling pointer to a potentially
-     * invalid #GObject instance. Use g_clear_object() for this.
-     */
-    unref(): void
-    /**
-     * This function essentially limits the life time of the `closure` to
-     * the life time of the object. That is, when the object is finalized,
-     * the `closure` is invalidated by calling g_closure_invalidate() on
-     * it, in order to prevent invocations of the closure with a finalized
-     * (nonexisting) object. Also, g_object_ref() and g_object_unref() are
-     * added as marshal guards to the `closure,` to ensure that an extra
-     * reference count is held on `object` during invocation of the
-     * `closure`.  Usually, this function will be called on closures that
-     * use this `object` as closure data.
-     * @param closure #GClosure to watch
-     */
-    watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -4856,7 +4909,42 @@ class DragSurface {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Surface */
+    /* Extended signals of GObject-2.0.GObject.Object */
+    /**
+     * The notify signal is emitted on an object when one of its properties has
+     * its value set through g_object_set_property(), g_object_set(), et al.
+     * 
+     * Note that getting this signal doesn’t itself guarantee that the value of
+     * the property has actually changed. When it is emitted is determined by the
+     * derived GObject class. If the implementor did not create the property with
+     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
+     * in ::notify being emitted, even if the new value is the same as the old.
+     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
+     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
+     * and common practice is to do that only when the value has actually changed.
+     * 
+     * This signal is typically used to obtain change notification for a
+     * single property, by specifying the property name as a detail in the
+     * g_signal_connect() call, like this:
+     * 
+     * 
+     * ```c
+     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
+     *                   G_CALLBACK (gtk_text_view_target_list_notify),
+     *                   text_view)
+     * ```
+     * 
+     * 
+     * It is important to note that you must use
+     * [canonical parameter names][canonical-parameter-names] as
+     * detail strings for the notify signal.
+     * @signal 
+     * @param pspec the #GParamSpec of the property which changed.
+     */
+    connect(sigName: "notify", callback: (($obj: DragSurface, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify", callback: (($obj: DragSurface, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify", pspec: GObject.ParamSpec): void
+    /* Implemented signals of Gdk-4.0.Gdk.Surface */
     /**
      * Emitted when `surface` starts being present on the monitor.
      * @signal 
@@ -4902,41 +4990,6 @@ class DragSurface {
     connect(sigName: "render", callback: (($obj: DragSurface, region: cairo.Region) => boolean)): number
     connect_after(sigName: "render", callback: (($obj: DragSurface, region: cairo.Region) => boolean)): number
     emit(sigName: "render", region: cairo.Region): void
-    /* Signals of GObject-2.0.GObject.Object */
-    /**
-     * The notify signal is emitted on an object when one of its properties has
-     * its value set through g_object_set_property(), g_object_set(), et al.
-     * 
-     * Note that getting this signal doesn’t itself guarantee that the value of
-     * the property has actually changed. When it is emitted is determined by the
-     * derived GObject class. If the implementor did not create the property with
-     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
-     * in ::notify being emitted, even if the new value is the same as the old.
-     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
-     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
-     * and common practice is to do that only when the value has actually changed.
-     * 
-     * This signal is typically used to obtain change notification for a
-     * single property, by specifying the property name as a detail in the
-     * g_signal_connect() call, like this:
-     * 
-     * 
-     * ```c
-     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
-     *                   G_CALLBACK (gtk_text_view_target_list_notify),
-     *                   text_view)
-     * ```
-     * 
-     * 
-     * It is important to note that you must use
-     * [canonical parameter names][canonical-parameter-names] as
-     * detail strings for the notify signal.
-     * @signal 
-     * @param pspec the #GParamSpec of the property which changed.
-     */
-    connect(sigName: "notify", callback: (($obj: DragSurface, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify", callback: (($obj: DragSurface, pspec: GObject.ParamSpec) => void)): number
-    emit(sigName: "notify", pspec: GObject.ParamSpec): void
     connect(sigName: "notify::cursor", callback: (($obj: DragSurface, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::cursor", callback: (($obj: DragSurface, pspec: GObject.ParamSpec) => void)): number
     connect(sigName: "notify::display", callback: (($obj: DragSurface, pspec: GObject.ParamSpec) => void)): number
@@ -4958,7 +5011,12 @@ class DragSurface {
     static name: string
     constructor (config?: DragSurface_ConstructProps)
     _init (config?: DragSurface_ConstructProps): void
+    /* Static methods and pseudo-constructors */
+    static new_popup(parent: Surface, autohide: boolean): DragSurface
+    static new_toplevel(display: Display): DragSurface
     static $gtype: GObject.GType<DragSurface>
+}
+interface Paintable_ConstructProps extends GObject.Object_ConstructProps {
 }
 /**
  * `GdkPaintable` is a simple interface used by GTK to represent content that
@@ -5009,7 +5067,9 @@ class DragSurface {
  * @interface 
  */
 class Paintable {
-    /* Methods of Gdk-4.0.Gdk.Paintable */
+    /* Extended fields of GObject-2.0.GObject.Object */
+    g_type_instance: GObject.TypeInstance
+    /* Owm methods of Gdk-4.0.Gdk.Paintable */
     /**
      * Compute a concrete size for the `GdkPaintable`.
      * 
@@ -5127,476 +5187,7 @@ class Paintable {
      * @param height height to snapshot in
      */
     snapshot(snapshot: Snapshot, width: number, height: number): void
-    /* Virtual methods of Gdk-4.0.Gdk.Paintable */
-    /**
-     * Gets an immutable paintable for the current contents displayed by `paintable`.
-     * 
-     * This is useful when you want to retain the current state of an animation,
-     * for example to take a screenshot of a running animation.
-     * 
-     * If the `paintable` is already immutable, it will return itself.
-     * @virtual 
-     */
-    vfunc_get_current_image(): Paintable
-    /**
-     * Get flags for the paintable.
-     * 
-     * This is oftentimes useful for optimizations.
-     * 
-     * See [flags`Gdk`.PaintableFlags] for the flags and what they mean.
-     * @virtual 
-     */
-    vfunc_get_flags(): PaintableFlags
-    /**
-     * Gets the preferred aspect ratio the `paintable` would like to be displayed at.
-     * 
-     * The aspect ratio is the width divided by the height, so a value of 0.5
-     * means that the `paintable` prefers to be displayed twice as high as it
-     * is wide. Consumers of this interface can use this to preserve aspect
-     * ratio when displaying the paintable.
-     * 
-     * This is a purely informational value and does not in any way limit the
-     * values that may be passed to [method`Gdk`.Paintable.snapshot].
-     * 
-     * Usually when a `paintable` returns nonzero values from
-     * [method`Gdk`.Paintable.get_intrinsic_width] and
-     * [method`Gdk`.Paintable.get_intrinsic_height] the aspect ratio
-     * should conform to those values, though that is not required.
-     * 
-     * If the `paintable` does not have a preferred aspect ratio,
-     * it returns 0. Negative values are never returned.
-     * @virtual 
-     */
-    vfunc_get_intrinsic_aspect_ratio(): number
-    /**
-     * Gets the preferred height the `paintable` would like to be displayed at.
-     * 
-     * Consumers of this interface can use this to reserve enough space to draw
-     * the paintable.
-     * 
-     * This is a purely informational value and does not in any way limit the
-     * values that may be passed to [method`Gdk`.Paintable.snapshot].
-     * 
-     * If the `paintable` does not have a preferred height, it returns 0.
-     * Negative values are never returned.
-     * @virtual 
-     */
-    vfunc_get_intrinsic_height(): number
-    /**
-     * Gets the preferred width the `paintable` would like to be displayed at.
-     * 
-     * Consumers of this interface can use this to reserve enough space to draw
-     * the paintable.
-     * 
-     * This is a purely informational value and does not in any way limit the
-     * values that may be passed to [method`Gdk`.Paintable.snapshot].
-     * 
-     * If the `paintable` does not have a preferred width, it returns 0.
-     * Negative values are never returned.
-     * @virtual 
-     */
-    vfunc_get_intrinsic_width(): number
-    /**
-     * Snapshots the given paintable with the given `width` and `height`.
-     * 
-     * The paintable is drawn at the current (0,0) offset of the `snapshot`.
-     * If `width` and `height` are not larger than zero, this function will
-     * do nothing.
-     * @virtual 
-     * @param snapshot a `GdkSnapshot` to snapshot to
-     * @param width width to snapshot in
-     * @param height height to snapshot in
-     */
-    vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
-    /* Signals of Gdk-4.0.Gdk.Paintable */
-    /**
-     * Emitted when the contents of the `paintable` change.
-     * 
-     * Examples for such an event would be videos changing to the next frame or
-     * the icon theme for an icon changing.
-     * @signal 
-     */
-    connect(sigName: "invalidate-contents", callback: (($obj: Paintable) => void)): number
-    connect_after(sigName: "invalidate-contents", callback: (($obj: Paintable) => void)): number
-    emit(sigName: "invalidate-contents"): void
-    /**
-     * Emitted when the intrinsic size of the `paintable` changes.
-     * 
-     * This means the values reported by at least one of
-     * [method`Gdk`.Paintable.get_intrinsic_width],
-     * [method`Gdk`.Paintable.get_intrinsic_height] or
-     * [method`Gdk`.Paintable.get_intrinsic_aspect_ratio]
-     * has changed.
-     * 
-     * Examples for such an event would be a paintable displaying
-     * the contents of a toplevel surface being resized.
-     * @signal 
-     */
-    connect(sigName: "invalidate-size", callback: (($obj: Paintable) => void)): number
-    connect_after(sigName: "invalidate-size", callback: (($obj: Paintable) => void)): number
-    emit(sigName: "invalidate-size"): void
-    static name: string
-    /* Static methods and pseudo-constructors */
-    /**
-     * Returns a paintable that has the given intrinsic size and draws nothing.
-     * 
-     * This is often useful for implementing the
-     * [vfunc`Gdk`.Paintable.get_current_image] virtual function
-     * when the paintable is in an incomplete state (like a
-     * [class`Gtk`.MediaStream] before receiving the first frame).
-     * @param intrinsic_width The intrinsic width to report. Can be 0 for no width.
-     * @param intrinsic_height The intrinsic height to report. Can be 0 for no height.
-     */
-    static new_empty(intrinsic_width: number, intrinsic_height: number): Paintable
-}
-interface Popup_ConstructProps extends Surface_ConstructProps {
-    /* Constructor properties of Gdk-4.0.Gdk.Popup */
-    /**
-     * Whether to hide on outside clicks.
-     */
-    autohide?: boolean | null
-    /**
-     * The parent surface.
-     */
-    parent?: Surface | null
-}
-/**
- * A `GdkPopup` is a surface that is attached to another surface.
- * 
- * The `GdkPopup` is positioned relative to its parent surface.
- * 
- * `GdkPopup`s are typically used to implement menus and similar popups.
- * They can be modal, which is indicated by the [property`GdkPopup:`autohide]
- * property.
- * @interface 
- */
-class Popup {
-    /* Properties of Gdk-4.0.Gdk.Popup */
-    /**
-     * Whether to hide on outside clicks.
-     */
-    readonly autohide: boolean
-    /**
-     * The parent surface.
-     */
-    readonly parent: Surface
-    /* Properties of Gdk-4.0.Gdk.Surface */
-    /**
-     * The mouse pointer for the `GdkSurface`.
-     */
-    cursor: Cursor
-    /**
-     * The `GdkDisplay` connection of the surface.
-     */
-    readonly display: Display
-    /**
-     * The `GdkFrameClock` of the surface.
-     */
-    readonly frame_clock: FrameClock
-    /**
-     * The height of the surface, in pixels.
-     */
-    readonly height: number
-    /**
-     * Whether the surface is mapped.
-     */
-    readonly mapped: boolean
-    /**
-     * The scale factor of the surface.
-     */
-    readonly scale_factor: number
-    /**
-     * The width of the surface in pixels.
-     */
-    readonly width: number
-    /* Fields of GObject-2.0.GObject.Object */
-    g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Popup */
-    /**
-     * Returns whether this popup is set to hide on outside clicks.
-     */
-    get_autohide(): boolean
-    /**
-     * Returns the parent surface of a popup.
-     */
-    get_parent(): Surface | null
-    /**
-     * Obtains the position of the popup relative to its parent.
-     */
-    get_position_x(): number
-    /**
-     * Obtains the position of the popup relative to its parent.
-     */
-    get_position_y(): number
-    /**
-     * Gets the current popup rectangle anchor.
-     * 
-     * The value returned may change after calling [method`Gdk`.Popup.present],
-     * or after the [signal`Gdk`.Surface::layout] signal is emitted.
-     */
-    get_rect_anchor(): Gravity
-    /**
-     * Gets the current popup surface anchor.
-     * 
-     * The value returned may change after calling [method`Gdk`.Popup.present],
-     * or after the [signal`Gdk`.Surface::layout] signal is emitted.
-     */
-    get_surface_anchor(): Gravity
-    /**
-     * Present `popup` after having processed the `GdkPopupLayout` rules.
-     * 
-     * If the popup was previously now showing, it will be showed,
-     * otherwise it will change position according to `layout`.
-     * 
-     * After calling this function, the result should be handled in response
-     * to the [signal`GdkSurface:`:layout] signal being emitted. The resulting
-     * popup position can be queried using [method`Gdk`.Popup.get_position_x],
-     * [method`Gdk`.Popup.get_position_y], and the resulting size will be sent as
-     * parameters in the layout signal. Use [method`Gdk`.Popup.get_rect_anchor]
-     * and [method`Gdk`.Popup.get_surface_anchor] to get the resulting anchors.
-     * 
-     * Presenting may fail, for example if the `popup` is set to autohide
-     * and is immediately hidden upon being presented. If presenting failed,
-     * the [signal`Gdk`.Surface::layout] signal will not me emitted.
-     * @param width the unconstrained popup width to layout
-     * @param height the unconstrained popup height to layout
-     * @param layout the `GdkPopupLayout` object used to layout
-     */
-    present(width: number, height: number, layout: PopupLayout): boolean
-    /* Methods of Gdk-4.0.Gdk.Surface */
-    /**
-     * Emits a short beep associated to `surface`.
-     * 
-     * If the display of `surface` does not support per-surface beeps,
-     * emits a short beep on the display just as [method`Gdk`.Display.beep].
-     */
-    beep(): void
-    /**
-     * Creates a new `GdkCairoContext` for rendering on `surface`.
-     */
-    create_cairo_context(): CairoContext
-    /**
-     * Creates a new `GdkGLContext` for the `GdkSurface`.
-     * 
-     * The context is disconnected from any particular surface or surface.
-     * If the creation of the `GdkGLContext` failed, `error` will be set.
-     * Before using the returned `GdkGLContext`, you will need to
-     * call [method`Gdk`.GLContext.make_current] or [method`Gdk`.GLContext.realize].
-     */
-    create_gl_context(): GLContext
-    /**
-     * Create a new Cairo surface that is as compatible as possible with the
-     * given `surface`.
-     * 
-     * For example the new surface will have the same fallback resolution
-     * and font options as `surface`. Generally, the new surface will also
-     * use the same backend as `surface,` unless that is not possible for
-     * some reason. The type of the returned surface may be examined with
-     * cairo_surface_get_type().
-     * 
-     * Initially the surface contents are all 0 (transparent if contents
-     * have transparency, black otherwise.)
-     * 
-     * This function always returns a valid pointer, but it will return a
-     * pointer to a “nil” surface if `other` is already in an error state
-     * or any other error occurs.
-     * @param content the content for the new surface
-     * @param width width of the new surface
-     * @param height height of the new surface
-     */
-    create_similar_surface(content: cairo.Content, width: number, height: number): cairo.Surface
-    /**
-     * Creates a new `GdkVulkanContext` for rendering on `surface`.
-     * 
-     * If the creation of the `GdkVulkanContext` failed, `error` will be set.
-     */
-    create_vulkan_context(): VulkanContext
-    /**
-     * Destroys the window system resources associated with `surface` and
-     * decrements `surface'`s reference count.
-     * 
-     * The window system resources for all children of `surface` are also
-     * destroyed, but the children’s reference counts are not decremented.
-     * 
-     * Note that a surface will not be destroyed automatically when its
-     * reference count reaches zero. You must call this function yourself
-     * before that happens.
-     */
-    destroy(): void
-    /**
-     * Retrieves a `GdkCursor` pointer for the cursor currently set on the
-     * `GdkSurface`.
-     * 
-     * If the return value is %NULL then there is no custom cursor set on
-     * the surface, and it is using the cursor for its parent surface.
-     * 
-     * Use [method`Gdk`.Surface.set_cursor] to unset the cursor of the surface.
-     */
-    get_cursor(): Cursor | null
-    /**
-     * Retrieves a `GdkCursor` pointer for the `device` currently set on the
-     * specified `GdkSurface`.
-     * 
-     * If the return value is %NULL then there is no custom cursor set on the
-     * specified surface, and it is using the cursor for its parent surface.
-     * 
-     * Use [method`Gdk`.Surface.set_cursor] to unset the cursor of the surface.
-     * @param device a pointer `GdkDevice`
-     */
-    get_device_cursor(device: Device): Cursor | null
-    /**
-     * Obtains the current device position and modifier state.
-     * 
-     * The position is given in coordinates relative to the upper
-     * left corner of `surface`.
-     * @param device pointer `GdkDevice` to query to
-     */
-    get_device_position(device: Device): [ /* returnType */ boolean, /* x */ number, /* y */ number, /* mask */ ModifierType ]
-    /**
-     * Gets the `GdkDisplay` associated with a `GdkSurface`.
-     */
-    get_display(): Display
-    /**
-     * Gets the frame clock for the surface.
-     * 
-     * The frame clock for a surface never changes unless the surface is
-     * reparented to a new toplevel surface.
-     */
-    get_frame_clock(): FrameClock
-    /**
-     * Returns the height of the given `surface`.
-     * 
-     * Surface size is reported in ”application pixels”, not
-     * ”device pixels” (see [method`Gdk`.Surface.get_scale_factor]).
-     */
-    get_height(): number
-    /**
-     * Checks whether the surface has been mapped.
-     * 
-     * A surface is mapped with [method`Gdk`.Toplevel.present]
-     * or [method`Gdk`.Popup.present].
-     */
-    get_mapped(): boolean
-    /**
-     * Returns the internal scale factor that maps from surface coordinates
-     * to the actual device pixels.
-     * 
-     * On traditional systems this is 1, but on very high density outputs
-     * this can be a higher value (often 2). A higher value means that drawing
-     * is automatically scaled up to a higher resolution, so any code doing
-     * drawing will automatically look nicer. However, if you are supplying
-     * pixel-based data the scale value can be used to determine whether to
-     * use a pixel resource with higher resolution data.
-     * 
-     * The scale of a surface may change during runtime.
-     */
-    get_scale_factor(): number
-    /**
-     * Returns the width of the given `surface`.
-     * 
-     * Surface size is reported in ”application pixels”, not
-     * ”device pixels” (see [method`Gdk`.Surface.get_scale_factor]).
-     */
-    get_width(): number
-    /**
-     * Hide the surface.
-     * 
-     * For toplevel surfaces, withdraws them, so they will no longer be
-     * known to the window manager; for all surfaces, unmaps them, so
-     * they won’t be displayed. Normally done automatically as
-     * part of [method`Gtk`.Widget.hide].
-     */
-    hide(): void
-    /**
-     * Check to see if a surface is destroyed.
-     */
-    is_destroyed(): boolean
-    /**
-     * Forces a [signal`Gdk`.Surface::render] signal emission for `surface`
-     * to be scheduled.
-     * 
-     * This function is useful for implementations that track invalid
-     * regions on their own.
-     */
-    queue_render(): void
-    /**
-     * Request a layout phase from the surface's frame clock.
-     * 
-     * See [method`Gdk`.FrameClock.request_phase].
-     */
-    request_layout(): void
-    /**
-     * Sets the default mouse pointer for a `GdkSurface`.
-     * 
-     * Passing %NULL for the `cursor` argument means that `surface` will use
-     * the cursor of its parent surface. Most surfaces should use this default.
-     * Note that `cursor` must be for the same display as `surface`.
-     * 
-     * Use [ctor`Gdk`.Cursor.new_from_name] or [ctor`Gdk`.Cursor.new_from_texture]
-     * to create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
-     * @param cursor a `GdkCursor`
-     */
-    set_cursor(cursor: Cursor | null): void
-    /**
-     * Sets a specific `GdkCursor` for a given device when it gets inside `surface`.
-     * 
-     * Passing %NULL for the `cursor` argument means that `surface` will use the
-     * cursor of its parent surface. Most surfaces should use this default.
-     * 
-     * Use [ctor`Gdk`.Cursor.new_from_name] or [ctor`Gdk`.Cursor.new_from_texture]
-     * to create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
-     * @param device a pointer `GdkDevice`
-     * @param cursor a `GdkCursor`
-     */
-    set_device_cursor(device: Device, cursor: Cursor): void
-    /**
-     * Apply the region to the surface for the purpose of event
-     * handling.
-     * 
-     * Mouse events which happen while the pointer position corresponds
-     * to an unset bit in the mask will be passed on the surface below
-     * `surface`.
-     * 
-     * An input region is typically used with RGBA surfaces. The alpha
-     * channel of the surface defines which pixels are invisible and
-     * allows for nicely antialiased borders, and the input region
-     * controls where the surface is “clickable”.
-     * 
-     * Use [method`Gdk`.Display.supports_input_shapes] to find out if
-     * a particular backend supports input regions.
-     * @param region region of surface to be reactive
-     */
-    set_input_region(region: cairo.Region): void
-    /**
-     * Marks a region of the `GdkSurface` as opaque.
-     * 
-     * For optimisation purposes, compositing window managers may
-     * like to not draw obscured regions of surfaces, or turn off blending
-     * during for these regions. With RGB windows with no transparency,
-     * this is just the shape of the window, but with ARGB32 windows, the
-     * compositor does not know what regions of the window are transparent
-     * or not.
-     * 
-     * This function only works for toplevel surfaces.
-     * 
-     * GTK will update this property automatically if the `surface` background
-     * is opaque, as we know where the opaque regions are. If your surface
-     * background is not opaque, please update this property in your
-     * [vfunc`Gtk`.Widget.css_changed] handler.
-     * @param region a region, or %NULL to make the entire   surface opaque
-     */
-    set_opaque_region(region: cairo.Region | null): void
-    /**
-     * Translates coordinates between two surfaces.
-     * 
-     * Note that this only works if `to` and `from` are popups or
-     * transient-for to the same toplevel (directly or indirectly).
-     * @param to the target surface
-     * @param x coordinates to translate
-     * @param y coordinates to translate
-     */
-    translate_coordinates(to: Surface, x: number, y: number): [ /* returnType */ boolean, /* x */ number, /* y */ number ]
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -5910,7 +5501,88 @@ class Popup {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Own virtual methods of Gdk-4.0.Gdk.Paintable */
+    /**
+     * Gets an immutable paintable for the current contents displayed by `paintable`.
+     * 
+     * This is useful when you want to retain the current state of an animation,
+     * for example to take a screenshot of a running animation.
+     * 
+     * If the `paintable` is already immutable, it will return itself.
+     * @virtual 
+     */
+    vfunc_get_current_image(): Paintable
+    /**
+     * Get flags for the paintable.
+     * 
+     * This is oftentimes useful for optimizations.
+     * 
+     * See [flags`Gdk`.PaintableFlags] for the flags and what they mean.
+     * @virtual 
+     */
+    vfunc_get_flags(): PaintableFlags
+    /**
+     * Gets the preferred aspect ratio the `paintable` would like to be displayed at.
+     * 
+     * The aspect ratio is the width divided by the height, so a value of 0.5
+     * means that the `paintable` prefers to be displayed twice as high as it
+     * is wide. Consumers of this interface can use this to preserve aspect
+     * ratio when displaying the paintable.
+     * 
+     * This is a purely informational value and does not in any way limit the
+     * values that may be passed to [method`Gdk`.Paintable.snapshot].
+     * 
+     * Usually when a `paintable` returns nonzero values from
+     * [method`Gdk`.Paintable.get_intrinsic_width] and
+     * [method`Gdk`.Paintable.get_intrinsic_height] the aspect ratio
+     * should conform to those values, though that is not required.
+     * 
+     * If the `paintable` does not have a preferred aspect ratio,
+     * it returns 0. Negative values are never returned.
+     * @virtual 
+     */
+    vfunc_get_intrinsic_aspect_ratio(): number
+    /**
+     * Gets the preferred height the `paintable` would like to be displayed at.
+     * 
+     * Consumers of this interface can use this to reserve enough space to draw
+     * the paintable.
+     * 
+     * This is a purely informational value and does not in any way limit the
+     * values that may be passed to [method`Gdk`.Paintable.snapshot].
+     * 
+     * If the `paintable` does not have a preferred height, it returns 0.
+     * Negative values are never returned.
+     * @virtual 
+     */
+    vfunc_get_intrinsic_height(): number
+    /**
+     * Gets the preferred width the `paintable` would like to be displayed at.
+     * 
+     * Consumers of this interface can use this to reserve enough space to draw
+     * the paintable.
+     * 
+     * This is a purely informational value and does not in any way limit the
+     * values that may be passed to [method`Gdk`.Paintable.snapshot].
+     * 
+     * If the `paintable` does not have a preferred width, it returns 0.
+     * Negative values are never returned.
+     * @virtual 
+     */
+    vfunc_get_intrinsic_width(): number
+    /**
+     * Snapshots the given paintable with the given `width` and `height`.
+     * 
+     * The paintable is drawn at the current (0,0) offset of the `snapshot`.
+     * If `width` and `height` are not larger than zero, this function will
+     * do nothing.
+     * @virtual 
+     * @param snapshot a `GdkSnapshot` to snapshot to
+     * @param width width to snapshot in
+     * @param height height to snapshot in
+     */
+    vfunc_snapshot(snapshot: Snapshot, width: number, height: number): void
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -5932,7 +5604,821 @@ class Popup {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Surface */
+    /* Own signals of Gdk-4.0.Gdk.Paintable */
+    /**
+     * Emitted when the contents of the `paintable` change.
+     * 
+     * Examples for such an event would be videos changing to the next frame or
+     * the icon theme for an icon changing.
+     * @signal 
+     */
+    connect(sigName: "invalidate-contents", callback: (($obj: Paintable) => void)): number
+    connect_after(sigName: "invalidate-contents", callback: (($obj: Paintable) => void)): number
+    emit(sigName: "invalidate-contents"): void
+    /**
+     * Emitted when the intrinsic size of the `paintable` changes.
+     * 
+     * This means the values reported by at least one of
+     * [method`Gdk`.Paintable.get_intrinsic_width],
+     * [method`Gdk`.Paintable.get_intrinsic_height] or
+     * [method`Gdk`.Paintable.get_intrinsic_aspect_ratio]
+     * has changed.
+     * 
+     * Examples for such an event would be a paintable displaying
+     * the contents of a toplevel surface being resized.
+     * @signal 
+     */
+    connect(sigName: "invalidate-size", callback: (($obj: Paintable) => void)): number
+    connect_after(sigName: "invalidate-size", callback: (($obj: Paintable) => void)): number
+    emit(sigName: "invalidate-size"): void
+    /* Extended signals of GObject-2.0.GObject.Object */
+    /**
+     * The notify signal is emitted on an object when one of its properties has
+     * its value set through g_object_set_property(), g_object_set(), et al.
+     * 
+     * Note that getting this signal doesn’t itself guarantee that the value of
+     * the property has actually changed. When it is emitted is determined by the
+     * derived GObject class. If the implementor did not create the property with
+     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
+     * in ::notify being emitted, even if the new value is the same as the old.
+     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
+     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
+     * and common practice is to do that only when the value has actually changed.
+     * 
+     * This signal is typically used to obtain change notification for a
+     * single property, by specifying the property name as a detail in the
+     * g_signal_connect() call, like this:
+     * 
+     * 
+     * ```c
+     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
+     *                   G_CALLBACK (gtk_text_view_target_list_notify),
+     *                   text_view)
+     * ```
+     * 
+     * 
+     * It is important to note that you must use
+     * [canonical parameter names][canonical-parameter-names] as
+     * detail strings for the notify signal.
+     * @signal 
+     * @param pspec the #GParamSpec of the property which changed.
+     */
+    connect(sigName: "notify", callback: (($obj: Paintable, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify", callback: (($obj: Paintable, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify", pspec: GObject.ParamSpec): void
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
+    emit(sigName: string, ...args: any[]): void
+    disconnect(id: number): void
+    static name: string
+    constructor (config?: Paintable_ConstructProps)
+    _init (config?: Paintable_ConstructProps): void
+    /* Static methods and pseudo-constructors */
+    /**
+     * Returns a paintable that has the given intrinsic size and draws nothing.
+     * 
+     * This is often useful for implementing the
+     * [vfunc`Gdk`.Paintable.get_current_image] virtual function
+     * when the paintable is in an incomplete state (like a
+     * [class`Gtk`.MediaStream] before receiving the first frame).
+     * @param intrinsic_width The intrinsic width to report. Can be 0 for no width.
+     * @param intrinsic_height The intrinsic height to report. Can be 0 for no height.
+     */
+    static new_empty(intrinsic_width: number, intrinsic_height: number): Paintable
+    static $gtype: GObject.GType<Paintable>
+}
+interface Popup_ConstructProps extends GObject.Object_ConstructProps {
+    /* Constructor properties of Gdk-4.0.Gdk.Popup */
+    /**
+     * Whether to hide on outside clicks.
+     */
+    autohide?: boolean | null
+    /**
+     * The parent surface.
+     */
+    parent?: Surface | null
+    /* Implemented constructor properties of Gdk-4.0.Gdk.Surface */
+    /**
+     * The mouse pointer for the `GdkSurface`.
+     */
+    cursor?: Cursor | null
+    /**
+     * The `GdkDisplay` connection of the surface.
+     */
+    display?: Display | null
+    /**
+     * The `GdkFrameClock` of the surface.
+     */
+    frame_clock?: FrameClock | null
+}
+/**
+ * A `GdkPopup` is a surface that is attached to another surface.
+ * 
+ * The `GdkPopup` is positioned relative to its parent surface.
+ * 
+ * `GdkPopup`s are typically used to implement menus and similar popups.
+ * They can be modal, which is indicated by the [property`GdkPopup:`autohide]
+ * property.
+ * @interface 
+ */
+class Popup {
+    /* Own properties of Gdk-4.0.Gdk.Popup */
+    /**
+     * Whether to hide on outside clicks.
+     */
+    readonly autohide: boolean
+    /**
+     * The parent surface.
+     */
+    readonly parent: Surface
+    /* Implemented properties of Gdk-4.0.Gdk.Surface */
+    /**
+     * The mouse pointer for the `GdkSurface`.
+     */
+    cursor: Cursor
+    /**
+     * The `GdkDisplay` connection of the surface.
+     */
+    readonly display: Display
+    /**
+     * The `GdkFrameClock` of the surface.
+     */
+    readonly frame_clock: FrameClock
+    /**
+     * The height of the surface, in pixels.
+     */
+    readonly height: number
+    /**
+     * Whether the surface is mapped.
+     */
+    readonly mapped: boolean
+    /**
+     * The scale factor of the surface.
+     */
+    readonly scale_factor: number
+    /**
+     * The width of the surface in pixels.
+     */
+    readonly width: number
+    /* Extended fields of GObject-2.0.GObject.Object */
+    g_type_instance: GObject.TypeInstance
+    /* Owm methods of Gdk-4.0.Gdk.Popup */
+    /**
+     * Returns whether this popup is set to hide on outside clicks.
+     */
+    get_autohide(): boolean
+    /**
+     * Returns the parent surface of a popup.
+     */
+    get_parent(): Surface | null
+    /**
+     * Obtains the position of the popup relative to its parent.
+     */
+    get_position_x(): number
+    /**
+     * Obtains the position of the popup relative to its parent.
+     */
+    get_position_y(): number
+    /**
+     * Gets the current popup rectangle anchor.
+     * 
+     * The value returned may change after calling [method`Gdk`.Popup.present],
+     * or after the [signal`Gdk`.Surface::layout] signal is emitted.
+     */
+    get_rect_anchor(): Gravity
+    /**
+     * Gets the current popup surface anchor.
+     * 
+     * The value returned may change after calling [method`Gdk`.Popup.present],
+     * or after the [signal`Gdk`.Surface::layout] signal is emitted.
+     */
+    get_surface_anchor(): Gravity
+    /**
+     * Present `popup` after having processed the `GdkPopupLayout` rules.
+     * 
+     * If the popup was previously now showing, it will be showed,
+     * otherwise it will change position according to `layout`.
+     * 
+     * After calling this function, the result should be handled in response
+     * to the [signal`GdkSurface:`:layout] signal being emitted. The resulting
+     * popup position can be queried using [method`Gdk`.Popup.get_position_x],
+     * [method`Gdk`.Popup.get_position_y], and the resulting size will be sent as
+     * parameters in the layout signal. Use [method`Gdk`.Popup.get_rect_anchor]
+     * and [method`Gdk`.Popup.get_surface_anchor] to get the resulting anchors.
+     * 
+     * Presenting may fail, for example if the `popup` is set to autohide
+     * and is immediately hidden upon being presented. If presenting failed,
+     * the [signal`Gdk`.Surface::layout] signal will not me emitted.
+     * @param width the unconstrained popup width to layout
+     * @param height the unconstrained popup height to layout
+     * @param layout the `GdkPopupLayout` object used to layout
+     */
+    present(width: number, height: number, layout: PopupLayout): boolean
+    /* Extended methods of GObject-2.0.GObject.Object */
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target`.
+     * 
+     * Whenever the `source_property` is changed the `target_property` is
+     * updated using the same value. For instance:
+     * 
+     * 
+     * ```c
+     *   g_object_bind_property (action, "active", widget, "sensitive", 0);
+     * ```
+     * 
+     * 
+     * Will result in the "sensitive" property of the widget #GObject instance to be
+     * updated with the same value of the "active" property of the action #GObject
+     * instance.
+     * 
+     * If `flags` contains %G_BINDING_BIDIRECTIONAL then the binding will be mutual:
+     * if `target_property` on `target` changes then the `source_property` on `source`
+     * will be updated as well.
+     * 
+     * The binding will automatically be removed when either the `source` or the
+     * `target` instances are finalized. To remove the binding without affecting the
+     * `source` and the `target` you can just call g_object_unref() on the returned
+     * #GBinding instance.
+     * 
+     * Removing the binding by calling g_object_unref() on it must only be done if
+     * the binding, `source` and `target` are only used from a single thread and it
+     * is clear that both `source` and `target` outlive the binding. Especially it
+     * is not safe to rely on this if the binding, `source` or `target` can be
+     * finalized from different threads. Keep another reference to the binding and
+     * use g_binding_unbind() instead to be on the safe side.
+     * 
+     * A #GObject can have multiple bindings.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     */
+    bind_property(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags): GObject.Binding
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target,` allowing you to set the transformation functions to be used by
+     * the binding.
+     * 
+     * This function is the language bindings friendly version of
+     * g_object_bind_property_full(), using #GClosures instead of
+     * function pointers.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     * @param transform_to a #GClosure wrapping the transformation function     from the `source` to the `target,` or %NULL to use the default
+     * @param transform_from a #GClosure wrapping the transformation function     from the `target` to the `source,` or %NULL to use the default
+     */
+    bind_property_full(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags, transform_to: GObject.TClosure, transform_from: GObject.TClosure): GObject.Binding
+    /**
+     * This function is intended for #GObject implementations to re-enforce
+     * a [floating][floating-ref] object reference. Doing this is seldom
+     * required: all #GInitiallyUnowneds are created with a floating reference
+     * which usually just needs to be sunken by calling g_object_ref_sink().
+     */
+    force_floating(): void
+    /**
+     * Increases the freeze count on `object`. If the freeze count is
+     * non-zero, the emission of "notify" signals on `object` is
+     * stopped. The signals are queued until the freeze count is decreased
+     * to zero. Duplicate notifications are squashed so that at most one
+     * #GObject::notify signal is emitted for each property modified while the
+     * object is frozen.
+     * 
+     * This is necessary for accessors that modify multiple properties to prevent
+     * premature notification while the object is still being modified.
+     */
+    freeze_notify(): void
+    /**
+     * Gets a named field from the objects table of associations (see g_object_set_data()).
+     * @param key name of the key for that association
+     */
+    get_data(key: string): object | null
+    /**
+     * Gets a property of an object.
+     * 
+     * The `value` can be:
+     * 
+     *  - an empty #GValue initialized by %G_VALUE_INIT, which will be
+     *    automatically initialized with the expected type of the property
+     *    (since GLib 2.60)
+     *  - a #GValue initialized with the expected type of the property
+     *  - a #GValue initialized with a type to which the expected type
+     *    of the property can be transformed
+     * 
+     * In general, a copy is made of the property contents and the caller is
+     * responsible for freeing the memory by calling g_value_unset().
+     * 
+     * Note that g_object_get_property() is really intended for language
+     * bindings, g_object_get() is much more convenient for C programming.
+     * @param property_name the name of the property to get
+     * @param value return location for the property value
+     */
+    get_property(property_name: string, value: any): void
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    get_qdata(quark: GLib.Quark): object | null
+    /**
+     * Gets `n_properties` properties for an `object`.
+     * Obtained properties will be set to `values`. All properties must be valid.
+     * Warnings will be emitted and undefined behaviour may result if invalid
+     * properties are passed in.
+     * @param names the names of each property to get
+     * @param values the values of each property to get
+     */
+    getv(names: string[], values: any[]): void
+    /**
+     * Checks whether `object` has a [floating][floating-ref] reference.
+     */
+    is_floating(): boolean
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @param property_name the name of a property installed on the class of `object`.
+     */
+    notify(property_name: string): void
+    /**
+     * Emits a "notify" signal for the property specified by `pspec` on `object`.
+     * 
+     * This function omits the property name lookup, hence it is faster than
+     * g_object_notify().
+     * 
+     * One way to avoid using g_object_notify() from within the
+     * class that registered the properties, and using g_object_notify_by_pspec()
+     * instead, is to store the GParamSpec used with
+     * g_object_class_install_property() inside a static array, e.g.:
+     * 
+     * 
+     * ```c
+     *   enum
+     *   {
+     *     PROP_0,
+     *     PROP_FOO,
+     *     PROP_LAST
+     *   };
+     * 
+     *   static GParamSpec *properties[PROP_LAST];
+     * 
+     *   static void
+     *   my_object_class_init (MyObjectClass *klass)
+     *   {
+     *     properties[PROP_FOO] = g_param_spec_int ("foo", "Foo", "The foo",
+     *                                              0, 100,
+     *                                              50,
+     *                                              G_PARAM_READWRITE);
+     *     g_object_class_install_property (gobject_class,
+     *                                      PROP_FOO,
+     *                                      properties[PROP_FOO]);
+     *   }
+     * ```
+     * 
+     * 
+     * and then notify a change on the "foo" property with:
+     * 
+     * 
+     * ```c
+     *   g_object_notify_by_pspec (self, properties[PROP_FOO]);
+     * ```
+     * 
+     * @param pspec the #GParamSpec of a property installed on the class of `object`.
+     */
+    notify_by_pspec(pspec: GObject.ParamSpec): void
+    /**
+     * Increases the reference count of `object`.
+     * 
+     * Since GLib 2.56, if `GLIB_VERSION_MAX_ALLOWED` is 2.56 or greater, the type
+     * of `object` will be propagated to the return type (using the GCC typeof()
+     * extension), so any casting the caller needs to do on the return type must be
+     * explicit.
+     */
+    ref(): GObject.Object
+    /**
+     * Increase the reference count of `object,` and possibly remove the
+     * [floating][floating-ref] reference, if `object` has a floating reference.
+     * 
+     * In other words, if the object is floating, then this call "assumes
+     * ownership" of the floating reference, converting it to a normal
+     * reference by clearing the floating flag while leaving the reference
+     * count unchanged.  If the object is not floating, then this call
+     * adds a new normal reference increasing the reference count by one.
+     * 
+     * Since GLib 2.56, the type of `object` will be propagated to the return type
+     * under the same conditions as for g_object_ref().
+     */
+    ref_sink(): GObject.Object
+    /**
+     * Releases all references to other objects. This can be used to break
+     * reference cycles.
+     * 
+     * This function should only be called from object system implementations.
+     */
+    run_dispose(): void
+    /**
+     * Each object carries around a table of associations from
+     * strings to pointers.  This function lets you set an association.
+     * 
+     * If the object already had an association with that name,
+     * the old association will be destroyed.
+     * 
+     * Internally, the `key` is converted to a #GQuark using g_quark_from_string().
+     * This means a copy of `key` is kept permanently (even after `object` has been
+     * finalized) — so it is recommended to only use a small, bounded set of values
+     * for `key` in your program, to avoid the #GQuark storage growing unbounded.
+     * @param key name of the key
+     * @param data data to associate with that key
+     */
+    set_data(key: string, data: object | null): void
+    /**
+     * Sets a property on an object.
+     * @param property_name the name of the property to set
+     * @param value the value
+     */
+    set_property(property_name: string, value: any): void
+    /**
+     * Remove a specified datum from the object's data associations,
+     * without invoking the association's destroy handler.
+     * @param key name of the key
+     */
+    steal_data(key: string): object | null
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata() and removes the `data` from object
+     * without invoking its destroy() function (if any was
+     * set).
+     * Usually, calling this function is only required to update
+     * user data pointers with a destroy notifier, for example:
+     * 
+     * ```c
+     * void
+     * object_add_to_user_list (GObject     *object,
+     *                          const gchar *new_string)
+     * {
+     *   // the quark, naming the object data
+     *   GQuark quark_string_list = g_quark_from_static_string ("my-string-list");
+     *   // retrieve the old string list
+     *   GList *list = g_object_steal_qdata (object, quark_string_list);
+     * 
+     *   // prepend new string
+     *   list = g_list_prepend (list, g_strdup (new_string));
+     *   // this changed 'list', so we need to set it again
+     *   g_object_set_qdata_full (object, quark_string_list, list, free_string_list);
+     * }
+     * static void
+     * free_string_list (gpointer data)
+     * {
+     *   GList *node, *list = data;
+     * 
+     *   for (node = list; node; node = node->next)
+     *     g_free (node->data);
+     *   g_list_free (list);
+     * }
+     * ```
+     * 
+     * Using g_object_get_qdata() in the above example, instead of
+     * g_object_steal_qdata() would have left the destroy function set,
+     * and thus the partial string list would have been freed upon
+     * g_object_set_qdata_full().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    steal_qdata(quark: GLib.Quark): object | null
+    /**
+     * Reverts the effect of a previous call to
+     * g_object_freeze_notify(). The freeze count is decreased on `object`
+     * and when it reaches zero, queued "notify" signals are emitted.
+     * 
+     * Duplicate notifications for each property are squashed so that at most one
+     * #GObject::notify signal is emitted for each property, in the reverse order
+     * in which they have been queued.
+     * 
+     * It is an error to call this function when the freeze count is zero.
+     */
+    thaw_notify(): void
+    /**
+     * Decreases the reference count of `object`. When its reference count
+     * drops to 0, the object is finalized (i.e. its memory is freed).
+     * 
+     * If the pointer to the #GObject may be reused in future (for example, if it is
+     * an instance variable of another object), it is recommended to clear the
+     * pointer to %NULL rather than retain a dangling pointer to a potentially
+     * invalid #GObject instance. Use g_clear_object() for this.
+     */
+    unref(): void
+    /**
+     * This function essentially limits the life time of the `closure` to
+     * the life time of the object. That is, when the object is finalized,
+     * the `closure` is invalidated by calling g_closure_invalidate() on
+     * it, in order to prevent invocations of the closure with a finalized
+     * (nonexisting) object. Also, g_object_ref() and g_object_unref() are
+     * added as marshal guards to the `closure,` to ensure that an extra
+     * reference count is held on `object` during invocation of the
+     * `closure`.  Usually, this function will be called on closures that
+     * use this `object` as closure data.
+     * @param closure #GClosure to watch
+     */
+    watch_closure(closure: GObject.TClosure): void
+    /* Implemented methods of Gdk-4.0.Gdk.Surface */
+    /**
+     * Emits a short beep associated to `surface`.
+     * 
+     * If the display of `surface` does not support per-surface beeps,
+     * emits a short beep on the display just as [method`Gdk`.Display.beep].
+     */
+    beep(): void
+    /**
+     * Creates a new `GdkCairoContext` for rendering on `surface`.
+     */
+    create_cairo_context(): CairoContext
+    /**
+     * Creates a new `GdkGLContext` for the `GdkSurface`.
+     * 
+     * The context is disconnected from any particular surface or surface.
+     * If the creation of the `GdkGLContext` failed, `error` will be set.
+     * Before using the returned `GdkGLContext`, you will need to
+     * call [method`Gdk`.GLContext.make_current] or [method`Gdk`.GLContext.realize].
+     */
+    create_gl_context(): GLContext
+    /**
+     * Create a new Cairo surface that is as compatible as possible with the
+     * given `surface`.
+     * 
+     * For example the new surface will have the same fallback resolution
+     * and font options as `surface`. Generally, the new surface will also
+     * use the same backend as `surface,` unless that is not possible for
+     * some reason. The type of the returned surface may be examined with
+     * cairo_surface_get_type().
+     * 
+     * Initially the surface contents are all 0 (transparent if contents
+     * have transparency, black otherwise.)
+     * 
+     * This function always returns a valid pointer, but it will return a
+     * pointer to a “nil” surface if `other` is already in an error state
+     * or any other error occurs.
+     * @param content the content for the new surface
+     * @param width width of the new surface
+     * @param height height of the new surface
+     */
+    create_similar_surface(content: cairo.Content, width: number, height: number): cairo.Surface
+    /**
+     * Creates a new `GdkVulkanContext` for rendering on `surface`.
+     * 
+     * If the creation of the `GdkVulkanContext` failed, `error` will be set.
+     */
+    create_vulkan_context(): VulkanContext
+    /**
+     * Destroys the window system resources associated with `surface` and
+     * decrements `surface'`s reference count.
+     * 
+     * The window system resources for all children of `surface` are also
+     * destroyed, but the children’s reference counts are not decremented.
+     * 
+     * Note that a surface will not be destroyed automatically when its
+     * reference count reaches zero. You must call this function yourself
+     * before that happens.
+     */
+    destroy(): void
+    /**
+     * Retrieves a `GdkCursor` pointer for the cursor currently set on the
+     * `GdkSurface`.
+     * 
+     * If the return value is %NULL then there is no custom cursor set on
+     * the surface, and it is using the cursor for its parent surface.
+     * 
+     * Use [method`Gdk`.Surface.set_cursor] to unset the cursor of the surface.
+     */
+    get_cursor(): Cursor | null
+    /**
+     * Retrieves a `GdkCursor` pointer for the `device` currently set on the
+     * specified `GdkSurface`.
+     * 
+     * If the return value is %NULL then there is no custom cursor set on the
+     * specified surface, and it is using the cursor for its parent surface.
+     * 
+     * Use [method`Gdk`.Surface.set_cursor] to unset the cursor of the surface.
+     * @param device a pointer `GdkDevice`
+     */
+    get_device_cursor(device: Device): Cursor | null
+    /**
+     * Obtains the current device position and modifier state.
+     * 
+     * The position is given in coordinates relative to the upper
+     * left corner of `surface`.
+     * @param device pointer `GdkDevice` to query to
+     */
+    get_device_position(device: Device): [ /* returnType */ boolean, /* x */ number, /* y */ number, /* mask */ ModifierType ]
+    /**
+     * Gets the `GdkDisplay` associated with a `GdkSurface`.
+     */
+    get_display(): Display
+    /**
+     * Gets the frame clock for the surface.
+     * 
+     * The frame clock for a surface never changes unless the surface is
+     * reparented to a new toplevel surface.
+     */
+    get_frame_clock(): FrameClock
+    /**
+     * Returns the height of the given `surface`.
+     * 
+     * Surface size is reported in ”application pixels”, not
+     * ”device pixels” (see [method`Gdk`.Surface.get_scale_factor]).
+     */
+    get_height(): number
+    /**
+     * Checks whether the surface has been mapped.
+     * 
+     * A surface is mapped with [method`Gdk`.Toplevel.present]
+     * or [method`Gdk`.Popup.present].
+     */
+    get_mapped(): boolean
+    /**
+     * Returns the internal scale factor that maps from surface coordinates
+     * to the actual device pixels.
+     * 
+     * On traditional systems this is 1, but on very high density outputs
+     * this can be a higher value (often 2). A higher value means that drawing
+     * is automatically scaled up to a higher resolution, so any code doing
+     * drawing will automatically look nicer. However, if you are supplying
+     * pixel-based data the scale value can be used to determine whether to
+     * use a pixel resource with higher resolution data.
+     * 
+     * The scale of a surface may change during runtime.
+     */
+    get_scale_factor(): number
+    /**
+     * Returns the width of the given `surface`.
+     * 
+     * Surface size is reported in ”application pixels”, not
+     * ”device pixels” (see [method`Gdk`.Surface.get_scale_factor]).
+     */
+    get_width(): number
+    /**
+     * Hide the surface.
+     * 
+     * For toplevel surfaces, withdraws them, so they will no longer be
+     * known to the window manager; for all surfaces, unmaps them, so
+     * they won’t be displayed. Normally done automatically as
+     * part of [method`Gtk`.Widget.hide].
+     */
+    hide(): void
+    /**
+     * Check to see if a surface is destroyed.
+     */
+    is_destroyed(): boolean
+    /**
+     * Forces a [signal`Gdk`.Surface::render] signal emission for `surface`
+     * to be scheduled.
+     * 
+     * This function is useful for implementations that track invalid
+     * regions on their own.
+     */
+    queue_render(): void
+    /**
+     * Request a layout phase from the surface's frame clock.
+     * 
+     * See [method`Gdk`.FrameClock.request_phase].
+     */
+    request_layout(): void
+    /**
+     * Sets the default mouse pointer for a `GdkSurface`.
+     * 
+     * Passing %NULL for the `cursor` argument means that `surface` will use
+     * the cursor of its parent surface. Most surfaces should use this default.
+     * Note that `cursor` must be for the same display as `surface`.
+     * 
+     * Use [ctor`Gdk`.Cursor.new_from_name] or [ctor`Gdk`.Cursor.new_from_texture]
+     * to create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
+     * @param cursor a `GdkCursor`
+     */
+    set_cursor(cursor: Cursor | null): void
+    /**
+     * Sets a specific `GdkCursor` for a given device when it gets inside `surface`.
+     * 
+     * Passing %NULL for the `cursor` argument means that `surface` will use the
+     * cursor of its parent surface. Most surfaces should use this default.
+     * 
+     * Use [ctor`Gdk`.Cursor.new_from_name] or [ctor`Gdk`.Cursor.new_from_texture]
+     * to create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
+     * @param device a pointer `GdkDevice`
+     * @param cursor a `GdkCursor`
+     */
+    set_device_cursor(device: Device, cursor: Cursor): void
+    /**
+     * Apply the region to the surface for the purpose of event
+     * handling.
+     * 
+     * Mouse events which happen while the pointer position corresponds
+     * to an unset bit in the mask will be passed on the surface below
+     * `surface`.
+     * 
+     * An input region is typically used with RGBA surfaces. The alpha
+     * channel of the surface defines which pixels are invisible and
+     * allows for nicely antialiased borders, and the input region
+     * controls where the surface is “clickable”.
+     * 
+     * Use [method`Gdk`.Display.supports_input_shapes] to find out if
+     * a particular backend supports input regions.
+     * @param region region of surface to be reactive
+     */
+    set_input_region(region: cairo.Region): void
+    /**
+     * Marks a region of the `GdkSurface` as opaque.
+     * 
+     * For optimisation purposes, compositing window managers may
+     * like to not draw obscured regions of surfaces, or turn off blending
+     * during for these regions. With RGB windows with no transparency,
+     * this is just the shape of the window, but with ARGB32 windows, the
+     * compositor does not know what regions of the window are transparent
+     * or not.
+     * 
+     * This function only works for toplevel surfaces.
+     * 
+     * GTK will update this property automatically if the `surface` background
+     * is opaque, as we know where the opaque regions are. If your surface
+     * background is not opaque, please update this property in your
+     * [vfunc`Gtk`.Widget.css_changed] handler.
+     * @param region a region, or %NULL to make the entire   surface opaque
+     */
+    set_opaque_region(region: cairo.Region | null): void
+    /**
+     * Translates coordinates between two surfaces.
+     * 
+     * Note that this only works if `to` and `from` are popups or
+     * transient-for to the same toplevel (directly or indirectly).
+     * @param to the target surface
+     * @param x coordinates to translate
+     * @param y coordinates to translate
+     */
+    translate_coordinates(to: Surface, x: number, y: number): [ /* returnType */ boolean, /* x */ number, /* y */ number ]
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
+    vfunc_constructed(): void
+    vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
+    vfunc_dispose(): void
+    vfunc_finalize(): void
+    vfunc_get_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @virtual 
+     * @param pspec 
+     */
+    vfunc_notify(pspec: GObject.ParamSpec): void
+    vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
+    /* Extended signals of GObject-2.0.GObject.Object */
+    /**
+     * The notify signal is emitted on an object when one of its properties has
+     * its value set through g_object_set_property(), g_object_set(), et al.
+     * 
+     * Note that getting this signal doesn’t itself guarantee that the value of
+     * the property has actually changed. When it is emitted is determined by the
+     * derived GObject class. If the implementor did not create the property with
+     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
+     * in ::notify being emitted, even if the new value is the same as the old.
+     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
+     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
+     * and common practice is to do that only when the value has actually changed.
+     * 
+     * This signal is typically used to obtain change notification for a
+     * single property, by specifying the property name as a detail in the
+     * g_signal_connect() call, like this:
+     * 
+     * 
+     * ```c
+     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
+     *                   G_CALLBACK (gtk_text_view_target_list_notify),
+     *                   text_view)
+     * ```
+     * 
+     * 
+     * It is important to note that you must use
+     * [canonical parameter names][canonical-parameter-names] as
+     * detail strings for the notify signal.
+     * @signal 
+     * @param pspec the #GParamSpec of the property which changed.
+     */
+    connect(sigName: "notify", callback: (($obj: Popup, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify", callback: (($obj: Popup, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify", pspec: GObject.ParamSpec): void
+    /* Implemented signals of Gdk-4.0.Gdk.Surface */
     /**
      * Emitted when `surface` starts being present on the monitor.
      * @signal 
@@ -5978,41 +6464,6 @@ class Popup {
     connect(sigName: "render", callback: (($obj: Popup, region: cairo.Region) => boolean)): number
     connect_after(sigName: "render", callback: (($obj: Popup, region: cairo.Region) => boolean)): number
     emit(sigName: "render", region: cairo.Region): void
-    /* Signals of GObject-2.0.GObject.Object */
-    /**
-     * The notify signal is emitted on an object when one of its properties has
-     * its value set through g_object_set_property(), g_object_set(), et al.
-     * 
-     * Note that getting this signal doesn’t itself guarantee that the value of
-     * the property has actually changed. When it is emitted is determined by the
-     * derived GObject class. If the implementor did not create the property with
-     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
-     * in ::notify being emitted, even if the new value is the same as the old.
-     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
-     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
-     * and common practice is to do that only when the value has actually changed.
-     * 
-     * This signal is typically used to obtain change notification for a
-     * single property, by specifying the property name as a detail in the
-     * g_signal_connect() call, like this:
-     * 
-     * 
-     * ```c
-     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
-     *                   G_CALLBACK (gtk_text_view_target_list_notify),
-     *                   text_view)
-     * ```
-     * 
-     * 
-     * It is important to note that you must use
-     * [canonical parameter names][canonical-parameter-names] as
-     * detail strings for the notify signal.
-     * @signal 
-     * @param pspec the #GParamSpec of the property which changed.
-     */
-    connect(sigName: "notify", callback: (($obj: Popup, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify", callback: (($obj: Popup, pspec: GObject.ParamSpec) => void)): number
-    emit(sigName: "notify", pspec: GObject.ParamSpec): void
     connect(sigName: "notify::autohide", callback: (($obj: Popup, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::autohide", callback: (($obj: Popup, pspec: GObject.ParamSpec) => void)): number
     connect(sigName: "notify::parent", callback: (($obj: Popup, pspec: GObject.ParamSpec) => void)): number
@@ -6038,9 +6489,12 @@ class Popup {
     static name: string
     constructor (config?: Popup_ConstructProps)
     _init (config?: Popup_ConstructProps): void
+    /* Static methods and pseudo-constructors */
+    static new_popup(parent: Surface, autohide: boolean): Popup
+    static new_toplevel(display: Display): Popup
     static $gtype: GObject.GType<Popup>
 }
-interface Toplevel_ConstructProps extends Surface_ConstructProps {
+interface Toplevel_ConstructProps extends GObject.Object_ConstructProps {
     /* Constructor properties of Gdk-4.0.Gdk.Toplevel */
     /**
      * Whether the window manager should add decorations.
@@ -6077,6 +6531,19 @@ interface Toplevel_ConstructProps extends Surface_ConstructProps {
      * The transient parent of the surface.
      */
     transient_for?: Surface | null
+    /* Implemented constructor properties of Gdk-4.0.Gdk.Surface */
+    /**
+     * The mouse pointer for the `GdkSurface`.
+     */
+    cursor?: Cursor | null
+    /**
+     * The `GdkDisplay` connection of the surface.
+     */
+    display?: Display | null
+    /**
+     * The `GdkFrameClock` of the surface.
+     */
+    frame_clock?: FrameClock | null
 }
 /**
  * A `GdkToplevel` is a freestanding toplevel surface.
@@ -6087,7 +6554,7 @@ interface Toplevel_ConstructProps extends Surface_ConstructProps {
  * @interface 
  */
 class Toplevel {
-    /* Properties of Gdk-4.0.Gdk.Toplevel */
+    /* Own properties of Gdk-4.0.Gdk.Toplevel */
     /**
      * Whether the window manager should add decorations.
      */
@@ -6131,7 +6598,7 @@ class Toplevel {
      * The transient parent of the surface.
      */
     transient_for: Surface
-    /* Properties of Gdk-4.0.Gdk.Surface */
+    /* Implemented properties of Gdk-4.0.Gdk.Surface */
     /**
      * The mouse pointer for the `GdkSurface`.
      */
@@ -6160,9 +6627,9 @@ class Toplevel {
      * The width of the surface in pixels.
      */
     readonly width: number
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Toplevel */
+    /* Owm methods of Gdk-4.0.Gdk.Toplevel */
     /**
      * Begins an interactive move operation.
      * 
@@ -6347,7 +6814,321 @@ class Toplevel {
      */
     supports_edge_constraints(): boolean
     titlebar_gesture(gesture: TitlebarGesture): boolean
-    /* Methods of Gdk-4.0.Gdk.Surface */
+    /* Extended methods of GObject-2.0.GObject.Object */
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target`.
+     * 
+     * Whenever the `source_property` is changed the `target_property` is
+     * updated using the same value. For instance:
+     * 
+     * 
+     * ```c
+     *   g_object_bind_property (action, "active", widget, "sensitive", 0);
+     * ```
+     * 
+     * 
+     * Will result in the "sensitive" property of the widget #GObject instance to be
+     * updated with the same value of the "active" property of the action #GObject
+     * instance.
+     * 
+     * If `flags` contains %G_BINDING_BIDIRECTIONAL then the binding will be mutual:
+     * if `target_property` on `target` changes then the `source_property` on `source`
+     * will be updated as well.
+     * 
+     * The binding will automatically be removed when either the `source` or the
+     * `target` instances are finalized. To remove the binding without affecting the
+     * `source` and the `target` you can just call g_object_unref() on the returned
+     * #GBinding instance.
+     * 
+     * Removing the binding by calling g_object_unref() on it must only be done if
+     * the binding, `source` and `target` are only used from a single thread and it
+     * is clear that both `source` and `target` outlive the binding. Especially it
+     * is not safe to rely on this if the binding, `source` or `target` can be
+     * finalized from different threads. Keep another reference to the binding and
+     * use g_binding_unbind() instead to be on the safe side.
+     * 
+     * A #GObject can have multiple bindings.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     */
+    bind_property(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags): GObject.Binding
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target,` allowing you to set the transformation functions to be used by
+     * the binding.
+     * 
+     * This function is the language bindings friendly version of
+     * g_object_bind_property_full(), using #GClosures instead of
+     * function pointers.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     * @param transform_to a #GClosure wrapping the transformation function     from the `source` to the `target,` or %NULL to use the default
+     * @param transform_from a #GClosure wrapping the transformation function     from the `target` to the `source,` or %NULL to use the default
+     */
+    bind_property_full(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags, transform_to: GObject.TClosure, transform_from: GObject.TClosure): GObject.Binding
+    /**
+     * This function is intended for #GObject implementations to re-enforce
+     * a [floating][floating-ref] object reference. Doing this is seldom
+     * required: all #GInitiallyUnowneds are created with a floating reference
+     * which usually just needs to be sunken by calling g_object_ref_sink().
+     */
+    force_floating(): void
+    /**
+     * Increases the freeze count on `object`. If the freeze count is
+     * non-zero, the emission of "notify" signals on `object` is
+     * stopped. The signals are queued until the freeze count is decreased
+     * to zero. Duplicate notifications are squashed so that at most one
+     * #GObject::notify signal is emitted for each property modified while the
+     * object is frozen.
+     * 
+     * This is necessary for accessors that modify multiple properties to prevent
+     * premature notification while the object is still being modified.
+     */
+    freeze_notify(): void
+    /**
+     * Gets a named field from the objects table of associations (see g_object_set_data()).
+     * @param key name of the key for that association
+     */
+    get_data(key: string): object | null
+    /**
+     * Gets a property of an object.
+     * 
+     * The `value` can be:
+     * 
+     *  - an empty #GValue initialized by %G_VALUE_INIT, which will be
+     *    automatically initialized with the expected type of the property
+     *    (since GLib 2.60)
+     *  - a #GValue initialized with the expected type of the property
+     *  - a #GValue initialized with a type to which the expected type
+     *    of the property can be transformed
+     * 
+     * In general, a copy is made of the property contents and the caller is
+     * responsible for freeing the memory by calling g_value_unset().
+     * 
+     * Note that g_object_get_property() is really intended for language
+     * bindings, g_object_get() is much more convenient for C programming.
+     * @param property_name the name of the property to get
+     * @param value return location for the property value
+     */
+    get_property(property_name: string, value: any): void
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    get_qdata(quark: GLib.Quark): object | null
+    /**
+     * Gets `n_properties` properties for an `object`.
+     * Obtained properties will be set to `values`. All properties must be valid.
+     * Warnings will be emitted and undefined behaviour may result if invalid
+     * properties are passed in.
+     * @param names the names of each property to get
+     * @param values the values of each property to get
+     */
+    getv(names: string[], values: any[]): void
+    /**
+     * Checks whether `object` has a [floating][floating-ref] reference.
+     */
+    is_floating(): boolean
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @param property_name the name of a property installed on the class of `object`.
+     */
+    notify(property_name: string): void
+    /**
+     * Emits a "notify" signal for the property specified by `pspec` on `object`.
+     * 
+     * This function omits the property name lookup, hence it is faster than
+     * g_object_notify().
+     * 
+     * One way to avoid using g_object_notify() from within the
+     * class that registered the properties, and using g_object_notify_by_pspec()
+     * instead, is to store the GParamSpec used with
+     * g_object_class_install_property() inside a static array, e.g.:
+     * 
+     * 
+     * ```c
+     *   enum
+     *   {
+     *     PROP_0,
+     *     PROP_FOO,
+     *     PROP_LAST
+     *   };
+     * 
+     *   static GParamSpec *properties[PROP_LAST];
+     * 
+     *   static void
+     *   my_object_class_init (MyObjectClass *klass)
+     *   {
+     *     properties[PROP_FOO] = g_param_spec_int ("foo", "Foo", "The foo",
+     *                                              0, 100,
+     *                                              50,
+     *                                              G_PARAM_READWRITE);
+     *     g_object_class_install_property (gobject_class,
+     *                                      PROP_FOO,
+     *                                      properties[PROP_FOO]);
+     *   }
+     * ```
+     * 
+     * 
+     * and then notify a change on the "foo" property with:
+     * 
+     * 
+     * ```c
+     *   g_object_notify_by_pspec (self, properties[PROP_FOO]);
+     * ```
+     * 
+     * @param pspec the #GParamSpec of a property installed on the class of `object`.
+     */
+    notify_by_pspec(pspec: GObject.ParamSpec): void
+    /**
+     * Increases the reference count of `object`.
+     * 
+     * Since GLib 2.56, if `GLIB_VERSION_MAX_ALLOWED` is 2.56 or greater, the type
+     * of `object` will be propagated to the return type (using the GCC typeof()
+     * extension), so any casting the caller needs to do on the return type must be
+     * explicit.
+     */
+    ref(): GObject.Object
+    /**
+     * Increase the reference count of `object,` and possibly remove the
+     * [floating][floating-ref] reference, if `object` has a floating reference.
+     * 
+     * In other words, if the object is floating, then this call "assumes
+     * ownership" of the floating reference, converting it to a normal
+     * reference by clearing the floating flag while leaving the reference
+     * count unchanged.  If the object is not floating, then this call
+     * adds a new normal reference increasing the reference count by one.
+     * 
+     * Since GLib 2.56, the type of `object` will be propagated to the return type
+     * under the same conditions as for g_object_ref().
+     */
+    ref_sink(): GObject.Object
+    /**
+     * Releases all references to other objects. This can be used to break
+     * reference cycles.
+     * 
+     * This function should only be called from object system implementations.
+     */
+    run_dispose(): void
+    /**
+     * Each object carries around a table of associations from
+     * strings to pointers.  This function lets you set an association.
+     * 
+     * If the object already had an association with that name,
+     * the old association will be destroyed.
+     * 
+     * Internally, the `key` is converted to a #GQuark using g_quark_from_string().
+     * This means a copy of `key` is kept permanently (even after `object` has been
+     * finalized) — so it is recommended to only use a small, bounded set of values
+     * for `key` in your program, to avoid the #GQuark storage growing unbounded.
+     * @param key name of the key
+     * @param data data to associate with that key
+     */
+    set_data(key: string, data: object | null): void
+    /**
+     * Sets a property on an object.
+     * @param property_name the name of the property to set
+     * @param value the value
+     */
+    set_property(property_name: string, value: any): void
+    /**
+     * Remove a specified datum from the object's data associations,
+     * without invoking the association's destroy handler.
+     * @param key name of the key
+     */
+    steal_data(key: string): object | null
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata() and removes the `data` from object
+     * without invoking its destroy() function (if any was
+     * set).
+     * Usually, calling this function is only required to update
+     * user data pointers with a destroy notifier, for example:
+     * 
+     * ```c
+     * void
+     * object_add_to_user_list (GObject     *object,
+     *                          const gchar *new_string)
+     * {
+     *   // the quark, naming the object data
+     *   GQuark quark_string_list = g_quark_from_static_string ("my-string-list");
+     *   // retrieve the old string list
+     *   GList *list = g_object_steal_qdata (object, quark_string_list);
+     * 
+     *   // prepend new string
+     *   list = g_list_prepend (list, g_strdup (new_string));
+     *   // this changed 'list', so we need to set it again
+     *   g_object_set_qdata_full (object, quark_string_list, list, free_string_list);
+     * }
+     * static void
+     * free_string_list (gpointer data)
+     * {
+     *   GList *node, *list = data;
+     * 
+     *   for (node = list; node; node = node->next)
+     *     g_free (node->data);
+     *   g_list_free (list);
+     * }
+     * ```
+     * 
+     * Using g_object_get_qdata() in the above example, instead of
+     * g_object_steal_qdata() would have left the destroy function set,
+     * and thus the partial string list would have been freed upon
+     * g_object_set_qdata_full().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    steal_qdata(quark: GLib.Quark): object | null
+    /**
+     * Reverts the effect of a previous call to
+     * g_object_freeze_notify(). The freeze count is decreased on `object`
+     * and when it reaches zero, queued "notify" signals are emitted.
+     * 
+     * Duplicate notifications for each property are squashed so that at most one
+     * #GObject::notify signal is emitted for each property, in the reverse order
+     * in which they have been queued.
+     * 
+     * It is an error to call this function when the freeze count is zero.
+     */
+    thaw_notify(): void
+    /**
+     * Decreases the reference count of `object`. When its reference count
+     * drops to 0, the object is finalized (i.e. its memory is freed).
+     * 
+     * If the pointer to the #GObject may be reused in future (for example, if it is
+     * an instance variable of another object), it is recommended to clear the
+     * pointer to %NULL rather than retain a dangling pointer to a potentially
+     * invalid #GObject instance. Use g_clear_object() for this.
+     */
+    unref(): void
+    /**
+     * This function essentially limits the life time of the `closure` to
+     * the life time of the object. That is, when the object is finalized,
+     * the `closure` is invalidated by calling g_closure_invalidate() on
+     * it, in order to prevent invocations of the closure with a finalized
+     * (nonexisting) object. Also, g_object_ref() and g_object_unref() are
+     * added as marshal guards to the `closure,` to ensure that an extra
+     * reference count is held on `object` during invocation of the
+     * `closure`.  Usually, this function will be called on closures that
+     * use this `object` as closure data.
+     * @param closure #GClosure to watch
+     */
+    watch_closure(closure: GObject.TClosure): void
+    /* Implemented methods of Gdk-4.0.Gdk.Surface */
     /**
      * Emits a short beep associated to `surface`.
      * 
@@ -6580,321 +7361,7 @@ class Toplevel {
      * @param y coordinates to translate
      */
     translate_coordinates(to: Surface, x: number, y: number): [ /* returnType */ boolean, /* x */ number, /* y */ number ]
-    /* Methods of GObject-2.0.GObject.Object */
-    /**
-     * Creates a binding between `source_property` on `source` and `target_property`
-     * on `target`.
-     * 
-     * Whenever the `source_property` is changed the `target_property` is
-     * updated using the same value. For instance:
-     * 
-     * 
-     * ```c
-     *   g_object_bind_property (action, "active", widget, "sensitive", 0);
-     * ```
-     * 
-     * 
-     * Will result in the "sensitive" property of the widget #GObject instance to be
-     * updated with the same value of the "active" property of the action #GObject
-     * instance.
-     * 
-     * If `flags` contains %G_BINDING_BIDIRECTIONAL then the binding will be mutual:
-     * if `target_property` on `target` changes then the `source_property` on `source`
-     * will be updated as well.
-     * 
-     * The binding will automatically be removed when either the `source` or the
-     * `target` instances are finalized. To remove the binding without affecting the
-     * `source` and the `target` you can just call g_object_unref() on the returned
-     * #GBinding instance.
-     * 
-     * Removing the binding by calling g_object_unref() on it must only be done if
-     * the binding, `source` and `target` are only used from a single thread and it
-     * is clear that both `source` and `target` outlive the binding. Especially it
-     * is not safe to rely on this if the binding, `source` or `target` can be
-     * finalized from different threads. Keep another reference to the binding and
-     * use g_binding_unbind() instead to be on the safe side.
-     * 
-     * A #GObject can have multiple bindings.
-     * @param source_property the property on `source` to bind
-     * @param target the target #GObject
-     * @param target_property the property on `target` to bind
-     * @param flags flags to pass to #GBinding
-     */
-    bind_property(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags): GObject.Binding
-    /**
-     * Creates a binding between `source_property` on `source` and `target_property`
-     * on `target,` allowing you to set the transformation functions to be used by
-     * the binding.
-     * 
-     * This function is the language bindings friendly version of
-     * g_object_bind_property_full(), using #GClosures instead of
-     * function pointers.
-     * @param source_property the property on `source` to bind
-     * @param target the target #GObject
-     * @param target_property the property on `target` to bind
-     * @param flags flags to pass to #GBinding
-     * @param transform_to a #GClosure wrapping the transformation function     from the `source` to the `target,` or %NULL to use the default
-     * @param transform_from a #GClosure wrapping the transformation function     from the `target` to the `source,` or %NULL to use the default
-     */
-    bind_property_full(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags, transform_to: GObject.TClosure, transform_from: GObject.TClosure): GObject.Binding
-    /**
-     * This function is intended for #GObject implementations to re-enforce
-     * a [floating][floating-ref] object reference. Doing this is seldom
-     * required: all #GInitiallyUnowneds are created with a floating reference
-     * which usually just needs to be sunken by calling g_object_ref_sink().
-     */
-    force_floating(): void
-    /**
-     * Increases the freeze count on `object`. If the freeze count is
-     * non-zero, the emission of "notify" signals on `object` is
-     * stopped. The signals are queued until the freeze count is decreased
-     * to zero. Duplicate notifications are squashed so that at most one
-     * #GObject::notify signal is emitted for each property modified while the
-     * object is frozen.
-     * 
-     * This is necessary for accessors that modify multiple properties to prevent
-     * premature notification while the object is still being modified.
-     */
-    freeze_notify(): void
-    /**
-     * Gets a named field from the objects table of associations (see g_object_set_data()).
-     * @param key name of the key for that association
-     */
-    get_data(key: string): object | null
-    /**
-     * Gets a property of an object.
-     * 
-     * The `value` can be:
-     * 
-     *  - an empty #GValue initialized by %G_VALUE_INIT, which will be
-     *    automatically initialized with the expected type of the property
-     *    (since GLib 2.60)
-     *  - a #GValue initialized with the expected type of the property
-     *  - a #GValue initialized with a type to which the expected type
-     *    of the property can be transformed
-     * 
-     * In general, a copy is made of the property contents and the caller is
-     * responsible for freeing the memory by calling g_value_unset().
-     * 
-     * Note that g_object_get_property() is really intended for language
-     * bindings, g_object_get() is much more convenient for C programming.
-     * @param property_name the name of the property to get
-     * @param value return location for the property value
-     */
-    get_property(property_name: string, value: any): void
-    /**
-     * This function gets back user data pointers stored via
-     * g_object_set_qdata().
-     * @param quark A #GQuark, naming the user data pointer
-     */
-    get_qdata(quark: GLib.Quark): object | null
-    /**
-     * Gets `n_properties` properties for an `object`.
-     * Obtained properties will be set to `values`. All properties must be valid.
-     * Warnings will be emitted and undefined behaviour may result if invalid
-     * properties are passed in.
-     * @param names the names of each property to get
-     * @param values the values of each property to get
-     */
-    getv(names: string[], values: any[]): void
-    /**
-     * Checks whether `object` has a [floating][floating-ref] reference.
-     */
-    is_floating(): boolean
-    /**
-     * Emits a "notify" signal for the property `property_name` on `object`.
-     * 
-     * When possible, eg. when signaling a property change from within the class
-     * that registered the property, you should use g_object_notify_by_pspec()
-     * instead.
-     * 
-     * Note that emission of the notify signal may be blocked with
-     * g_object_freeze_notify(). In this case, the signal emissions are queued
-     * and will be emitted (in reverse order) when g_object_thaw_notify() is
-     * called.
-     * @param property_name the name of a property installed on the class of `object`.
-     */
-    notify(property_name: string): void
-    /**
-     * Emits a "notify" signal for the property specified by `pspec` on `object`.
-     * 
-     * This function omits the property name lookup, hence it is faster than
-     * g_object_notify().
-     * 
-     * One way to avoid using g_object_notify() from within the
-     * class that registered the properties, and using g_object_notify_by_pspec()
-     * instead, is to store the GParamSpec used with
-     * g_object_class_install_property() inside a static array, e.g.:
-     * 
-     * 
-     * ```c
-     *   enum
-     *   {
-     *     PROP_0,
-     *     PROP_FOO,
-     *     PROP_LAST
-     *   };
-     * 
-     *   static GParamSpec *properties[PROP_LAST];
-     * 
-     *   static void
-     *   my_object_class_init (MyObjectClass *klass)
-     *   {
-     *     properties[PROP_FOO] = g_param_spec_int ("foo", "Foo", "The foo",
-     *                                              0, 100,
-     *                                              50,
-     *                                              G_PARAM_READWRITE);
-     *     g_object_class_install_property (gobject_class,
-     *                                      PROP_FOO,
-     *                                      properties[PROP_FOO]);
-     *   }
-     * ```
-     * 
-     * 
-     * and then notify a change on the "foo" property with:
-     * 
-     * 
-     * ```c
-     *   g_object_notify_by_pspec (self, properties[PROP_FOO]);
-     * ```
-     * 
-     * @param pspec the #GParamSpec of a property installed on the class of `object`.
-     */
-    notify_by_pspec(pspec: GObject.ParamSpec): void
-    /**
-     * Increases the reference count of `object`.
-     * 
-     * Since GLib 2.56, if `GLIB_VERSION_MAX_ALLOWED` is 2.56 or greater, the type
-     * of `object` will be propagated to the return type (using the GCC typeof()
-     * extension), so any casting the caller needs to do on the return type must be
-     * explicit.
-     */
-    ref(): GObject.Object
-    /**
-     * Increase the reference count of `object,` and possibly remove the
-     * [floating][floating-ref] reference, if `object` has a floating reference.
-     * 
-     * In other words, if the object is floating, then this call "assumes
-     * ownership" of the floating reference, converting it to a normal
-     * reference by clearing the floating flag while leaving the reference
-     * count unchanged.  If the object is not floating, then this call
-     * adds a new normal reference increasing the reference count by one.
-     * 
-     * Since GLib 2.56, the type of `object` will be propagated to the return type
-     * under the same conditions as for g_object_ref().
-     */
-    ref_sink(): GObject.Object
-    /**
-     * Releases all references to other objects. This can be used to break
-     * reference cycles.
-     * 
-     * This function should only be called from object system implementations.
-     */
-    run_dispose(): void
-    /**
-     * Each object carries around a table of associations from
-     * strings to pointers.  This function lets you set an association.
-     * 
-     * If the object already had an association with that name,
-     * the old association will be destroyed.
-     * 
-     * Internally, the `key` is converted to a #GQuark using g_quark_from_string().
-     * This means a copy of `key` is kept permanently (even after `object` has been
-     * finalized) — so it is recommended to only use a small, bounded set of values
-     * for `key` in your program, to avoid the #GQuark storage growing unbounded.
-     * @param key name of the key
-     * @param data data to associate with that key
-     */
-    set_data(key: string, data: object | null): void
-    /**
-     * Sets a property on an object.
-     * @param property_name the name of the property to set
-     * @param value the value
-     */
-    set_property(property_name: string, value: any): void
-    /**
-     * Remove a specified datum from the object's data associations,
-     * without invoking the association's destroy handler.
-     * @param key name of the key
-     */
-    steal_data(key: string): object | null
-    /**
-     * This function gets back user data pointers stored via
-     * g_object_set_qdata() and removes the `data` from object
-     * without invoking its destroy() function (if any was
-     * set).
-     * Usually, calling this function is only required to update
-     * user data pointers with a destroy notifier, for example:
-     * 
-     * ```c
-     * void
-     * object_add_to_user_list (GObject     *object,
-     *                          const gchar *new_string)
-     * {
-     *   // the quark, naming the object data
-     *   GQuark quark_string_list = g_quark_from_static_string ("my-string-list");
-     *   // retrieve the old string list
-     *   GList *list = g_object_steal_qdata (object, quark_string_list);
-     * 
-     *   // prepend new string
-     *   list = g_list_prepend (list, g_strdup (new_string));
-     *   // this changed 'list', so we need to set it again
-     *   g_object_set_qdata_full (object, quark_string_list, list, free_string_list);
-     * }
-     * static void
-     * free_string_list (gpointer data)
-     * {
-     *   GList *node, *list = data;
-     * 
-     *   for (node = list; node; node = node->next)
-     *     g_free (node->data);
-     *   g_list_free (list);
-     * }
-     * ```
-     * 
-     * Using g_object_get_qdata() in the above example, instead of
-     * g_object_steal_qdata() would have left the destroy function set,
-     * and thus the partial string list would have been freed upon
-     * g_object_set_qdata_full().
-     * @param quark A #GQuark, naming the user data pointer
-     */
-    steal_qdata(quark: GLib.Quark): object | null
-    /**
-     * Reverts the effect of a previous call to
-     * g_object_freeze_notify(). The freeze count is decreased on `object`
-     * and when it reaches zero, queued "notify" signals are emitted.
-     * 
-     * Duplicate notifications for each property are squashed so that at most one
-     * #GObject::notify signal is emitted for each property, in the reverse order
-     * in which they have been queued.
-     * 
-     * It is an error to call this function when the freeze count is zero.
-     */
-    thaw_notify(): void
-    /**
-     * Decreases the reference count of `object`. When its reference count
-     * drops to 0, the object is finalized (i.e. its memory is freed).
-     * 
-     * If the pointer to the #GObject may be reused in future (for example, if it is
-     * an instance variable of another object), it is recommended to clear the
-     * pointer to %NULL rather than retain a dangling pointer to a potentially
-     * invalid #GObject instance. Use g_clear_object() for this.
-     */
-    unref(): void
-    /**
-     * This function essentially limits the life time of the `closure` to
-     * the life time of the object. That is, when the object is finalized,
-     * the `closure` is invalidated by calling g_closure_invalidate() on
-     * it, in order to prevent invocations of the closure with a finalized
-     * (nonexisting) object. Also, g_object_ref() and g_object_unref() are
-     * added as marshal guards to the `closure,` to ensure that an extra
-     * reference count is held on `object` during invocation of the
-     * `closure`.  Usually, this function will be called on closures that
-     * use this `object` as closure data.
-     * @param closure #GClosure to watch
-     */
-    watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -6916,7 +7383,7 @@ class Toplevel {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Toplevel */
+    /* Own signals of Gdk-4.0.Gdk.Toplevel */
     /**
      * Emitted when the size for the surface needs to be computed, when
      * it is present.
@@ -6935,7 +7402,42 @@ class Toplevel {
     connect(sigName: "compute-size", callback: (($obj: Toplevel) => void)): number
     connect_after(sigName: "compute-size", callback: (($obj: Toplevel) => void)): number
     emit(sigName: "compute-size"): void
-    /* Signals of Gdk-4.0.Gdk.Surface */
+    /* Extended signals of GObject-2.0.GObject.Object */
+    /**
+     * The notify signal is emitted on an object when one of its properties has
+     * its value set through g_object_set_property(), g_object_set(), et al.
+     * 
+     * Note that getting this signal doesn’t itself guarantee that the value of
+     * the property has actually changed. When it is emitted is determined by the
+     * derived GObject class. If the implementor did not create the property with
+     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
+     * in ::notify being emitted, even if the new value is the same as the old.
+     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
+     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
+     * and common practice is to do that only when the value has actually changed.
+     * 
+     * This signal is typically used to obtain change notification for a
+     * single property, by specifying the property name as a detail in the
+     * g_signal_connect() call, like this:
+     * 
+     * 
+     * ```c
+     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
+     *                   G_CALLBACK (gtk_text_view_target_list_notify),
+     *                   text_view)
+     * ```
+     * 
+     * 
+     * It is important to note that you must use
+     * [canonical parameter names][canonical-parameter-names] as
+     * detail strings for the notify signal.
+     * @signal 
+     * @param pspec the #GParamSpec of the property which changed.
+     */
+    connect(sigName: "notify", callback: (($obj: Toplevel, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify", callback: (($obj: Toplevel, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify", pspec: GObject.ParamSpec): void
+    /* Implemented signals of Gdk-4.0.Gdk.Surface */
     /**
      * Emitted when `surface` starts being present on the monitor.
      * @signal 
@@ -6981,41 +7483,6 @@ class Toplevel {
     connect(sigName: "render", callback: (($obj: Toplevel, region: cairo.Region) => boolean)): number
     connect_after(sigName: "render", callback: (($obj: Toplevel, region: cairo.Region) => boolean)): number
     emit(sigName: "render", region: cairo.Region): void
-    /* Signals of GObject-2.0.GObject.Object */
-    /**
-     * The notify signal is emitted on an object when one of its properties has
-     * its value set through g_object_set_property(), g_object_set(), et al.
-     * 
-     * Note that getting this signal doesn’t itself guarantee that the value of
-     * the property has actually changed. When it is emitted is determined by the
-     * derived GObject class. If the implementor did not create the property with
-     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
-     * in ::notify being emitted, even if the new value is the same as the old.
-     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
-     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
-     * and common practice is to do that only when the value has actually changed.
-     * 
-     * This signal is typically used to obtain change notification for a
-     * single property, by specifying the property name as a detail in the
-     * g_signal_connect() call, like this:
-     * 
-     * 
-     * ```c
-     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
-     *                   G_CALLBACK (gtk_text_view_target_list_notify),
-     *                   text_view)
-     * ```
-     * 
-     * 
-     * It is important to note that you must use
-     * [canonical parameter names][canonical-parameter-names] as
-     * detail strings for the notify signal.
-     * @signal 
-     * @param pspec the #GParamSpec of the property which changed.
-     */
-    connect(sigName: "notify", callback: (($obj: Toplevel, pspec: GObject.ParamSpec) => void)): number
-    connect_after(sigName: "notify", callback: (($obj: Toplevel, pspec: GObject.ParamSpec) => void)): number
-    emit(sigName: "notify", pspec: GObject.ParamSpec): void
     connect(sigName: "notify::decorated", callback: (($obj: Toplevel, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::decorated", callback: (($obj: Toplevel, pspec: GObject.ParamSpec) => void)): number
     connect(sigName: "notify::deletable", callback: (($obj: Toplevel, pspec: GObject.ParamSpec) => void)): number
@@ -7057,6 +7524,9 @@ class Toplevel {
     static name: string
     constructor (config?: Toplevel_ConstructProps)
     _init (config?: Toplevel_ConstructProps): void
+    /* Static methods and pseudo-constructors */
+    static new_popup(parent: Surface, autohide: boolean): Toplevel
+    static new_toplevel(display: Display): Toplevel
     static $gtype: GObject.GType<Toplevel>
 }
 interface AppLaunchContext_ConstructProps extends Gio.AppLaunchContext_ConstructProps {
@@ -7088,16 +7558,16 @@ interface AppLaunchContext_ConstructProps extends Gio.AppLaunchContext_Construct
  * ```
  */
 class AppLaunchContext {
-    /* Properties of Gdk-4.0.Gdk.AppLaunchContext */
+    /* Own properties of Gdk-4.0.Gdk.AppLaunchContext */
     /**
      * The display that the `GdkAppLaunchContext` is on.
      */
     readonly display: Display
-    /* Fields of Gio-2.0.Gio.AppLaunchContext */
+    /* Extended fields of Gio-2.0.Gio.AppLaunchContext */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.AppLaunchContext */
+    /* Owm methods of Gdk-4.0.Gdk.AppLaunchContext */
     /**
      * Gets the `GdkDisplay` that `context` is for.
      */
@@ -7156,7 +7626,7 @@ class AppLaunchContext {
      * @param timestamp a timestamp
      */
     set_timestamp(timestamp: number): void
-    /* Methods of Gio-2.0.Gio.AppLaunchContext */
+    /* Extended methods of Gio-2.0.Gio.AppLaunchContext */
     /**
      * Gets the display string for the `context`. This is used to ensure new
      * applications are started on the same display as the launching
@@ -7201,7 +7671,7 @@ class AppLaunchContext {
      * @param variable the environment variable to remove
      */
     unsetenv(variable: string): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -7515,7 +7985,7 @@ class AppLaunchContext {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of Gio-2.0.Gio.AppLaunchContext */
+    /* Extended virtual methods of Gio-2.0.Gio.AppLaunchContext */
     /**
      * Gets the display string for the `context`. This is used to ensure new
      * applications are started on the same display as the launching
@@ -7545,7 +8015,7 @@ class AppLaunchContext {
     vfunc_launch_failed(startup_notify_id: string): void
     vfunc_launch_started(info: Gio.AppInfo, platform_data: GLib.Variant): void
     vfunc_launched(info: Gio.AppInfo, platform_data: GLib.Variant): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -7567,7 +8037,7 @@ class AppLaunchContext {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gio-2.0.Gio.AppLaunchContext */
+    /* Extended signals of Gio-2.0.Gio.AppLaunchContext */
     /**
      * The #GAppLaunchContext::launch-failed signal is emitted when a #GAppInfo launch
      * fails. The startup notification id is provided, so that the launcher
@@ -7617,7 +8087,7 @@ class AppLaunchContext {
     connect(sigName: "launched", callback: (($obj: AppLaunchContext, info: Gio.AppInfo, platform_data: GLib.Variant) => void)): number
     connect_after(sigName: "launched", callback: (($obj: AppLaunchContext, info: Gio.AppInfo, platform_data: GLib.Variant) => void)): number
     emit(sigName: "launched", info: Gio.AppInfo, platform_data: GLib.Variant): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -7667,12 +8137,12 @@ class AppLaunchContext {
  * An event related to a button on a pointer device.
  */
 class ButtonEvent {
-    /* Methods of Gdk-4.0.Gdk.ButtonEvent */
+    /* Owm methods of Gdk-4.0.Gdk.ButtonEvent */
     /**
      * Extract the button number from a button event.
      */
     get_button(): number
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -7823,7 +8293,7 @@ interface CairoContext_ConstructProps extends DrawContext_ConstructProps {
  * can then be used to draw on that surface.
  */
 class CairoContext {
-    /* Properties of Gdk-4.0.Gdk.DrawContext */
+    /* Extended properties of Gdk-4.0.Gdk.DrawContext */
     /**
      * The `GdkDisplay` used to create the `GdkDrawContext`.
      */
@@ -7832,9 +8302,9 @@ class CairoContext {
      * The `GdkSurface` the context is bound to.
      */
     readonly surface: Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.CairoContext */
+    /* Owm methods of Gdk-4.0.Gdk.CairoContext */
     /**
      * Retrieves a Cairo context to be used to draw on the `GdkSurface`
      * of `context`.
@@ -7846,7 +8316,7 @@ class CairoContext {
      * [method`Gdk`.DrawContext.end_frame] is called.
      */
     cairo_create(): cairo.Context | null
-    /* Methods of Gdk-4.0.Gdk.DrawContext */
+    /* Extended methods of Gdk-4.0.Gdk.DrawContext */
     /**
      * Indicates that you are beginning the process of redrawing `region`
      * on the `context'`s surface.
@@ -7913,7 +8383,7 @@ class CairoContext {
      * may be effecting the contents of the `context'`s surface.
      */
     is_in_frame(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -8227,7 +8697,7 @@ class CairoContext {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -8249,7 +8719,7 @@ class CairoContext {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -8324,7 +8794,7 @@ interface Clipboard_ConstructProps extends GObject.Object_ConstructProps {
  * [method`Gdk`.Clipboard.read_async], which provides a `GInputStream` object.
  */
 class Clipboard {
-    /* Properties of Gdk-4.0.Gdk.Clipboard */
+    /* Own properties of Gdk-4.0.Gdk.Clipboard */
     /**
      * The `GdkContentProvider` or %NULL if the clipboard is empty or contents are
      * provided otherwise.
@@ -8342,9 +8812,9 @@ class Clipboard {
      * %TRUE if the contents of the clipboard are owned by this process.
      */
     readonly local: boolean
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Clipboard */
+    /* Owm methods of Gdk-4.0.Gdk.Clipboard */
     /**
      * Returns the `GdkContentProvider` currently set on `clipboard`.
      * 
@@ -8502,7 +8972,7 @@ class Clipboard {
      * @param result a `GAsyncResult`
      */
     store_finish(result: Gio.AsyncResult): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -8816,7 +9286,7 @@ class Clipboard {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -8838,7 +9308,7 @@ class Clipboard {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Clipboard */
+    /* Own signals of Gdk-4.0.Gdk.Clipboard */
     /**
      * Emitted when the clipboard changes ownership.
      * @signal 
@@ -8846,7 +9316,7 @@ class Clipboard {
     connect(sigName: "changed", callback: (($obj: Clipboard) => void)): number
     connect_after(sigName: "changed", callback: (($obj: Clipboard) => void)): number
     emit(sigName: "changed"): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -8914,9 +9384,9 @@ interface ContentDeserializer_ConstructProps extends GObject.Object_ConstructPro
  * Also see [class`Gdk`.ContentSerializer].
  */
 class ContentDeserializer {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.ContentDeserializer */
+    /* Owm methods of Gdk-4.0.Gdk.ContentDeserializer */
     /**
      * Gets the cancellable for the current operation.
      * 
@@ -8974,7 +9444,7 @@ class ContentDeserializer {
      * @param notify destroy notify for `data`
      */
     set_task_data(data: object | null, notify: GLib.DestroyNotify): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -9288,7 +9758,7 @@ class ContentDeserializer {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Gio-2.0.Gio.AsyncResult */
+    /* Implemented methods of Gio-2.0.Gio.AsyncResult */
     /**
      * Gets the source object from a #GAsyncResult.
      */
@@ -9312,7 +9782,7 @@ class ContentDeserializer {
      * to enable subclasses to chain up correctly.
      */
     legacy_propagate_error(): boolean
-    /* Virtual methods of Gdk-4.0.Gdk.ContentDeserializer */
+    /* Own virtual methods of Gdk-4.0.Gdk.ContentDeserializer */
     /**
      * Gets the source object from a #GAsyncResult.
      * @virtual 
@@ -9330,7 +9800,7 @@ class ContentDeserializer {
      * @param source_tag an application-defined tag
      */
     vfunc_is_tagged(source_tag: object | null): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -9352,7 +9822,7 @@ class ContentDeserializer {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -9410,7 +9880,7 @@ interface ContentProvider_ConstructProps extends GObject.Object_ConstructProps {
  * to add support for application-specific data formats.
  */
 class ContentProvider {
-    /* Properties of Gdk-4.0.Gdk.ContentProvider */
+    /* Own properties of Gdk-4.0.Gdk.ContentProvider */
     /**
      * The possible formats that the provider can provide its data in.
      */
@@ -9419,11 +9889,11 @@ class ContentProvider {
      * The subset of formats that clipboard managers should store this provider's data in.
      */
     readonly storable_formats: ContentFormats
-    /* Fields of Gdk-4.0.Gdk.ContentProvider */
+    /* Own fields of Gdk-4.0.Gdk.ContentProvider */
     parent: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.ContentProvider */
+    /* Owm methods of Gdk-4.0.Gdk.ContentProvider */
     /**
      * Emits the ::content-changed signal.
      */
@@ -9478,7 +9948,7 @@ class ContentProvider {
      * @param result a `GAsyncResult`
      */
     write_mime_type_finish(result: Gio.AsyncResult): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -9792,7 +10262,7 @@ class ContentProvider {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of Gdk-4.0.Gdk.ContentProvider */
+    /* Own virtual methods of Gdk-4.0.Gdk.ContentProvider */
     vfunc_attach_clipboard(clipboard: Clipboard): void
     /**
      * Emits the ::content-changed signal.
@@ -9855,7 +10325,7 @@ class ContentProvider {
      * @param result a `GAsyncResult`
      */
     vfunc_write_mime_type_finish(result: Gio.AsyncResult): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -9877,7 +10347,7 @@ class ContentProvider {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.ContentProvider */
+    /* Own signals of Gdk-4.0.Gdk.ContentProvider */
     /**
      * Emitted whenever the content provided by this provider has changed.
      * @signal 
@@ -9885,7 +10355,7 @@ class ContentProvider {
     connect(sigName: "content-changed", callback: (($obj: ContentProvider) => void)): number
     connect_after(sigName: "content-changed", callback: (($obj: ContentProvider) => void)): number
     emit(sigName: "content-changed"): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -9954,9 +10424,9 @@ interface ContentSerializer_ConstructProps extends GObject.Object_ConstructProps
  * Also see [class`Gdk`.ContentDeserializer].
  */
 class ContentSerializer {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.ContentSerializer */
+    /* Owm methods of Gdk-4.0.Gdk.ContentSerializer */
     /**
      * Gets the cancellable for the current operation.
      * 
@@ -10014,7 +10484,7 @@ class ContentSerializer {
      * @param notify destroy notify for `data`
      */
     set_task_data(data: object | null, notify: GLib.DestroyNotify): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -10328,7 +10798,7 @@ class ContentSerializer {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Gio-2.0.Gio.AsyncResult */
+    /* Implemented methods of Gio-2.0.Gio.AsyncResult */
     /**
      * Gets the source object from a #GAsyncResult.
      */
@@ -10352,7 +10822,7 @@ class ContentSerializer {
      * to enable subclasses to chain up correctly.
      */
     legacy_propagate_error(): boolean
-    /* Virtual methods of Gdk-4.0.Gdk.ContentSerializer */
+    /* Own virtual methods of Gdk-4.0.Gdk.ContentSerializer */
     /**
      * Gets the source object from a #GAsyncResult.
      * @virtual 
@@ -10370,7 +10840,7 @@ class ContentSerializer {
      * @param source_tag an application-defined tag
      */
     vfunc_is_tagged(source_tag: object | null): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -10392,7 +10862,7 @@ class ContentSerializer {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -10440,7 +10910,7 @@ class ContentSerializer {
  * An event caused by a pointing device moving between surfaces.
  */
 class CrossingEvent {
-    /* Methods of Gdk-4.0.Gdk.CrossingEvent */
+    /* Owm methods of Gdk-4.0.Gdk.CrossingEvent */
     /**
      * Extracts the notify detail from a crossing event.
      */
@@ -10453,7 +10923,7 @@ class CrossingEvent {
      * Extracts the crossing mode from a crossing event.
      */
     get_mode(): CrossingMode
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -10656,7 +11126,7 @@ interface Cursor_ConstructProps extends GObject.Object_ConstructProps {
  * the default cursor will be the ultimate fallback.
  */
 class Cursor {
-    /* Properties of Gdk-4.0.Gdk.Cursor */
+    /* Own properties of Gdk-4.0.Gdk.Cursor */
     /**
      * Cursor to fall back to if this cursor cannot be displayed.
      */
@@ -10681,9 +11151,9 @@ class Cursor {
      * The texture will be %NULL if the cursor was created from a name.
      */
     readonly texture: Texture
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Cursor */
+    /* Owm methods of Gdk-4.0.Gdk.Cursor */
     /**
      * Returns the fallback for this `cursor`.
      * 
@@ -10726,7 +11196,7 @@ class Cursor {
      * If the cursor is a named cursor, %NULL will be returned.
      */
     get_texture(): Texture | null
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -11040,7 +11510,7 @@ class Cursor {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -11062,7 +11532,7 @@ class Cursor {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -11123,12 +11593,12 @@ class Cursor {
  * An event related to drag and drop operations.
  */
 class DNDEvent {
-    /* Methods of Gdk-4.0.Gdk.DNDEvent */
+    /* Owm methods of Gdk-4.0.Gdk.DNDEvent */
     /**
      * Gets the `GdkDrop` object from a DND event.
      */
     get_drop(): Drop | null
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -11272,7 +11742,7 @@ class DNDEvent {
  * An event related to closing a top-level surface.
  */
 class DeleteEvent {
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -11462,7 +11932,7 @@ interface Device_ConstructProps extends GObject.Object_ConstructProps {
  * about the various kinds of devices, and their relationships.
  */
 class Device {
-    /* Properties of Gdk-4.0.Gdk.Device */
+    /* Own properties of Gdk-4.0.Gdk.Device */
     /**
      * Whether Caps Lock is on.
      * 
@@ -11546,9 +12016,9 @@ class Device {
      * See [method`Gdk`.Device.get_vendor_id].
      */
     readonly vendor_id: string
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Device */
+    /* Owm methods of Gdk-4.0.Gdk.Device */
     /**
      * Retrieves whether the Caps Lock modifier of the keyboard is locked.
      * 
@@ -11667,7 +12137,7 @@ class Device {
      * ```
      */
     get_vendor_id(): string | null
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -11981,7 +12451,7 @@ class Device {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -12003,7 +12473,7 @@ class Device {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Device */
+    /* Own signals of Gdk-4.0.Gdk.Device */
     /**
      * Emitted either when the number of either axes or keys changes.
      * 
@@ -12025,7 +12495,7 @@ class Device {
     connect(sigName: "tool-changed", callback: (($obj: Device, tool: DeviceTool) => void)): number
     connect_after(sigName: "tool-changed", callback: (($obj: Device, tool: DeviceTool) => void)): number
     emit(sigName: "tool-changed", tool: DeviceTool): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -12124,7 +12594,7 @@ interface DeviceTool_ConstructProps extends GObject.Object_ConstructProps {
  * A physical tool associated to a `GdkDevice`.
  */
 class DeviceTool {
-    /* Properties of Gdk-4.0.Gdk.DeviceTool */
+    /* Own properties of Gdk-4.0.Gdk.DeviceTool */
     /**
      * The axes of the tool.
      */
@@ -12141,9 +12611,9 @@ class DeviceTool {
      * The type of the tool.
      */
     readonly tool_type: DeviceToolType
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.DeviceTool */
+    /* Owm methods of Gdk-4.0.Gdk.DeviceTool */
     /**
      * Gets the axes of the tool.
      */
@@ -12173,7 +12643,7 @@ class DeviceTool {
      * Gets the `GdkDeviceToolType` of the tool.
      */
     get_tool_type(): DeviceToolType
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -12487,7 +12957,7 @@ class DeviceTool {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -12509,7 +12979,7 @@ class DeviceTool {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -12580,7 +13050,7 @@ interface Display_ConstructProps extends GObject.Object_ConstructProps {
  * be accessed with [method`Gdk`.Display.get_monitor_at_surface] and similar APIs.
  */
 class Display {
-    /* Properties of Gdk-4.0.Gdk.Display */
+    /* Own properties of Gdk-4.0.Gdk.Display */
     /**
      * %TRUE if the display properly composites the alpha channel.
      */
@@ -12593,9 +13063,9 @@ class Display {
      * %TRUE if the display supports an alpha channel.
      */
     readonly rgba: boolean
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Display */
+    /* Owm methods of Gdk-4.0.Gdk.Display */
     /**
      * Emits a short beep on `display`
      */
@@ -12845,7 +13315,7 @@ class Display {
      * @param group active keyboard group
      */
     translate_key(keycode: number, state: ModifierType, group: number): [ /* returnType */ boolean, /* keyval */ number, /* effective_group */ number, /* level */ number, /* consumed */ ModifierType ]
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -13159,7 +13629,7 @@ class Display {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -13181,7 +13651,7 @@ class Display {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Display */
+    /* Own signals of Gdk-4.0.Gdk.Display */
     /**
      * Emitted when the connection to the windowing system for `display` is closed.
      * @signal 
@@ -13221,7 +13691,7 @@ class Display {
     connect(sigName: "setting-changed", callback: (($obj: Display, setting: string) => void)): number
     connect_after(sigName: "setting-changed", callback: (($obj: Display, setting: string) => void)): number
     emit(sigName: "setting-changed", setting: string): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -13339,14 +13809,14 @@ interface DisplayManager_ConstructProps extends GObject.Object_ConstructProps {
  * ```
  */
 class DisplayManager {
-    /* Properties of Gdk-4.0.Gdk.DisplayManager */
+    /* Own properties of Gdk-4.0.Gdk.DisplayManager */
     /**
      * The default display.
      */
     default_display: Display
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.DisplayManager */
+    /* Owm methods of Gdk-4.0.Gdk.DisplayManager */
     /**
      * Gets the default `GdkDisplay`.
      */
@@ -13365,7 +13835,7 @@ class DisplayManager {
      * @param display a `GdkDisplay`
      */
     set_default_display(display: Display): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -13679,7 +14149,7 @@ class DisplayManager {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -13701,7 +14171,7 @@ class DisplayManager {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.DisplayManager */
+    /* Own signals of Gdk-4.0.Gdk.DisplayManager */
     /**
      * Emitted when a display is opened.
      * @signal 
@@ -13710,7 +14180,7 @@ class DisplayManager {
     connect(sigName: "display-opened", callback: (($obj: DisplayManager, display: Display) => void)): number
     connect_after(sigName: "display-opened", callback: (($obj: DisplayManager, display: Display) => void)): number
     emit(sigName: "display-opened", display: Display): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -13809,7 +14279,7 @@ interface Drag_ConstructProps extends GObject.Object_ConstructProps {
  * "Drag and Drop" section of the GTK documentation for more information.
  */
 class Drag {
-    /* Properties of Gdk-4.0.Gdk.Drag */
+    /* Own properties of Gdk-4.0.Gdk.Drag */
     /**
      * The possible actions of this drag.
      */
@@ -13838,9 +14308,9 @@ class Drag {
      * The surface where the drag originates.
      */
     readonly surface: Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Drag */
+    /* Owm methods of Gdk-4.0.Gdk.Drag */
     /**
      * Informs GDK that the drop ended.
      * 
@@ -13903,7 +14373,7 @@ class Drag {
      * @param hot_y y coordinate of the drag surface hotspot
      */
     set_hotspot(hot_x: number, hot_y: number): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -14217,7 +14687,7 @@ class Drag {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -14239,7 +14709,7 @@ class Drag {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Drag */
+    /* Own signals of Gdk-4.0.Gdk.Drag */
     /**
      * Emitted when the drag operation is cancelled.
      * @signal 
@@ -14264,7 +14734,7 @@ class Drag {
     connect(sigName: "drop-performed", callback: (($obj: Drag) => void)): number
     connect_after(sigName: "drop-performed", callback: (($obj: Drag) => void)): number
     emit(sigName: "drop-performed"): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -14369,7 +14839,7 @@ interface DrawContext_ConstructProps extends GObject.Object_ConstructProps {
  * A `GdkDrawContext` is always associated with a single toplevel surface.
  */
 class DrawContext {
-    /* Properties of Gdk-4.0.Gdk.DrawContext */
+    /* Own properties of Gdk-4.0.Gdk.DrawContext */
     /**
      * The `GdkDisplay` used to create the `GdkDrawContext`.
      */
@@ -14378,9 +14848,9 @@ class DrawContext {
      * The `GdkSurface` the context is bound to.
      */
     readonly surface: Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.DrawContext */
+    /* Owm methods of Gdk-4.0.Gdk.DrawContext */
     /**
      * Indicates that you are beginning the process of redrawing `region`
      * on the `context'`s surface.
@@ -14447,7 +14917,7 @@ class DrawContext {
      * may be effecting the contents of the `context'`s surface.
      */
     is_in_frame(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -14761,7 +15231,7 @@ class DrawContext {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -14783,7 +15253,7 @@ class DrawContext {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -14871,7 +15341,7 @@ interface Drop_ConstructProps extends GObject.Object_ConstructProps {
  * "Drag and Drop" section of the GTK documentation for more information.
  */
 class Drop {
-    /* Properties of Gdk-4.0.Gdk.Drop */
+    /* Own properties of Gdk-4.0.Gdk.Drop */
     /**
      * The possible actions for this drop
      */
@@ -14896,9 +15366,9 @@ class Drop {
      * The `GdkSurface` the drop happens on
      */
     readonly surface: Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Drop */
+    /* Owm methods of Gdk-4.0.Gdk.Drop */
     /**
      * Ends the drag operation after a drop.
      * 
@@ -15011,7 +15481,7 @@ class Drop {
      * @param preferred A unique action that's a member of `actions` indicating the    preferred action
      */
     status(actions: DragAction, preferred: DragAction): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -15325,7 +15795,7 @@ class Drop {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -15347,7 +15817,7 @@ class Drop {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -15412,7 +15882,7 @@ class Drop {
  * so using `GdkEvent` and its related API is rarely needed.
  */
 class Event {
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Owm methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -15556,13 +16026,13 @@ class Event {
  * An event related to a keyboard focus change.
  */
 class FocusEvent {
-    /* Methods of Gdk-4.0.Gdk.FocusEvent */
+    /* Owm methods of Gdk-4.0.Gdk.FocusEvent */
     /**
      * Extracts whether this event is about focus entering or
      * leaving the surface.
      */
     get_in(): boolean
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -15740,9 +16210,9 @@ interface FrameClock_ConstructProps extends GObject.Object_ConstructProps {
  * they will stay exactly synchronized.
  */
 class FrameClock {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.FrameClock */
+    /* Owm methods of Gdk-4.0.Gdk.FrameClock */
     /**
      * Starts updates for an animation.
      * 
@@ -15830,7 +16300,7 @@ class FrameClock {
      * @param phase the phase that is requested
      */
     request_phase(phase: FrameClockPhase): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -16144,7 +16614,7 @@ class FrameClock {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -16166,7 +16636,7 @@ class FrameClock {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.FrameClock */
+    /* Own signals of Gdk-4.0.Gdk.FrameClock */
     /**
      * This signal ends processing of the frame.
      * 
@@ -16240,7 +16710,7 @@ class FrameClock {
     connect(sigName: "update", callback: (($obj: FrameClock) => void)): number
     connect_after(sigName: "update", callback: (($obj: FrameClock) => void)): number
     emit(sigName: "update"): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -16350,7 +16820,7 @@ interface GLContext_ConstructProps extends DrawContext_ConstructProps {
  * that is currently set by calling [func`Gdk`.GLContext.clear_current].
  */
 class GLContext {
-    /* Properties of Gdk-4.0.Gdk.GLContext */
+    /* Own properties of Gdk-4.0.Gdk.GLContext */
     /**
      * The allowed APIs.
      */
@@ -16366,7 +16836,7 @@ class GLContext {
      * anymore, this function has been deprecated and now always returns %NULL.
      */
     readonly shared_context: GLContext
-    /* Properties of Gdk-4.0.Gdk.DrawContext */
+    /* Extended properties of Gdk-4.0.Gdk.DrawContext */
     /**
      * The `GdkDisplay` used to create the `GdkDrawContext`.
      */
@@ -16375,9 +16845,9 @@ class GLContext {
      * The `GdkSurface` the context is bound to.
      */
     readonly surface: Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.GLContext */
+    /* Owm methods of Gdk-4.0.Gdk.GLContext */
     /**
      * Gets the allowed APIs set via gdk_gl_context_set_allowed_apis().
      */
@@ -16539,7 +17009,7 @@ class GLContext {
      * @param use_es whether the context should use OpenGL ES instead of OpenGL,   or -1 to allow auto-detection
      */
     set_use_es(use_es: number): void
-    /* Methods of Gdk-4.0.Gdk.DrawContext */
+    /* Extended methods of Gdk-4.0.Gdk.DrawContext */
     /**
      * Indicates that you are beginning the process of redrawing `region`
      * on the `context'`s surface.
@@ -16598,7 +17068,7 @@ class GLContext {
      * may be effecting the contents of the `context'`s surface.
      */
     is_in_frame(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -16912,7 +17382,7 @@ class GLContext {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -16934,7 +17404,7 @@ class GLContext {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -17006,7 +17476,7 @@ interface GLTexture_ConstructProps extends Texture_ConstructProps {
  * A GdkTexture representing a GL texture object.
  */
 class GLTexture {
-    /* Properties of Gdk-4.0.Gdk.Texture */
+    /* Extended properties of Gdk-4.0.Gdk.Texture */
     /**
      * The height of the texture, in pixels.
      */
@@ -17015,9 +17485,9 @@ class GLTexture {
      * The width of the texture, in pixels.
      */
     readonly width: number
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.GLTexture */
+    /* Owm methods of Gdk-4.0.Gdk.GLTexture */
     /**
      * Releases the GL resources held by a `GdkGLTexture`.
      * 
@@ -17026,7 +17496,7 @@ class GLTexture {
      * function has been called.
      */
     release(): void
-    /* Methods of Gdk-4.0.Gdk.Texture */
+    /* Extended methods of Gdk-4.0.Gdk.Texture */
     /**
      * Downloads the `texture` into local memory.
      * 
@@ -17109,7 +17579,7 @@ class GLTexture {
      * use [method`Gdk`.Texture.save_to_png_bytes].
      */
     save_to_tiff_bytes(): GLib.Bytes
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -17423,7 +17893,7 @@ class GLTexture {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Gdk-4.0.Gdk.Paintable */
+    /* Implemented methods of Gdk-4.0.Gdk.Paintable */
     /**
      * Compute a concrete size for the `GdkPaintable`.
      * 
@@ -17541,7 +18011,7 @@ class GLTexture {
      * @param height height to snapshot in
      */
     snapshot(snapshot: Snapshot, width: number, height: number): void
-    /* Methods of Gio-2.0.Gio.Icon */
+    /* Implemented methods of Gio-2.0.Gio.Icon */
     /**
      * Checks if two icons are equal.
      * @param icon2 pointer to the second #GIcon.
@@ -17574,7 +18044,7 @@ class GLTexture {
      *   the encoding is simply the name (such as `network-server`).
      */
     to_string(): string | null
-    /* Methods of Gio-2.0.Gio.LoadableIcon */
+    /* Implemented methods of Gio-2.0.Gio.LoadableIcon */
     /**
      * Loads a loadable icon. For the asynchronous version of this function,
      * see g_loadable_icon_load_async().
@@ -17596,7 +18066,7 @@ class GLTexture {
      * @param res a #GAsyncResult.
      */
     load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
-    /* Virtual methods of Gdk-4.0.Gdk.GLTexture */
+    /* Own virtual methods of Gdk-4.0.Gdk.GLTexture */
     /**
      * Gets an immutable paintable for the current contents displayed by `paintable`.
      * 
@@ -17721,7 +18191,7 @@ class GLTexture {
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
-    /* Virtual methods of Gdk-4.0.Gdk.Texture */
+    /* Extended virtual methods of Gdk-4.0.Gdk.Texture */
     /**
      * Gets an immutable paintable for the current contents displayed by `paintable`.
      * 
@@ -17846,7 +18316,7 @@ class GLTexture {
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -17868,7 +18338,7 @@ class GLTexture {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -17903,7 +18373,7 @@ class GLTexture {
     connect(sigName: "notify", callback: (($obj: GLTexture, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify", callback: (($obj: GLTexture, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify", pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Paintable */
+    /* Implemented signals of Gdk-4.0.Gdk.Paintable */
     /**
      * Emitted when the contents of the `paintable` change.
      * 
@@ -17980,7 +18450,7 @@ class GLTexture {
  * An event related to a broken windowing system grab.
  */
 class GrabBrokenEvent {
-    /* Methods of Gdk-4.0.Gdk.GrabBrokenEvent */
+    /* Owm methods of Gdk-4.0.Gdk.GrabBrokenEvent */
     /**
      * Extracts the grab surface from a grab broken event.
      */
@@ -17989,7 +18459,7 @@ class GrabBrokenEvent {
      * Checks whether the grab broken event is for an implicit grab.
      */
     get_implicit(): boolean
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -18133,7 +18603,7 @@ class GrabBrokenEvent {
  * An event related to a key-based device.
  */
 class KeyEvent {
-    /* Methods of Gdk-4.0.Gdk.KeyEvent */
+    /* Owm methods of Gdk-4.0.Gdk.KeyEvent */
     /**
      * Extracts the consumed modifiers from a key event.
      */
@@ -18178,7 +18648,7 @@ class KeyEvent {
      * @param modifiers the modifiers to match
      */
     matches(keyval: number, modifiers: ModifierType): KeyMatch
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -18324,7 +18794,7 @@ interface MemoryTexture_ConstructProps extends Texture_ConstructProps {
  * A `GdkTexture` representing image data in memory.
  */
 class MemoryTexture {
-    /* Properties of Gdk-4.0.Gdk.Texture */
+    /* Extended properties of Gdk-4.0.Gdk.Texture */
     /**
      * The height of the texture, in pixels.
      */
@@ -18333,9 +18803,9 @@ class MemoryTexture {
      * The width of the texture, in pixels.
      */
     readonly width: number
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Texture */
+    /* Extended methods of Gdk-4.0.Gdk.Texture */
     /**
      * Downloads the `texture` into local memory.
      * 
@@ -18418,7 +18888,7 @@ class MemoryTexture {
      * use [method`Gdk`.Texture.save_to_png_bytes].
      */
     save_to_tiff_bytes(): GLib.Bytes
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -18732,7 +19202,7 @@ class MemoryTexture {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Gdk-4.0.Gdk.Paintable */
+    /* Implemented methods of Gdk-4.0.Gdk.Paintable */
     /**
      * Compute a concrete size for the `GdkPaintable`.
      * 
@@ -18850,7 +19320,7 @@ class MemoryTexture {
      * @param height height to snapshot in
      */
     snapshot(snapshot: Snapshot, width: number, height: number): void
-    /* Methods of Gio-2.0.Gio.Icon */
+    /* Implemented methods of Gio-2.0.Gio.Icon */
     /**
      * Checks if two icons are equal.
      * @param icon2 pointer to the second #GIcon.
@@ -18883,7 +19353,7 @@ class MemoryTexture {
      *   the encoding is simply the name (such as `network-server`).
      */
     to_string(): string | null
-    /* Methods of Gio-2.0.Gio.LoadableIcon */
+    /* Implemented methods of Gio-2.0.Gio.LoadableIcon */
     /**
      * Loads a loadable icon. For the asynchronous version of this function,
      * see g_loadable_icon_load_async().
@@ -18905,7 +19375,7 @@ class MemoryTexture {
      * @param res a #GAsyncResult.
      */
     load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
-    /* Virtual methods of Gdk-4.0.Gdk.MemoryTexture */
+    /* Own virtual methods of Gdk-4.0.Gdk.MemoryTexture */
     /**
      * Gets an immutable paintable for the current contents displayed by `paintable`.
      * 
@@ -19030,7 +19500,7 @@ class MemoryTexture {
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
-    /* Virtual methods of Gdk-4.0.Gdk.Texture */
+    /* Extended virtual methods of Gdk-4.0.Gdk.Texture */
     /**
      * Gets an immutable paintable for the current contents displayed by `paintable`.
      * 
@@ -19155,7 +19625,7 @@ class MemoryTexture {
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -19177,7 +19647,7 @@ class MemoryTexture {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -19212,7 +19682,7 @@ class MemoryTexture {
     connect(sigName: "notify", callback: (($obj: MemoryTexture, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify", callback: (($obj: MemoryTexture, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify", pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Paintable */
+    /* Implemented signals of Gdk-4.0.Gdk.Paintable */
     /**
      * Emitted when the contents of the `paintable` change.
      * 
@@ -19302,7 +19772,7 @@ interface Monitor_ConstructProps extends GObject.Object_ConstructProps {
  * monitor.
  */
 class Monitor {
-    /* Properties of Gdk-4.0.Gdk.Monitor */
+    /* Own properties of Gdk-4.0.Gdk.Monitor */
     /**
      * The connector name.
      */
@@ -19347,9 +19817,9 @@ class Monitor {
      * The width of the monitor, in millimeters.
      */
     readonly width_mm: number
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Monitor */
+    /* Owm methods of Gdk-4.0.Gdk.Monitor */
     /**
      * Gets the name of the monitor's connector, if available.
      */
@@ -19420,7 +19890,7 @@ class Monitor {
      * is unplugged or removed.
      */
     is_valid(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -19734,7 +20204,7 @@ class Monitor {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -19756,7 +20226,7 @@ class Monitor {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Monitor */
+    /* Own signals of Gdk-4.0.Gdk.Monitor */
     /**
      * Emitted when the output represented by `monitor` gets disconnected.
      * @signal 
@@ -19764,7 +20234,7 @@ class Monitor {
     connect(sigName: "invalidate", callback: (($obj: Monitor) => void)): number
     connect_after(sigName: "invalidate", callback: (($obj: Monitor) => void)): number
     emit(sigName: "invalidate"): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -19834,7 +20304,7 @@ class Monitor {
  * An event related to a pointer or touch device motion.
  */
 class MotionEvent {
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -19978,7 +20448,7 @@ class MotionEvent {
  * An event related to a pad-based device.
  */
 class PadEvent {
-    /* Methods of Gdk-4.0.Gdk.PadEvent */
+    /* Owm methods of Gdk-4.0.Gdk.PadEvent */
     /**
      * Extracts the information from a pad strip or ring event.
      */
@@ -19992,7 +20462,7 @@ class PadEvent {
      * Extracts group and mode information from a pad event.
      */
     get_group_mode(): [ /* group */ number, /* mode */ number ]
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -20136,7 +20606,7 @@ class PadEvent {
  * An event related to the proximity of a tool to a device.
  */
 class ProximityEvent {
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -20280,7 +20750,7 @@ class ProximityEvent {
  * An event related to a scrolling motion.
  */
 class ScrollEvent {
-    /* Methods of Gdk-4.0.Gdk.ScrollEvent */
+    /* Owm methods of Gdk-4.0.Gdk.ScrollEvent */
     /**
      * Extracts the scroll deltas of a scroll event.
      * 
@@ -20304,7 +20774,7 @@ class ScrollEvent {
      * Stop scroll events always have a delta of 0/0.
      */
     is_stop(): boolean
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -20456,16 +20926,16 @@ interface Seat_ConstructProps extends GObject.Object_ConstructProps {
  * that belong to a user.
  */
 class Seat {
-    /* Properties of Gdk-4.0.Gdk.Seat */
+    /* Own properties of Gdk-4.0.Gdk.Seat */
     /**
      * `GdkDisplay` of this seat.
      */
     readonly display: Display
-    /* Fields of Gdk-4.0.Gdk.Seat */
+    /* Own fields of Gdk-4.0.Gdk.Seat */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Seat */
+    /* Owm methods of Gdk-4.0.Gdk.Seat */
     /**
      * Returns the capabilities this `GdkSeat` currently has.
      */
@@ -20491,7 +20961,7 @@ class Seat {
      * Returns all `GdkDeviceTools` that are known to the application.
      */
     get_tools(): DeviceTool[]
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -20805,7 +21275,7 @@ class Seat {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -20827,7 +21297,7 @@ class Seat {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Seat */
+    /* Own signals of Gdk-4.0.Gdk.Seat */
     /**
      * Emitted when a new input device is related to this seat.
      * @signal 
@@ -20866,7 +21336,7 @@ class Seat {
     connect(sigName: "tool-removed", callback: (($obj: Seat, tool: DeviceTool) => void)): number
     connect_after(sigName: "tool-removed", callback: (($obj: Seat, tool: DeviceTool) => void)): number
     emit(sigName: "tool-removed", tool: DeviceTool): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -20920,9 +21390,9 @@ interface Snapshot_ConstructProps extends GObject.Object_ConstructProps {
  * The subclass of `GdkSnapshot` used by GTK is [class`Gtk`.Snapshot].
  */
 class Snapshot {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -21236,7 +21706,7 @@ class Snapshot {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -21258,7 +21728,7 @@ class Snapshot {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -21329,7 +21799,7 @@ interface Surface_ConstructProps extends GObject.Object_ConstructProps {
  * types exist, but you will rarely interact with them directly.
  */
 class Surface {
-    /* Properties of Gdk-4.0.Gdk.Surface */
+    /* Own properties of Gdk-4.0.Gdk.Surface */
     /**
      * The mouse pointer for the `GdkSurface`.
      */
@@ -21358,9 +21828,9 @@ class Surface {
      * The width of the surface in pixels.
      */
     readonly width: number
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Surface */
+    /* Owm methods of Gdk-4.0.Gdk.Surface */
     /**
      * Emits a short beep associated to `surface`.
      * 
@@ -21593,7 +22063,7 @@ class Surface {
      * @param y coordinates to translate
      */
     translate_coordinates(to: Surface, x: number, y: number): [ /* returnType */ boolean, /* x */ number, /* y */ number ]
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -21907,7 +22377,7 @@ class Surface {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -21929,7 +22399,7 @@ class Surface {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Surface */
+    /* Own signals of Gdk-4.0.Gdk.Surface */
     /**
      * Emitted when `surface` starts being present on the monitor.
      * @signal 
@@ -21975,7 +22445,7 @@ class Surface {
     connect(sigName: "render", callback: (($obj: Surface, region: cairo.Region) => boolean)): number
     connect_after(sigName: "render", callback: (($obj: Surface, region: cairo.Region) => boolean)): number
     emit(sigName: "render", region: cairo.Region): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -22064,7 +22534,7 @@ interface Texture_ConstructProps extends GObject.Object_ConstructProps {
  * [method`GObject`.Object.ref], and consequently, it is a thread-safe object.
  */
 class Texture {
-    /* Properties of Gdk-4.0.Gdk.Texture */
+    /* Own properties of Gdk-4.0.Gdk.Texture */
     /**
      * The height of the texture, in pixels.
      */
@@ -22073,9 +22543,9 @@ class Texture {
      * The width of the texture, in pixels.
      */
     readonly width: number
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.Texture */
+    /* Owm methods of Gdk-4.0.Gdk.Texture */
     /**
      * Downloads the `texture` into local memory.
      * 
@@ -22158,7 +22628,7 @@ class Texture {
      * use [method`Gdk`.Texture.save_to_png_bytes].
      */
     save_to_tiff_bytes(): GLib.Bytes
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -22472,7 +22942,7 @@ class Texture {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Gdk-4.0.Gdk.Paintable */
+    /* Implemented methods of Gdk-4.0.Gdk.Paintable */
     /**
      * Compute a concrete size for the `GdkPaintable`.
      * 
@@ -22590,7 +23060,7 @@ class Texture {
      * @param height height to snapshot in
      */
     snapshot(snapshot: Snapshot, width: number, height: number): void
-    /* Methods of Gio-2.0.Gio.Icon */
+    /* Implemented methods of Gio-2.0.Gio.Icon */
     /**
      * Checks if two icons are equal.
      * @param icon2 pointer to the second #GIcon.
@@ -22623,7 +23093,7 @@ class Texture {
      *   the encoding is simply the name (such as `network-server`).
      */
     to_string(): string | null
-    /* Methods of Gio-2.0.Gio.LoadableIcon */
+    /* Implemented methods of Gio-2.0.Gio.LoadableIcon */
     /**
      * Loads a loadable icon. For the asynchronous version of this function,
      * see g_loadable_icon_load_async().
@@ -22645,7 +23115,7 @@ class Texture {
      * @param res a #GAsyncResult.
      */
     load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
-    /* Virtual methods of Gdk-4.0.Gdk.Texture */
+    /* Own virtual methods of Gdk-4.0.Gdk.Texture */
     /**
      * Gets an immutable paintable for the current contents displayed by `paintable`.
      * 
@@ -22770,7 +23240,7 @@ class Texture {
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -22792,7 +23262,7 @@ class Texture {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -22827,7 +23297,7 @@ class Texture {
     connect(sigName: "notify", callback: (($obj: Texture, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify", callback: (($obj: Texture, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify", pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.Paintable */
+    /* Implemented signals of Gdk-4.0.Gdk.Paintable */
     /**
      * Emitted when the contents of the `paintable` change.
      * 
@@ -22908,12 +23378,12 @@ class Texture {
  * An event related to a touch-based device.
  */
 class TouchEvent {
-    /* Methods of Gdk-4.0.Gdk.TouchEvent */
+    /* Owm methods of Gdk-4.0.Gdk.TouchEvent */
     /**
      * Extracts whether a touch event is emulating a pointer event.
      */
     get_emulating_pointer(): boolean
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -23062,7 +23532,7 @@ class TouchEvent {
  * processed by the system, resulting in these events.
  */
 class TouchpadEvent {
-    /* Methods of Gdk-4.0.Gdk.TouchpadEvent */
+    /* Owm methods of Gdk-4.0.Gdk.TouchpadEvent */
     /**
      * Extracts delta information from a touchpad event.
      */
@@ -23083,7 +23553,7 @@ class TouchpadEvent {
      * Extracts the scale from a touchpad pinch event.
      */
     get_pinch_scale(): number
-    /* Methods of Gdk-4.0.Gdk.Event */
+    /* Extended methods of Gdk-4.0.Gdk.Event */
     /**
      * Returns the relative angle from `event1` to `event2`.
      * 
@@ -23237,7 +23707,7 @@ interface VulkanContext_ConstructProps extends DrawContext_ConstructProps {
  * can fail, returning %NULL context.
  */
 class VulkanContext {
-    /* Properties of Gdk-4.0.Gdk.DrawContext */
+    /* Extended properties of Gdk-4.0.Gdk.DrawContext */
     /**
      * The `GdkDisplay` used to create the `GdkDrawContext`.
      */
@@ -23246,9 +23716,9 @@ class VulkanContext {
      * The `GdkSurface` the context is bound to.
      */
     readonly surface: Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gdk-4.0.Gdk.DrawContext */
+    /* Extended methods of Gdk-4.0.Gdk.DrawContext */
     /**
      * Indicates that you are beginning the process of redrawing `region`
      * on the `context'`s surface.
@@ -23315,7 +23785,7 @@ class VulkanContext {
      * may be effecting the contents of the `context'`s surface.
      */
     is_in_frame(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -23629,7 +24099,7 @@ class VulkanContext {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Gio-2.0.Gio.Initable */
+    /* Implemented methods of Gio-2.0.Gio.Initable */
     /**
      * Initializes the object implementing the interface.
      * 
@@ -23672,7 +24142,7 @@ class VulkanContext {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     init(cancellable: Gio.Cancellable | null): boolean
-    /* Virtual methods of Gdk-4.0.Gdk.VulkanContext */
+    /* Own virtual methods of Gdk-4.0.Gdk.VulkanContext */
     /**
      * Initializes the object implementing the interface.
      * 
@@ -23716,7 +24186,7 @@ class VulkanContext {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     vfunc_init(cancellable: Gio.Cancellable | null): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -23738,7 +24208,7 @@ class VulkanContext {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Gdk-4.0.Gdk.VulkanContext */
+    /* Own signals of Gdk-4.0.Gdk.VulkanContext */
     /**
      * Emitted when the images managed by this context have changed.
      * 
@@ -23749,7 +24219,7 @@ class VulkanContext {
     connect(sigName: "images-updated", callback: (($obj: VulkanContext) => void)): number
     connect_after(sigName: "images-updated", callback: (($obj: VulkanContext) => void)): number
     emit(sigName: "images-updated"): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -23842,7 +24312,7 @@ class VulkanContext {
  * endeavor.
  */
 class ContentFormats {
-    /* Methods of Gdk-4.0.Gdk.ContentFormats */
+    /* Owm methods of Gdk-4.0.Gdk.ContentFormats */
     /**
      * Checks if a given `GType` is part of the given `formats`.
      * @param type the `GType` to search for
@@ -23965,7 +24435,7 @@ class ContentFormats {
  * new `GdkContentFormats`, and should not be kept around.
  */
 class ContentFormatsBuilder {
-    /* Methods of Gdk-4.0.Gdk.ContentFormatsBuilder */
+    /* Owm methods of Gdk-4.0.Gdk.ContentFormatsBuilder */
     /**
      * Appends all formats from `formats` to `builder,` skipping those that
      * already exist.
@@ -24013,7 +24483,7 @@ class ContentFormatsBuilder {
  * Class structure for `GdkContentProvider`.
  */
 abstract class ContentProviderClass {
-    /* Fields of Gdk-4.0.Gdk.ContentProviderClass */
+    /* Own fields of Gdk-4.0.Gdk.ContentProviderClass */
     parent_class: GObject.ObjectClass
     content_changed: (provider: ContentProvider) => void
     attach_clipboard: (provider: ContentProvider, clipboard: Clipboard) => void
@@ -24045,7 +24515,7 @@ class EventSequence {
  * An opaque type representing a list of files.
  */
 class FileList {
-    /* Methods of Gdk-4.0.Gdk.FileList */
+    /* Owm methods of Gdk-4.0.Gdk.FileList */
     /**
      * Retrieves the list of files inside a `GdkFileList`.
      * 
@@ -24071,7 +24541,7 @@ class FrameClockPrivate {
  * application’s display, such as latency and jitter.
  */
 class FrameTimings {
-    /* Methods of Gdk-4.0.Gdk.FrameTimings */
+    /* Owm methods of Gdk-4.0.Gdk.FrameTimings */
     /**
      * Returns whether `timings` are complete.
      * 
@@ -24148,7 +24618,7 @@ abstract class GLTextureClass {
  * A `GdkKeymapKey` is a hardware key that can be mapped to a keyval.
  */
 class KeymapKey {
-    /* Fields of Gdk-4.0.Gdk.KeymapKey */
+    /* Own fields of Gdk-4.0.Gdk.KeymapKey */
     /**
      * the hardware keycode. This is an identifying number for a
      *   physical key.
@@ -24190,7 +24660,7 @@ abstract class MonitorClass {
  * that will make the implementation likely quite slow.
  */
 abstract class PaintableInterface {
-    /* Fields of Gdk-4.0.Gdk.PaintableInterface */
+    /* Own fields of Gdk-4.0.Gdk.PaintableInterface */
     snapshot: (paintable: Paintable, snapshot: Snapshot, width: number, height: number) => void
     get_current_image: (paintable: Paintable) => Paintable
     get_flags: (paintable: Paintable) => PaintableFlags
@@ -24238,7 +24708,7 @@ abstract class PopupInterface {
  * has to be presented again.
  */
 class PopupLayout {
-    /* Methods of Gdk-4.0.Gdk.PopupLayout */
+    /* Owm methods of Gdk-4.0.Gdk.PopupLayout */
     /**
      * Makes a copy of `layout`.
      */
@@ -24342,7 +24812,7 @@ class PopupLayout {
  * be clamped to this range when drawing.
  */
 class RGBA {
-    /* Fields of Gdk-4.0.Gdk.RGBA */
+    /* Own fields of Gdk-4.0.Gdk.RGBA */
     /**
      * The intensity of the red channel from 0.0 to 1.0 inclusive
      */
@@ -24360,7 +24830,7 @@ class RGBA {
      *   1.0 for opaque
      */
     alpha: number
-    /* Methods of Gdk-4.0.Gdk.RGBA */
+    /* Owm methods of Gdk-4.0.Gdk.RGBA */
     /**
      * Makes a copy of a `GdkRGBA`.
      * 
@@ -24452,7 +24922,7 @@ class RGBA {
  * volumes in 2D and 3D.
  */
 class Rectangle {
-    /* Fields of Gdk-4.0.Gdk.Rectangle */
+    /* Own fields of Gdk-4.0.Gdk.Rectangle */
     /**
      * the x coordinate of the top left corner
      */
@@ -24469,7 +24939,7 @@ class Rectangle {
      * the height of the rectangle
      */
     height: number
-    /* Methods of Gdk-4.0.Gdk.Rectangle */
+    /* Owm methods of Gdk-4.0.Gdk.Rectangle */
     /**
      * Returns %TRUE if `rect` contains the point described by `x` and `y`.
      * @param x X coordinate
@@ -24519,7 +24989,7 @@ abstract class TextureClass {
  * A `GdkTimeCoord` stores a single event in a motion history.
  */
 class TimeCoord {
-    /* Fields of Gdk-4.0.Gdk.TimeCoord */
+    /* Own fields of Gdk-4.0.Gdk.TimeCoord */
     /**
      * The timestamp for this event
      */
@@ -24549,7 +25019,7 @@ abstract class ToplevelInterface {
  * etc).
  */
 class ToplevelLayout {
-    /* Methods of Gdk-4.0.Gdk.ToplevelLayout */
+    /* Owm methods of Gdk-4.0.Gdk.ToplevelLayout */
     /**
      * Create a new `GdkToplevelLayout` and copy the contents of `layout` into it.
      */
@@ -24619,7 +25089,7 @@ class ToplevelLayout {
  * to compute the size of a toplevel.
  */
 class ToplevelSize {
-    /* Methods of Gdk-4.0.Gdk.ToplevelSize */
+    /* Owm methods of Gdk-4.0.Gdk.ToplevelSize */
     /**
      * Retrieves the bounds the toplevel is placed within.
      * 

@@ -380,7 +380,7 @@ interface ParseErrorFunc {
  * A render node applying a blending function between its two child nodes.
  */
 class BlendNode {
-    /* Methods of Gsk-4.0.Gsk.BlendNode */
+    /* Owm methods of Gsk-4.0.Gsk.BlendNode */
     /**
      * Retrieves the blend mode used by `node`.
      */
@@ -393,7 +393,7 @@ class BlendNode {
      * Retrieves the top `GskRenderNode` child of the `node`.
      */
     get_top_child(): RenderNode
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -460,7 +460,7 @@ class BlendNode {
  * A render node applying a blur effect to its single child.
  */
 class BlurNode {
-    /* Methods of Gsk-4.0.Gsk.BlurNode */
+    /* Owm methods of Gsk-4.0.Gsk.BlurNode */
     /**
      * Retrieves the child `GskRenderNode` of the blur `node`.
      */
@@ -469,7 +469,7 @@ class BlurNode {
      * Retrieves the blur radius of the `node`.
      */
     get_radius(): number
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -536,7 +536,7 @@ class BlurNode {
  * A render node for a border.
  */
 class BorderNode {
-    /* Methods of Gsk-4.0.Gsk.BorderNode */
+    /* Owm methods of Gsk-4.0.Gsk.BorderNode */
     /**
      * Retrieves the colors of the border.
      */
@@ -549,7 +549,7 @@ class BorderNode {
      * Retrieves the stroke widths of the border.
      */
     get_widths(): number[]
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -615,7 +615,7 @@ class BorderNode {
 interface BroadwayRenderer_ConstructProps extends Renderer_ConstructProps {
 }
 class BroadwayRenderer {
-    /* Properties of Gsk-4.0.Gsk.Renderer */
+    /* Extended properties of Gsk-4.0.Gsk.Renderer */
     /**
      * Whether the renderer has been associated with a surface or draw context.
      */
@@ -624,9 +624,9 @@ class BroadwayRenderer {
      * The surface associated with renderer.
      */
     readonly surface: Gdk.Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gsk-4.0.Gsk.Renderer */
+    /* Extended methods of Gsk-4.0.Gsk.Renderer */
     /**
      * Retrieves the `GdkSurface` set using gsk_enderer_realize().
      * 
@@ -683,7 +683,7 @@ class BroadwayRenderer {
      * Releases all the resources created by gsk_renderer_realize().
      */
     unrealize(): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -997,7 +997,7 @@ class BroadwayRenderer {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -1019,7 +1019,7 @@ class BroadwayRenderer {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -1073,7 +1073,7 @@ class BroadwayRenderer {
  * A render node for a Cairo surface.
  */
 class CairoNode {
-    /* Methods of Gsk-4.0.Gsk.CairoNode */
+    /* Owm methods of Gsk-4.0.Gsk.CairoNode */
     /**
      * Creates a Cairo context for drawing using the surface associated
      * to the render node.
@@ -1086,7 +1086,7 @@ class CairoNode {
      * Retrieves the Cairo surface used by the render node.
      */
     get_surface(): cairo.Surface
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -1158,7 +1158,7 @@ interface CairoRenderer_ConstructProps extends Renderer_ConstructProps {
  * 3D transformations.
  */
 class CairoRenderer {
-    /* Properties of Gsk-4.0.Gsk.Renderer */
+    /* Extended properties of Gsk-4.0.Gsk.Renderer */
     /**
      * Whether the renderer has been associated with a surface or draw context.
      */
@@ -1167,9 +1167,9 @@ class CairoRenderer {
      * The surface associated with renderer.
      */
     readonly surface: Gdk.Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gsk-4.0.Gsk.Renderer */
+    /* Extended methods of Gsk-4.0.Gsk.Renderer */
     /**
      * Retrieves the `GdkSurface` set using gsk_enderer_realize().
      * 
@@ -1226,7 +1226,7 @@ class CairoRenderer {
      * Releases all the resources created by gsk_renderer_realize().
      */
     unrealize(): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -1540,7 +1540,7 @@ class CairoRenderer {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -1562,7 +1562,7 @@ class CairoRenderer {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -1616,7 +1616,7 @@ class CairoRenderer {
  * A render node applying a rectangular clip to its single child node.
  */
 class ClipNode {
-    /* Methods of Gsk-4.0.Gsk.ClipNode */
+    /* Owm methods of Gsk-4.0.Gsk.ClipNode */
     /**
      * Gets the child node that is getting clipped by the given `node`.
      */
@@ -1625,7 +1625,7 @@ class ClipNode {
      * Retrieves the clip rectangle for `node`.
      */
     get_clip(): Graphene.Rect
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -1692,7 +1692,7 @@ class ClipNode {
  * A render node controlling the color matrix of its single child node.
  */
 class ColorMatrixNode {
-    /* Methods of Gsk-4.0.Gsk.ColorMatrixNode */
+    /* Owm methods of Gsk-4.0.Gsk.ColorMatrixNode */
     /**
      * Gets the child node that is getting its colors modified by the given `node`.
      */
@@ -1705,7 +1705,7 @@ class ColorMatrixNode {
      * Retrieves the color offset used by the `node`.
      */
     get_color_offset(): Graphene.Vec4
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -1772,12 +1772,12 @@ class ColorMatrixNode {
  * A render node for a solid color.
  */
 class ColorNode {
-    /* Methods of Gsk-4.0.Gsk.ColorNode */
+    /* Owm methods of Gsk-4.0.Gsk.ColorNode */
     /**
      * Retrieves the color of the given `node`.
      */
     get_color(): Gdk.RGBA
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -1844,7 +1844,7 @@ class ColorNode {
  * A render node for a conic gradient.
  */
 class ConicGradientNode {
-    /* Methods of Gsk-4.0.Gsk.ConicGradientNode */
+    /* Owm methods of Gsk-4.0.Gsk.ConicGradientNode */
     /**
      * Retrieves the angle for the gradient in radians, normalized in [0, 2 * PI].
      * 
@@ -1870,7 +1870,7 @@ class ConicGradientNode {
      * Retrieves the rotation for the gradient in degrees.
      */
     get_rotation(): number
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -1937,7 +1937,7 @@ class ConicGradientNode {
  * A render node that can contain other render nodes.
  */
 class ContainerNode {
-    /* Methods of Gsk-4.0.Gsk.ContainerNode */
+    /* Owm methods of Gsk-4.0.Gsk.ContainerNode */
     /**
      * Gets one of the children of `container`.
      * @param idx the position of the child to get
@@ -1947,7 +1947,7 @@ class ContainerNode {
      * Retrieves the number of direct children of `node`.
      */
     get_n_children(): number
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -2014,7 +2014,7 @@ class ContainerNode {
  * A render node cross fading between two child nodes.
  */
 class CrossFadeNode {
-    /* Methods of Gsk-4.0.Gsk.CrossFadeNode */
+    /* Owm methods of Gsk-4.0.Gsk.CrossFadeNode */
     /**
      * Retrieves the child `GskRenderNode` at the end of the cross-fade.
      */
@@ -2027,7 +2027,7 @@ class CrossFadeNode {
      * Retrieves the child `GskRenderNode` at the beginning of the cross-fade.
      */
     get_start_child(): RenderNode
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -2095,7 +2095,7 @@ class CrossFadeNode {
  * child node.
  */
 class DebugNode {
-    /* Methods of Gsk-4.0.Gsk.DebugNode */
+    /* Owm methods of Gsk-4.0.Gsk.DebugNode */
     /**
      * Gets the child node that is getting drawn by the given `node`.
      */
@@ -2104,7 +2104,7 @@ class DebugNode {
      * Gets the debug message that was set on this node
      */
     get_message(): string
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -2170,7 +2170,7 @@ class DebugNode {
 interface GLRenderer_ConstructProps extends Renderer_ConstructProps {
 }
 class GLRenderer {
-    /* Properties of Gsk-4.0.Gsk.Renderer */
+    /* Extended properties of Gsk-4.0.Gsk.Renderer */
     /**
      * Whether the renderer has been associated with a surface or draw context.
      */
@@ -2179,9 +2179,9 @@ class GLRenderer {
      * The surface associated with renderer.
      */
     readonly surface: Gdk.Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gsk-4.0.Gsk.Renderer */
+    /* Extended methods of Gsk-4.0.Gsk.Renderer */
     /**
      * Retrieves the `GdkSurface` set using gsk_enderer_realize().
      * 
@@ -2238,7 +2238,7 @@ class GLRenderer {
      * Releases all the resources created by gsk_renderer_realize().
      */
     unrealize(): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -2552,7 +2552,7 @@ class GLRenderer {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -2574,7 +2574,7 @@ class GLRenderer {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -2751,7 +2751,7 @@ interface GLShader_ConstructProps extends GObject.Object_ConstructProps {
  * ```
  */
 class GLShader {
-    /* Properties of Gsk-4.0.Gsk.GLShader */
+    /* Own properties of Gsk-4.0.Gsk.GLShader */
     /**
      * Resource containing the source code for the shader.
      * 
@@ -2760,9 +2760,9 @@ class GLShader {
      */
     readonly resource: string
     readonly source: GLib.Bytes
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gsk-4.0.Gsk.GLShader */
+    /* Owm methods of Gsk-4.0.Gsk.GLShader */
     /**
      * Tries to compile the `shader` for the given `renderer`.
      * 
@@ -2884,7 +2884,7 @@ class GLShader {
      * @param idx index of the uniform
      */
     get_uniform_type(idx: number): GLUniformType
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -3198,7 +3198,7 @@ class GLShader {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -3220,7 +3220,7 @@ class GLShader {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -3275,7 +3275,7 @@ class GLShader {
  * A render node using a GL shader when drawing its children nodes.
  */
 class GLShaderNode {
-    /* Methods of Gsk-4.0.Gsk.GLShaderNode */
+    /* Owm methods of Gsk-4.0.Gsk.GLShaderNode */
     /**
      * Gets args for the node.
      */
@@ -3293,7 +3293,7 @@ class GLShaderNode {
      * Gets shader code for the node.
      */
     get_shader(): GLShader
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -3360,7 +3360,7 @@ class GLShaderNode {
  * A render node for an inset shadow.
  */
 class InsetShadowNode {
-    /* Methods of Gsk-4.0.Gsk.InsetShadowNode */
+    /* Owm methods of Gsk-4.0.Gsk.InsetShadowNode */
     /**
      * Retrieves the blur radius to apply to the shadow.
      */
@@ -3385,7 +3385,7 @@ class InsetShadowNode {
      * Retrieves how much the shadow spreads inwards.
      */
     get_spread(): number
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -3452,7 +3452,7 @@ class InsetShadowNode {
  * A render node for a linear gradient.
  */
 class LinearGradientNode {
-    /* Methods of Gsk-4.0.Gsk.LinearGradientNode */
+    /* Owm methods of Gsk-4.0.Gsk.LinearGradientNode */
     /**
      * Retrieves the color stops in the gradient.
      */
@@ -3469,7 +3469,7 @@ class LinearGradientNode {
      * Retrieves the initial point of the linear gradient.
      */
     get_start(): Graphene.Point
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -3535,7 +3535,7 @@ class LinearGradientNode {
 interface NglRenderer_ConstructProps extends Renderer_ConstructProps {
 }
 class NglRenderer {
-    /* Properties of Gsk-4.0.Gsk.Renderer */
+    /* Extended properties of Gsk-4.0.Gsk.Renderer */
     /**
      * Whether the renderer has been associated with a surface or draw context.
      */
@@ -3544,9 +3544,9 @@ class NglRenderer {
      * The surface associated with renderer.
      */
     readonly surface: Gdk.Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gsk-4.0.Gsk.Renderer */
+    /* Extended methods of Gsk-4.0.Gsk.Renderer */
     /**
      * Retrieves the `GdkSurface` set using gsk_enderer_realize().
      * 
@@ -3603,7 +3603,7 @@ class NglRenderer {
      * Releases all the resources created by gsk_renderer_realize().
      */
     unrealize(): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -3917,7 +3917,7 @@ class NglRenderer {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -3939,7 +3939,7 @@ class NglRenderer {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -3993,7 +3993,7 @@ class NglRenderer {
  * A render node controlling the opacity of its single child node.
  */
 class OpacityNode {
-    /* Methods of Gsk-4.0.Gsk.OpacityNode */
+    /* Owm methods of Gsk-4.0.Gsk.OpacityNode */
     /**
      * Gets the child node that is getting opacityed by the given `node`.
      */
@@ -4002,7 +4002,7 @@ class OpacityNode {
      * Gets the transparency factor for an opacity node.
      */
     get_opacity(): number
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -4069,7 +4069,7 @@ class OpacityNode {
  * A render node for an outset shadow.
  */
 class OutsetShadowNode {
-    /* Methods of Gsk-4.0.Gsk.OutsetShadowNode */
+    /* Owm methods of Gsk-4.0.Gsk.OutsetShadowNode */
     /**
      * Retrieves the blur radius of the shadow.
      */
@@ -4094,7 +4094,7 @@ class OutsetShadowNode {
      * Retrieves how much the shadow spreads outwards.
      */
     get_spread(): number
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -4161,7 +4161,7 @@ class OutsetShadowNode {
  * A render node for a radial gradient.
  */
 class RadialGradientNode {
-    /* Methods of Gsk-4.0.Gsk.RadialGradientNode */
+    /* Owm methods of Gsk-4.0.Gsk.RadialGradientNode */
     /**
      * Retrieves the center pointer for the gradient.
      */
@@ -4190,7 +4190,7 @@ class RadialGradientNode {
      * Retrieves the vertical radius for the gradient.
      */
     get_vradius(): number
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -4269,7 +4269,7 @@ class RadialGradientNode {
  * properties during construction.
  */
 class RenderNode {
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Owm methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -4352,7 +4352,7 @@ interface Renderer_ConstructProps extends GObject.Object_ConstructProps {
  * to render the scene.
  */
 class Renderer {
-    /* Properties of Gsk-4.0.Gsk.Renderer */
+    /* Own properties of Gsk-4.0.Gsk.Renderer */
     /**
      * Whether the renderer has been associated with a surface or draw context.
      */
@@ -4361,9 +4361,9 @@ class Renderer {
      * The surface associated with renderer.
      */
     readonly surface: Gdk.Surface
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Gsk-4.0.Gsk.Renderer */
+    /* Owm methods of Gsk-4.0.Gsk.Renderer */
     /**
      * Retrieves the `GdkSurface` set using gsk_enderer_realize().
      * 
@@ -4420,7 +4420,7 @@ class Renderer {
      * Releases all the resources created by gsk_renderer_realize().
      */
     unrealize(): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -4734,7 +4734,7 @@ class Renderer {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -4756,7 +4756,7 @@ class Renderer {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -4810,7 +4810,7 @@ class Renderer {
  * A render node repeating its single child node.
  */
 class RepeatNode {
-    /* Methods of Gsk-4.0.Gsk.RepeatNode */
+    /* Owm methods of Gsk-4.0.Gsk.RepeatNode */
     /**
      * Retrieves the child of `node`.
      */
@@ -4819,7 +4819,7 @@ class RepeatNode {
      * Retrieves the bounding rectangle of the child of `node`.
      */
     get_child_bounds(): Graphene.Rect
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -4886,7 +4886,7 @@ class RepeatNode {
  * A render node for a repeating linear gradient.
  */
 class RepeatingLinearGradientNode {
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -4953,7 +4953,7 @@ class RepeatingLinearGradientNode {
  * A render node for a repeating radial gradient.
  */
 class RepeatingRadialGradientNode {
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -5020,7 +5020,7 @@ class RepeatingRadialGradientNode {
  * A render node applying a rounded rectangle clip to its single child.
  */
 class RoundedClipNode {
-    /* Methods of Gsk-4.0.Gsk.RoundedClipNode */
+    /* Owm methods of Gsk-4.0.Gsk.RoundedClipNode */
     /**
      * Gets the child node that is getting clipped by the given `node`.
      */
@@ -5029,7 +5029,7 @@ class RoundedClipNode {
      * Retrieves the rounded rectangle used to clip the contents of the `node`.
      */
     get_clip(): RoundedRect
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -5096,7 +5096,7 @@ class RoundedClipNode {
  * A render node drawing one or more shadows behind its single child node.
  */
 class ShadowNode {
-    /* Methods of Gsk-4.0.Gsk.ShadowNode */
+    /* Owm methods of Gsk-4.0.Gsk.ShadowNode */
     /**
      * Retrieves the child `GskRenderNode` of the shadow `node`.
      */
@@ -5110,7 +5110,7 @@ class ShadowNode {
      * @param i the given index
      */
     get_shadow(i: number): Shadow
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -5177,7 +5177,7 @@ class ShadowNode {
  * A render node drawing a set of glyphs.
  */
 class TextNode {
-    /* Methods of Gsk-4.0.Gsk.TextNode */
+    /* Owm methods of Gsk-4.0.Gsk.TextNode */
     /**
      * Retrieves the color used by the text `node`.
      */
@@ -5202,7 +5202,7 @@ class TextNode {
      * Checks whether the text `node` has color glyphs.
      */
     has_color_glyphs(): boolean
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -5269,12 +5269,12 @@ class TextNode {
  * A render node for a `GdkTexture`.
  */
 class TextureNode {
-    /* Methods of Gsk-4.0.Gsk.TextureNode */
+    /* Owm methods of Gsk-4.0.Gsk.TextureNode */
     /**
      * Retrieves the `GdkTexture` used when creating this `GskRenderNode`.
      */
     get_texture(): Gdk.Texture
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -5341,7 +5341,7 @@ class TextureNode {
  * A render node applying a `GskTransform` to its single child node.
  */
 class TransformNode {
-    /* Methods of Gsk-4.0.Gsk.TransformNode */
+    /* Owm methods of Gsk-4.0.Gsk.TransformNode */
     /**
      * Gets the child node that is getting transformed by the given `node`.
      */
@@ -5350,7 +5350,7 @@ class TransformNode {
      * Retrieves the `GskTransform` used by the `node`.
      */
     get_transform(): Transform
-    /* Methods of Gsk-4.0.Gsk.RenderNode */
+    /* Extended methods of Gsk-4.0.Gsk.RenderNode */
     /**
      * Draw the contents of `node` to the given cairo context.
      * 
@@ -5423,7 +5423,7 @@ abstract class CairoRendererClass {
  * A color stop in a gradient node.
  */
 class ColorStop {
-    /* Fields of Gsk-4.0.Gsk.ColorStop */
+    /* Own fields of Gsk-4.0.Gsk.ColorStop */
     /**
      * the offset of the color stop
      */
@@ -5438,7 +5438,7 @@ abstract class GLRendererClass {
     static name: string
 }
 abstract class GLShaderClass {
-    /* Fields of Gsk-4.0.Gsk.GLShaderClass */
+    /* Own fields of Gsk-4.0.Gsk.GLShaderClass */
     parent_class: GObject.ObjectClass
     static name: string
 }
@@ -5446,7 +5446,7 @@ abstract class GLShaderClass {
  * A location in a parse buffer.
  */
 class ParseLocation {
-    /* Fields of Gsk-4.0.Gsk.ParseLocation */
+    /* Own fields of Gsk-4.0.Gsk.ParseLocation */
     /**
      * the offset of the location in the parse buffer, as bytes
      */
@@ -5488,7 +5488,7 @@ abstract class RendererClass {
  * [the CSS specification](https://drafts.csswg.org/css-backgrounds-3/#border-radius).
  */
 class RoundedRect {
-    /* Fields of Gsk-4.0.Gsk.RoundedRect */
+    /* Own fields of Gsk-4.0.Gsk.RoundedRect */
     /**
      * the bounds of the rectangle
      */
@@ -5497,7 +5497,7 @@ class RoundedRect {
      * the size of the 4 rounded corners
      */
     corner: Graphene.Size[]
-    /* Methods of Gsk-4.0.Gsk.RoundedRect */
+    /* Owm methods of Gsk-4.0.Gsk.RoundedRect */
     /**
      * Checks if the given `point` is inside the rounded rectangle.
      * @param point the point to check
@@ -5585,7 +5585,7 @@ class RoundedRect {
  * An object to build the uniforms data for a `GskGLShader`.
  */
 class ShaderArgsBuilder {
-    /* Methods of Gsk-4.0.Gsk.ShaderArgsBuilder */
+    /* Owm methods of Gsk-4.0.Gsk.ShaderArgsBuilder */
     /**
      * Increases the reference count of a `GskShaderArgsBuilder` by one.
      */
@@ -5676,7 +5676,7 @@ class ShaderArgsBuilder {
  * The shadow parameters in a shadow node.
  */
 class Shadow {
-    /* Fields of Gsk-4.0.Gsk.Shadow */
+    /* Own fields of Gsk-4.0.Gsk.Shadow */
     /**
      * the color of the shadow
      */
@@ -5707,7 +5707,7 @@ class Shadow {
  * having to worry about others changing them.
  */
 class Transform {
-    /* Methods of Gsk-4.0.Gsk.Transform */
+    /* Owm methods of Gsk-4.0.Gsk.Transform */
     /**
      * Checks two transforms for equality.
      * @param second the second transform

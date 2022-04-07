@@ -534,7 +534,7 @@ interface Pixbuf_ConstructProps extends GObject.Object_ConstructProps {
  * to a socket or store it in a database.
  */
 class Pixbuf {
-    /* Properties of GdkPixbuf-2.0.GdkPixbuf.Pixbuf */
+    /* Own properties of GdkPixbuf-2.0.GdkPixbuf.Pixbuf */
     /**
      * The number of bits per sample.
      * 
@@ -578,9 +578,9 @@ class Pixbuf {
      * The number of columns of the pixbuf.
      */
     readonly width: number
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of GdkPixbuf-2.0.GdkPixbuf.Pixbuf */
+    /* Owm methods of GdkPixbuf-2.0.GdkPixbuf.Pixbuf */
     /**
      * Takes an existing pixbuf and adds an alpha channel to it.
      * 
@@ -999,7 +999,7 @@ class Pixbuf {
      * @param value a nul-terminated string.
      */
     set_option(key: string, value: string): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -1313,7 +1313,7 @@ class Pixbuf {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Gio-2.0.Gio.Icon */
+    /* Implemented methods of Gio-2.0.Gio.Icon */
     /**
      * Checks if two icons are equal.
      * @param icon2 pointer to the second #GIcon.
@@ -1346,7 +1346,7 @@ class Pixbuf {
      *   the encoding is simply the name (such as `network-server`).
      */
     to_string(): string | null
-    /* Methods of Gio-2.0.Gio.LoadableIcon */
+    /* Implemented methods of Gio-2.0.Gio.LoadableIcon */
     /**
      * Loads a loadable icon. For the asynchronous version of this function,
      * see g_loadable_icon_load_async().
@@ -1368,7 +1368,7 @@ class Pixbuf {
      * @param res a #GAsyncResult.
      */
     load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
-    /* Virtual methods of GdkPixbuf-2.0.GdkPixbuf.Pixbuf */
+    /* Own virtual methods of GdkPixbuf-2.0.GdkPixbuf.Pixbuf */
     /**
      * Checks if two icons are equal.
      * @virtual 
@@ -1413,7 +1413,7 @@ class Pixbuf {
      * @param res a #GAsyncResult.
      */
     vfunc_load_finish(res: Gio.AsyncResult): [ /* returnType */ Gio.InputStream, /* type */ string ]
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -1435,7 +1435,7 @@ class Pixbuf {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -1646,11 +1646,11 @@ interface PixbufAnimation_ConstructProps extends GObject.Object_ConstructProps {
  * be displayed at a given point in time.
  */
 class PixbufAnimation {
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
+    /* Own fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
+    /* Owm methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
     /**
      * Queries the height of the bounding box of a pixbuf animation.
      */
@@ -1720,7 +1720,7 @@ class PixbufAnimation {
      * the image.
      */
     is_static_image(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -2034,7 +2034,7 @@ class PixbufAnimation {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
+    /* Own virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
     /**
      * Get an iterator for displaying an animation.
      * 
@@ -2100,7 +2100,7 @@ class PixbufAnimation {
      * @virtual 
      */
     vfunc_is_static_image(): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -2122,7 +2122,7 @@ class PixbufAnimation {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -2192,11 +2192,11 @@ interface PixbufAnimationIter_ConstructProps extends GObject.Object_ConstructPro
  * certain position in an animation.
  */
 class PixbufAnimationIter {
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
+    /* Own fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
+    /* Owm methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
     /**
      * Possibly advances an animation to a new frame.
      * 
@@ -2261,7 +2261,7 @@ class PixbufAnimationIter {
      * you will need to redraw the screen for the updated area.
      */
     on_currently_loading_frame(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -2575,7 +2575,7 @@ class PixbufAnimationIter {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
+    /* Own virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
     /**
      * Possibly advances an animation to a new frame.
      * 
@@ -2644,7 +2644,7 @@ class PixbufAnimationIter {
      * @virtual 
      */
     vfunc_on_currently_loading_frame(): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -2666,7 +2666,7 @@ class PixbufAnimationIter {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -2760,9 +2760,9 @@ interface PixbufLoader_ConstructProps extends GObject.Object_ConstructProps {
  * desired time stamp.
  */
 class PixbufLoader {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of GdkPixbuf-2.0.GdkPixbuf.PixbufLoader */
+    /* Owm methods of GdkPixbuf-2.0.GdkPixbuf.PixbufLoader */
     /**
      * Informs a pixbuf loader that no further writes with
      * gdk_pixbuf_loader_write() will occur, so that it can free its
@@ -2838,7 +2838,7 @@ class PixbufLoader {
      * @param buffer The image data as a `GBytes` buffer.
      */
     write_bytes(buffer: GLib.Bytes): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -3152,12 +3152,12 @@ class PixbufLoader {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufLoader */
+    /* Own virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufLoader */
     vfunc_area_prepared(): void
     vfunc_area_updated(x: number, y: number, width: number, height: number): void
     vfunc_closed(): void
     vfunc_size_prepared(width: number, height: number): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -3179,7 +3179,7 @@ class PixbufLoader {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GdkPixbuf-2.0.GdkPixbuf.PixbufLoader */
+    /* Own signals of GdkPixbuf-2.0.GdkPixbuf.PixbufLoader */
     /**
      * This signal is emitted when the pixbuf loader has allocated the
      * pixbuf in the desired size.
@@ -3236,7 +3236,7 @@ class PixbufLoader {
     connect(sigName: "size-prepared", callback: (($obj: PixbufLoader, width: number, height: number) => void)): number
     connect_after(sigName: "size-prepared", callback: (($obj: PixbufLoader, width: number, height: number) => void)): number
     emit(sigName: "size-prepared", width: number, height: number): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -3287,11 +3287,11 @@ class PixbufLoader {
 interface PixbufNonAnim_ConstructProps extends PixbufAnimation_ConstructProps {
 }
 class PixbufNonAnim {
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
+    /* Extended fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
+    /* Extended methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
     /**
      * Queries the height of the bounding box of a pixbuf animation.
      */
@@ -3361,7 +3361,7 @@ class PixbufNonAnim {
      * the image.
      */
     is_static_image(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -3675,7 +3675,7 @@ class PixbufNonAnim {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
+    /* Extended virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
     /**
      * Get an iterator for displaying an animation.
      * 
@@ -3741,7 +3741,7 @@ class PixbufNonAnim {
      * @virtual 
      */
     vfunc_is_static_image(): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -3763,7 +3763,7 @@ class PixbufNonAnim {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -3820,16 +3820,16 @@ interface PixbufSimpleAnim_ConstructProps extends PixbufAnimation_ConstructProps
  * An opaque struct representing a simple animation.
  */
 class PixbufSimpleAnim {
-    /* Properties of GdkPixbuf-2.0.GdkPixbuf.PixbufSimpleAnim */
+    /* Own properties of GdkPixbuf-2.0.GdkPixbuf.PixbufSimpleAnim */
     /**
      * Whether the animation should loop when it reaches the end.
      */
     loop: boolean
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
+    /* Extended fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of GdkPixbuf-2.0.GdkPixbuf.PixbufSimpleAnim */
+    /* Owm methods of GdkPixbuf-2.0.GdkPixbuf.PixbufSimpleAnim */
     /**
      * Adds a new frame to `animation`. The `pixbuf` must
      * have the dimensions specified when the animation
@@ -3846,7 +3846,7 @@ class PixbufSimpleAnim {
      * @param loop whether to loop the animation
      */
     set_loop(loop: boolean): void
-    /* Methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
+    /* Extended methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
     /**
      * Queries the height of the bounding box of a pixbuf animation.
      */
@@ -3916,7 +3916,7 @@ class PixbufSimpleAnim {
      * the image.
      */
     is_static_image(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -4230,7 +4230,7 @@ class PixbufSimpleAnim {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
+    /* Extended virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimation */
     /**
      * Get an iterator for displaying an animation.
      * 
@@ -4296,7 +4296,7 @@ class PixbufSimpleAnim {
      * @virtual 
      */
     vfunc_is_static_image(): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -4318,7 +4318,7 @@ class PixbufSimpleAnim {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -4369,11 +4369,11 @@ class PixbufSimpleAnim {
 interface PixbufSimpleAnimIter_ConstructProps extends PixbufAnimationIter_ConstructProps {
 }
 class PixbufSimpleAnimIter {
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
+    /* Extended fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
+    /* Extended methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
     /**
      * Possibly advances an animation to a new frame.
      * 
@@ -4438,7 +4438,7 @@ class PixbufSimpleAnimIter {
      * you will need to redraw the screen for the updated area.
      */
     on_currently_loading_frame(): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -4752,7 +4752,7 @@ class PixbufSimpleAnimIter {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
+    /* Extended virtual methods of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIter */
     /**
      * Possibly advances an animation to a new frame.
      * 
@@ -4821,7 +4821,7 @@ class PixbufSimpleAnimIter {
      * @virtual 
      */
     vfunc_on_currently_loading_frame(): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -4843,7 +4843,7 @@ class PixbufSimpleAnimIter {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -4893,7 +4893,7 @@ class PixbufSimpleAnimIter {
  * virtual functions.
  */
 abstract class PixbufAnimationClass {
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationClass */
+    /* Own fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationClass */
     /**
      * the parent class
      */
@@ -4910,7 +4910,7 @@ abstract class PixbufAnimationClass {
  * virtual functions.
  */
 abstract class PixbufAnimationIterClass {
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIterClass */
+    /* Own fields of GdkPixbuf-2.0.GdkPixbuf.PixbufAnimationIterClass */
     /**
      * the parent class
      */
@@ -4929,7 +4929,7 @@ abstract class PixbufAnimationIterClass {
  * use the `gdk_pixbuf_format_*` family of functions.
  */
 class PixbufFormat {
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufFormat */
+    /* Own fields of GdkPixbuf-2.0.GdkPixbuf.PixbufFormat */
     /**
      * the name of the image format
      */
@@ -4968,7 +4968,7 @@ class PixbufFormat {
      *   shorthands like "GPL", "LGPL", etc.
      */
     license: string
-    /* Methods of GdkPixbuf-2.0.GdkPixbuf.PixbufFormat */
+    /* Owm methods of GdkPixbuf-2.0.GdkPixbuf.PixbufFormat */
     /**
      * Creates a copy of `format`.
      */
@@ -5042,7 +5042,7 @@ class PixbufFormat {
     static name: string
 }
 abstract class PixbufLoaderClass {
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufLoaderClass */
+    /* Own fields of GdkPixbuf-2.0.GdkPixbuf.PixbufLoaderClass */
     parent_class: GObject.ObjectClass
     size_prepared: (loader: PixbufLoader, width: number, height: number) => void
     area_prepared: (loader: PixbufLoader) => void
@@ -5098,7 +5098,7 @@ abstract class PixbufLoaderClass {
  *    by the environment variable `GDK_PIXBUF_MODULE_FILE`)
  */
 class PixbufModule {
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufModule */
+    /* Own fields of GdkPixbuf-2.0.GdkPixbuf.PixbufModule */
     /**
      * the name of the module, usually the same as the
      *  usual file extension for images of this type, eg. "xpm", "jpeg" or "png".
@@ -5179,7 +5179,7 @@ class PixbufModule {
  * relevance 100, and "blau" with relevance 90.
  */
 class PixbufModulePattern {
-    /* Fields of GdkPixbuf-2.0.GdkPixbuf.PixbufModulePattern */
+    /* Own fields of GdkPixbuf-2.0.GdkPixbuf.PixbufModulePattern */
     /**
      * the prefix for this pattern
      */

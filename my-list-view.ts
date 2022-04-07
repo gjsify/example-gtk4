@@ -62,9 +62,11 @@ export class IMyListView extends ListViewListStore {
         // Update Gtk.Label with data from model item
         label?.set_text(data.name || "")
         // Update Gtk.Switch with data from model item
-        _switch.set_state(false) // 'TODO: data.state'
+        _switch.set_state(data.state)
         // connect switch to handler, so we can handle changes
-        // TODO: _switch?.connect('state-set', this.switch_changed.bind(this), item.get_position())
+        _switch?.connect('state-set', (widget: Gtk.Switch, state: boolean) => {
+            this.switchChanged(widget, state, item.get_position())
+        })
         item.set_child(box)
     }
 
@@ -99,7 +101,7 @@ export class IMyListView extends ListViewListStore {
         this.win?.page4Label?.set_markup(markup)
     }
 
-    switch_changed(widget, state: boolean, pos: number) {
+    switchChanged(widget: Gtk.Switch, state: boolean, pos: number) {
         // update the data model, with current state
         const elem = this.store?.[pos]
         elem.state = state

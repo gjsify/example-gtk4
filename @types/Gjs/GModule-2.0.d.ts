@@ -82,7 +82,7 @@ interface ModuleUnload {
  * It should only be accessed via the following functions.
  */
 class Module {
-    /* Methods of GModule-2.0.GModule.Module */
+    /* Owm methods of GModule-2.0.GModule.Module */
     /**
      * Closes a module.
      */

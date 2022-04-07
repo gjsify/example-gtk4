@@ -263,7 +263,7 @@ class Path {
     static name: string
 }
 class Rectangle {
-    /* Fields of cairo-1.0.cairo.Rectangle */
+    /* Own fields of cairo-1.0.cairo.Rectangle */
     x: number
     y: number
     width: number
@@ -271,7 +271,7 @@ class Rectangle {
     static name: string
 }
 class RectangleInt {
-    /* Fields of cairo-1.0.cairo.RectangleInt */
+    /* Own fields of cairo-1.0.cairo.RectangleInt */
     x: number
     y: number
     width: number

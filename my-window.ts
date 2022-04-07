@@ -198,7 +198,7 @@ export class IMyWindow extends Window {
         for (const txt in ['One', 'Two', 'Three', 'Four']) {
             model.append(txt)
         }
-        const dropdown = Gtk.DropDown.new(model, null); // TODO: ts-for-gir do not allow undefined here
+        const dropdown = Gtk.DropDown.new(model, null);
         dropdown.set_margin_top(20)
         dropdown.set_margin_start(20)
         dropdown.set_size_request(200, -1)
@@ -514,11 +514,11 @@ export class IMyWindow extends Window {
     setupPageFive(name: string, title: string) {
         // Content box for the page
         const {frame, content, label} = this.setupPageHeader(name, title)
-        // this.page5_label = label
+        this.page5Label = label
         // // Material Color button
         // const btn_row = new ButtonRow(["Material Color"], this.onButtonChooser.bind(this))
         // content.append(btn_row)
-        // // Add the content box as a new page in the stack
+        // Add the content box as a new page in the stack
         return this.stack?.addPage(name, title, frame)
     }
 

@@ -3897,7 +3897,7 @@ interface unicode_script_func_t {
  * Structure representing a setting for an #hb_aat_layout_feature_type_t.
  */
 class aat_layout_feature_selector_info_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.aat_layout_feature_selector_info_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.aat_layout_feature_selector_info_t */
     /**
      * The selector's name identifier
      */
@@ -3942,7 +3942,7 @@ class draw_funcs_t {
  * Current drawing state.
  */
 class draw_state_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.draw_state_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.draw_state_t */
     /**
      * Whether there is an open path
      */
@@ -3979,7 +3979,7 @@ class face_t {
  * specifies that the feature always applies to the entire buffer.
  */
 class feature_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.feature_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.feature_t */
     /**
      * The #hb_tag_t tag of the feature
      */
@@ -3998,7 +3998,7 @@ class feature_t {
      * the cluster to end applying this feature setting (exclusive).
      */
     end: number
-    /* Methods of HarfBuzz-0.0.HarfBuzz.feature_t */
+    /* Owm methods of HarfBuzz-0.0.HarfBuzz.feature_t */
     /**
      * Converts a #hb_feature_t into a %NULL-terminated string in the format
      * understood by hb_feature_from_string(). The client in responsible for
@@ -4014,7 +4014,7 @@ class feature_t {
  * negative, in coordinate systems that grow up.
  */
 class font_extents_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.font_extents_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.font_extents_t */
     /**
      * The height of typographic ascenders.
      */
@@ -4054,7 +4054,7 @@ class font_t {
  * Note that `height` is negative, in coordinate systems that grow up.
  */
 class glyph_extents_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.glyph_extents_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.glyph_extents_t */
     /**
      * Distance from the x-origin to the left extremum of the glyph.
      */
@@ -4078,7 +4078,7 @@ class glyph_extents_t {
  * glyphs and their relation to input text.
  */
 class glyph_info_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.glyph_info_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.glyph_info_t */
     /**
      * either a Unicode code point (before shaping) or a glyph index
      *             (after shaping).
@@ -4106,7 +4106,7 @@ class glyph_info_t {
  * #hb_glyph_position_t are relative to the current point.
  */
 class glyph_position_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.glyph_position_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.glyph_position_t */
     /**
      * how much the line advances after drawing this glyph when setting
      *             text in horizontal direction.
@@ -4134,7 +4134,7 @@ class glyph_position_t {
  * language tag.
  */
 class language_t {
-    /* Methods of HarfBuzz-0.0.HarfBuzz.language_t */
+    /* Owm methods of HarfBuzz-0.0.HarfBuzz.language_t */
     /**
      * Converts an #hb_language_t to a string.
      */
@@ -4151,7 +4151,7 @@ class map_t {
  * Pairs of glyph and color index.
  */
 class ot_color_layer_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.ot_color_layer_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.ot_color_layer_t */
     /**
      * the glyph ID of the layer
      */
@@ -4168,7 +4168,7 @@ class ot_color_layer_t {
  * on the fly from parts.
  */
 class ot_math_glyph_part_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.ot_math_glyph_part_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.ot_math_glyph_part_t */
     /**
      * The glyph index of the variant part
      */
@@ -4195,7 +4195,7 @@ class ot_math_glyph_part_t {
  * Data type to hold math-variant information for a glyph.
  */
 class ot_math_glyph_variant_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.ot_math_glyph_variant_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.ot_math_glyph_variant_t */
     /**
      * The glyph index of the variant
      */
@@ -4210,7 +4210,7 @@ class ot_math_glyph_variant_t {
  * Data type to hold math kerning (cut-in) information for a glyph.
  */
 class ot_math_kern_entry_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.ot_math_kern_entry_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.ot_math_kern_entry_t */
     /**
      * The maximum height at which this entry should be used
      */
@@ -4225,7 +4225,7 @@ class ot_math_kern_entry_t {
  * Structure representing a name ID in a particular language.
  */
 class ot_name_entry_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.ot_name_entry_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.ot_name_entry_t */
     /**
      * name ID
      */
@@ -4245,7 +4245,7 @@ class ot_name_entry_t {
  * #HB_OT_VAR_AXIS_FLAG_HIDDEN.</note>
  */
 class ot_var_axis_info_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.ot_var_axis_info_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.ot_var_axis_info_t */
     /**
      * Index of the axis in the variation-axis array
      */
@@ -4280,7 +4280,7 @@ class ot_var_axis_info_t {
  * Use #hb_ot_var_axis_info_t instead.
  */
 class ot_var_axis_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.ot_var_axis_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.ot_var_axis_t */
     /**
      * axis tag
      */
@@ -4309,7 +4309,7 @@ class ot_var_axis_t {
  * hb_buffer_get_segment_properties(), respectively.
  */
 class segment_properties_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.segment_properties_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.segment_properties_t */
     /**
      * the #hb_direction_t of the buffer, see hb_buffer_set_direction().
      */
@@ -4372,7 +4372,7 @@ class user_data_key_t {
  * [OpenType Axis Tag Registry](https://docs.microsoft.com/en-us/typography/opentype/spec/dvaraxisreg).
  */
 class variation_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.variation_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.variation_t */
     /**
      * The #hb_tag_t tag of the variation-axis name
      */
@@ -4381,7 +4381,7 @@ class variation_t {
      * The value of the variation axis
      */
     value: number
-    /* Methods of HarfBuzz-0.0.HarfBuzz.variation_t */
+    /* Owm methods of HarfBuzz-0.0.HarfBuzz.variation_t */
     /**
      * Converts an #hb_variation_t into a %NULL-terminated string in the format
      * understood by hb_variation_from_string(). The client in responsible for
@@ -4391,7 +4391,7 @@ class variation_t {
     static name: string
 }
 class var_int_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.var_int_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.var_int_t */
     u32: number
     i32: number
     u16: number[]
@@ -4401,7 +4401,7 @@ class var_int_t {
     static name: string
 }
 class var_num_t {
-    /* Fields of HarfBuzz-0.0.HarfBuzz.var_num_t */
+    /* Own fields of HarfBuzz-0.0.HarfBuzz.var_num_t */
     f: number
     u32: number
     i32: number

@@ -105,13 +105,17 @@ function identity_from_string(str: string): Identity | null
 function implicit_authorization_from_string(string: string, out_implicit_authorization: ImplicitAuthorization): boolean
 function implicit_authorization_to_string(implicit_authorization: ImplicitAuthorization): string
 function subject_from_string(str: string): Subject
+interface Identity_ConstructProps extends GObject.Object_ConstructProps {
+}
 /**
  * #PolkitIdentity is an abstract type for representing one or more
  * identities.
  * @interface 
  */
 class Identity {
-    /* Methods of Polkit-1.0.Polkit.Identity */
+    /* Extended fields of GObject-2.0.GObject.Object */
+    g_type_instance: GObject.TypeInstance
+    /* Owm methods of Polkit-1.0.Polkit.Identity */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
@@ -128,204 +132,7 @@ class Identity {
      * polkit_identity_from_string().
      */
     to_string(): string
-    /* Virtual methods of Polkit-1.0.Polkit.Identity */
-    /**
-     * Checks if `a` and `b` are equal, ie. represent the same identity.
-     * 
-     * This function can be used in e.g. g_hash_table_new().
-     * @virtual 
-     * @param b A #PolkitIdentity.
-     */
-    vfunc_equal(b: Identity): boolean
-    /**
-     * Gets a hash code for `identity` that can be used with e.g. g_hash_table_new().
-     * @virtual 
-     */
-    vfunc_hash(): number
-    /**
-     * Serializes `identity` to a string that can be used in
-     * polkit_identity_from_string().
-     * @virtual 
-     */
-    vfunc_to_string(): string
-    static name: string
-    /* Static methods and pseudo-constructors */
-    /**
-     * Creates an object from `str` that implements the #PolkitIdentity
-     * interface.
-     * @param str A string obtained from polkit_identity_to_string().
-     */
-    static from_string(str: string): Identity | null
-}
-/**
- * #PolkitSubject is an abstract type for representing one or more
- * processes.
- * @interface 
- */
-class Subject {
-    /* Methods of Polkit-1.0.Polkit.Subject */
-    /**
-     * Checks if `a` and `b` are equal, ie. represent the same subject.
-     * However, avoid calling polkit_subject_equal() to compare two processes;
-     * for more information see the `PolkitUnixProcess` documentation.
-     * 
-     * This function can be used in e.g. g_hash_table_new().
-     * @param b A #PolkitSubject.
-     */
-    equal(b: Subject): boolean
-    /**
-     * Asynchronously checks if `subject` exists.
-     * 
-     * When the operation is finished, `callback` will be invoked in the
-     * <link linkend="g-main-context-push-thread-default">thread-default
-     * main loop</link> of the thread you are calling this method
-     * from. You can then call polkit_subject_exists_finish() to get the
-     * result of the operation.
-     * @param cancellable A #GCancellable or %NULL.
-     * @param callback A #GAsyncReadyCallback to call when the request is satisfied
-     */
-    exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
-    /**
-     * Finishes checking whether a subject exists.
-     * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
-     */
-    exists_finish(res: Gio.AsyncResult): boolean
-    /**
-     * Checks if `subject` exists.
-     * 
-     * This is a synchronous blocking call - the calling thread is blocked
-     * until a reply is received. See polkit_subject_exists() for the
-     * asynchronous version.
-     * @param cancellable A #GCancellable or %NULL.
-     */
-    exists_sync(cancellable: Gio.Cancellable | null): boolean
-    /**
-     * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
-     */
-    hash(): number
-    /**
-     * Serializes `subject` to a string that can be used in
-     * polkit_subject_from_string().
-     */
-    to_string(): string
-    /* Virtual methods of Polkit-1.0.Polkit.Subject */
-    /**
-     * Checks if `a` and `b` are equal, ie. represent the same subject.
-     * However, avoid calling polkit_subject_equal() to compare two processes;
-     * for more information see the `PolkitUnixProcess` documentation.
-     * 
-     * This function can be used in e.g. g_hash_table_new().
-     * @virtual 
-     * @param b A #PolkitSubject.
-     */
-    vfunc_equal(b: Subject): boolean
-    /**
-     * Asynchronously checks if `subject` exists.
-     * 
-     * When the operation is finished, `callback` will be invoked in the
-     * <link linkend="g-main-context-push-thread-default">thread-default
-     * main loop</link> of the thread you are calling this method
-     * from. You can then call polkit_subject_exists_finish() to get the
-     * result of the operation.
-     * @virtual 
-     * @param cancellable A #GCancellable or %NULL.
-     * @param callback A #GAsyncReadyCallback to call when the request is satisfied
-     */
-    vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
-    /**
-     * Finishes checking whether a subject exists.
-     * @virtual 
-     * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
-     */
-    vfunc_exists_finish(res: Gio.AsyncResult): boolean
-    /**
-     * Checks if `subject` exists.
-     * 
-     * This is a synchronous blocking call - the calling thread is blocked
-     * until a reply is received. See polkit_subject_exists() for the
-     * asynchronous version.
-     * @virtual 
-     * @param cancellable A #GCancellable or %NULL.
-     */
-    vfunc_exists_sync(cancellable: Gio.Cancellable | null): boolean
-    /**
-     * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
-     * @virtual 
-     */
-    vfunc_hash(): number
-    /**
-     * Serializes `subject` to a string that can be used in
-     * polkit_subject_from_string().
-     * @virtual 
-     */
-    vfunc_to_string(): string
-    static name: string
-    /* Static methods and pseudo-constructors */
-    /**
-     * Creates an object from `str` that implements the #PolkitSubject
-     * interface.
-     * @param str A string obtained from polkit_subject_to_string().
-     */
-    static from_string(str: string): Subject
-}
-interface ActionDescription_ConstructProps extends GObject.Object_ConstructProps {
-}
-/**
- * Object used to encapsulate a registered action.
- */
-class ActionDescription {
-    /* Fields of GObject-2.0.GObject.Object */
-    g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.ActionDescription */
-    /**
-     * Gets the action id for `action_description`.
-     */
-    get_action_id(): string
-    /**
-     * Get the value of the annotation with `key`.
-     * @param key An annotation key.
-     */
-    get_annotation(key: string): string | null
-    /**
-     * Gets the keys of annotations defined in `action_description`.
-     */
-    get_annotation_keys(): string[]
-    /**
-     * Gets the description used for `action_description`.
-     */
-    get_description(): string
-    /**
-     * Gets the icon name for `action_description,` if any.
-     */
-    get_icon_name(): string
-    /**
-     * Gets the implicit authorization for `action_description` used for
-     * subjects in active sessions on a local console.
-     */
-    get_implicit_active(): ImplicitAuthorization
-    /**
-     * Gets the implicit authorization for `action_description` used for
-     * any subject.
-     */
-    get_implicit_any(): ImplicitAuthorization
-    /**
-     * Gets the implicit authorization for `action_description` used for
-     * subjects in inactive sessions on a local console.
-     */
-    get_implicit_inactive(): ImplicitAuthorization
-    /**
-     * Gets the message used for `action_description`.
-     */
-    get_message(): string
-    /**
-     * Gets the vendor name for `action_description,` if any.
-     */
-    get_vendor_name(): string
-    /**
-     * Gets the vendor URL for `action_description,` if any.
-     */
-    get_vendor_url(): string
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -639,7 +446,27 @@ class ActionDescription {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Own virtual methods of Polkit-1.0.Polkit.Identity */
+    /**
+     * Checks if `a` and `b` are equal, ie. represent the same identity.
+     * 
+     * This function can be used in e.g. g_hash_table_new().
+     * @virtual 
+     * @param b A #PolkitIdentity.
+     */
+    vfunc_equal(b: Identity): boolean
+    /**
+     * Gets a hash code for `identity` that can be used with e.g. g_hash_table_new().
+     * @virtual 
+     */
+    vfunc_hash(): number
+    /**
+     * Serializes `identity` to a string that can be used in
+     * polkit_identity_from_string().
+     * @virtual 
+     */
+    vfunc_to_string(): string
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -661,7 +488,944 @@ class ActionDescription {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
+    /**
+     * The notify signal is emitted on an object when one of its properties has
+     * its value set through g_object_set_property(), g_object_set(), et al.
+     * 
+     * Note that getting this signal doesn’t itself guarantee that the value of
+     * the property has actually changed. When it is emitted is determined by the
+     * derived GObject class. If the implementor did not create the property with
+     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
+     * in ::notify being emitted, even if the new value is the same as the old.
+     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
+     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
+     * and common practice is to do that only when the value has actually changed.
+     * 
+     * This signal is typically used to obtain change notification for a
+     * single property, by specifying the property name as a detail in the
+     * g_signal_connect() call, like this:
+     * 
+     * 
+     * ```c
+     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
+     *                   G_CALLBACK (gtk_text_view_target_list_notify),
+     *                   text_view)
+     * ```
+     * 
+     * 
+     * It is important to note that you must use
+     * [canonical parameter names][canonical-parameter-names] as
+     * detail strings for the notify signal.
+     * @signal 
+     * @param pspec the #GParamSpec of the property which changed.
+     */
+    connect(sigName: "notify", callback: (($obj: Identity, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify", callback: (($obj: Identity, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify", pspec: GObject.ParamSpec): void
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
+    emit(sigName: string, ...args: any[]): void
+    disconnect(id: number): void
+    static name: string
+    constructor (config?: Identity_ConstructProps)
+    _init (config?: Identity_ConstructProps): void
+    /* Static methods and pseudo-constructors */
+    /**
+     * Creates an object from `str` that implements the #PolkitIdentity
+     * interface.
+     * @param str A string obtained from polkit_identity_to_string().
+     */
+    static from_string(str: string): Identity | null
+    static $gtype: GObject.GType<Identity>
+}
+interface Subject_ConstructProps extends GObject.Object_ConstructProps {
+}
+/**
+ * #PolkitSubject is an abstract type for representing one or more
+ * processes.
+ * @interface 
+ */
+class Subject {
+    /* Extended fields of GObject-2.0.GObject.Object */
+    g_type_instance: GObject.TypeInstance
+    /* Owm methods of Polkit-1.0.Polkit.Subject */
+    /**
+     * Checks if `a` and `b` are equal, ie. represent the same subject.
+     * However, avoid calling polkit_subject_equal() to compare two processes;
+     * for more information see the `PolkitUnixProcess` documentation.
+     * 
+     * This function can be used in e.g. g_hash_table_new().
+     * @param b A #PolkitSubject.
+     */
+    equal(b: Subject): boolean
+    /**
+     * Asynchronously checks if `subject` exists.
+     * 
+     * When the operation is finished, `callback` will be invoked in the
+     * <link linkend="g-main-context-push-thread-default">thread-default
+     * main loop</link> of the thread you are calling this method
+     * from. You can then call polkit_subject_exists_finish() to get the
+     * result of the operation.
+     * @param cancellable A #GCancellable or %NULL.
+     * @param callback A #GAsyncReadyCallback to call when the request is satisfied
+     */
+    exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    /**
+     * Finishes checking whether a subject exists.
+     * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
+     */
+    exists_finish(res: Gio.AsyncResult): boolean
+    /**
+     * Checks if `subject` exists.
+     * 
+     * This is a synchronous blocking call - the calling thread is blocked
+     * until a reply is received. See polkit_subject_exists() for the
+     * asynchronous version.
+     * @param cancellable A #GCancellable or %NULL.
+     */
+    exists_sync(cancellable: Gio.Cancellable | null): boolean
+    /**
+     * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
+     */
+    hash(): number
+    /**
+     * Serializes `subject` to a string that can be used in
+     * polkit_subject_from_string().
+     */
+    to_string(): string
+    /* Extended methods of GObject-2.0.GObject.Object */
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target`.
+     * 
+     * Whenever the `source_property` is changed the `target_property` is
+     * updated using the same value. For instance:
+     * 
+     * 
+     * ```c
+     *   g_object_bind_property (action, "active", widget, "sensitive", 0);
+     * ```
+     * 
+     * 
+     * Will result in the "sensitive" property of the widget #GObject instance to be
+     * updated with the same value of the "active" property of the action #GObject
+     * instance.
+     * 
+     * If `flags` contains %G_BINDING_BIDIRECTIONAL then the binding will be mutual:
+     * if `target_property` on `target` changes then the `source_property` on `source`
+     * will be updated as well.
+     * 
+     * The binding will automatically be removed when either the `source` or the
+     * `target` instances are finalized. To remove the binding without affecting the
+     * `source` and the `target` you can just call g_object_unref() on the returned
+     * #GBinding instance.
+     * 
+     * Removing the binding by calling g_object_unref() on it must only be done if
+     * the binding, `source` and `target` are only used from a single thread and it
+     * is clear that both `source` and `target` outlive the binding. Especially it
+     * is not safe to rely on this if the binding, `source` or `target` can be
+     * finalized from different threads. Keep another reference to the binding and
+     * use g_binding_unbind() instead to be on the safe side.
+     * 
+     * A #GObject can have multiple bindings.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     */
+    bind_property(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags): GObject.Binding
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target,` allowing you to set the transformation functions to be used by
+     * the binding.
+     * 
+     * This function is the language bindings friendly version of
+     * g_object_bind_property_full(), using #GClosures instead of
+     * function pointers.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     * @param transform_to a #GClosure wrapping the transformation function     from the `source` to the `target,` or %NULL to use the default
+     * @param transform_from a #GClosure wrapping the transformation function     from the `target` to the `source,` or %NULL to use the default
+     */
+    bind_property_full(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags, transform_to: GObject.TClosure, transform_from: GObject.TClosure): GObject.Binding
+    /**
+     * This function is intended for #GObject implementations to re-enforce
+     * a [floating][floating-ref] object reference. Doing this is seldom
+     * required: all #GInitiallyUnowneds are created with a floating reference
+     * which usually just needs to be sunken by calling g_object_ref_sink().
+     */
+    force_floating(): void
+    /**
+     * Increases the freeze count on `object`. If the freeze count is
+     * non-zero, the emission of "notify" signals on `object` is
+     * stopped. The signals are queued until the freeze count is decreased
+     * to zero. Duplicate notifications are squashed so that at most one
+     * #GObject::notify signal is emitted for each property modified while the
+     * object is frozen.
+     * 
+     * This is necessary for accessors that modify multiple properties to prevent
+     * premature notification while the object is still being modified.
+     */
+    freeze_notify(): void
+    /**
+     * Gets a named field from the objects table of associations (see g_object_set_data()).
+     * @param key name of the key for that association
+     */
+    get_data(key: string): object | null
+    /**
+     * Gets a property of an object.
+     * 
+     * The `value` can be:
+     * 
+     *  - an empty #GValue initialized by %G_VALUE_INIT, which will be
+     *    automatically initialized with the expected type of the property
+     *    (since GLib 2.60)
+     *  - a #GValue initialized with the expected type of the property
+     *  - a #GValue initialized with a type to which the expected type
+     *    of the property can be transformed
+     * 
+     * In general, a copy is made of the property contents and the caller is
+     * responsible for freeing the memory by calling g_value_unset().
+     * 
+     * Note that g_object_get_property() is really intended for language
+     * bindings, g_object_get() is much more convenient for C programming.
+     * @param property_name the name of the property to get
+     * @param value return location for the property value
+     */
+    get_property(property_name: string, value: any): void
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    get_qdata(quark: GLib.Quark): object | null
+    /**
+     * Gets `n_properties` properties for an `object`.
+     * Obtained properties will be set to `values`. All properties must be valid.
+     * Warnings will be emitted and undefined behaviour may result if invalid
+     * properties are passed in.
+     * @param names the names of each property to get
+     * @param values the values of each property to get
+     */
+    getv(names: string[], values: any[]): void
+    /**
+     * Checks whether `object` has a [floating][floating-ref] reference.
+     */
+    is_floating(): boolean
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @param property_name the name of a property installed on the class of `object`.
+     */
+    notify(property_name: string): void
+    /**
+     * Emits a "notify" signal for the property specified by `pspec` on `object`.
+     * 
+     * This function omits the property name lookup, hence it is faster than
+     * g_object_notify().
+     * 
+     * One way to avoid using g_object_notify() from within the
+     * class that registered the properties, and using g_object_notify_by_pspec()
+     * instead, is to store the GParamSpec used with
+     * g_object_class_install_property() inside a static array, e.g.:
+     * 
+     * 
+     * ```c
+     *   enum
+     *   {
+     *     PROP_0,
+     *     PROP_FOO,
+     *     PROP_LAST
+     *   };
+     * 
+     *   static GParamSpec *properties[PROP_LAST];
+     * 
+     *   static void
+     *   my_object_class_init (MyObjectClass *klass)
+     *   {
+     *     properties[PROP_FOO] = g_param_spec_int ("foo", "Foo", "The foo",
+     *                                              0, 100,
+     *                                              50,
+     *                                              G_PARAM_READWRITE);
+     *     g_object_class_install_property (gobject_class,
+     *                                      PROP_FOO,
+     *                                      properties[PROP_FOO]);
+     *   }
+     * ```
+     * 
+     * 
+     * and then notify a change on the "foo" property with:
+     * 
+     * 
+     * ```c
+     *   g_object_notify_by_pspec (self, properties[PROP_FOO]);
+     * ```
+     * 
+     * @param pspec the #GParamSpec of a property installed on the class of `object`.
+     */
+    notify_by_pspec(pspec: GObject.ParamSpec): void
+    /**
+     * Increases the reference count of `object`.
+     * 
+     * Since GLib 2.56, if `GLIB_VERSION_MAX_ALLOWED` is 2.56 or greater, the type
+     * of `object` will be propagated to the return type (using the GCC typeof()
+     * extension), so any casting the caller needs to do on the return type must be
+     * explicit.
+     */
+    ref(): GObject.Object
+    /**
+     * Increase the reference count of `object,` and possibly remove the
+     * [floating][floating-ref] reference, if `object` has a floating reference.
+     * 
+     * In other words, if the object is floating, then this call "assumes
+     * ownership" of the floating reference, converting it to a normal
+     * reference by clearing the floating flag while leaving the reference
+     * count unchanged.  If the object is not floating, then this call
+     * adds a new normal reference increasing the reference count by one.
+     * 
+     * Since GLib 2.56, the type of `object` will be propagated to the return type
+     * under the same conditions as for g_object_ref().
+     */
+    ref_sink(): GObject.Object
+    /**
+     * Releases all references to other objects. This can be used to break
+     * reference cycles.
+     * 
+     * This function should only be called from object system implementations.
+     */
+    run_dispose(): void
+    /**
+     * Each object carries around a table of associations from
+     * strings to pointers.  This function lets you set an association.
+     * 
+     * If the object already had an association with that name,
+     * the old association will be destroyed.
+     * 
+     * Internally, the `key` is converted to a #GQuark using g_quark_from_string().
+     * This means a copy of `key` is kept permanently (even after `object` has been
+     * finalized) — so it is recommended to only use a small, bounded set of values
+     * for `key` in your program, to avoid the #GQuark storage growing unbounded.
+     * @param key name of the key
+     * @param data data to associate with that key
+     */
+    set_data(key: string, data: object | null): void
+    /**
+     * Sets a property on an object.
+     * @param property_name the name of the property to set
+     * @param value the value
+     */
+    set_property(property_name: string, value: any): void
+    /**
+     * Remove a specified datum from the object's data associations,
+     * without invoking the association's destroy handler.
+     * @param key name of the key
+     */
+    steal_data(key: string): object | null
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata() and removes the `data` from object
+     * without invoking its destroy() function (if any was
+     * set).
+     * Usually, calling this function is only required to update
+     * user data pointers with a destroy notifier, for example:
+     * 
+     * ```c
+     * void
+     * object_add_to_user_list (GObject     *object,
+     *                          const gchar *new_string)
+     * {
+     *   // the quark, naming the object data
+     *   GQuark quark_string_list = g_quark_from_static_string ("my-string-list");
+     *   // retrieve the old string list
+     *   GList *list = g_object_steal_qdata (object, quark_string_list);
+     * 
+     *   // prepend new string
+     *   list = g_list_prepend (list, g_strdup (new_string));
+     *   // this changed 'list', so we need to set it again
+     *   g_object_set_qdata_full (object, quark_string_list, list, free_string_list);
+     * }
+     * static void
+     * free_string_list (gpointer data)
+     * {
+     *   GList *node, *list = data;
+     * 
+     *   for (node = list; node; node = node->next)
+     *     g_free (node->data);
+     *   g_list_free (list);
+     * }
+     * ```
+     * 
+     * Using g_object_get_qdata() in the above example, instead of
+     * g_object_steal_qdata() would have left the destroy function set,
+     * and thus the partial string list would have been freed upon
+     * g_object_set_qdata_full().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    steal_qdata(quark: GLib.Quark): object | null
+    /**
+     * Reverts the effect of a previous call to
+     * g_object_freeze_notify(). The freeze count is decreased on `object`
+     * and when it reaches zero, queued "notify" signals are emitted.
+     * 
+     * Duplicate notifications for each property are squashed so that at most one
+     * #GObject::notify signal is emitted for each property, in the reverse order
+     * in which they have been queued.
+     * 
+     * It is an error to call this function when the freeze count is zero.
+     */
+    thaw_notify(): void
+    /**
+     * Decreases the reference count of `object`. When its reference count
+     * drops to 0, the object is finalized (i.e. its memory is freed).
+     * 
+     * If the pointer to the #GObject may be reused in future (for example, if it is
+     * an instance variable of another object), it is recommended to clear the
+     * pointer to %NULL rather than retain a dangling pointer to a potentially
+     * invalid #GObject instance. Use g_clear_object() for this.
+     */
+    unref(): void
+    /**
+     * This function essentially limits the life time of the `closure` to
+     * the life time of the object. That is, when the object is finalized,
+     * the `closure` is invalidated by calling g_closure_invalidate() on
+     * it, in order to prevent invocations of the closure with a finalized
+     * (nonexisting) object. Also, g_object_ref() and g_object_unref() are
+     * added as marshal guards to the `closure,` to ensure that an extra
+     * reference count is held on `object` during invocation of the
+     * `closure`.  Usually, this function will be called on closures that
+     * use this `object` as closure data.
+     * @param closure #GClosure to watch
+     */
+    watch_closure(closure: GObject.TClosure): void
+    /* Own virtual methods of Polkit-1.0.Polkit.Subject */
+    /**
+     * Checks if `a` and `b` are equal, ie. represent the same subject.
+     * However, avoid calling polkit_subject_equal() to compare two processes;
+     * for more information see the `PolkitUnixProcess` documentation.
+     * 
+     * This function can be used in e.g. g_hash_table_new().
+     * @virtual 
+     * @param b A #PolkitSubject.
+     */
+    vfunc_equal(b: Subject): boolean
+    /**
+     * Asynchronously checks if `subject` exists.
+     * 
+     * When the operation is finished, `callback` will be invoked in the
+     * <link linkend="g-main-context-push-thread-default">thread-default
+     * main loop</link> of the thread you are calling this method
+     * from. You can then call polkit_subject_exists_finish() to get the
+     * result of the operation.
+     * @virtual 
+     * @param cancellable A #GCancellable or %NULL.
+     * @param callback A #GAsyncReadyCallback to call when the request is satisfied
+     */
+    vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    /**
+     * Finishes checking whether a subject exists.
+     * @virtual 
+     * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
+     */
+    vfunc_exists_finish(res: Gio.AsyncResult): boolean
+    /**
+     * Checks if `subject` exists.
+     * 
+     * This is a synchronous blocking call - the calling thread is blocked
+     * until a reply is received. See polkit_subject_exists() for the
+     * asynchronous version.
+     * @virtual 
+     * @param cancellable A #GCancellable or %NULL.
+     */
+    vfunc_exists_sync(cancellable: Gio.Cancellable | null): boolean
+    /**
+     * Gets a hash code for `subject` that can be used with e.g. g_hash_table_new().
+     * @virtual 
+     */
+    vfunc_hash(): number
+    /**
+     * Serializes `subject` to a string that can be used in
+     * polkit_subject_from_string().
+     * @virtual 
+     */
+    vfunc_to_string(): string
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
+    vfunc_constructed(): void
+    vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
+    vfunc_dispose(): void
+    vfunc_finalize(): void
+    vfunc_get_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @virtual 
+     * @param pspec 
+     */
+    vfunc_notify(pspec: GObject.ParamSpec): void
+    vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
+    /* Extended signals of GObject-2.0.GObject.Object */
+    /**
+     * The notify signal is emitted on an object when one of its properties has
+     * its value set through g_object_set_property(), g_object_set(), et al.
+     * 
+     * Note that getting this signal doesn’t itself guarantee that the value of
+     * the property has actually changed. When it is emitted is determined by the
+     * derived GObject class. If the implementor did not create the property with
+     * %G_PARAM_EXPLICIT_NOTIFY, then any call to g_object_set_property() results
+     * in ::notify being emitted, even if the new value is the same as the old.
+     * If they did pass %G_PARAM_EXPLICIT_NOTIFY, then this signal is emitted only
+     * when they explicitly call g_object_notify() or g_object_notify_by_pspec(),
+     * and common practice is to do that only when the value has actually changed.
+     * 
+     * This signal is typically used to obtain change notification for a
+     * single property, by specifying the property name as a detail in the
+     * g_signal_connect() call, like this:
+     * 
+     * 
+     * ```c
+     * g_signal_connect (text_view->buffer, "notify::paste-target-list",
+     *                   G_CALLBACK (gtk_text_view_target_list_notify),
+     *                   text_view)
+     * ```
+     * 
+     * 
+     * It is important to note that you must use
+     * [canonical parameter names][canonical-parameter-names] as
+     * detail strings for the notify signal.
+     * @signal 
+     * @param pspec the #GParamSpec of the property which changed.
+     */
+    connect(sigName: "notify", callback: (($obj: Subject, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify", callback: (($obj: Subject, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify", pspec: GObject.ParamSpec): void
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
+    emit(sigName: string, ...args: any[]): void
+    disconnect(id: number): void
+    static name: string
+    constructor (config?: Subject_ConstructProps)
+    _init (config?: Subject_ConstructProps): void
+    /* Static methods and pseudo-constructors */
+    /**
+     * Creates an object from `str` that implements the #PolkitSubject
+     * interface.
+     * @param str A string obtained from polkit_subject_to_string().
+     */
+    static from_string(str: string): Subject
+    static $gtype: GObject.GType<Subject>
+}
+interface ActionDescription_ConstructProps extends GObject.Object_ConstructProps {
+}
+/**
+ * Object used to encapsulate a registered action.
+ */
+class ActionDescription {
+    /* Extended fields of GObject-2.0.GObject.Object */
+    g_type_instance: GObject.TypeInstance
+    /* Owm methods of Polkit-1.0.Polkit.ActionDescription */
+    /**
+     * Gets the action id for `action_description`.
+     */
+    get_action_id(): string
+    /**
+     * Get the value of the annotation with `key`.
+     * @param key An annotation key.
+     */
+    get_annotation(key: string): string | null
+    /**
+     * Gets the keys of annotations defined in `action_description`.
+     */
+    get_annotation_keys(): string[]
+    /**
+     * Gets the description used for `action_description`.
+     */
+    get_description(): string
+    /**
+     * Gets the icon name for `action_description,` if any.
+     */
+    get_icon_name(): string
+    /**
+     * Gets the implicit authorization for `action_description` used for
+     * subjects in active sessions on a local console.
+     */
+    get_implicit_active(): ImplicitAuthorization
+    /**
+     * Gets the implicit authorization for `action_description` used for
+     * any subject.
+     */
+    get_implicit_any(): ImplicitAuthorization
+    /**
+     * Gets the implicit authorization for `action_description` used for
+     * subjects in inactive sessions on a local console.
+     */
+    get_implicit_inactive(): ImplicitAuthorization
+    /**
+     * Gets the message used for `action_description`.
+     */
+    get_message(): string
+    /**
+     * Gets the vendor name for `action_description,` if any.
+     */
+    get_vendor_name(): string
+    /**
+     * Gets the vendor URL for `action_description,` if any.
+     */
+    get_vendor_url(): string
+    /* Extended methods of GObject-2.0.GObject.Object */
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target`.
+     * 
+     * Whenever the `source_property` is changed the `target_property` is
+     * updated using the same value. For instance:
+     * 
+     * 
+     * ```c
+     *   g_object_bind_property (action, "active", widget, "sensitive", 0);
+     * ```
+     * 
+     * 
+     * Will result in the "sensitive" property of the widget #GObject instance to be
+     * updated with the same value of the "active" property of the action #GObject
+     * instance.
+     * 
+     * If `flags` contains %G_BINDING_BIDIRECTIONAL then the binding will be mutual:
+     * if `target_property` on `target` changes then the `source_property` on `source`
+     * will be updated as well.
+     * 
+     * The binding will automatically be removed when either the `source` or the
+     * `target` instances are finalized. To remove the binding without affecting the
+     * `source` and the `target` you can just call g_object_unref() on the returned
+     * #GBinding instance.
+     * 
+     * Removing the binding by calling g_object_unref() on it must only be done if
+     * the binding, `source` and `target` are only used from a single thread and it
+     * is clear that both `source` and `target` outlive the binding. Especially it
+     * is not safe to rely on this if the binding, `source` or `target` can be
+     * finalized from different threads. Keep another reference to the binding and
+     * use g_binding_unbind() instead to be on the safe side.
+     * 
+     * A #GObject can have multiple bindings.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     */
+    bind_property(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags): GObject.Binding
+    /**
+     * Creates a binding between `source_property` on `source` and `target_property`
+     * on `target,` allowing you to set the transformation functions to be used by
+     * the binding.
+     * 
+     * This function is the language bindings friendly version of
+     * g_object_bind_property_full(), using #GClosures instead of
+     * function pointers.
+     * @param source_property the property on `source` to bind
+     * @param target the target #GObject
+     * @param target_property the property on `target` to bind
+     * @param flags flags to pass to #GBinding
+     * @param transform_to a #GClosure wrapping the transformation function     from the `source` to the `target,` or %NULL to use the default
+     * @param transform_from a #GClosure wrapping the transformation function     from the `target` to the `source,` or %NULL to use the default
+     */
+    bind_property_full(source_property: string, target: GObject.Object, target_property: string, flags: GObject.BindingFlags, transform_to: GObject.TClosure, transform_from: GObject.TClosure): GObject.Binding
+    /**
+     * This function is intended for #GObject implementations to re-enforce
+     * a [floating][floating-ref] object reference. Doing this is seldom
+     * required: all #GInitiallyUnowneds are created with a floating reference
+     * which usually just needs to be sunken by calling g_object_ref_sink().
+     */
+    force_floating(): void
+    /**
+     * Increases the freeze count on `object`. If the freeze count is
+     * non-zero, the emission of "notify" signals on `object` is
+     * stopped. The signals are queued until the freeze count is decreased
+     * to zero. Duplicate notifications are squashed so that at most one
+     * #GObject::notify signal is emitted for each property modified while the
+     * object is frozen.
+     * 
+     * This is necessary for accessors that modify multiple properties to prevent
+     * premature notification while the object is still being modified.
+     */
+    freeze_notify(): void
+    /**
+     * Gets a named field from the objects table of associations (see g_object_set_data()).
+     * @param key name of the key for that association
+     */
+    get_data(key: string): object | null
+    /**
+     * Gets a property of an object.
+     * 
+     * The `value` can be:
+     * 
+     *  - an empty #GValue initialized by %G_VALUE_INIT, which will be
+     *    automatically initialized with the expected type of the property
+     *    (since GLib 2.60)
+     *  - a #GValue initialized with the expected type of the property
+     *  - a #GValue initialized with a type to which the expected type
+     *    of the property can be transformed
+     * 
+     * In general, a copy is made of the property contents and the caller is
+     * responsible for freeing the memory by calling g_value_unset().
+     * 
+     * Note that g_object_get_property() is really intended for language
+     * bindings, g_object_get() is much more convenient for C programming.
+     * @param property_name the name of the property to get
+     * @param value return location for the property value
+     */
+    get_property(property_name: string, value: any): void
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    get_qdata(quark: GLib.Quark): object | null
+    /**
+     * Gets `n_properties` properties for an `object`.
+     * Obtained properties will be set to `values`. All properties must be valid.
+     * Warnings will be emitted and undefined behaviour may result if invalid
+     * properties are passed in.
+     * @param names the names of each property to get
+     * @param values the values of each property to get
+     */
+    getv(names: string[], values: any[]): void
+    /**
+     * Checks whether `object` has a [floating][floating-ref] reference.
+     */
+    is_floating(): boolean
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @param property_name the name of a property installed on the class of `object`.
+     */
+    notify(property_name: string): void
+    /**
+     * Emits a "notify" signal for the property specified by `pspec` on `object`.
+     * 
+     * This function omits the property name lookup, hence it is faster than
+     * g_object_notify().
+     * 
+     * One way to avoid using g_object_notify() from within the
+     * class that registered the properties, and using g_object_notify_by_pspec()
+     * instead, is to store the GParamSpec used with
+     * g_object_class_install_property() inside a static array, e.g.:
+     * 
+     * 
+     * ```c
+     *   enum
+     *   {
+     *     PROP_0,
+     *     PROP_FOO,
+     *     PROP_LAST
+     *   };
+     * 
+     *   static GParamSpec *properties[PROP_LAST];
+     * 
+     *   static void
+     *   my_object_class_init (MyObjectClass *klass)
+     *   {
+     *     properties[PROP_FOO] = g_param_spec_int ("foo", "Foo", "The foo",
+     *                                              0, 100,
+     *                                              50,
+     *                                              G_PARAM_READWRITE);
+     *     g_object_class_install_property (gobject_class,
+     *                                      PROP_FOO,
+     *                                      properties[PROP_FOO]);
+     *   }
+     * ```
+     * 
+     * 
+     * and then notify a change on the "foo" property with:
+     * 
+     * 
+     * ```c
+     *   g_object_notify_by_pspec (self, properties[PROP_FOO]);
+     * ```
+     * 
+     * @param pspec the #GParamSpec of a property installed on the class of `object`.
+     */
+    notify_by_pspec(pspec: GObject.ParamSpec): void
+    /**
+     * Increases the reference count of `object`.
+     * 
+     * Since GLib 2.56, if `GLIB_VERSION_MAX_ALLOWED` is 2.56 or greater, the type
+     * of `object` will be propagated to the return type (using the GCC typeof()
+     * extension), so any casting the caller needs to do on the return type must be
+     * explicit.
+     */
+    ref(): GObject.Object
+    /**
+     * Increase the reference count of `object,` and possibly remove the
+     * [floating][floating-ref] reference, if `object` has a floating reference.
+     * 
+     * In other words, if the object is floating, then this call "assumes
+     * ownership" of the floating reference, converting it to a normal
+     * reference by clearing the floating flag while leaving the reference
+     * count unchanged.  If the object is not floating, then this call
+     * adds a new normal reference increasing the reference count by one.
+     * 
+     * Since GLib 2.56, the type of `object` will be propagated to the return type
+     * under the same conditions as for g_object_ref().
+     */
+    ref_sink(): GObject.Object
+    /**
+     * Releases all references to other objects. This can be used to break
+     * reference cycles.
+     * 
+     * This function should only be called from object system implementations.
+     */
+    run_dispose(): void
+    /**
+     * Each object carries around a table of associations from
+     * strings to pointers.  This function lets you set an association.
+     * 
+     * If the object already had an association with that name,
+     * the old association will be destroyed.
+     * 
+     * Internally, the `key` is converted to a #GQuark using g_quark_from_string().
+     * This means a copy of `key` is kept permanently (even after `object` has been
+     * finalized) — so it is recommended to only use a small, bounded set of values
+     * for `key` in your program, to avoid the #GQuark storage growing unbounded.
+     * @param key name of the key
+     * @param data data to associate with that key
+     */
+    set_data(key: string, data: object | null): void
+    /**
+     * Sets a property on an object.
+     * @param property_name the name of the property to set
+     * @param value the value
+     */
+    set_property(property_name: string, value: any): void
+    /**
+     * Remove a specified datum from the object's data associations,
+     * without invoking the association's destroy handler.
+     * @param key name of the key
+     */
+    steal_data(key: string): object | null
+    /**
+     * This function gets back user data pointers stored via
+     * g_object_set_qdata() and removes the `data` from object
+     * without invoking its destroy() function (if any was
+     * set).
+     * Usually, calling this function is only required to update
+     * user data pointers with a destroy notifier, for example:
+     * 
+     * ```c
+     * void
+     * object_add_to_user_list (GObject     *object,
+     *                          const gchar *new_string)
+     * {
+     *   // the quark, naming the object data
+     *   GQuark quark_string_list = g_quark_from_static_string ("my-string-list");
+     *   // retrieve the old string list
+     *   GList *list = g_object_steal_qdata (object, quark_string_list);
+     * 
+     *   // prepend new string
+     *   list = g_list_prepend (list, g_strdup (new_string));
+     *   // this changed 'list', so we need to set it again
+     *   g_object_set_qdata_full (object, quark_string_list, list, free_string_list);
+     * }
+     * static void
+     * free_string_list (gpointer data)
+     * {
+     *   GList *node, *list = data;
+     * 
+     *   for (node = list; node; node = node->next)
+     *     g_free (node->data);
+     *   g_list_free (list);
+     * }
+     * ```
+     * 
+     * Using g_object_get_qdata() in the above example, instead of
+     * g_object_steal_qdata() would have left the destroy function set,
+     * and thus the partial string list would have been freed upon
+     * g_object_set_qdata_full().
+     * @param quark A #GQuark, naming the user data pointer
+     */
+    steal_qdata(quark: GLib.Quark): object | null
+    /**
+     * Reverts the effect of a previous call to
+     * g_object_freeze_notify(). The freeze count is decreased on `object`
+     * and when it reaches zero, queued "notify" signals are emitted.
+     * 
+     * Duplicate notifications for each property are squashed so that at most one
+     * #GObject::notify signal is emitted for each property, in the reverse order
+     * in which they have been queued.
+     * 
+     * It is an error to call this function when the freeze count is zero.
+     */
+    thaw_notify(): void
+    /**
+     * Decreases the reference count of `object`. When its reference count
+     * drops to 0, the object is finalized (i.e. its memory is freed).
+     * 
+     * If the pointer to the #GObject may be reused in future (for example, if it is
+     * an instance variable of another object), it is recommended to clear the
+     * pointer to %NULL rather than retain a dangling pointer to a potentially
+     * invalid #GObject instance. Use g_clear_object() for this.
+     */
+    unref(): void
+    /**
+     * This function essentially limits the life time of the `closure` to
+     * the life time of the object. That is, when the object is finalized,
+     * the `closure` is invalidated by calling g_closure_invalidate() on
+     * it, in order to prevent invocations of the closure with a finalized
+     * (nonexisting) object. Also, g_object_ref() and g_object_unref() are
+     * added as marshal guards to the `closure,` to ensure that an extra
+     * reference count is held on `object` during invocation of the
+     * `closure`.  Usually, this function will be called on closures that
+     * use this `object` as closure data.
+     * @param closure #GClosure to watch
+     */
+    watch_closure(closure: GObject.TClosure): void
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
+    vfunc_constructed(): void
+    vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
+    vfunc_dispose(): void
+    vfunc_finalize(): void
+    vfunc_get_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
+    /**
+     * Emits a "notify" signal for the property `property_name` on `object`.
+     * 
+     * When possible, eg. when signaling a property change from within the class
+     * that registered the property, you should use g_object_notify_by_pspec()
+     * instead.
+     * 
+     * Note that emission of the notify signal may be blocked with
+     * g_object_freeze_notify(). In this case, the signal emissions are queued
+     * and will be emitted (in reverse order) when g_object_thaw_notify() is
+     * called.
+     * @virtual 
+     * @param pspec 
+     */
+    vfunc_notify(pspec: GObject.ParamSpec): void
+    vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -720,7 +1484,7 @@ interface Authority_ConstructProps extends GObject.Object_ConstructProps {
  * #PolkitAgentListener and #PolkitAgentSession for details.
  */
 class Authority {
-    /* Properties of Polkit-1.0.Polkit.Authority */
+    /* Own properties of Polkit-1.0.Polkit.Authority */
     /**
      * The features of the currently used Authority backend.
      */
@@ -736,9 +1500,9 @@ class Authority {
      * #GObject::notify signal to track changes to this property.
      */
     readonly owner: string
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.Authority */
+    /* Owm methods of Polkit-1.0.Polkit.Authority */
     /**
      * Asynchronously provide response that `identity` successfully authenticated
      * for the authentication request identified by `cookie`.
@@ -1089,7 +1853,7 @@ class Authority {
      * @param cancellable A #GCancellable or %NULL.
      */
     unregister_authentication_agent_sync(subject: Subject, object_path: string, cancellable: Gio.Cancellable | null): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -1403,7 +2167,7 @@ class Authority {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Gio-2.0.Gio.AsyncInitable */
+    /* Implemented methods of Gio-2.0.Gio.AsyncInitable */
     /**
      * Starts asynchronous initialization of the object implementing the
      * interface. This must be done before any real use of the object after
@@ -1458,7 +2222,7 @@ class Authority {
      * @param res the #GAsyncResult from the callback
      */
     new_finish(res: Gio.AsyncResult): GObject.Object
-    /* Methods of Gio-2.0.Gio.Initable */
+    /* Implemented methods of Gio-2.0.Gio.Initable */
     /**
      * Initializes the object implementing the interface.
      * 
@@ -1501,7 +2265,7 @@ class Authority {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     init(cancellable: Gio.Cancellable | null): boolean
-    /* Virtual methods of Polkit-1.0.Polkit.Authority */
+    /* Own virtual methods of Polkit-1.0.Polkit.Authority */
     /**
      * Starts asynchronous initialization of the object implementing the
      * interface. This must be done before any real use of the object after
@@ -1595,7 +2359,7 @@ class Authority {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     vfunc_init(cancellable: Gio.Cancellable | null): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -1617,7 +2381,7 @@ class Authority {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of Polkit-1.0.Polkit.Authority */
+    /* Own signals of Polkit-1.0.Polkit.Authority */
     /**
      * Emitted when actions and/or authorizations change
      * @signal 
@@ -1625,7 +2389,7 @@ class Authority {
     connect(sigName: "changed", callback: (($obj: Authority) => void)): number
     connect_after(sigName: "changed", callback: (($obj: Authority) => void)): number
     emit(sigName: "changed"): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -1739,9 +2503,9 @@ interface AuthorizationResult_ConstructProps extends GObject.Object_ConstructPro
  * This class represents the result you get when checking for an authorization.
  */
 class AuthorizationResult {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.AuthorizationResult */
+    /* Owm methods of Polkit-1.0.Polkit.AuthorizationResult */
     /**
      * Gets the details about the result.
      */
@@ -1794,7 +2558,7 @@ class AuthorizationResult {
      * key <literal>polkit.temporary_authorization_id</literal>.
      */
     get_temporary_authorization_id(): string | null
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -2108,7 +2872,7 @@ class AuthorizationResult {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -2130,7 +2894,7 @@ class AuthorizationResult {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -2182,9 +2946,9 @@ interface Details_ConstructProps extends GObject.Object_ConstructProps {
  * An object used for passing details around.
  */
 class Details {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.Details */
+    /* Owm methods of Polkit-1.0.Polkit.Details */
     /**
      * Gets a list of all keys on `details`.
      */
@@ -2202,7 +2966,7 @@ class Details {
      * @param key A key.
      */
     lookup(key: string): string | null
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -2516,7 +3280,7 @@ class Details {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -2538,7 +3302,7 @@ class Details {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -2602,7 +3366,7 @@ interface Permission_ConstructProps extends Gio.Permission_ConstructProps {
  * more information.
  */
 class Permission {
-    /* Properties of Polkit-1.0.Polkit.Permission */
+    /* Own properties of Polkit-1.0.Polkit.Permission */
     /**
      * The action identifier to use for the permission.
      */
@@ -2612,7 +3376,7 @@ class Permission {
      * construction, it will be set to match the current process.
      */
     readonly subject: Subject
-    /* Properties of Gio-2.0.Gio.Permission */
+    /* Extended properties of Gio-2.0.Gio.Permission */
     /**
      * %TRUE if the caller currently has permission to perform the action that
      * `permission` represents the permission to perform.
@@ -2628,11 +3392,11 @@ class Permission {
      * g_permission_release().
      */
     readonly can_release: boolean
-    /* Fields of Gio-2.0.Gio.Permission */
+    /* Extended fields of Gio-2.0.Gio.Permission */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.Permission */
+    /* Owm methods of Polkit-1.0.Polkit.Permission */
     /**
      * Gets the PolicyKit action identifier used for `permission`.
      */
@@ -2641,7 +3405,7 @@ class Permission {
      * Gets the subject used for `permission`.
      */
     get_subject(): Subject
-    /* Methods of Gio-2.0.Gio.Permission */
+    /* Extended methods of Gio-2.0.Gio.Permission */
     /**
      * Attempts to acquire the permission represented by `permission`.
      * 
@@ -2745,7 +3509,7 @@ class Permission {
      * @param result the #GAsyncResult given to the #GAsyncReadyCallback
      */
     release_finish(result: Gio.AsyncResult): boolean
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -3059,7 +3823,7 @@ class Permission {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Gio-2.0.Gio.AsyncInitable */
+    /* Implemented methods of Gio-2.0.Gio.AsyncInitable */
     /**
      * Starts asynchronous initialization of the object implementing the
      * interface. This must be done before any real use of the object after
@@ -3114,7 +3878,7 @@ class Permission {
      * @param res the #GAsyncResult from the callback
      */
     new_finish(res: Gio.AsyncResult): GObject.Object
-    /* Methods of Gio-2.0.Gio.Initable */
+    /* Implemented methods of Gio-2.0.Gio.Initable */
     /**
      * Initializes the object implementing the interface.
      * 
@@ -3157,7 +3921,7 @@ class Permission {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     init(cancellable: Gio.Cancellable | null): boolean
-    /* Virtual methods of Polkit-1.0.Polkit.Permission */
+    /* Own virtual methods of Polkit-1.0.Polkit.Permission */
     /**
      * Starts asynchronous initialization of the object implementing the
      * interface. This must be done before any real use of the object after
@@ -3251,7 +4015,7 @@ class Permission {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     vfunc_init(cancellable: Gio.Cancellable | null): boolean
-    /* Virtual methods of Gio-2.0.Gio.Permission */
+    /* Extended virtual methods of Gio-2.0.Gio.Permission */
     /**
      * Attempts to acquire the permission represented by `permission`.
      * 
@@ -3332,7 +4096,7 @@ class Permission {
      * @param result the #GAsyncResult given to the #GAsyncReadyCallback
      */
     vfunc_release_finish(result: Gio.AsyncResult): boolean
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -3354,7 +4118,7 @@ class Permission {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -3446,14 +4210,14 @@ interface SystemBusName_ConstructProps extends GObject.Object_ConstructProps {
  * An object that represents a process owning a unique name on the system bus.
  */
 class SystemBusName {
-    /* Properties of Polkit-1.0.Polkit.SystemBusName */
+    /* Own properties of Polkit-1.0.Polkit.SystemBusName */
     /**
      * The unique name on the system message bus.
      */
     name: string
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.SystemBusName */
+    /* Owm methods of Polkit-1.0.Polkit.SystemBusName */
     /**
      * Gets the unique system bus name for `system_bus_name`.
      */
@@ -3475,7 +4239,7 @@ class SystemBusName {
      * @param name A unique system bus name.
      */
     set_name(name: string): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -3789,7 +4553,7 @@ class SystemBusName {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Polkit-1.0.Polkit.Subject */
+    /* Implemented methods of Polkit-1.0.Polkit.Subject */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same subject.
      * However, avoid calling polkit_subject_equal() to compare two processes;
@@ -3834,7 +4598,7 @@ class SystemBusName {
      * polkit_subject_from_string().
      */
     to_string(): string
-    /* Virtual methods of Polkit-1.0.Polkit.SystemBusName */
+    /* Own virtual methods of Polkit-1.0.Polkit.SystemBusName */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same subject.
      * However, avoid calling polkit_subject_equal() to compare two processes;
@@ -3885,7 +4649,7 @@ class SystemBusName {
      * @virtual 
      */
     vfunc_to_string(): string
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -3907,7 +4671,7 @@ class SystemBusName {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -3966,9 +4730,9 @@ interface TemporaryAuthorization_ConstructProps extends GObject.Object_Construct
  * Object used to describe a temporary authorization.
  */
 class TemporaryAuthorization {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.TemporaryAuthorization */
+    /* Owm methods of Polkit-1.0.Polkit.TemporaryAuthorization */
     /**
      * Gets the action that `authorization` is for.
      */
@@ -3995,7 +4759,7 @@ class TemporaryAuthorization {
      * so the returned value may change if system time changes.)
      */
     get_time_obtained(): number
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -4309,7 +5073,7 @@ class TemporaryAuthorization {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -4331,7 +5095,7 @@ class TemporaryAuthorization {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -4386,14 +5150,14 @@ interface UnixGroup_ConstructProps extends GObject.Object_ConstructProps {
  * An object representing a group identity on a UNIX system.
  */
 class UnixGroup {
-    /* Properties of Polkit-1.0.Polkit.UnixGroup */
+    /* Own properties of Polkit-1.0.Polkit.UnixGroup */
     /**
      * The UNIX group id.
      */
     gid: number
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.UnixGroup */
+    /* Owm methods of Polkit-1.0.Polkit.UnixGroup */
     /**
      * Gets the UNIX group id for `group`.
      */
@@ -4403,7 +5167,7 @@ class UnixGroup {
      * @param gid A UNIX group id.
      */
     set_gid(gid: number): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -4717,7 +5481,7 @@ class UnixGroup {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Polkit-1.0.Polkit.Identity */
+    /* Implemented methods of Polkit-1.0.Polkit.Identity */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
@@ -4734,7 +5498,7 @@ class UnixGroup {
      * polkit_identity_from_string().
      */
     to_string(): string
-    /* Virtual methods of Polkit-1.0.Polkit.UnixGroup */
+    /* Own virtual methods of Polkit-1.0.Polkit.UnixGroup */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
@@ -4754,7 +5518,7 @@ class UnixGroup {
      * @virtual 
      */
     vfunc_to_string(): string
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -4776,7 +5540,7 @@ class UnixGroup {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -4846,14 +5610,14 @@ interface UnixNetgroup_ConstructProps extends GObject.Object_ConstructProps {
  * An object representing a netgroup identity on a UNIX system.
  */
 class UnixNetgroup {
-    /* Properties of Polkit-1.0.Polkit.UnixNetgroup */
+    /* Own properties of Polkit-1.0.Polkit.UnixNetgroup */
     /**
      * The NIS netgroup name.
      */
     name: string
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.UnixNetgroup */
+    /* Owm methods of Polkit-1.0.Polkit.UnixNetgroup */
     /**
      * Gets the netgroup name for `group`.
      */
@@ -4863,7 +5627,7 @@ class UnixNetgroup {
      * @param name A netgroup name.
      */
     set_name(name: string): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -5177,7 +5941,7 @@ class UnixNetgroup {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Polkit-1.0.Polkit.Identity */
+    /* Implemented methods of Polkit-1.0.Polkit.Identity */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
@@ -5194,7 +5958,7 @@ class UnixNetgroup {
      * polkit_identity_from_string().
      */
     to_string(): string
-    /* Virtual methods of Polkit-1.0.Polkit.UnixNetgroup */
+    /* Own virtual methods of Polkit-1.0.Polkit.UnixNetgroup */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
@@ -5214,7 +5978,7 @@ class UnixNetgroup {
      * @virtual 
      */
     vfunc_to_string(): string
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -5236,7 +6000,7 @@ class UnixNetgroup {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -5325,7 +6089,7 @@ interface UnixProcess_ConstructProps extends GObject.Object_ConstructProps {
  * polkit_unix_process_new_for_owner() with trusted data.
  */
 class UnixProcess {
-    /* Properties of Polkit-1.0.Polkit.UnixProcess */
+    /* Own properties of Polkit-1.0.Polkit.UnixProcess */
     /**
      * The UNIX process id.
      */
@@ -5340,9 +6104,9 @@ class UnixProcess {
      * Note that this is the real user-id, not the effective user-id.
      */
     uid: number
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.UnixProcess */
+    /* Owm methods of Polkit-1.0.Polkit.UnixProcess */
     /**
      * (deprecated)
      */
@@ -5381,7 +6145,7 @@ class UnixProcess {
      * @param uid The user id to set for `process` or -1 to unset it.
      */
     set_uid(uid: number): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -5695,7 +6459,7 @@ class UnixProcess {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Polkit-1.0.Polkit.Subject */
+    /* Implemented methods of Polkit-1.0.Polkit.Subject */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same subject.
      * However, avoid calling polkit_subject_equal() to compare two processes;
@@ -5740,7 +6504,7 @@ class UnixProcess {
      * polkit_subject_from_string().
      */
     to_string(): string
-    /* Virtual methods of Polkit-1.0.Polkit.UnixProcess */
+    /* Own virtual methods of Polkit-1.0.Polkit.UnixProcess */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same subject.
      * However, avoid calling polkit_subject_equal() to compare two processes;
@@ -5791,7 +6555,7 @@ class UnixProcess {
      * @virtual 
      */
     vfunc_to_string(): string
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -5813,7 +6577,7 @@ class UnixProcess {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -5904,7 +6668,7 @@ interface UnixSession_ConstructProps extends GObject.Object_ConstructProps {
  * The session id is an opaque string obtained from ConsoleKit.
  */
 class UnixSession {
-    /* Properties of Polkit-1.0.Polkit.UnixSession */
+    /* Own properties of Polkit-1.0.Polkit.UnixSession */
     /**
      * The UNIX process id to look up the session.
      */
@@ -5913,9 +6677,9 @@ class UnixSession {
      * The UNIX session id.
      */
     session_id: string
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.UnixSession */
+    /* Owm methods of Polkit-1.0.Polkit.UnixSession */
     /**
      * Gets the session id for `session`.
      */
@@ -5925,7 +6689,7 @@ class UnixSession {
      * @param session_id The session id.
      */
     set_session_id(session_id: string): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -6239,7 +7003,7 @@ class UnixSession {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Gio-2.0.Gio.AsyncInitable */
+    /* Implemented methods of Gio-2.0.Gio.AsyncInitable */
     /**
      * Starts asynchronous initialization of the object implementing the
      * interface. This must be done before any real use of the object after
@@ -6294,7 +7058,7 @@ class UnixSession {
      * @param res the #GAsyncResult from the callback
      */
     new_finish(res: Gio.AsyncResult): GObject.Object
-    /* Methods of Gio-2.0.Gio.Initable */
+    /* Implemented methods of Gio-2.0.Gio.Initable */
     /**
      * Initializes the object implementing the interface.
      * 
@@ -6337,7 +7101,7 @@ class UnixSession {
      * @param cancellable optional #GCancellable object, %NULL to ignore.
      */
     init(cancellable: Gio.Cancellable | null): boolean
-    /* Methods of Polkit-1.0.Polkit.Subject */
+    /* Implemented methods of Polkit-1.0.Polkit.Subject */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same subject.
      * However, avoid calling polkit_subject_equal() to compare two processes;
@@ -6382,7 +7146,7 @@ class UnixSession {
      * polkit_subject_from_string().
      */
     to_string(): string
-    /* Virtual methods of Polkit-1.0.Polkit.UnixSession */
+    /* Own virtual methods of Polkit-1.0.Polkit.UnixSession */
     /**
      * Starts asynchronous initialization of the object implementing the
      * interface. This must be done before any real use of the object after
@@ -6526,7 +7290,7 @@ class UnixSession {
      * @virtual 
      */
     vfunc_to_string(): string
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -6548,7 +7312,7 @@ class UnixSession {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -6671,14 +7435,14 @@ interface UnixUser_ConstructProps extends GObject.Object_ConstructProps {
  * An object representing a user identity on a UNIX system.
  */
 class UnixUser {
-    /* Properties of Polkit-1.0.Polkit.UnixUser */
+    /* Own properties of Polkit-1.0.Polkit.UnixUser */
     /**
      * The UNIX user id.
      */
     uid: number
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Polkit-1.0.Polkit.UnixUser */
+    /* Owm methods of Polkit-1.0.Polkit.UnixUser */
     /**
      * Get the user's name.
      */
@@ -6692,7 +7456,7 @@ class UnixUser {
      * @param uid A UNIX user id.
      */
     set_uid(uid: number): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -7006,7 +7770,7 @@ class UnixUser {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Methods of Polkit-1.0.Polkit.Identity */
+    /* Implemented methods of Polkit-1.0.Polkit.Identity */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
@@ -7023,7 +7787,7 @@ class UnixUser {
      * polkit_identity_from_string().
      */
     to_string(): string
-    /* Virtual methods of Polkit-1.0.Polkit.UnixUser */
+    /* Own virtual methods of Polkit-1.0.Polkit.UnixUser */
     /**
      * Checks if `a` and `b` are equal, ie. represent the same identity.
      * 
@@ -7043,7 +7807,7 @@ class UnixUser {
      * @virtual 
      */
     vfunc_to_string(): string
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -7065,7 +7829,7 @@ class UnixUser {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -7140,7 +7904,7 @@ abstract class DetailsClass {
  * An interface for identities.
  */
 abstract class IdentityIface {
-    /* Fields of Polkit-1.0.Polkit.IdentityIface */
+    /* Own fields of Polkit-1.0.Polkit.IdentityIface */
     /**
      * The parent interface.
      */
@@ -7154,7 +7918,7 @@ abstract class IdentityIface {
  * An interface for subjects.
  */
 abstract class SubjectIface {
-    /* Fields of Polkit-1.0.Polkit.SubjectIface */
+    /* Own fields of Polkit-1.0.Polkit.SubjectIface */
     /**
      * The parent interface.
      */

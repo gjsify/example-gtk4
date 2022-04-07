@@ -1669,9 +1669,9 @@ interface Context_ConstructProps extends GObject.Object_ConstructProps {
  * To obtain a `PangoContext`, use [method`Pango`.FontMap.create_context].
  */
 class Context {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Pango-1.0.Pango.Context */
+    /* Owm methods of Pango-1.0.Pango.Context */
     /**
      * Forces a change in the context, which will cause any `PangoLayout`
      * using this context to re-layout.
@@ -1858,7 +1858,7 @@ class Context {
      * @param round_positions whether to round glyph positions
      */
     set_round_glyph_positions(round_positions: boolean): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -2172,7 +2172,7 @@ class Context {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -2194,7 +2194,7 @@ class Context {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -2253,9 +2253,9 @@ interface Coverage_ConstructProps extends GObject.Object_ConstructProps {
  * opaque structure with no public fields.
  */
 class Coverage {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Pango-1.0.Pango.Coverage */
+    /* Owm methods of Pango-1.0.Pango.Coverage */
     /**
      * Copy an existing `PangoCoverage`.
      */
@@ -2292,7 +2292,7 @@ class Coverage {
      * If the result is zero, free the coverage and all associated memory.
      */
     unref(): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -2596,7 +2596,7 @@ class Coverage {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -2618,7 +2618,7 @@ class Coverage {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -2677,11 +2677,11 @@ interface Font_ConstructProps extends GObject.Object_ConstructProps {
  * rendering-system-independent manner.
  */
 class Font {
-    /* Fields of Pango-1.0.Pango.Font */
+    /* Own fields of Pango-1.0.Pango.Font */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Pango-1.0.Pango.Font */
+    /* Owm methods of Pango-1.0.Pango.Font */
     /**
      * Returns a description of the font, with font size set in points.
      * 
@@ -2785,7 +2785,7 @@ class Font {
      * To recreate a font from its serialized form, use [func`Pango`.Font.deserialize].
      */
     serialize(): GLib.Bytes
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -3099,7 +3099,7 @@ class Font {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of Pango-1.0.Pango.Font */
+    /* Own virtual methods of Pango-1.0.Pango.Font */
     vfunc_create_hb_font(): HarfBuzz.font_t
     /**
      * Returns a description of the font, with font size set in points.
@@ -3172,7 +3172,7 @@ class Font {
      * @param language language tag used to determine which script   to get the metrics for, or %NULL to indicate to get the metrics for   the entire font.
      */
     vfunc_get_metrics(language: Language | null): FontMetrics
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -3194,7 +3194,7 @@ class Font {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -3263,11 +3263,11 @@ interface FontFace_ConstructProps extends GObject.Object_ConstructProps {
  * the same family, slant, weight, and width, but varying sizes.
  */
 class FontFace {
-    /* Fields of Pango-1.0.Pango.FontFace */
+    /* Own fields of Pango-1.0.Pango.FontFace */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Pango-1.0.Pango.FontFace */
+    /* Owm methods of Pango-1.0.Pango.FontFace */
     /**
      * Returns a font description that matches the face.
      * 
@@ -3305,7 +3305,7 @@ class FontFace {
      * in ascending order.
      */
     list_sizes(): /* sizes */ number[] | null
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -3619,7 +3619,7 @@ class FontFace {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of Pango-1.0.Pango.FontFace */
+    /* Own virtual methods of Pango-1.0.Pango.FontFace */
     /**
      * Returns a font description that matches the face.
      * 
@@ -3662,7 +3662,7 @@ class FontFace {
      * @virtual 
      */
     vfunc_list_sizes(): /* sizes */ number[] | null
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -3684,7 +3684,7 @@ class FontFace {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -3738,11 +3738,11 @@ interface FontFamily_ConstructProps extends GObject.Object_ConstructProps {
  * slant, weight, width or other aspects.
  */
 class FontFamily {
-    /* Fields of Pango-1.0.Pango.FontFamily */
+    /* Own fields of Pango-1.0.Pango.FontFamily */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Pango-1.0.Pango.FontFamily */
+    /* Owm methods of Pango-1.0.Pango.FontFamily */
     /**
      * Gets the `PangoFontFace` of `family` with the given name.
      * @param name the name of a face. If the name is %NULL,   the family's default face (fontconfig calls it "Regular")   will be returned.
@@ -3794,7 +3794,7 @@ class FontFamily {
      * for enumerating faces.
      */
     list_faces(): /* faces */ FontFace[]
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -4108,7 +4108,7 @@ class FontFamily {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of Pango-1.0.Pango.FontFamily */
+    /* Own virtual methods of Pango-1.0.Pango.FontFamily */
     /**
      * Gets the `PangoFontFace` of `family` with the given name.
      * @virtual 
@@ -4165,7 +4165,7 @@ class FontFamily {
      * @virtual 
      */
     vfunc_list_faces(): /* faces */ FontFace[]
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -4187,7 +4187,7 @@ class FontFamily {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -4241,11 +4241,11 @@ interface FontMap_ConstructProps extends GObject.Object_ConstructProps {
  * particular rendering systems.
  */
 class FontMap {
-    /* Fields of Pango-1.0.Pango.FontMap */
+    /* Own fields of Pango-1.0.Pango.FontMap */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Pango-1.0.Pango.FontMap */
+    /* Owm methods of Pango-1.0.Pango.FontMap */
     /**
      * Forces a change in the context, which will cause any `PangoContext`
      * using this fontmap to change.
@@ -4311,7 +4311,7 @@ class FontMap {
      * @param language a `PangoLanguage` the fonts will be used for
      */
     load_fontset(context: Context, desc: FontDescription, language: Language): Fontset | null
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -4625,7 +4625,7 @@ class FontMap {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of Pango-1.0.Pango.FontMap */
+    /* Own virtual methods of Pango-1.0.Pango.FontMap */
     /**
      * Forces a change in the context, which will cause any `PangoContext`
      * using this fontmap to change.
@@ -4685,7 +4685,7 @@ class FontMap {
      * @param language a `PangoLanguage` the fonts will be used for
      */
     vfunc_load_fontset(context: Context, desc: FontDescription, language: Language): Fontset | null
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -4707,7 +4707,7 @@ class FontMap {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -4762,11 +4762,11 @@ interface Fontset_ConstructProps extends GObject.Object_ConstructProps {
  * composite set of metrics for the entire fontset.
  */
 class Fontset {
-    /* Fields of Pango-1.0.Pango.Fontset */
+    /* Own fields of Pango-1.0.Pango.Fontset */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Pango-1.0.Pango.Fontset */
+    /* Owm methods of Pango-1.0.Pango.Fontset */
     /**
      * Iterates through all the fonts in a fontset, calling `func` for
      * each one.
@@ -4785,7 +4785,7 @@ class Fontset {
      * Get overall metric information for the fonts in the fontset.
      */
     get_metrics(): FontMetrics
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -5099,7 +5099,7 @@ class Fontset {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of Pango-1.0.Pango.Fontset */
+    /* Own virtual methods of Pango-1.0.Pango.Fontset */
     /**
      * Iterates through all the fonts in a fontset, calling `func` for
      * each one.
@@ -5122,7 +5122,7 @@ class Fontset {
      * @virtual 
      */
     vfunc_get_metrics(): FontMetrics
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -5144,7 +5144,7 @@ class Fontset {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -5198,11 +5198,11 @@ interface FontsetSimple_ConstructProps extends Fontset_ConstructProps {
  * the array of fonts that make up the fontset.
  */
 class FontsetSimple {
-    /* Fields of Pango-1.0.Pango.Fontset */
+    /* Extended fields of Pango-1.0.Pango.Fontset */
     parent_instance: GObject.Object
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Pango-1.0.Pango.FontsetSimple */
+    /* Owm methods of Pango-1.0.Pango.FontsetSimple */
     /**
      * Adds a font to the fontset.
      * 
@@ -5214,7 +5214,7 @@ class FontsetSimple {
      * Returns the number of fonts in the fontset.
      */
     size(): number
-    /* Methods of Pango-1.0.Pango.Fontset */
+    /* Extended methods of Pango-1.0.Pango.Fontset */
     /**
      * Iterates through all the fonts in a fontset, calling `func` for
      * each one.
@@ -5233,7 +5233,7 @@ class FontsetSimple {
      * Get overall metric information for the fonts in the fontset.
      */
     get_metrics(): FontMetrics
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -5547,7 +5547,7 @@ class FontsetSimple {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of Pango-1.0.Pango.Fontset */
+    /* Extended virtual methods of Pango-1.0.Pango.Fontset */
     /**
      * Iterates through all the fonts in a fontset, calling `func` for
      * each one.
@@ -5570,7 +5570,7 @@ class FontsetSimple {
      * @virtual 
      */
     vfunc_get_metrics(): FontMetrics
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -5592,7 +5592,7 @@ class FontsetSimple {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -5681,9 +5681,9 @@ interface Layout_ConstructProps extends GObject.Object_ConstructProps {
  * and simply treat the results of a `PangoLayout` as a list of lines.
  */
 class Layout {
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Pango-1.0.Pango.Layout */
+    /* Owm methods of Pango-1.0.Pango.Layout */
     /**
      * Forces recomputation of any state in the `PangoLayout` that
      * might depend on the layout's context.
@@ -6348,7 +6348,7 @@ class Layout {
      * @param y the Y offset (in Pango units) from the top edge of the layout
      */
     xy_to_index(x: number, y: number): [ /* returnType */ boolean, /* index_ */ number, /* trailing */ number ]
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -6662,7 +6662,7 @@ class Layout {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -6684,7 +6684,7 @@ class Layout {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -6754,16 +6754,16 @@ interface Renderer_ConstructProps extends GObject.Object_ConstructProps {
  * backends and destinations can be created.
  */
 class Renderer {
-    /* Fields of Pango-1.0.Pango.Renderer */
+    /* Own fields of Pango-1.0.Pango.Renderer */
     /**
      * the current transformation matrix for
      *   the Renderer; may be %NULL, which should be treated the
      *   same as the identity matrix.
      */
     matrix: Matrix
-    /* Fields of GObject-2.0.GObject.Object */
+    /* Extended fields of GObject-2.0.GObject.Object */
     g_type_instance: GObject.TypeInstance
-    /* Methods of Pango-1.0.Pango.Renderer */
+    /* Owm methods of Pango-1.0.Pango.Renderer */
     /**
      * Does initial setup before rendering operations on `renderer`.
      * 
@@ -6963,7 +6963,7 @@ class Renderer {
      * @param matrix a `PangoMatrix`, or %NULL to unset any existing matrix  (No matrix set is the same as setting the identity matrix.)
      */
     set_matrix(matrix: Matrix | null): void
-    /* Methods of GObject-2.0.GObject.Object */
+    /* Extended methods of GObject-2.0.GObject.Object */
     /**
      * Creates a binding between `source_property` on `source` and `target_property`
      * on `target`.
@@ -7277,7 +7277,7 @@ class Renderer {
      * @param closure #GClosure to watch
      */
     watch_closure(closure: GObject.TClosure): void
-    /* Virtual methods of Pango-1.0.Pango.Renderer */
+    /* Own virtual methods of Pango-1.0.Pango.Renderer */
     vfunc_begin(): void
     /**
      * Draw a squiggly line that approximately covers the given rectangle
@@ -7390,7 +7390,7 @@ class Renderer {
      */
     vfunc_part_changed(part: RenderPart): void
     vfunc_prepare_run(run: LayoutRun): void
-    /* Virtual methods of GObject-2.0.GObject.Object */
+    /* Extended virtual methods of GObject-2.0.GObject.Object */
     vfunc_constructed(): void
     vfunc_dispatch_properties_changed(n_pspecs: number, pspecs: GObject.ParamSpec): void
     vfunc_dispose(): void
@@ -7412,7 +7412,7 @@ class Renderer {
      */
     vfunc_notify(pspec: GObject.ParamSpec): void
     vfunc_set_property(property_id: number, value: any, pspec: GObject.ParamSpec): void
-    /* Signals of GObject-2.0.GObject.Object */
+    /* Extended signals of GObject-2.0.GObject.Object */
     /**
      * The notify signal is emitted on an object when one of its properties has
      * its value set through g_object_set_property(), g_object_set(), et al.
@@ -7461,7 +7461,7 @@ class Renderer {
  * the properties of a segment of text.
  */
 class Analysis {
-    /* Fields of Pango-1.0.Pango.Analysis */
+    /* Own fields of Pango-1.0.Pango.Analysis */
     /**
      * unused, reserved
      */
@@ -7508,7 +7508,7 @@ class Analysis {
  * one should use the wrapper functions provided for `PangoAttribute`.
  */
 class AttrClass {
-    /* Fields of Pango-1.0.Pango.AttrClass */
+    /* Own fields of Pango-1.0.Pango.AttrClass */
     /**
      * the type ID for this attribute
      */
@@ -7523,7 +7523,7 @@ class AttrClass {
  * are colors.
  */
 class AttrColor {
-    /* Fields of Pango-1.0.Pango.AttrColor */
+    /* Own fields of Pango-1.0.Pango.AttrColor */
     /**
      * the common portion of the attribute
      */
@@ -7539,7 +7539,7 @@ class AttrColor {
  * a float or double value.
  */
 class AttrFloat {
-    /* Fields of Pango-1.0.Pango.AttrFloat */
+    /* Own fields of Pango-1.0.Pango.AttrFloat */
     /**
      * the common portion of the attribute
      */
@@ -7555,7 +7555,7 @@ class AttrFloat {
  * sets all aspects of the font description at once.
  */
 class AttrFontDesc {
-    /* Fields of Pango-1.0.Pango.AttrFontDesc */
+    /* Own fields of Pango-1.0.Pango.AttrFontDesc */
     /**
      * the common portion of the attribute
      */
@@ -7571,7 +7571,7 @@ class AttrFontDesc {
  * font features as an attribute.
  */
 class AttrFontFeatures {
-    /* Fields of Pango-1.0.Pango.AttrFontFeatures */
+    /* Own fields of Pango-1.0.Pango.AttrFontFeatures */
     /**
      * the common portion of the attribute
      */
@@ -7587,7 +7587,7 @@ class AttrFontFeatures {
  * an integer or enumeration value.
  */
 class AttrInt {
-    /* Fields of Pango-1.0.Pango.AttrInt */
+    /* Own fields of Pango-1.0.Pango.AttrInt */
     /**
      * the common portion of the attribute
      */
@@ -7608,7 +7608,7 @@ class AttrInt {
  * currently in effect can be queried.
  */
 class AttrIterator {
-    /* Methods of Pango-1.0.Pango.AttrIterator */
+    /* Owm methods of Pango-1.0.Pango.AttrIterator */
     /**
      * Copy a `PangoAttrIterator`.
      */
@@ -7658,7 +7658,7 @@ class AttrIterator {
  * are languages.
  */
 class AttrLanguage {
-    /* Fields of Pango-1.0.Pango.AttrLanguage */
+    /* Own fields of Pango-1.0.Pango.AttrLanguage */
     /**
      * the common portion of the attribute
      */
@@ -7683,7 +7683,7 @@ class AttrLanguage {
  * should not use a single `PangoAttrList` for more than one paragraph of text.
  */
 class AttrList {
-    /* Methods of Pango-1.0.Pango.AttrList */
+    /* Owm methods of Pango-1.0.Pango.AttrList */
     /**
      * Insert the given attribute into the `PangoAttrList`.
      * 
@@ -7834,7 +7834,7 @@ class AttrList {
  * impose shape restrictions.
  */
 class AttrShape {
-    /* Fields of Pango-1.0.Pango.AttrShape */
+    /* Own fields of Pango-1.0.Pango.AttrShape */
     /**
      * the common portion of the attribute
      */
@@ -7879,7 +7879,7 @@ class AttrShape {
  * set font size.
  */
 class AttrSize {
-    /* Fields of Pango-1.0.Pango.AttrSize */
+    /* Own fields of Pango-1.0.Pango.AttrSize */
     /**
      * the common portion of the attribute
      */
@@ -7909,7 +7909,7 @@ class AttrSize {
  * a string value.
  */
 class AttrString {
-    /* Fields of Pango-1.0.Pango.AttrString */
+    /* Own fields of Pango-1.0.Pango.AttrString */
     /**
      * the common portion of the attribute
      */
@@ -7931,7 +7931,7 @@ class AttrString {
  * will have an all-inclusive range of [0,%G_MAXUINT].
  */
 class Attribute {
-    /* Fields of Pango-1.0.Pango.Attribute */
+    /* Own fields of Pango-1.0.Pango.Attribute */
     /**
      * the class structure holding information about the type of the attribute
      */
@@ -7945,7 +7945,7 @@ class Attribute {
      *   is not included in the range.
      */
     end_index: number
-    /* Methods of Pango-1.0.Pango.Attribute */
+    /* Owm methods of Pango-1.0.Pango.Attribute */
     /**
      * Returns the attribute cast to `PangoAttrColor`.
      * 
@@ -8032,7 +8032,7 @@ class Attribute {
  * represent a color in an uncalibrated RGB color-space.
  */
 class Color {
-    /* Fields of Pango-1.0.Pango.Color */
+    /* Own fields of Pango-1.0.Pango.Color */
     /**
      * value of red component
      */
@@ -8045,7 +8045,7 @@ class Color {
      * value of blue component
      */
     blue: number
-    /* Methods of Pango-1.0.Pango.Color */
+    /* Owm methods of Pango-1.0.Pango.Color */
     /**
      * Creates a copy of `src`.
      * 
@@ -8105,7 +8105,7 @@ abstract class ContextClass {
     static name: string
 }
 abstract class FontClass {
-    /* Fields of Pango-1.0.Pango.FontClass */
+    /* Own fields of Pango-1.0.Pango.FontClass */
     parent_class: GObject.ObjectClass
     describe: (font: Font) => FontDescription
     get_coverage: (font: Font, language: Language) => Coverage
@@ -8126,7 +8126,7 @@ abstract class FontClass {
  * a font to load.
  */
 class FontDescription {
-    /* Methods of Pango-1.0.Pango.FontDescription */
+    /* Owm methods of Pango-1.0.Pango.FontDescription */
     /**
      * Determines if the style attributes of `new_match` are a closer match
      * for `desc` than those of `old_match` are, or if `old_match` is %NULL,
@@ -8466,7 +8466,7 @@ class FontDescription {
     static from_string(str: string): FontDescription
 }
 abstract class FontFaceClass {
-    /* Fields of Pango-1.0.Pango.FontFaceClass */
+    /* Own fields of Pango-1.0.Pango.FontFaceClass */
     parent_class: GObject.ObjectClass
     get_face_name: (face: FontFace) => string
     describe: (face: FontFace) => FontDescription
@@ -8476,7 +8476,7 @@ abstract class FontFaceClass {
     static name: string
 }
 abstract class FontFamilyClass {
-    /* Fields of Pango-1.0.Pango.FontFamilyClass */
+    /* Own fields of Pango-1.0.Pango.FontFamilyClass */
     parent_class: GObject.ObjectClass
     list_faces: (family: FontFamily) => /* faces */ FontFace[]
     get_name: (family: FontFamily) => string
@@ -8490,7 +8490,7 @@ abstract class FontFamilyClass {
  * a particular `PangoFontMap` implementation.
  */
 abstract class FontMapClass {
-    /* Fields of Pango-1.0.Pango.FontMapClass */
+    /* Own fields of Pango-1.0.Pango.FontMapClass */
     /**
      * parent `GObjectClass`
      */
@@ -8525,7 +8525,7 @@ abstract class FontMapClass {
  * </picture>
  */
 class FontMetrics {
-    /* Methods of Pango-1.0.Pango.FontMetrics */
+    /* Owm methods of Pango-1.0.Pango.FontMetrics */
     /**
      * Gets the approximate character width for a font metrics structure.
      * 
@@ -8611,7 +8611,7 @@ class FontMetrics {
  * a particular `PangoFontset` implementation.
  */
 abstract class FontsetClass {
-    /* Fields of Pango-1.0.Pango.FontsetClass */
+    /* Own fields of Pango-1.0.Pango.FontsetClass */
     /**
      * parent `GObjectClass`
      */
@@ -8643,7 +8643,7 @@ abstract class FontsetSimpleClass {
  * 4. Render the next glyph
  */
 class GlyphGeometry {
-    /* Fields of Pango-1.0.Pango.GlyphGeometry */
+    /* Own fields of Pango-1.0.Pango.GlyphGeometry */
     /**
      * the logical width to use for the the character.
      */
@@ -8663,7 +8663,7 @@ class GlyphGeometry {
  * positioning information and visual attributes.
  */
 class GlyphInfo {
-    /* Fields of Pango-1.0.Pango.GlyphInfo */
+    /* Own fields of Pango-1.0.Pango.GlyphInfo */
     /**
      * the glyph itself.
      */
@@ -8687,7 +8687,7 @@ class GlyphInfo {
  * each of which contains a list of `PangoGlyphItem`.
  */
 class GlyphItem {
-    /* Fields of Pango-1.0.Pango.GlyphItem */
+    /* Own fields of Pango-1.0.Pango.GlyphItem */
     /**
      * corresponding `PangoItem`
      */
@@ -8711,7 +8711,7 @@ class GlyphItem {
      *   glyph item. Positive values shift right
      */
     end_x_offset: number
-    /* Methods of Pango-1.0.Pango.GlyphItem */
+    /* Owm methods of Pango-1.0.Pango.GlyphItem */
     /**
      * Splits a shaped item (`PangoGlyphItem`) into multiple items based
      * on an attribute list.
@@ -8823,7 +8823,7 @@ class GlyphItem {
  * None of the members of a `PangoGlyphItemIter` should be modified manually.
  */
 class GlyphItemIter {
-    /* Fields of Pango-1.0.Pango.GlyphItemIter */
+    /* Own fields of Pango-1.0.Pango.GlyphItemIter */
     glyph_item: GlyphItem
     text: string
     start_glyph: number
@@ -8832,7 +8832,7 @@ class GlyphItemIter {
     end_glyph: number
     end_index: number
     end_char: number
-    /* Methods of Pango-1.0.Pango.GlyphItemIter */
+    /* Owm methods of Pango-1.0.Pango.GlyphItemIter */
     /**
      * Make a shallow copy of an existing `PangoGlyphItemIter` structure.
      */
@@ -8880,7 +8880,7 @@ class GlyphItemIter {
  * which simplifies memory management.
  */
 class GlyphString {
-    /* Fields of Pango-1.0.Pango.GlyphString */
+    /* Own fields of Pango-1.0.Pango.GlyphString */
     /**
      * number of glyphs in this glyph string
      */
@@ -8894,7 +8894,7 @@ class GlyphString {
      *   within the text corresponding to the glyph string
      */
     log_clusters: number
-    /* Methods of Pango-1.0.Pango.GlyphString */
+    /* Owm methods of Pango-1.0.Pango.GlyphString */
     /**
      * Copy a glyph string and associated storage.
      */
@@ -9021,7 +9021,7 @@ class GlyphString {
  * base character.
  */
 class GlyphVisAttr {
-    /* Fields of Pango-1.0.Pango.GlyphVisAttr */
+    /* Own fields of Pango-1.0.Pango.GlyphVisAttr */
     /**
      * set for the first logical glyph in each cluster.
      */
@@ -9039,7 +9039,7 @@ class GlyphVisAttr {
  * with [func`itemize]`.
  */
 class Item {
-    /* Fields of Pango-1.0.Pango.Item */
+    /* Own fields of Pango-1.0.Pango.Item */
     /**
      * byte offset of the start of this item in text.
      */
@@ -9056,7 +9056,7 @@ class Item {
      * analysis results for the item.
      */
     analysis: Analysis
-    /* Methods of Pango-1.0.Pango.Item */
+    /* Owm methods of Pango-1.0.Pango.Item */
     /**
      * Add attributes to a `PangoItem`.
      * 
@@ -9111,7 +9111,7 @@ class Item {
  * copied and compared with each other.
  */
 class Language {
-    /* Methods of Pango-1.0.Pango.Language */
+    /* Owm methods of Pango-1.0.Pango.Language */
     /**
      * Get a string that is representative of the characters needed to
      * render a particular language.
@@ -9272,7 +9272,7 @@ abstract class LayoutClass {
  * The `PangoLayoutIter` structure is opaque, and has no user-visible fields.
  */
 class LayoutIter {
-    /* Methods of Pango-1.0.Pango.LayoutIter */
+    /* Owm methods of Pango-1.0.Pango.LayoutIter */
     /**
      * Determines whether `iter` is on the last line of the layout.
      */
@@ -9439,7 +9439,7 @@ class LayoutIter {
  * attributes, or settings of the parent `PangoLayout` are modified.
  */
 class LayoutLine {
-    /* Fields of Pango-1.0.Pango.LayoutLine */
+    /* Own fields of Pango-1.0.Pango.LayoutLine */
     /**
      * the layout this line belongs to, might be %NULL
      */
@@ -9465,7 +9465,7 @@ class LayoutLine {
      * #Resolved PangoDirection of line
      */
     resolved_dir: number
-    /* Methods of Pango-1.0.Pango.LayoutLine */
+    /* Owm methods of Pango-1.0.Pango.LayoutLine */
     /**
      * Computes the logical and ink extents of a layout line.
      * 
@@ -9555,7 +9555,7 @@ class LayoutLine {
  * single character.
  */
 class LogAttr {
-    /* Fields of Pango-1.0.Pango.LogAttr */
+    /* Own fields of Pango-1.0.Pango.LogAttr */
     /**
      * if set, can break line in front of character
      */
@@ -9660,7 +9660,7 @@ class LogAttr {
  * ```
  */
 class Matrix {
-    /* Fields of Pango-1.0.Pango.Matrix */
+    /* Own fields of Pango-1.0.Pango.Matrix */
     /**
      * 1st component of the transformation matrix
      */
@@ -9685,7 +9685,7 @@ class Matrix {
      * y translation
      */
     y0: number
-    /* Methods of Pango-1.0.Pango.Matrix */
+    /* Owm methods of Pango-1.0.Pango.Matrix */
     /**
      * Changes the transformation represented by `matrix` to be the
      * transformation given by first applying transformation
@@ -9826,7 +9826,7 @@ class Matrix {
  * [method`Pango`.Font.get_glyph_extents].)
  */
 class Rectangle {
-    /* Fields of Pango-1.0.Pango.Rectangle */
+    /* Own fields of Pango-1.0.Pango.Rectangle */
     /**
      * X coordinate of the left side of the rectangle.
      */
@@ -9864,7 +9864,7 @@ class Rectangle {
  * - draw_glyph
  */
 abstract class RendererClass {
-    /* Fields of Pango-1.0.Pango.RendererClass */
+    /* Own fields of Pango-1.0.Pango.RendererClass */
     draw_glyphs: (renderer: Renderer, font: Font, glyphs: GlyphString, x: number, y: number) => void
     draw_rectangle: (renderer: Renderer, part: RenderPart, x: number, y: number, width: number, height: number) => void
     draw_error_underline: (renderer: Renderer, x: number, y: number, width: number, height: number) => void
@@ -9886,7 +9886,7 @@ class RendererPrivate {
  * and identify ranges in different scripts.
  */
 class ScriptIter {
-    /* Methods of Pango-1.0.Pango.ScriptIter */
+    /* Owm methods of Pango-1.0.Pango.ScriptIter */
     /**
      * Frees a `PangoScriptIter`.
      */
@@ -9924,7 +9924,7 @@ class ScriptIter {
  * a character to use as decimal point.
  */
 class TabArray {
-    /* Methods of Pango-1.0.Pango.TabArray */
+    /* Owm methods of Pango-1.0.Pango.TabArray */
     /**
      * Copies a `PangoTabArray`.
      */

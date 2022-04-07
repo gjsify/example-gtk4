@@ -25,9 +25,7 @@ export class IStack extends Gtk.Stack {
 
     public setParent(headerBar: Gtk.HeaderBar) {
         if (!this.switcher) {
-            printerr('TODO this.switcher is not defined!')
-            this.switcher = new Gtk.StackSwitcher()
-            this.switcher.set_stack(this)
+            throw new Error('this.switcher is not defined!')
         }
         headerBar.set_title_widget(this.switcher);
     }

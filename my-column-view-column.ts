@@ -61,21 +61,12 @@ export class IMyColumnViewColumn extends ColumnViewListStore {
      * @param ndx 
      */
     selectionChanged(widget: Gtk.SelectionModel, ndx: number) {
-        print("this.store", JSON.stringify(this.store))
         const markup = this.win?.getTextMarkup(
-            `Row ${ndx} was selected ( ${this.store?.[ndx]} )`) || ""
+            `Row ${ndx} was selected ( ${this.store?.get_item(ndx)} )`) || ""
         this.win?.page4Label?.set_markup(markup)
     }
 }
 
 export const MyColumnViewColumn = GObject.registerClass({
     GTypeName: 'MyColumnViewColumn',
-    Properties: {
-        'store': GObject.ParamSpec.jsobject(
-            'store',
-            'store',
-            'store',
-            GObject.ParamFlags.CONSTRUCT | GObject.ParamFlags.READWRITE,
-        ),
-    }
 }, IMyColumnViewColumn );
