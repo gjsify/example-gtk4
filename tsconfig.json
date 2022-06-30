@@ -8,5 +8,6 @@
     "strictNullChecks": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
-  }
+  },
+  "include": ["src"]
 }

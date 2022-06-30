@@ -10,7 +10,7 @@ export class IMyColumnViewColumn extends ColumnViewListStore {
 
     win?: IMyWindow
 
-    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, modelCls: typeof ColumnElem, colView: Gtk.ColumnView, data: string[] = [], win: IMyWindow) {
+    constructor(config: Gtk.ColumnViewColumn.ConstructorProperties = {}, modelCls: typeof ColumnElem, colView: Gtk.ColumnView, data: string[] = [], win: IMyWindow) {
         // Init ListView with store model class.
         super(config, modelCls, colView)
         this.win = win

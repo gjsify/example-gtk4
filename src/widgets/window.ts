@@ -11,7 +11,7 @@ class IWindow extends Gtk.ApplicationWindow {
 
     headerbar?: Gtk.HeaderBar;
 
-    constructor(config: Gtk.ApplicationWindow_ConstructProps = {}) {
+    constructor(config: Gtk.ApplicationWindow.ConstructorProperties = {}) {
         const title = config?.title || "";
         super(config);
         

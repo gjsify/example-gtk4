@@ -5,3 +5,6 @@
   export const Mainloop = imports.mainloop;
   export const gettext = imports.gettext;
   export const System = imports.system;
+  export const Signals = imports.signals;
+  export const Package = imports.package;
+

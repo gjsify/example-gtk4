@@ -8,7 +8,7 @@ export class IStack extends Gtk.Stack {
 
     private _pages: {[name: string]: Gtk.StackPage} = {};
 
-    constructor(config: Gtk.Stack_ConstructProps = {}) {
+    constructor(config: Gtk.Stack.ConstructorProperties = {}) {
         super(config);
         this._pages = {};
         this.switcher = new Gtk.StackSwitcher()

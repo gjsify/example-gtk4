@@ -17,7 +17,7 @@ export class IViewColumnBase extends Gtk.ColumnViewColumn {
     model?: Gtk.SelectionModel
     colView?: Gtk.ColumnView;
 
-    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, modelCls: typeof IColumnElem, colView: Gtk.ColumnView) {
+    constructor(config: Gtk.ColumnViewColumn.ConstructorProperties = {}, modelCls: typeof IColumnElem, colView: Gtk.ColumnView) {
         super(config)
         this.colView = colView
     

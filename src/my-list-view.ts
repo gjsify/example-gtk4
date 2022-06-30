@@ -11,7 +11,7 @@ export class IMyListView extends ListViewListStore {
 
     win?: IMyWindow
 
-    constructor(config: Gtk.ListView_ConstructProps = {}, win?: IMyWindow) {
+    constructor(config: Gtk.ListView.ConstructorProperties = {}, win?: IMyWindow) {
         // Init ListView with store model class.
         super(config, ListElem)
         

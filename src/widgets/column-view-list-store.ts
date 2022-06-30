@@ -13,7 +13,7 @@ import { ColumnElem } from "../column-elem.js"
  **/
 export class IColumnViewListStore extends ViewColumnBase {
 
-    constructor(config: Gtk.ColumnViewColumn_ConstructProps = {}, modelCls: typeof ColumnElem, colView: Gtk.ColumnView) {
+    constructor(config: Gtk.ColumnViewColumn.ConstructorProperties = {}, modelCls: typeof ColumnElem, colView: Gtk.ColumnView) {
         super(config, modelCls, colView)
     }
 

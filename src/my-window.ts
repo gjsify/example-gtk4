@@ -35,7 +35,7 @@ export class IMyWindow extends Window {
     page4Label?: Gtk.Label;
     page5Label?: Gtk.Label;
 
-    constructor(config?: Gtk.ApplicationWindow_ConstructProps, title = "") {
+    constructor(config?: Gtk.ApplicationWindow.ConstructorProperties, title = "") {
         super(config)
 
         // load the custom css, so we can use it later

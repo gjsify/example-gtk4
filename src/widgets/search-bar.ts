@@ -7,7 +7,7 @@ export class ISearchBar extends Gtk.SearchBar {
     entry?: Gtk.SearchEntry;
     searchOptions?: Gtk.MenuButton;
 
-    constructor(config: Gtk.SearchBar_ConstructProps = {}, win?: Gtk.ApplicationWindow) {
+    constructor(config: Gtk.SearchBar.ConstructorProperties = {}, win?: Gtk.ApplicationWindow) {
         super(config);
 
         const box = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL})

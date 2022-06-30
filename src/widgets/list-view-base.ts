@@ -15,7 +15,7 @@ class IListViewBase extends Gtk.ListView {
 
     store?: Gio.ListStore | Gio.ListModel;
 
-    constructor(config: Gtk.ListView_ConstructProps = {}, modelCls: typeof GObject.Object) {
+    constructor(config: Gtk.ListView.ConstructorProperties = {}, modelCls: typeof GObject.Object) {
         super(config)
     
         // Use the signal Factory, so we can connect our own methods to setup

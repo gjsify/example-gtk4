@@ -10,7 +10,7 @@ import { APP_MENU } from "../constants.js";
  */
 export class IMenuButton extends Gtk.MenuButton {
 
-    constructor(config: Gtk.MenuButton_ConstructProps = {}) {
+    constructor(config: Gtk.MenuButton.ConstructorProperties = {}) {
         super(config)
         const xml = APP_MENU;
         const name = 'app-menu';

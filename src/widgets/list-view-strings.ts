@@ -10,7 +10,7 @@ import { ListViewBase } from "./list-view-base.js"
  */
 export class IListViewStrings extends ListViewBase {
 
-    constructor(config: Gtk.ListView_ConstructProps) {
+    constructor(config: Gtk.ListView.ConstructorProperties) {
         super(config, Gtk.StringObject as any) // TODO
     }
 

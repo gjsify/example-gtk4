@@ -6,7 +6,7 @@ export class ISwitchRow extends Gtk.Box {
     label?: Gtk.Label;
     switch?: Gtk.Switch;
 
-    constructor(config: Gtk.Box_ConstructProps = {}, text: string = "") {
+    constructor(config: Gtk.Box.ConstructorProperties = {}, text: string = "") {
         config.orientation ||= Gtk.Orientation.HORIZONTAL; 
         super(config)
 
