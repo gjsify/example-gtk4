@@ -9,10 +9,10 @@
  * Polkit-1.0
  */
 
-import type * as Gjs from './Gjs';
-import type Gio from './Gio-2.0';
-import type GObject from './GObject-2.0';
-import type GLib from './GLib-2.0';
+import type * as Gjs from './Gjs.js';
+import type Gio from './Gio-2.0.js';
+import type GObject from './GObject-2.0.js';
+import type GLib from './GLib-2.0.js';
 
 export namespace Polkit {
 
@@ -233,7 +233,7 @@ interface Subject {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes checking whether a subject exists.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_subject_exists().
@@ -282,7 +282,7 @@ interface Subject {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    vfunc_exists(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes checking whether a subject exists.
      * @virtual 
@@ -489,7 +489,7 @@ interface Authority extends Gio.AsyncInitable, Gio.Initable {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    authentication_agent_response(cookie: string, identity: Identity, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    authentication_agent_response(cookie: string, identity: Identity, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes providing response from an authentication agent.
      * @param res A #GAsyncResult obtained from the callback.
@@ -540,7 +540,7 @@ interface Authority extends Gio.AsyncInitable, Gio.Initable {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    check_authorization(subject: Subject, action_id: string, details: Details | null, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    check_authorization(subject: Subject, action_id: string, details: Details | null, flags: CheckAuthorizationFlags, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes checking if a subject is authorized for an action.
      * @param res A #GAsyncResult obtained from the callback.
@@ -586,7 +586,7 @@ interface Authority extends Gio.AsyncInitable, Gio.Initable {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    enumerate_actions(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    enumerate_actions(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes retrieving all registered actions.
      * @param res A #GAsyncResult obtained from the callback.
@@ -612,7 +612,7 @@ interface Authority extends Gio.AsyncInitable, Gio.Initable {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    enumerate_temporary_authorizations(subject: Subject, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    enumerate_temporary_authorizations(subject: Subject, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes retrieving all registered actions.
      * @param res A #GAsyncResult obtained from the callback.
@@ -666,7 +666,7 @@ interface Authority extends Gio.AsyncInitable, Gio.Initable {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    register_authentication_agent(subject: Subject, locale: string, object_path: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    register_authentication_agent(subject: Subject, locale: string, object_path: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes registering an authentication agent.
      * @param res A #GAsyncResult obtained from the callback.
@@ -709,7 +709,7 @@ interface Authority extends Gio.AsyncInitable, Gio.Initable {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    register_authentication_agent_with_options(subject: Subject, locale: string, object_path: string, options: GLib.Variant | null, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    register_authentication_agent_with_options(subject: Subject, locale: string, object_path: string, options: GLib.Variant | null, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes registering an authentication agent.
      * @param res A #GAsyncResult obtained from the callback.
@@ -746,7 +746,7 @@ interface Authority extends Gio.AsyncInitable, Gio.Initable {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    revoke_temporary_authorization_by_id(id: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    revoke_temporary_authorization_by_id(id: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes revoking a temporary authorization by id.
      * @param res A #GAsyncResult obtained from the callback.
@@ -775,7 +775,7 @@ interface Authority extends Gio.AsyncInitable, Gio.Initable {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    revoke_temporary_authorizations(subject: Subject, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    revoke_temporary_authorizations(subject: Subject, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes revoking temporary authorizations.
      * @param res A #GAsyncResult obtained from the callback.
@@ -805,7 +805,7 @@ interface Authority extends Gio.AsyncInitable, Gio.Initable {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    unregister_authentication_agent(subject: Subject, object_path: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    unregister_authentication_agent(subject: Subject, object_path: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Finishes unregistering an authentication agent.
      * @param res A #GAsyncResult obtained from the callback.
@@ -888,7 +888,7 @@ class Authority extends GObject.Object {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    static get_async(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    static get_async(cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<Authority> | null): void
     /**
      * Finishes an operation started with polkit_authority_get_async().
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_authority_get_async().
@@ -1197,7 +1197,7 @@ class Permission extends Gio.Permission {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied.
      */
-    static new(action_id: string, subject: Subject | null, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    static new(action_id: string, subject: Subject | null, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<Permission> | null): void
 }
 
 module SystemBusName {
@@ -1752,7 +1752,7 @@ class UnixSession extends GObject.Object {
      * @param cancellable A #GCancellable or %NULL.
      * @param callback A #GAsyncReadyCallback to call when the request is satisfied
      */
-    static new_for_process(pid: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    static new_for_process(pid: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<UnixSession> | null): void
     /**
      * Finishes constructing a #PolkitSubject for a process id.
      * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to polkit_unix_session_new_for_process().
@@ -2013,5 +2013,15 @@ abstract class UnixUserClass {
     static name: string
 }
 
+/**
+ * Name of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L188
+ */
+const __name__: string
+/**
+ * Version of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L189
+ */
+const __version__: string
 }
 export default Polkit;

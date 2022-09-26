@@ -9,11 +9,12 @@
  * Pango-1.0
  */
 
-import type * as Gjs from './Gjs';
-import type cairo from './cairo-1.0';
-import type HarfBuzz from './HarfBuzz-0.0';
-import type GObject from './GObject-2.0';
-import type GLib from './GLib-2.0';
+import type * as Gjs from './Gjs.js';
+import type cairo from './cairo-1.0.js';
+import type HarfBuzz from './HarfBuzz-0.0.js';
+import type GObject from './GObject-2.0.js';
+import type GLib from './GLib-2.0.js';
+import type Gio from './Gio-2.0.js';
 
 export namespace Pango {
 
@@ -1300,7 +1301,7 @@ enum Weight {
      */
     NORMAL,
     /**
-     * the normal weight (= 500) Since: 1.24
+     * the medium weight (= 500) Since: 1.24
      */
     MEDIUM,
     /**
@@ -3379,12 +3380,23 @@ module FontFamily {
 
     // Constructor properties interface
 
-    interface ConstructorProperties extends GObject.Object.ConstructorProperties {
+    interface ConstructorProperties extends Gio.ListModel.ConstructorProperties, GObject.Object.ConstructorProperties {
     }
 
 }
 
-interface FontFamily {
+interface FontFamily extends Gio.ListModel {
+
+    // Own properties of Pango-1.0.Pango.FontFamily
+
+    /**
+     * The type of items contained in this list.
+     */
+    readonly item_type: GObject.GType
+    /**
+     * The number of items contained in this list.
+     */
+    readonly n_items: number
 
     // Own fields of Pango-1.0.Pango.FontFamily
 
@@ -3505,6 +3517,12 @@ interface FontFamily {
 
     // Class property signals of Pango-1.0.Pango.FontFamily
 
+    connect(sigName: "notify::item-type", callback: (($obj: FontFamily, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::item-type", callback: (($obj: FontFamily, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::item-type", ...args: any[]): void
+    connect(sigName: "notify::n-items", callback: (($obj: FontFamily, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::n-items", callback: (($obj: FontFamily, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::n-items", ...args: any[]): void
     connect(sigName: string, callback: (...args: any[]) => void): number
     connect_after(sigName: string, callback: (...args: any[]) => void): number
     emit(sigName: string, ...args: any[]): void
@@ -3536,12 +3554,23 @@ module FontMap {
 
     // Constructor properties interface
 
-    interface ConstructorProperties extends GObject.Object.ConstructorProperties {
+    interface ConstructorProperties extends Gio.ListModel.ConstructorProperties, GObject.Object.ConstructorProperties {
     }
 
 }
 
-interface FontMap {
+interface FontMap extends Gio.ListModel {
+
+    // Own properties of Pango-1.0.Pango.FontMap
+
+    /**
+     * The type of items contained in this list.
+     */
+    readonly item_type: GObject.GType
+    /**
+     * The number of items contained in this list.
+     */
+    readonly n_items: number
 
     // Own fields of Pango-1.0.Pango.FontMap
 
@@ -3679,6 +3708,12 @@ interface FontMap {
 
     // Class property signals of Pango-1.0.Pango.FontMap
 
+    connect(sigName: "notify::item-type", callback: (($obj: FontMap, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::item-type", callback: (($obj: FontMap, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::item-type", ...args: any[]): void
+    connect(sigName: "notify::n-items", callback: (($obj: FontMap, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::n-items", callback: (($obj: FontMap, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::n-items", ...args: any[]): void
     connect(sigName: string, callback: (...args: any[]) => void): number
     connect_after(sigName: string, callback: (...args: any[]) => void): number
     emit(sigName: string, ...args: any[]): void
@@ -8221,5 +8256,15 @@ class TabArray {
     type Glyph = number
     type GlyphUnit = number
     type LayoutRun = GlyphItem
+/**
+ * Name of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L188
+ */
+const __name__: string
+/**
+ * Version of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L189
+ */
+const __version__: string
 }
 export default Pango;

@@ -9,8 +9,8 @@
  * cairo-1.0
  */
 
-import type * as Gjs from './Gjs';
-import type GObject from './GObject-2.0';
+import type * as Gjs from './Gjs.js';
+import type GObject from './GObject-2.0.js';
 
 export namespace cairo {
 
@@ -367,5 +367,15 @@ class RectangleInt {
     static name: string
 }
 
+/**
+ * Name of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L188
+ */
+const __name__: string
+/**
+ * Version of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L189
+ */
+const __version__: string
 }
 export default cairo;

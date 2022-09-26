@@ -1,6 +1,6 @@
 
 
-    import GObject from './GObject-2.0';
+    import GObject from './GObject-2.0.js';
   
 
 const inheritanceTable: { [key: string]: string[] } = {
@@ -1941,9 +1941,11 @@ const inheritanceTable: { [key: string]: string[] } = {
 ],
     'Pango.FontFamily': [
     'GObject.Object',
+    'Gio.ListModel',
 ],
     'Pango.FontMap': [
     'GObject.Object',
+    'Gio.ListModel',
 ],
     'Pango.Fontset': [
     'GObject.Object',

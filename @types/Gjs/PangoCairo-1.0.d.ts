@@ -9,12 +9,13 @@
  * PangoCairo-1.0
  */
 
-import type * as Gjs from './Gjs';
-import type cairo from './cairo-1.0';
-import type Pango from './Pango-1.0';
-import type HarfBuzz from './HarfBuzz-0.0';
-import type GObject from './GObject-2.0';
-import type GLib from './GLib-2.0';
+import type * as Gjs from './Gjs.js';
+import type cairo from './cairo-1.0.js';
+import type Pango from './Pango-1.0.js';
+import type HarfBuzz from './HarfBuzz-0.0.js';
+import type GObject from './GObject-2.0.js';
+import type GLib from './GLib-2.0.js';
+import type Gio from './Gio-2.0.js';
 
 export namespace PangoCairo {
 
@@ -378,6 +379,12 @@ interface FontMap extends Pango.FontMap {
 
     // Class property signals of PangoCairo-1.0.PangoCairo.FontMap
 
+    connect(sigName: "notify::item-type", callback: (($obj: FontMap, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::item-type", callback: (($obj: FontMap, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::item-type", ...args: any[]): void
+    connect(sigName: "notify::n-items", callback: (($obj: FontMap, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::n-items", callback: (($obj: FontMap, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::n-items", ...args: any[]): void
     connect(sigName: string, callback: (...args: any[]) => void): number
     connect_after(sigName: string, callback: (...args: any[]) => void): number
     emit(sigName: string, ...args: any[]): void
@@ -453,5 +460,15 @@ class FontMap extends GObject.Object {
     static get_default(): Pango.FontMap
 }
 
+/**
+ * Name of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L188
+ */
+const __name__: string
+/**
+ * Version of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L189
+ */
+const __version__: string
 }
 export default PangoCairo;

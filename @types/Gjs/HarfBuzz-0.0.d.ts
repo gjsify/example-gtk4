@@ -9,9 +9,9 @@
  * HarfBuzz-0.0
  */
 
-import type * as Gjs from './Gjs';
-import type GObject from './GObject-2.0';
-import type GLib from './GLib-2.0';
+import type * as Gjs from './Gjs.js';
+import type GObject from './GObject-2.0.js';
+import type GLib from './GLib-2.0.js';
 
 export namespace HarfBuzz {
 
@@ -7480,5 +7480,15 @@ class var_num_t {
     type ot_name_id_t = number
     type position_t = number
     type tag_t = number
+/**
+ * Name of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L188
+ */
+const __name__: string
+/**
+ * Version of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L189
+ */
+const __version__: string
 }
 export default HarfBuzz;

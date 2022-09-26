@@ -9,18 +9,18 @@
  * Gsk-4.0
  */
 
-import type * as Gjs from './Gjs';
-import type Graphene from './Graphene-1.0';
-import type GObject from './GObject-2.0';
-import type GLib from './GLib-2.0';
-import type Gdk from './Gdk-4.0';
-import type cairo from './cairo-1.0';
-import type PangoCairo from './PangoCairo-1.0';
-import type Pango from './Pango-1.0';
-import type HarfBuzz from './HarfBuzz-0.0';
-import type Gio from './Gio-2.0';
-import type GdkPixbuf from './GdkPixbuf-2.0';
-import type GModule from './GModule-2.0';
+import type * as Gjs from './Gjs.js';
+import type Graphene from './Graphene-1.0.js';
+import type GObject from './GObject-2.0.js';
+import type GLib from './GLib-2.0.js';
+import type Gdk from './Gdk-4.0.js';
+import type cairo from './cairo-1.0.js';
+import type PangoCairo from './PangoCairo-1.0.js';
+import type Pango from './Pango-1.0.js';
+import type HarfBuzz from './HarfBuzz-0.0.js';
+import type Gio from './Gio-2.0.js';
+import type GdkPixbuf from './GdkPixbuf-2.0.js';
+import type GModule from './GModule-2.0.js';
 
 export namespace Gsk {
 
@@ -3159,5 +3159,15 @@ class Transform {
     static parse(string: string): [ /* returnType */ boolean, /* out_transform */ Transform ]
 }
 
+/**
+ * Name of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L188
+ */
+const __name__: string
+/**
+ * Version of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L189
+ */
+const __version__: string
 }
 export default Gsk;

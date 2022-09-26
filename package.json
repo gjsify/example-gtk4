@@ -12,6 +12,7 @@
     "start:gjs": "gjs -m dist/main.js",
     "start:gjs:debug": "GTK_DEBUG=interactive gjs -m dist/main.js",
     "start": "npm run build:app && npm run start:gjs",
+    "validate": "npm run validate:types && npm run validate:app",
     "validate:types": "NODE_OPTIONS=--max_old_space_size=9216 tsc ./@types/Gjs/*.ts --noEmit",
     "validate:app": "tsc --noEmit"
   },
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/gjsify/example-gtk4#readme",
   "devDependencies": {
+    "@ts-for-gir/cli": "^3.0.0-beta.5",
     "babel-plugin-gjs": "^0.0.11",
     "esbuild": "^0.14.36",
     "typescript": "^4.7.3"

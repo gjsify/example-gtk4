@@ -9,8 +9,8 @@
  * GLib-2.0
  */
 
-import type * as Gjs from './Gjs';
-import type GObject from './GObject-2.0';
+import type * as Gjs from './Gjs.js';
+import type GObject from './GObject-2.0.js';
 
 export namespace GLib {
 
@@ -12939,6 +12939,10 @@ interface Bytes {
      * data is copied.
      */
     unref_to_data(): Uint8Array
+    /**
+     * Convert a [`GLib.Bytes`](https://gjs-docs.gnome.org/glib20/glib.bytes) object to a `Uint8Array` object.
+     */
+    toArray(): Uint8Array
 }
 
 /**
@@ -22788,6 +22792,10 @@ interface Variant {
      * drops to 0, the memory used by the variant is freed.
      */
     unref(): void
+    new(sig: string, value: any): Variant
+    unpack<T = unknown>(): T
+    deepUnpack<T = unknown>(): T
+    recursiveUnpack<T = unknown>(): T
 }
 
 /**
@@ -23427,6 +23435,10 @@ class Variant {
      * Same as g_variant_error_quark().
      */
     static parser_get_error_quark(): Quark
+
+    // Owm static methods of GLib-2.0.GLib.Variant
+
+    constructor(sig: string, value: any) 
 }
 
 interface VariantBuilder {
@@ -24597,5 +24609,15 @@ class TokenValue {
     type Time = number
     type TimeSpan = number
     type Type = number
+/**
+ * Name of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L188
+ */
+const __name__: string
+/**
+ * Version of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L189
+ */
+const __version__: string
 }
 export default GLib;

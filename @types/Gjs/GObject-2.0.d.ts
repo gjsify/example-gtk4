@@ -9,8 +9,8 @@
  * GObject-2.0
  */
 
-import type * as Gjs from './Gjs';
-import type GLib from './GLib-2.0';
+import type * as Gjs from './Gjs.js';
+import type GLib from './GLib-2.0.js';
 
 export namespace GObject {
 
@@ -2435,7 +2435,7 @@ export interface MetaInfo<Props, Interfaces, Sigs> {
     Signals?: Sigs
     Implements?: Interfaces
     CssName?: string
-    Template?: string
+    Template?: Uint8Array | GLib.Bytes
     Children?: string[]
     InternalChildren?: string[]
 }
@@ -7049,5 +7049,15 @@ class _Value__data__union {
 
     type SignalCMarshaller = ClosureMarshal
     type SignalCVaMarshaller = any
+/**
+ * Name of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L188
+ */
+const __name__: string
+/**
+ * Version of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L189
+ */
+const __version__: string
 }
 export default GObject;

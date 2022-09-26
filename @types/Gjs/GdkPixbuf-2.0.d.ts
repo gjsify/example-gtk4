@@ -9,11 +9,11 @@
  * GdkPixbuf-2.0
  */
 
-import type * as Gjs from './Gjs';
-import type Gio from './Gio-2.0';
-import type GObject from './GObject-2.0';
-import type GLib from './GLib-2.0';
-import type GModule from './GModule-2.0';
+import type * as Gjs from './Gjs.js';
+import type Gio from './Gio-2.0.js';
+import type GObject from './GObject-2.0.js';
+import type GLib from './GLib-2.0.js';
+import type GModule from './GModule-2.0.js';
 
 export namespace GdkPixbuf {
 
@@ -824,7 +824,7 @@ interface Pixbuf extends Gio.Icon, Gio.LoadableIcon {
      * @param cancellable optional `GCancellable` object, `NULL` to ignore
      * @param callback a `GAsyncReadyCallback` to call when the pixbuf is saved
      */
-    save_to_streamv_async(stream: Gio.OutputStream, type: string, option_keys: string[] | null, option_values: string[] | null, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    save_to_streamv_async(stream: Gio.OutputStream, type: string, option_keys: string[] | null, option_values: string[] | null, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
     /**
      * Vector version of `gdk_pixbuf_save()`.
      * 
@@ -1371,7 +1371,7 @@ class Pixbuf extends GObject.Object {
      * @param cancellable optional `GCancellable` object, `NULL` to ignore
      * @param callback a `GAsyncReadyCallback` to call when the pixbuf is loaded
      */
-    static new_from_stream_async(stream: Gio.InputStream, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    static new_from_stream_async(stream: Gio.InputStream, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<Pixbuf> | null): void
     /**
      * Creates a new pixbuf by asynchronously loading an image from an input stream.
      * 
@@ -1387,7 +1387,7 @@ class Pixbuf extends GObject.Object {
      * @param cancellable optional `GCancellable` object, `NULL` to ignore
      * @param callback a `GAsyncReadyCallback` to call when the pixbuf is loaded
      */
-    static new_from_stream_at_scale_async(stream: Gio.InputStream, width: number, height: number, preserve_aspect_ratio: boolean, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    static new_from_stream_at_scale_async(stream: Gio.InputStream, width: number, height: number, preserve_aspect_ratio: boolean, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<Pixbuf> | null): void
     /**
      * Calculates the rowstride that an image created with those values would
      * have.
@@ -1420,7 +1420,7 @@ class Pixbuf extends GObject.Object {
      * @param cancellable optional `GCancellable` object, `NULL` to ignore
      * @param callback a `GAsyncReadyCallback` to call when the file info is available
      */
-    static get_file_info_async(filename: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    static get_file_info_async(filename: string, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<Pixbuf> | null): void
     /**
      * Finishes an asynchronous pixbuf parsing operation started with
      * gdk_pixbuf_get_file_info_async().
@@ -1707,7 +1707,7 @@ class PixbufAnimation extends GObject.Object {
      * @param cancellable optional #GCancellable object
      * @param callback a `GAsyncReadyCallback` to call when the pixbuf is loaded
      */
-    static new_from_stream_async(stream: Gio.InputStream, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback | null): void
+    static new_from_stream_async(stream: Gio.InputStream, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<PixbufAnimation> | null): void
 }
 
 module PixbufAnimationIter {
@@ -2707,5 +2707,15 @@ abstract class PixbufSimpleAnimClass {
     static name: string
 }
 
+/**
+ * Name of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L188
+ */
+const __name__: string
+/**
+ * Version of the imported GIR library
+ * @see https://gitlab.gnome.org/GNOME/gjs/-/blob/master/gi/ns.cpp#L189
+ */
+const __version__: string
 }
 export default GdkPixbuf;
